@@ -1,5 +1,6 @@
 import { captureVisualContext, clearVisualEvidence } from './visual-context.js';
 import { nativeBrainLink } from './native-brain.js';
+import { cancelReplayForReset, getAgentTab, getReplaySnapshot } from './playback.js';
 const brainLink=nativeBrainLink();
 // Opt-in observation across HTTP(S) tabs, independent of execution assignment.
 // Independent of debugger/native probe execution.
@@ -68,7 +69,7 @@ async function snapshot() {
   const {contextBrain:storedBrain=null,brainConnection=null,brainActivity=null} = await chrome.storage.local.get(['contextBrain','brainConnection','brainActivity']);
   const contextBrain=storedBrain?.providers?.context?storedBrain:null;
   const brain=contextBrain && Date.now()-Date.parse(contextBrain.connectedAt)>120000?{...contextBrain,working:null,recent:[],pendingSwitches:0}:contextBrain;
-  return {...state, brain, brainConnection, brainActivity, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:'all open HTTP/HTTPS tabs'};
+  return {...state, brain, brainConnection, brainActivity, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:'all open HTTP/HTTPS tabs', replay:await getReplaySnapshot(), agentTab:await getAgentTab()};
 }
 async function save(state) {
   try { await chrome.storage.local.set({[KEY]:state});brainLink.schedule(state); }
@@ -119,6 +120,7 @@ export function installRecorder() {
         await refreshTabs(state,true);
         state.sessionId = crypto.randomUUID();
         state.startedAt = new Date().toISOString();
+        await cancelReplayForReset('recording-session-changed');
         await save(state);
         await chrome.storage.session.set({recordingEnabled:true,recordingError:null});
         await badge(true);
@@ -129,6 +131,7 @@ export function installRecorder() {
       } else if (message.kind === 'recording:clear') {
         clearVisualEvidence();
         await chrome.storage.session.set({recordingEnabled:false,recordingError:null});
+        await cancelReplayForReset('recording-cleared');
         await save(empty());
         await chrome.storage.local.remove('contextBrain');
         await badge(false);

@@ -30,6 +30,7 @@
     "worker:verifier": "node dist/workers/verifier.mjs",
     "worker:registry": "node dist/workers/registry.mjs",
     "smoke:companion:unencrypted": "electron dist/companion/main.cjs --smoke-unencrypted",
+    "verify:playback": "tsx scripts/verify-playback.ts",
     "recording": "tsx scripts/recording.ts --demo",
     "verify:recording": "tsx scripts/recording.ts",
     "brain": "tsx scripts/context-brain.ts",

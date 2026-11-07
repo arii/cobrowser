@@ -27,6 +27,24 @@ pnpm verify:recording --raw  # same checks against the unpacked source extension
 
 The checks write synthetic evidence to `.local/evidence/recording.json`, `recording-export.json`, and `recording-monitor.png`. They use a temporary isolated browser profile and remove it afterward.
 
+## Agent playback: direct replay, then decided replay
+
+The recording monitor now has an **Agent playback** section that replays saved events in the assigned agent tab through real browser input (`chrome.debugger` CDP). Two modes share one planner (`apps/extension/playback-plan.js`, tested by `tests/playback.test.ts`):
+
+- **Direct · literal** replays every actionable event in recorded order, including pointer moves. Scroll distance was never recorded, so direct replay scrolls a stated 200px fallback per scroll event.
+- **Filtered · decided** drops pointer/scroll/page noise and replays clicks, control keys, and submits in order.
+
+Neither mode invents typed values: recordings never save them, so every `change` event pauses replay with **Waiting on you**. Focus the field in the agent tab, enter the value in the monitor, and choose **Send input** (or **Skip input step**). Replay is scoped to the assigned tab: only events recorded on that tab's origin run, on any recorded site — other origins' events are skipped and counted in the warnings line. Full URLs and query strings were never recorded, so replay never auto-navigates; if the assigned tab navigates away mid-run, replay pauses until it matches again. Replayed input is tagged as agent activity and stays out of the human recording. A new recording session or **Clear saved data** cancels the active run.
+
+```sh
+pnpm build:extension
+pnpm probe:popup --built        # assign the agent tab flow still works after the refactor
+pnpm verify:playback            # filtered + direct replay, input pause, suppression, detach guidance
+pnpm verify:playback --raw      # same checks against the unpacked source extension
+```
+
+Manual flow: start recording, interact with any HTTP/HTTPS page, then in the monitor's Agent playback section select the page and choose **Assign selected tab** (this attaches without reloading, so the recorded tab itself works as the target). Pick a mode and choose **Start replay**. The popup's **Create agent tab** / **Adopt active tab** flow still works as an alternative. Keep the monitor open during long runs: a suspended extension worker parks the run as interrupted, and **Resume replay** continues from the persisted step. Steps advance only after successful dispatch, so resuming after a crash may repeat the in-flight step.
+
 ## All open tabs and next-action predictions
 
 Observation now covers HTTP and HTTPS tabs in the browser where this extension is installed. The fixed localhost origin and execution-tab assignment no longer restrict passive observation. Incognito and browser-internal pages remain excluded. Rebuild/reload the extension at `chrome://extensions` and allow its HTTP/HTTPS site access when Chrome requests it. The standalone source extension and the WXT build both declare these permissions.

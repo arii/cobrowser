@@ -1,6 +1,7 @@
 import { installRecorder } from './recorder.js';
+import { ORIGIN, scope, command } from './agent-tab.js';
+import './playback.js';
 installRecorder();
-const ORIGIN = 'http://127.0.0.1:3210';
 let port, retry = 100;
 const pending = new Map();
 let clientPromise = chrome.storage.local.get('client').then(async ({client}) => {
@@ -34,17 +35,6 @@ async function ping(seq = Date.now()) {
 chrome.runtime.onStartup.addListener(() => connect());
 chrome.alarms.create('relay-reconnect', {periodInMinutes: .5});
 chrome.alarms.onAlarm.addListener(() => { if (pending.size) connect(); });
-function tabOrigin(tab) {
-  try { return new URL(tab.url ?? '').origin; } catch { return ''; }
-}
-async function scope() {
-  const {assigned} = await chrome.storage.session.get('assigned');
-  if (!assigned) throw new Error('no-assigned-tab');
-  const tab = await chrome.tabs.get(assigned.tabId);
-  if (tab.incognito || tabOrigin(tab) !== (assigned.origin ?? ORIGIN) || tab.windowId !== assigned.windowId) throw new Error('scope-lost');
-  return {tab, assigned, target:{tabId:tab.id}};
-}
-async function command(method, params = {}) { const {target} = await scope(); return chrome.debugger.sendCommand(target, method, params); }
 async function assign({adopt = false} = {}) {
   const previous = await chrome.storage.session.get('assigned');
   if (previous.assigned) throw new Error('stop-existing-assignment-first');
