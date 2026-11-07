@@ -39,7 +39,8 @@
     "verify:brain": "tsx scripts/context-brain.ts --record --replay --headless --smoke",
     "verify:all-tabs": "tsx scripts/verify-all-tabs.ts",
     "install:context-host": "tsx scripts/install-context-host.ts",
-    "verify:visual-context": "tsx scripts/verify-visual-context.ts"
+    "verify:visual-context": "tsx scripts/verify-visual-context.ts",
+    "verify:skills": "tsx scripts/verify-skills.ts"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

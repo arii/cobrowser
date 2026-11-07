@@ -11,14 +11,38 @@
   let maskRoot,maskToken,maskSignature;
   const removeMask=()=>{maskRoot?.remove();maskRoot=undefined;};
   controller.signal.addEventListener('abort',removeMask);
+  let interactionSequence=0;
   const send = (kind, target, metadata = {}) => {
     if (document.visibilityState !== 'visible') return;
     const element = target instanceof Element ? target : null;
-    // Never read values, page text, names, IDs, or printable keystrokes.
+    // Capture bounded control labels for replay, never values or printable keystrokes.
     if (element?.closest('[data-sensitive], [autocomplete^="cc-"], [autocomplete="current-password"], [autocomplete="new-password"], input[type="password"], input[type="hidden"]')) return;
-    const name = element?.closest('input,select,textarea,button,a,form')?.tagName;
+    const control = element?.closest('input,select,textarea,button,a');
+    const name = control?.tagName ?? element?.closest('form')?.tagName;
+    let replayTarget;
+    if (control && !control.closest('[contenteditable]') && !['password','hidden','file'].includes(control.type)) {
+      const copy=control.cloneNode(true);copy.querySelectorAll('input,select,textarea,[data-sensitive],[contenteditable],script,style').forEach(node=>node.remove());
+      const label=(control.getAttribute('aria-label') || (control.labels ? [...control.labels].map(label=>{const node=label.cloneNode(true);node.querySelectorAll('input,select,textarea,[data-sensitive]').forEach(child=>child.remove());return node.textContent;}).join(' ') : '') || (['BUTTON','A'].includes(name)?copy.textContent:'')).replace(/\s+/g,' ').trim().slice(0,100);
+      if(label)replayTarget={tag:name,label,type:(control.getAttribute('type') || (name==='BUTTON' && control.form?'submit':'')).toLowerCase()};
+    }
     const tag = kind === 'scroll' || kind === 'page-visible' ? 'PAGE' : name ?? 'OTHER';
-    void chrome.runtime.sendMessage({kind:'recording:event',event:{kind,tag,...metadata}}).catch(() => {});
+    const sequence=['click','change','key'].includes(kind)?++interactionSequence:interactionSequence;
+    const before=kind==='click' && replayTarget?JSON.stringify(context()):null;
+    const saved=chrome.runtime.sendMessage({kind:'recording:event',event:{kind,tag,...metadata,...(['click','change'].includes(kind) && replayTarget?{target:replayTarget}:{})}});
+    // Attribute only a visible content change before the next interaction. Keep page
+    // text transient: persist just a boolean effect signal bound to the saved action.
+    if(before!==null){
+      let reported=false;
+      const observe=async()=>{
+        if(reported || controller.signal.aborted || interactionSequence!==sequence || document.visibilityState!=='visible')return;
+        if(JSON.stringify(context())!==before){
+          const result=await saved;
+          if(!reported && result?.ok && result.value?.id){reported=true;await chrome.runtime.sendMessage({kind:'recording:effect',id:result.value.id});}
+        }
+      };
+      for(const delay of [100,400,1200])setTimeout(()=>{void observe().catch(()=>{});},delay);
+    }
+    void saved.catch(()=>{});
   };
   for (const kind of ['click','change','submit']) {
     document.addEventListener(kind, event => { if (event.isTrusted) send(kind,event.target,kind === 'click' && event.detail>0 ? {x:Math.max(0,Math.min(1,event.clientX/innerWidth)),y:Math.max(0,Math.min(1,event.clientY/innerHeight))} : {}); }, {capture:true,signal:controller.signal});

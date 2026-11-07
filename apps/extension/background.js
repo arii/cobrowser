@@ -1,5 +1,7 @@
+import { installSkills } from './skills.js';
 import { installRecorder } from './recorder.js';
 installRecorder();
+installSkills();
 const ORIGIN = 'http://127.0.0.1:3210';
 let port, retry = 100;
 const pending = new Map();

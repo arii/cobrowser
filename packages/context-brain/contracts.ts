@@ -6,6 +6,8 @@ export const BrainEvent = z.object({
   documentId:label.optional(), provenance:z.literal('human'),
   kind:z.enum(['click','change','submit','scroll','page-visible','pointer','key','screen-change','page-content']),
   tag:z.enum(['INPUT','SELECT','TEXTAREA','BUTTON','A','FORM','PAGE','OTHER']),
+  effect:z.literal('content-changed').optional(),
+  target:z.object({tag:z.enum(['BUTTON','A','INPUT','SELECT','TEXTAREA']),label:z.string().min(1).max(100),type:z.string().max(30)}).strict().optional(),
   x:z.number().min(0).max(1).optional(), y:z.number().min(0).max(1).optional(),
   key:z.enum(['Tab','Enter','Escape','Backspace','Delete','ArrowUp','ArrowDown','ArrowLeft','ArrowRight']).optional(),
 }).strict().superRefine((event, context) => {

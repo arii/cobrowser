@@ -1,3 +1,4 @@
+import { validTarget } from './skill-learning.js';
 import { captureVisualContext, clearVisualEvidence } from './visual-context.js';
 import { nativeBrainLink } from './native-brain.js';
 const brainLink=nativeBrainLink();
@@ -79,8 +80,9 @@ async function save(state) {
   }
 }
 function validEvent(value) {
-  if (!value || typeof value !== 'object' || Object.keys(value).some(key => !['kind','tag','x','y','key'].includes(key))) return false;
-  return ['click','change','submit','scroll','page-visible','pointer','key'].includes(value.kind)
+  if (!value || typeof value !== 'object' || Object.keys(value).some(key => !['kind','tag','x','y','key','target'].includes(key))) return false;
+  return (value.target===undefined || (['click','change'].includes(value.kind) && validTarget(value.target)))
+    && ['click','change','submit','scroll','page-visible','pointer','key'].includes(value.kind)
     && ['INPUT','SELECT','TEXTAREA','BUTTON','A','FORM','PAGE','OTHER'].includes(value.tag)
     && ((value.x === undefined && value.y === undefined) || (['pointer','click'].includes(value.kind) && Number.isFinite(value.x) && Number.isFinite(value.y) && value.x>=0 && value.x<=1 && value.y>=0 && value.y<=1))
     && (value.key === undefined || (value.kind === 'key' && ['Tab','Enter','Escape','Backspace','Delete','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(value.key)));
@@ -90,11 +92,20 @@ export function installRecorder() {
     const isView = sender.id === chrome.runtime.id && !sender.tab?.incognito
       && [chrome.runtime.getURL('recording.html'),chrome.runtime.getURL('popup.html')].includes(sender.url);
     const isContent = sender.id === chrome.runtime.id && sender.tab && !sender.tab.incognito && sender.frameId === 0;
+    if(message?.kind==='recording:effect' && isContent){
+      serial(async()=>{
+        if(!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled)return;
+        const state=await read();
+        const event=state.events.find(item=>item.id===message.id && item.tabId===sender.tab.id && item.sessionId===state.sessionId && item.origin===webOrigin(sender.url));
+        if(event?.kind==='click' && Date.now()-Date.parse(event.at)<5000){event.effect='content-changed';await save(state);}
+      }).then(()=>respond({ok:true}),error=>respond({ok:false,error:error.message}));return true;
+    }
     if (message?.kind === 'recording:event' && isContent) {
       serial(async () => {
         if (!validEvent(message.event)) throw new Error('invalid-recording-event');
         if (!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled) return;
-        const {lastDispatch} = await chrome.storage.session.get(['lastDispatch']);
+        const {lastDispatch,skillRun} = await chrome.storage.session.get(['lastDispatch','skillRun']);
+        if(skillRun?.status==='running' && skillRun.tabId===sender.tab.id)return;
         const expected = webOrigin(sender.url);
         if (!expected) return;
         if (messageOrigin(sender.url) !== expected || messageOrigin(sender.tab?.url) !== expected) return;
@@ -106,10 +117,12 @@ export function installRecorder() {
           const removed=state.events.splice(0,state.events.length-LIMIT+1);
           state.dropped+=removed.length;
         }
-        state.events.push({id:crypto.randomUUID(),sessionId:state.sessionId,at:new Date().toISOString(),
+        const id=crypto.randomUUID();
+        state.events.push({id,sessionId:state.sessionId,at:new Date().toISOString(),
           origin:expected,tabId:sender.tab.id,provenance:'human',...message.event});
         await save(state);
-      }).then(() => respond({ok:true}), error => respond({ok:false,error:error.message}));
+        return {id};
+      }).then(value => respond({ok:true,value}), error => respond({ok:false,error:error.message}));
       return true;
     }
     if (!isView || !['recording:status','recording:start','recording:pause','recording:clear'].includes(message?.kind)) return;

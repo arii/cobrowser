@@ -37,7 +37,7 @@ export function nativeBrainLink() {
         });
       }catch{port=undefined;retryAt=Date.now()+30000;void status({status:'unavailable',code:'context-native-host-unavailable'});schedule(latest);return;}
     }
-    const message={v:1,kind:'observe',seq:++seq,sessionId:latest.sessionId,enabled:recordingEnabled,tabs:latest.tabs??[],events:latest.events.filter(event=>event.sessionId===latest.sessionId).slice(-64)};
+    const message={v:1,kind:'observe',seq:++seq,sessionId:latest.sessionId,enabled:recordingEnabled,tabs:latest.tabs??[],events:latest.events.filter(event=>event.sessionId===latest.sessionId).slice(-64).map(({target:_target,effect:_effect,...event})=>event)};
     const observation=currentVisualEvidence();
     if(recordingEnabled && observation?.frames?.every(frame=>frame.sessionId===latest.sessionId)){
       message.observation=observation;
