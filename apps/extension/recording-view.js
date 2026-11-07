@@ -4,7 +4,7 @@ root.innerHTML = `<header><p>COBROWSER · LOCAL RECORDER</p><h1 id="recording-st
 <div class="controls"><button id="record-start">Start recording</button><button id="record-pause">Pause</button><button id="record-fixture">Open fixture</button><button id="record-export">Export JSON</button><button id="record-clear">Clear saved data</button></div>
 <p id="record-error" role="alert"></p><section class="stats"><div><strong id="record-count">0</strong><span>events saved locally</span></div><div><strong id="record-last">—</strong><span>last saved</span></div><div><strong>24 hours</strong><span>retention · latest 2,000 events</span></div></section>
 <p id="record-detail" role="status" aria-live="polite"></p><section id="brain-panel"><h2>Rolling context brain</h2><p id="brain-mode">Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.</p>
-<h3 id="brain-intent">Waiting for evidence</h3><p id="brain-summary"></p><p id="brain-status"></p><p id="brain-metrics"></p><h3>Likely next action · a guess</h3><p id="brain-next">Waiting for a prediction</p><p id="brain-next-detail"></p><details><summary>Context decisions and provider log</summary><pre id="brain-journal"></pre></details></section><h2>Open tabs</h2><p id="tab-count"></p><table><thead><tr><th>Tab</th><th>Page</th><th>Origin</th><th>Read status</th></tr></thead><tbody id="open-tabs"></tbody></table><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
+<h3 id="brain-intent">Waiting for evidence</h3><p id="brain-summary"></p><p id="brain-status"></p><p id="brain-metrics"></p><p id="brain-error" role="alert"></p><h3>Likely next action · a guess</h3><p id="brain-next">Waiting for a prediction</p><p id="brain-next-detail"></p><details><summary>Context decisions and provider log</summary><pre id="brain-journal"></pre></details></section><h2>Open tabs</h2><p id="tab-count"></p><table><thead><tr><th>Tab</th><th>Page</th><th>Origin</th><th>Read status</th></tr></thead><tbody id="open-tabs"></tbody></table><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
 <table><thead><tr><th>Time</th><th>Interaction</th><th>Element</th><th>Input metadata</th><th>Origin / tab</th></tr></thead><tbody id="record-events"></tbody></table>
 <footer>Local Chrome extension storage in this browser profile. Typed values, page text and printable keys are excluded from event recording. Live brain mode sends masked active-tab screenshots to Snap and open-tab titles, headings, page excerpts and action/context summaries to the configured context model; the preview uses synthetic responses. Incognito and browser-internal pages are excluded, as is the agent's own debugger input. Predictions are guesses and never trigger actions. Browser restart pauses capture; saved events remain until expiry or deletion. Exported files are yours to manage.</footer>`;
 let state;
@@ -48,7 +48,7 @@ function renderBrain(brain) {
   if (!brain) {
     el('brain-mode').textContent='Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.';
     el('brain-intent').textContent='Waiting for evidence';
-    for (const id of ['brain-summary','brain-status','brain-metrics','brain-journal','brain-next-detail']) el(id).textContent='';
+    for (const id of ['brain-summary','brain-status','brain-metrics','brain-journal','brain-next-detail','brain-error']) el(id).textContent='';
     el('brain-next').textContent='Waiting for a prediction';
     return;
   }
@@ -58,6 +58,8 @@ function renderBrain(brain) {
   el('brain-summary').textContent=brain.working?.summary??'';
   el('brain-status').textContent=brain.working?`${brain.working.status} · confidence ${Math.round(brain.working.confidence*100)}% · ${brain.recent.length} recent events · ${brain.archived.length} retired contexts · ${brain.pendingSwitches} task-change confirmations`:'No active task context.';
   el('brain-metrics').textContent=`Snap: ${brain.providers.snap.calls} calls, average ${Math.round(brain.providers.snap.averageMs)} ms · Context: ${brain.providers.context.calls} calls, average ${Math.round(brain.providers.context.averageMs)} ms`;
+  const latestStatus=brain.journal.findLast(entry=>entry.kind==='provider-result'||entry.kind==='provider-unavailable');
+  el('brain-error').textContent=latestStatus?.kind==='provider-unavailable'?`${latestStatus.provider} unavailable: ${latestStatus.code??'no response'}. Next-action prediction is waiting for valid model output.`:'';
   const next=brain.working?.nextAction;
   el('brain-next').textContent=next?.description??'Prediction unavailable';
   const target=(state.tabs??[]).find(tab=>tab.tabId===next?.targetTabId);

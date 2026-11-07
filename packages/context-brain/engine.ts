@@ -107,6 +107,7 @@ export class ContextBrain {
         const result=await this.providers.context({previous:this.state.working,events,signals,tabs:this.state.tabs,freshEventIds:fresh.map(event=>event.id),candidate:this.pendingIntent?{intent:this.pendingIntent,confirmations:this.state.pendingSwitches}:null});
         this.measured('context',result,events.map(event=>event.id));decision=ContextDecision.parse(result.value);
         if (decision.nextAction.evidenceIds.some(id=>!events.some(event=>event.id===id))) throw new Error('unknown-evidence-reference');
+        if (!decision.nextAction.evidenceIds.some(id=>fresh.some(event=>event.id===id))) throw new Error('decision-must-cite-fresh-evidence');
         if (decision.nextAction.targetTabId!==null && !this.state.tabs.some(tab=>tab.tabId===decision.nextAction.targetTabId) && !events.some(event=>event.tabId===decision.nextAction.targetTabId)) throw new Error('context-prediction-unknown-tab');
         if (decision.evidenceIds.some(id=>!events.some(event=>event.id===id))) throw new Error('unknown-evidence-reference');
         if (!decision.evidenceIds.some(id=>fresh.some(event=>event.id===id))) throw new Error('decision-must-cite-fresh-evidence');

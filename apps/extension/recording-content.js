@@ -28,7 +28,7 @@
   document.addEventListener('visibilitychange', () => send('page-visible'));
   const context = () => {
     const excluded='input,textarea,select,[contenteditable],[data-sensitive],[autocomplete^="cc-"],script,style,noscript,iframe,[hidden],[aria-hidden="true"]';
-    const headings=[...document.querySelectorAll('h1,h2,[role="heading"]')].filter(element=>!element.closest(excluded)).slice(0,3).map(element=>element.textContent.replace(/\s+/g,' ').trim().slice(0,120));
+    const headings=[...document.querySelectorAll('h1,h2,[role="heading"]')].filter(element=>!element.closest(excluded)).slice(0,3).map(element=>{const copy=element.cloneNode(true);copy.querySelectorAll(excluded).forEach(node=>node.remove());return copy.textContent.replace(/\s+/g,' ').trim().slice(0,120);});
     const walker=document.createTreeWalker(document.body??document.documentElement,NodeFilter.SHOW_TEXT);
     let excerpt='',visited=0,node;
     while ((node=walker.nextNode()) && visited++<500 && excerpt.length<400) {

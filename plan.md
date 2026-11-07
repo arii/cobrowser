@@ -170,6 +170,8 @@ created -> running -> succeeded | failed | cancelled
                  -> needs_user -> running | cancelled
 ```
 
+Observation scope update (November 7): the user authorized reading all open HTTP/HTTPS tabs and forecasting the next action. The recorder now inventories bounded page summaries across origins; focused-tab screenshots and cross-tab context feed the configured brain. This expands passive observation only; predictions do not authorize execution.
+
 ## 6. Continuous observation implementation
 
 ### Capture and lifecycle
