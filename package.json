@@ -36,7 +36,8 @@
     "brain:demo": "tsx scripts/context-brain.ts --demo",
     "brain:record": "tsx scripts/context-brain.ts --record",
     "brain:preview": "tsx scripts/context-brain.ts --record --replay",
-    "verify:brain": "tsx scripts/context-brain.ts --record --replay --headless --smoke"
+    "verify:brain": "tsx scripts/context-brain.ts --record --replay --headless --smoke",
+    "verify:all-tabs": "tsx scripts/verify-all-tabs.ts"
   },
   "devDependencies": {
     "@types/node": "24.10.1",
