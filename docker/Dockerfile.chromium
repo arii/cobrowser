@@ -1,0 +1,19 @@
+# Local Chromium for co-browsing with Stagehand's helper extension baked in.
+#
+# Why: Stagehand loads its extension by API-side path via
+# Extensions.loadUnpacked, and the browser runs in a different container whose
+# filesystem cannot see the API host's virtualenv (bind mounts resolve on the
+# Docker daemon host, not the repo checkout). Baking the files into the image
+# at the exact path Stagehand passes makes loadUnpacked resolve everywhere.
+#
+# Keep in sync with uv.lock: stagehand==4.4.0 ships docker/stagehand-ext/.
+# After bumping stagehand, re-vendor:
+#   rm -rf docker/stagehand-ext
+#   cp -r .venv/lib/python*/site-packages/stagehand/_extension docker/stagehand-ext
+FROM selenium/standalone-chromium:latest
+COPY docker/stagehand-ext/ /srv/repos/cobrowser/.venv/lib/python3.12/site-packages/stagehand/_extension/
+# Bake the CDP forwarder + supervising entrypoint: the forwarder must live as
+# long as the container (an exec-installed copy dies on every restart).
+COPY docker/cdp-forward.py /opt/cdp-forward.py
+# No exec bit (classic builder, non-root image user): compose invokes it via /bin/sh.
+COPY docker/chromium-entrypoint.sh /opt/chromium-entrypoint.sh

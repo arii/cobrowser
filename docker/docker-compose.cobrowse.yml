@@ -1,18 +1,33 @@
 services:
-  steel-browser:
-    image: ghcr.io/steel-dev/steel-browser:latest
-    container_name: cobrowse-steel-sandbox
+  chromium:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.chromium
+    image: cobrowse-chromium:local
+    container_name: cobrowse-chromium
+    # Local full Chromium (headless=new) with a plain CDP port. No accounts, no API keys.
+    # Full build required: the agent's Stagehand driver loads its helper extension
+    # via Extensions.loadUnpacked, which headless-shell builds do not implement.
+    # The preview server proxies :9222 at /cobrowse/cdp; viewer and agent speak raw CDP.
+    # The entrypoint supervises the CDP forwarder (/opt/cdp-forward.py) next
+    # to Chromium so restarts keep the gateway working; flags stay here.
+    entrypoint: [/bin/sh, /opt/chromium-entrypoint.sh]
+    command:
+      - --headless=new
+      - --no-sandbox
+      - --disable-gpu
+      - --hide-scrollbars
+      - --remote-debugging-port=9222
+      - --remote-debugging-address=0.0.0.0
+      # Since Chrome 111, WS upgrades carrying an Origin header (browser viewer
+      # pages, the Stagehand helper extension) are 403 unless allowlisted.
+      - --remote-allow-origins=*
+      - about:blank
     ports:
-      - "3000:3000" # Steel Sessions API & Live Viewer (/ui)
-      - "9223:9223" # Chrome DevTools Protocol (CDP) WebSocket Proxy
+      # Host :9222 -> container :9223, where the in-container TCP forwarder
+      # (docker/cdp-forward.py, installed by scripts/start-chromium.sh)
+      # re-exposes Chromium's loopback-only DevTools server. Plain Chromium
+      # ignores --remote-debugging-address, so the forwarder is required.
+      - "9222:9223" # Chrome DevTools Protocol (CDP) for agent + viewer
     shm_size: "1gb"
-    environment:
-      - CDP_REDIRECT_PORT=9223
-    volumes:
-      - steel_files:/app/files
-      - steel_data:/app/data
     restart: unless-stopped
-
-volumes:
-  steel_files:
-  steel_data:

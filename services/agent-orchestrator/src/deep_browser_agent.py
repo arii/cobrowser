@@ -1,15 +1,50 @@
 # File: services/agent-orchestrator/src/deep_browser_agent.py
+import json
 import os
+import urllib.request
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 from deepagents import create_deep_agent
 from langchain_core.tools import tool
 from langchain_stagehand import StagehandMiddleware
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.types import interrupt
+from sponsors.meta_muse import META_BASE_URL
 from stagehand import Stagehand, local_browser
 
 ACTIVE_BROWSER_SESSIONS: dict[str, dict[str, Any]] = {}
+
+
+def ensure_muse_env() -> None:
+    """Route the agent's OpenAI-compatible model calls to Meta's Muse Spark API.
+
+    The agent model name is ``openai:muse-spark-1.3``: the ``openai:`` prefix only
+    selects the OpenAI-compatible client shape, while the endpoint and key below
+    make it Meta Muse. Explicit OPENAI_* env values always win.
+    """
+    if os.environ.get("MODEL_API_KEY") and not os.environ.get("OPENAI_API_KEY"):
+        os.environ["OPENAI_API_KEY"] = os.environ["MODEL_API_KEY"]
+    if not os.environ.get("OPENAI_BASE_URL"):
+        os.environ["OPENAI_BASE_URL"] = META_BASE_URL
+
+
+def resolve_browser_ws(cdp_url: str) -> str:
+    """Stagehand needs the browser-level WS endpoint (/devtools/browser/<id>),
+    not the bare CDP port (which 404s upgrades). Resolve it via /json/version
+    when the caller passed a bare host:port URL."""
+    parts = urlsplit(cdp_url)
+    if "/devtools/" in parts.path:
+        return cdp_url
+    scheme = "https" if parts.scheme == "wss" else "http"
+    http_base = urlunsplit((scheme, parts.netloc, "", "", ""))
+    with urllib.request.urlopen(http_base + "/json/version", timeout=10) as r:
+        info = json.load(r)
+    ws_parts = urlsplit(info["webSocketDebuggerUrl"])
+    # Keep our reachable host; the browser may advertise its own.
+    host = parts.hostname or ws_parts.hostname
+    netloc = f"{host}:{ws_parts.port or 9222}"
+    return urlunsplit(("ws", netloc, ws_parts.path, ws_parts.query, ""))
 
 
 async def get_or_create_stagehand_session(
@@ -19,11 +54,20 @@ async def get_or_create_stagehand_session(
     if thread_id in ACTIVE_BROWSER_SESSIONS:
         return ACTIVE_BROWSER_SESSIONS[thread_id]
 
-    steel_base = os.environ.get("STEEL_API_URL", "http://127.0.0.1:3000")
-    effective_cdp = cdp_url or os.environ.get("REMOTE_SERVER_CDP_URL", "ws://127.0.0.1:9223")
+    steel_base = os.environ.get(
+        "BROWSER_BASE_URL", os.environ.get("STEEL_API_URL", "http://127.0.0.1:3000")
+    )
+    effective_cdp = cdp_url or os.environ.get("REMOTE_SERVER_CDP_URL", "ws://127.0.0.1:9222")
 
     if effective_cdp:
-        browser = await local_browser.connect(cdp_url=effective_cdp)
+        browser_ws = resolve_browser_ws(effective_cdp)
+        # The extension lives inside the browser container: it must dial the
+        # browser's own loopback, not the gateway address our client uses.
+        ext_parts = urlsplit(browser_ws)
+        ext_ws = urlunsplit(
+            ("ws", f"127.0.0.1:{ext_parts.port or 9222}", ext_parts.path, ext_parts.query, "")
+        )
+        browser = await local_browser.connect(cdp_url=browser_ws, extension_cdp_url=ext_ws)
         live_view_url = f"{steel_base}/ui"
     else:
         browser = await local_browser.launch(headless=True, keep_alive=True)
@@ -74,6 +118,7 @@ async def build_cobrowse_deep_agent(
     model_name: str = "openai:muse-spark-1.3",
 ):
     """Constructs the Deep Agent with isolated Stagehand browser subagent and checkpointer."""
+    ensure_muse_env()
     session = await get_or_create_stagehand_session(thread_id)
     stagehand_mw = StagehandMiddleware(stagehand=session["stagehand"])
 
