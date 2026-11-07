@@ -18564,7 +18564,7 @@ function getVariablePromptEntries(variables) {
 function buildUserInstructionsString(userProvidedInstructions) {
 	if (!userProvidedInstructions) return "";
 	return `\n\n# Custom Instructions Provided by the User
-    
+
 Please keep the user's instructions in mind when performing actions. If the user's instructions are not relevant to the current task, ignore them.
 
 User Instructions:
@@ -18572,9 +18572,9 @@ ${userProvidedInstructions}`;
 }
 function buildExtractSystemPrompt(isUsingPrintExtractedDataTool = false, userProvidedInstructions, includeScreenshot = false) {
 	const baseContent = `You are extracting content on behalf of a user.
-  If a user asks you to extract a 'list' of information, or 'all' information, 
+  If a user asks you to extract a 'list' of information, or 'all' information,
   YOU MUST EXTRACT ALL OF THE INFORMATION THAT THE USER REQUESTS.
-   
+
   You will be given:
 1. An instruction
 2. `;
@@ -18684,28 +18684,28 @@ function buildActVariablesPrompt(variables) {
     To use the variables in the action, you must respond with the variable name inside the 'arguments' array. The variable name must be wrapped in percentage signs (eg, %variableNameHere%) so that it can be replaced with the actual variable value before the action is taken. \n`;
 }
 function buildActPrompt(action, supportedActions, variables) {
-	let instruction = `Find the most relevant element to perform an action on given the following action: ${action}.  
+	let instruction = `Find the most relevant element to perform an action on given the following action: ${action}.
   IF AND ONLY IF the action EXPLICITLY includes the word 'dropdown' and implies choosing/selecting an option from a dropdown, ignore the 'General Instructions' section, and follow the 'Dropdown Specific Instructions' section carefully.
-  
-  General Instructions: 
+
+  General Instructions:
     Provide an action for this element such as ${supportedActions.join(", ")}. Remember that to users, buttons and links look the same in most cases.
     When choosing non-left click actions, provide right or middle as the argument
     If the action is completely unrelated to a potential action to be taken on the page, or no matching element exists, set \`action\` to null. Do not fabricate or guess an element.
     ONLY return one action. If multiple actions are relevant, return the most relevant one.
     If the user is asking to scroll to a position on the page, e.g., 'halfway' or 0.75, etc, you must return the argument formatted as the correct percentage, e.g., '50%' or '75%', etc.
     If the user is asking to scroll to the next chunk/previous chunk, choose the nextChunk/prevChunk method. No arguments are required here.
-    If the action implies a key press, e.g., 'press enter', 'press a', 'press space', etc., always choose the press method with the appropriate key as argument — e.g. 'a', 'Enter', 'Space'. Do not choose a click action on an on-screen keyboard. Capitalize the first character like 'Enter', 'Tab', 'Escape' only for special keys. 
-  
+    If the action implies a key press, e.g., 'press enter', 'press a', 'press space', etc., always choose the press method with the appropriate key as argument — e.g. 'a', 'Enter', 'Space'. Do not choose a click action on an on-screen keyboard. Capitalize the first character like 'Enter', 'Tab', 'Escape' only for special keys.
+
   Dropdown Specific Instructions:
-    For interacting with dropdowns, there are two specific cases that you need to handle. 
-    
-    CASE 1: the element is a 'select' element. 
+    For interacting with dropdowns, there are two specific cases that you need to handle.
+
+    CASE 1: the element is a 'select' element.
       - choose the selectOptionFromDropdown method,
       - set the argument to the exact text of the option that should be selected,
       - set twoStep to false.
     CASE 2: the element is NOT a 'select' element:
       - do not attempt to directly choose the element from the dropdown. You will need to click to expand the dropdown first. You will achieve this by following these instructions:
-        - choose the node that most closely corresponds to the given instruction EVEN if it is a 'StaticText' element, or otherwise does not appear to be interactable.  
+        - choose the node that most closely corresponds to the given instruction EVEN if it is a 'StaticText' element, or otherwise does not appear to be interactable.
         - choose the 'click' method
         - set twoStep to true.
   `;
@@ -18716,16 +18716,16 @@ function buildStepTwoPrompt(originalUserAction, previousAction, supportedActions
 	let instruction = `
   The original user action was: ${originalUserAction}.
   You have just taken the following action which completed step 1 of 2: ${previousAction}.
-  
-  Now, you must find the most relevant element to perform an action on in order to complete step 2 of 2. 
-  
-  General Instructions: 
+
+  Now, you must find the most relevant element to perform an action on in order to complete step 2 of 2.
+
+  General Instructions:
   Provide an action for this element such as ${supportedActions.join(", ")}. Remember that to users, buttons and links look the same in most cases.
   If the action is completely unrelated to a potential action to be taken on the page, or no matching element exists, set \`action\` to null. Do not fabricate or guess an element.
   ONLY return one action. If multiple actions are relevant, return the most relevant one.
   If the user is asking to scroll to a position on the page, e.g., 'halfway' or 0.75, etc, you must return the argument formatted as the correct percentage, e.g., '50%' or '75%', etc.
   If the user is asking to scroll to the next chunk/previous chunk, choose the nextChunk/prevChunk method. No arguments are required here.
-  If the action implies a key press, e.g., 'press enter', 'press a', 'press space', etc., always choose the press method with the appropriate key as argument — e.g. 'a', 'Enter', 'Space'. Do not choose a click action on an on-screen keyboard. Capitalize the first character like 'Enter', 'Tab', 'Escape' only for special keys. 
+  If the action implies a key press, e.g., 'press enter', 'press a', 'press space', etc., always choose the press method with the appropriate key as argument — e.g. 'a', 'Enter', 'Space'. Do not choose a click action on an on-screen keyboard. Capitalize the first character like 'Enter', 'Tab', 'Escape' only for special keys.
   `;
 	instruction += buildActVariablesPrompt(variables);
 	return instruction;
@@ -26779,7 +26779,7 @@ var anthropicFilePartProviderOptions = lazySchema$1(() => zodSchema$2(object({
 	* Citation configuration for this document.
 	* When enabled, this document will generate citations in the response.
 	*/
-	citations: object({ 
+	citations: object({
 	/**
 	* Enable citations for this document
 	*/
@@ -26903,7 +26903,7 @@ var anthropicLanguageModelOptions = lazySchema$1(() => zodSchema$2(object({
 			budgetTokens: number$1().optional()
 		}),
 		object({ type: literal("disabled") }),
-		object({ 
+		object({
 		/**
 		* for `claude-sonnet-5-5`: no upfront thinking, but progress notes
 		* between tool calls are returned as summarized thinking blocks.
@@ -26932,7 +26932,7 @@ type: literal("between_tools") })
 	*
 	* See https://platform.claude.com/docs/en/api/messages/create for details.
 	*/
-	metadata: object({ 
+	metadata: object({
 	/**
 	* An external identifier for the user associated with the request.
 	*
@@ -42958,7 +42958,7 @@ var googleSpeechResponseSchema = lazySchema(() => zodSchema(object({ candidates:
 	data: string().nullish()
 }).nullish() })).nullish() }).nullish() })).nullish() })));
 var voiceConfigSchema = object({ prebuiltVoiceConfig: object({ voiceName: string() }) });
-var googleSpeechProviderOptionsSchema = lazySchema(() => zodSchema(object({ 
+var googleSpeechProviderOptionsSchema = lazySchema(() => zodSchema(object({
 /**
 * Multi-speaker configuration for dialogue audio. When provided, this
 * overrides the top-level `voice`. The Gemini TTS API supports up to two
@@ -48465,7 +48465,7 @@ var openaiImageModelGenerationOptions = lazySchema(() => zodSchema(baseImageMode
 	*/
 	moderation: _enum(["auto", "low"]).optional()
 })));
-var openaiImageModelEditOptions = lazySchema(() => zodSchema(baseImageModelOptionsObject.extend({ 
+var openaiImageModelEditOptions = lazySchema(() => zodSchema(baseImageModelOptionsObject.extend({
 /**
 * Fidelity of the output image(s) to the input image(s).
 */

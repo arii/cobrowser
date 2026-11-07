@@ -2,28 +2,16 @@
   "manifest_version": 3,
   "name": "Stagehand Runtime",
   "minimum_chrome_version": "137",
-  "permissions": [
-    "debugger",
-    "offscreen",
-    "scripting",
-    "tabs",
-    "declarativeNetRequest"
-  ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "permissions": ["debugger", "offscreen", "scripting", "tabs", "declarativeNetRequest"],
+  "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "service-worker.js",
     "type": "module"
   },
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "content-script.js"
-      ],
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
       "run_at": "document_start",
       "all_frames": true,
       "world": "ISOLATED",
