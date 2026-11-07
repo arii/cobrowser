@@ -1,5 +1,9 @@
-// Fixture-only event metadata. Independent of debugger/native probe execution.
+// Human interaction metadata for the assigned origin (fixture when unassigned).
+// Independent of debugger/native probe execution.
 const ORIGIN = 'http://127.0.0.1:3210';
+function messageOrigin(value) {
+  try { return new URL(value ?? '').origin; } catch { return ''; }
+}
 const KEY = 'fixtureRecording';
 const TTL = 24 * 60 * 60 * 1000;
 const LIMIT = 2000;
@@ -22,8 +26,8 @@ async function badge(enabled) {
 }
 async function snapshot() {
   const state = await read();
-  const {recordingEnabled = false, recordingError = null} = await chrome.storage.session.get(['recordingEnabled','recordingError']);
-  return {...state, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:ORIGIN};
+  const {recordingEnabled = false, recordingError = null, assigned} = await chrome.storage.session.get(['recordingEnabled','recordingError','assigned']);
+  return {...state, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:assigned?.origin ?? ORIGIN};
 }
 async function save(state) {
   try { await chrome.storage.local.set({[KEY]:state}); }
@@ -42,16 +46,17 @@ export function installRecorder() {
   chrome.runtime.onMessage.addListener((message, sender, respond) => {
     const isView = sender.id === chrome.runtime.id && !sender.tab?.incognito
       && [chrome.runtime.getURL('recording.html'),chrome.runtime.getURL('popup.html')].includes(sender.url);
-    const isContent = sender.id === chrome.runtime.id && sender.tab && !sender.tab.incognito
-      && sender.frameId === 0 && sender.url === `${ORIGIN}/` && sender.tab.url === `${ORIGIN}/`;
+    const isContent = sender.id === chrome.runtime.id && sender.tab && !sender.tab.incognito && sender.frameId === 0;
     if (message?.kind === 'recording:event' && isContent) {
       serial(async () => {
         if (!validEvent(message.event)) throw new Error('invalid-recording-event');
         if (!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled) return;
-        const {assigned} = await chrome.storage.session.get('assigned');
-        if (assigned?.tabId === sender.tab.id) return; // Agent traces never become human observations.
+        const {assigned, lastDispatch} = await chrome.storage.session.get(['assigned','lastDispatch']);
+        const expected = assigned?.origin ?? ORIGIN;
+        if (messageOrigin(sender.url) !== expected || messageOrigin(sender.tab?.url) !== expected) return;
+        if (lastDispatch?.tabId === sender.tab.id && Date.now() - lastDispatch.at < 750) return; // Own debugger input is not a human observation.
         const tab = await chrome.tabs.get(sender.tab.id);
-        if (!tab.active || tab.url !== `${ORIGIN}/` || !(await chrome.windows.get(tab.windowId)).focused) return;
+        if (!tab.active || messageOrigin(tab.url) !== expected || !(await chrome.windows.get(tab.windowId)).focused) return;
         const state = await read();
         if (state.events.length >= LIMIT) {
           state.dropped++;
@@ -61,7 +66,7 @@ export function installRecorder() {
           return;
         }
         state.events.push({id:crypto.randomUUID(),sessionId:state.sessionId,at:new Date().toISOString(),
-          origin:ORIGIN,tabId:sender.tab.id,provenance:'human',...message.event});
+          origin:expected,tabId:sender.tab.id,provenance:'human',...message.event});
         await save(state);
       }).then(() => respond({ok:true}), error => respond({ok:false,error:error.message}));
       return true;

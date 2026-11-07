@@ -1,11 +1,11 @@
 const root = document.getElementById('recording');
 root.innerHTML = `<header><p>COBROWSER · LOCAL RECORDER</p><h1 id="recording-state">Loading…</h1>
-<p>Records human interaction metadata on <strong>127.0.0.1:3210/</strong> while its tab is active and its browser window is focused.</p></header>
+<p>Records human interaction metadata on <strong id="record-origin">…</strong> while its tab is active and its browser window is focused.</p></header>
 <div class="controls"><button id="record-start">Start recording</button><button id="record-pause">Pause</button><button id="record-fixture">Open fixture</button><button id="record-export">Export JSON</button><button id="record-clear">Clear saved data</button></div>
 <p id="record-error" role="alert"></p><section class="stats"><div><strong id="record-count">0</strong><span>events saved locally</span></div><div><strong id="record-last">—</strong><span>last saved</span></div><div><strong>24 hours</strong><span>retention · 2,000 event limit</span></div></section>
 <p id="record-detail" role="status" aria-live="polite"></p><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
 <table><thead><tr><th>Time</th><th>Interaction</th><th>Element</th><th>Tab</th></tr></thead><tbody id="record-events"></tbody></table>
-<footer>Local Chrome extension storage in this browser profile. No typed values, page text, screenshots or cloud uploads. Other sites and assigned agent tabs are excluded. Browser restart pauses capture; saved events remain until expiry or deletion. Exported files are yours to manage.</footer>`;
+<footer>Local Chrome extension storage in this browser profile. No typed values, page text, screenshots or cloud uploads. Other origins are excluded, as is the agent's own debugger input. Browser restart pauses capture; saved events remain until expiry or deletion. Exported files are yours to manage.</footer>`;
 let state;
 let busy = false;
 const el = id => document.getElementById(id);
@@ -22,7 +22,9 @@ function render(value) {
   el('record-pause').disabled = !value.enabled || busy;
   el('record-count').textContent = String(value.events.length);
   el('record-last').textContent = value.events.length ? new Date(value.events.at(-1).at).toLocaleTimeString() : '—';
-  el('record-detail').textContent = value.enabled ? 'Armed for the fixture. Switch to it to record; this monitor is excluded.' : 'Capture paused. Saved events can still be reviewed and exported.';
+  el('record-origin').textContent = value.origin;
+  el('record-empty').textContent = `Switch to ${value.origin} and click a control or change a field, then return here. Events appear after Chrome confirms the save.`;
+  el('record-detail').textContent = value.enabled ? `Armed for ${value.origin}. Switch to it to record; this monitor is excluded.` : 'Capture paused. Saved events can still be reviewed and exported.';
   el('record-error').textContent = value.error ?? '';
   el('record-empty').hidden = value.events.length > 0;
   const rows = value.events.slice(-50).reverse().map(event => {

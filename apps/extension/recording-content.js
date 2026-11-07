@@ -1,5 +1,8 @@
 (() => {
-  if (location.href !== 'http://127.0.0.1:3210/' || window !== window.top) return;
+  if (window !== window.top) return;
+  if (!['http:','https:'].includes(location.protocol)) return;
+  if (window.__harnessRecorder) return;
+  window.__harnessRecorder = true;
   let lastScroll = 0;
   const send = (kind, target) => {
     if (document.visibilityState !== 'visible') return;
@@ -17,5 +20,8 @@
     if (event.isTrusted && Date.now() - lastScroll > 1000) { lastScroll = Date.now(); send('scroll'); }
   }, {passive:true,capture:true});
   document.addEventListener('visibilitychange', () => send('page-visible'));
+  chrome.runtime.onMessage.addListener((message, _sender, respond) => {
+    if (message?.kind === 'recording:ping') respond({ok:true});
+  });
   send('page-visible');
 })();

@@ -34,22 +34,61 @@ async function ping(seq = Date.now()) {
 chrome.runtime.onStartup.addListener(() => connect());
 chrome.alarms.create('relay-reconnect', {periodInMinutes: .5});
 chrome.alarms.onAlarm.addListener(() => { if (pending.size) connect(); });
+function tabOrigin(tab) {
+  try { return new URL(tab.url ?? '').origin; } catch { return ''; }
+}
 async function scope() {
   const {assigned} = await chrome.storage.session.get('assigned');
   if (!assigned) throw new Error('no-assigned-tab');
   const tab = await chrome.tabs.get(assigned.tabId);
-  if (tab.incognito || tab.url !== `${ORIGIN}/` || tab.windowId !== assigned.windowId) throw new Error('scope-lost');
+  if (tab.incognito || tabOrigin(tab) !== (assigned.origin ?? ORIGIN) || tab.windowId !== assigned.windowId) throw new Error('scope-lost');
   return {tab, assigned, target:{tabId:tab.id}};
 }
 async function command(method, params = {}) { const {target} = await scope(); return chrome.debugger.sendCommand(target, method, params); }
-async function assign() {
+async function assign({adopt = false} = {}) {
   const previous = await chrome.storage.session.get('assigned');
   if (previous.assigned) throw new Error('stop-existing-assignment-first');
-  const tab = await chrome.tabs.create({url:`${ORIGIN}/`, active:true});
-  await chrome.storage.session.set({assigned:{tabId:tab.id,windowId:tab.windowId}});
-  await chrome.debugger.attach({tabId:tab.id}, '1.3');
-  await command('Page.enable');
-  return {tabId:tab.id,chromeWindowId:tab.windowId};
+  let tab, origin;
+  if (adopt) {
+    [tab] = await chrome.tabs.query({active:true, currentWindow:true});
+    if (!tab) throw new Error('no-active-tab');
+    if (tab.incognito) throw new Error('adopt-requires-non-incognito-tab');
+    let url = null;
+    try { url = new URL(tab.url ?? ''); } catch {}
+    if (!url || !['http:','https:'].includes(url.protocol)) throw new Error('adopt-requires-http-tab');
+    origin = url.origin;
+  } else {
+    tab = await chrome.tabs.create({url:`${ORIGIN}/`, active:true});
+    origin = ORIGIN;
+  }
+  const assigned = {tabId:tab.id, windowId:tab.windowId, origin};
+  await chrome.storage.session.set({assigned});
+  let reloaded = false;
+  try {
+    await chrome.debugger.attach({tabId:tab.id}, '1.3');
+    await command('Page.enable');
+    if (adopt) {
+      let alive = false;
+      for (let i = 0; i < 4 && !alive; i++) {
+        alive = await chrome.tabs.sendMessage(tab.id, {kind:'recording:ping'}).then(() => true, () => false);
+        if (!alive) await new Promise(resolve => setTimeout(resolve, 500));
+      }
+      if (!alive) {
+        await chrome.tabs.reload(tab.id);
+        await new Promise(resolve => {
+          const done = () => { chrome.tabs.onUpdated.removeListener(listener); resolve(); };
+          const listener = (id, change) => { if (id === tab.id && change.status === 'complete') done(); };
+          chrome.tabs.onUpdated.addListener(listener);
+          setTimeout(done, 10000);
+        });
+        reloaded = true;
+      }
+    }
+  } catch (error) {
+    await stop();
+    throw error;
+  }
+  return {tabId:tab.id, chromeWindowId:tab.windowId, origin:assigned.origin, adopted:adopt, reloaded};
 }
 async function screenshot() {
   const {tab} = await scope();
@@ -69,6 +108,7 @@ async function clickType({observationId,x,y,text}) {
   const now = (await command('Page.getLayoutMetrics')).cssVisualViewport;
   if (JSON.stringify(now)!==JSON.stringify(observation.viewport) || (await chrome.tabs.getZoom(tab.id))!==observation.zoom) throw new Error('viewport-changed');
   if (!Number.isFinite(x)||!Number.isFinite(y)||x<0||y<0||x>=now.clientWidth||y>=now.clientHeight||typeof text!=='string'||text.length>100) throw new Error('invalid-input');
+  await chrome.storage.session.set({lastDispatch:{tabId:tab.id, at:Date.now()}});
   await command('Input.dispatchMouseEvent',{type:'mousePressed',x,y,button:'left',clickCount:1});
   await command('Input.dispatchMouseEvent',{type:'mouseReleased',x,y,button:'left',clickCount:1});
   await command('Input.insertText',{text});
@@ -82,7 +122,12 @@ async function stop() {
 }
 chrome.debugger.onDetach.addListener(() => { chrome.storage.session.remove(['assigned','observation']); });
 chrome.tabs.onUpdated.addListener((id, change) => {
-  if (change.url && change.url !== `${ORIGIN}/`) chrome.storage.session.get('assigned').then(({assigned}) => { if (assigned?.tabId===id) return stop(); });
+  if (!change.url) return;
+  let origin = '';
+  try { origin = new URL(change.url).origin; } catch {}
+  chrome.storage.session.get('assigned').then(({assigned}) => {
+    if (assigned?.tabId===id && origin !== (assigned.origin ?? ORIGIN)) return stop();
+  });
 });
 chrome.tabs.onRemoved.addListener(id => chrome.storage.session.get('assigned').then(({assigned}) => { if (assigned?.tabId===id) return stop(); }));
 globalThis.phase0 = {ping,assign,screenshot,clickType,stop};
