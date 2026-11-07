@@ -63,8 +63,11 @@ export async function runBrowserBrain(brain:ContextBrain,persist:(view:BrainView
         const significant=pending.some(event=>!['pointer','scroll','page-visible'].includes(event.kind));
         const activeOrigin=active?.url && /^https?:/.test(active.url)?new URL(active.url).origin:null;
         const matchingPages=context.pages().filter(candidate=>candidate.url()===active?.url);
-        // Duplicate URLs are ambiguous; skip pixels while retaining tab summaries.
-        const sourcePage=matchingPages.length===1?matchingPages[0]:undefined;
+        const focusedPages=(await Promise.all(matchingPages.map(async candidate=>{
+          try{return await candidate.evaluate(()=>document.visibilityState==='visible' && document.hasFocus())?candidate:null;}catch{return null;}
+        }))).filter(candidate=>candidate!==null);
+        // Never pick a background document when several tabs have the same URL.
+        const sourcePage=focusedPages.length===1?focusedPages[0]:undefined;
         if ((significant || Date.now()-lastCaptureAt>=4000) && focused?.focused && activeOrigin && sourcePage && !active?.incognito && (!latest || active?.id===latest.tabId)) {
           // Mask editable/sensitive surfaces and frames before creating the screenshot.
           const bytes=await sourcePage.screenshot({type:'png',mask:[sourcePage.locator('input,textarea,select,[contenteditable],[data-sensitive],iframe')],maskColor:'#000000'});

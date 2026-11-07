@@ -10,7 +10,9 @@ const demo = process.argv.includes('--demo');
 const extension = resolve(process.argv.includes('--raw') ? 'apps/extension' : 'apps/extension/.output/chrome-mv3');
 const profile = demo ? resolve('.local/recording-profile') : await mkdtemp(join(tmpdir(),'cobrowser-recording-'));
 await mkdir(profile,{recursive:true});
-const fixture = await startFixture(false,3210);
+const existingFixture=await fetch('http://127.0.0.1:3210/',{signal:AbortSignal.timeout(2000)}).catch(()=>null);
+if(existingFixture && !(await existingFixture.text()).includes('<title>Harness fixture phase0-agent-7f3a91</title>')) throw new Error('port-3210-is-not-the-reporting-fixture');
+const fixture = existingFixture?{origin:'http://127.0.0.1:3210',close:async()=>{}}:await startFixture(false,3210);
 let context: BrowserContext | undefined;
 const launch = () => chromium.launchPersistentContext(profile,{
   channel:'chromium',headless:!demo,acceptDownloads:true,
@@ -48,16 +50,16 @@ try {
     });
     await context.waitForEvent('close',{timeout:0});
   } else {
-    // A tab assigned to automation must never enter the human recording stream.
+    // Recent input dispatched by our debugger is suppressed from human observations.
     await worker.evaluate(async () => {
       const [tab] = await chrome.tabs.query({url:'http://127.0.0.1:3210/'});
-      await chrome.storage.session.set({assigned:{tabId:tab.id,windowId:tab.windowId}});
+      await chrome.storage.session.set({lastDispatch:{tabId:tab.id,at:Date.now()}});
     });
     const beforeAgent = (await events()).length;
     await tab.locator('#probe').click();
     await new Promise(resolve => setTimeout(resolve,300));
     assert.equal((await events()).length,beforeAgent);
-    await worker.evaluate(() => chrome.storage.session.remove('assigned'));
+    await worker.evaluate(() => chrome.storage.session.remove('lastDispatch'));
     // Sensitive targets and synthetic DOM-dispatched events are excluded.
     await tab.evaluate(() => {
       const secret = document.createElement('input');secret.type='password';secret.id='secret';document.body.prepend(secret);
@@ -87,7 +89,8 @@ try {
     await tab.goto(`${fixture.origin}/?excluded=PRIVATE-QUERY`);
     await tab.bringToFront();await tab.locator('#probe').click();
     await new Promise(resolve => setTimeout(resolve,300));
-    assert.equal((await events()).length,pausedCount);
+    assert((await events()).length>pausedCount);
+    assert(!JSON.stringify(await events()).includes('PRIVATE-QUERY'));
     await monitor.bringToFront();
     const download = monitor.waitForEvent('download');
     await monitor.getByRole('button',{name:'Export JSON',exact:true}).click();
@@ -118,7 +121,7 @@ try {
     assert.equal((await events()).length,0);
     assert.deepEqual(errors,[]);
     const report = {mode:'real-browser-fixture-recording',eventsSaved:saved.length,typedValuesExcluded:true,passwordTargetsExcluded:true,
-      syntheticDOMEventsExcluded:true,assignedAgentTabExcluded:true,pauseVerified:true,queryNavigationExcluded:true,persistedAcrossBrowserRestart:true,
+      syntheticDOMEventsExcluded:true,ownDebuggerInputExcluded:true,pauseVerified:true,queryPagesRecordedWithoutURLParameters:true,persistedAcrossBrowserRestart:true,
       restartPaused:true,retentionVerified:true,clearVerified:true,export:'.local/evidence/recording-export.json',pageErrors:errors};
     await writeFile('.local/evidence/recording.json',JSON.stringify(report,null,2));
     console.log(JSON.stringify(report,null,2));

@@ -98,3 +98,16 @@ test('action-only analysis bypasses Snap after measured slower calls while Previ
   assert.equal(s.calls.at(-1)!.signals,null);
   assert(s.brain.view().journal.some(entry=>entry.reason==='action-analysis-Snap-measured-slower'));
 });
+test('next-action forecasts use open-tab context and reject invented targets or evidence',async()=>{
+  const s=setup();const event=s.event();
+  s.brain.setTabs([{tabId:7,origin:'https://reports.example',title:'Reports',headings:['Export report'],excerpt:'Choose a report',active:false,observedAt:event.at,readStatus:'ready'}]);
+  s.setDecision({nextAction:{kind:'switch-tab',description:'Switch to the Reports tab',targetTabId:7,confidence:.7,evidenceIds:[event.id]}});
+  await s.brain.observe([event]);assert.equal(s.calls[0].tabs?.[0].title,'Reports');assert.equal(s.brain.view().working?.nextAction.targetTabId,7);
+  const second=s.event();
+  s.setDecision({nextAction:{kind:'switch-tab',description:'Invented target',targetTabId:999,confidence:.9,evidenceIds:[second.id]}});
+  await s.brain.observe([second]);assert.equal(s.brain.view().working?.nextAction.kind,'unknown');
+  const third=s.event();
+  s.setDecision({nextAction:{kind:'click',description:'Invented evidence',targetTabId:null,confidence:.9,evidenceIds:['invented-id']}});
+  await s.brain.observe([third]);assert.equal(s.brain.view().working?.nextAction.confidence,0);
+  s.advance(31000);assert.equal(s.brain.view().tabs.length,0);
+});
