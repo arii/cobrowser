@@ -1,0 +1,11 @@
+# Add above the `handle` fallback in /srv/remote-server/caddy/Caddyfile,
+# then: docker exec remote-caddy-1 caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
+# No strip_prefix: the app serves its own base path (see docs/repo-previews.md).
+# Upstream is Tier 1: dev server running inside the terminal container on :3001.
+handle /cobrowse {
+	redir * /cobrowse/
+}
+
+handle /cobrowse* {
+	reverse_proxy terminal:3001
+}
