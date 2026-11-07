@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto';
-import { BrainEvent, ContextDecision, SnapSignals, type BrainProviders, type WorkingContext, type CallResult, type ContextFrame, TabContext } from './contracts.js';
+import { BrainEvent, ContextDecision, SnapSignals, type BrainProviders, type WorkingContext, type CallResult, type ContextFrame, TabContext, type IntervalEvidence } from './contracts.js';
 import { checkImages } from '../model-adapters/index.js';
 
 function safeFailure(error:unknown) {
@@ -9,7 +9,7 @@ function safeFailure(error:unknown) {
 const RECENT_MS=90_000, IDLE_MS=120_000, RETENTION_MS=24*3600_000;
 export type JournalEntry = {at:string;kind:string;[key:string]:unknown};
 export type BrainView = {
-  schemaVersion:1;contextModel:string;mode:'live'|'replay';working:WorkingContext|null;recent:BrainEvent[];tabs:TabContext[];
+  schemaVersion:1;contextModel:string;mode:'live'|'replay';working:WorkingContext|null;recent:BrainEvent[];tabs:TabContext[];assumptions:{id:string;at:string;decision:ContextDecision;observation?:IntervalEvidence}[];
   archived:{context:WorkingContext;reason:string;closedAt:string}[];journal:JournalEntry[];
   pendingSwitches:number;lastEventAt:string|null;
   providers:{snap:{calls:number;averageMs:number};context:{calls:number;averageMs:number}};
@@ -21,7 +21,7 @@ export class ContextBrain {
   private busy=false;
   private pendingIntent='';
   constructor(private readonly providers:BrainProviders,private readonly clock=()=>Date.now()) {
-    this.state={schemaVersion:1,contextModel:providers.contextModel??'context',mode:providers.mode,working:null,recent:[],tabs:[],archived:[],journal:[],pendingSwitches:0,lastEventAt:null,providers:{snap:{calls:0,averageMs:0},context:{calls:0,averageMs:0}}};
+    this.state={schemaVersion:1,contextModel:providers.contextModel??'context',mode:providers.mode,working:null,recent:[],tabs:[],assumptions:[],archived:[],journal:[],pendingSwitches:0,lastEventAt:null,providers:{snap:{calls:0,averageMs:0},context:{calls:0,averageMs:0}}};
   }
   private log(kind:string,data:Record<string,unknown>={}) {
     this.state.journal.push({at:new Date(this.clock()).toISOString(),kind,...data});
@@ -35,6 +35,7 @@ export class ContextBrain {
   }
   private expire() {
     const now=this.clock();
+    this.state.assumptions=this.state.assumptions.filter(item=>now-Date.parse(item.at)<RETENTION_MS);
     this.state.tabs=this.state.tabs.filter(tab=>now-Date.parse(tab.observedAt)<30000);
     this.state.recent=this.state.recent.filter(event=>now-Date.parse(event.at)<RECENT_MS);
     this.state.archived=this.state.archived.filter(item=>now-Date.parse(item.closedAt)<RETENTION_MS);
@@ -56,7 +57,7 @@ export class ContextBrain {
     const metric=this.state.providers[provider];metric.averageMs=(metric.averageMs*metric.calls+call.latencyMs)/(metric.calls+1);metric.calls++;
     this.log('provider-result',{provider,model:call.model,mode:call.mode,latencyMs:call.latencyMs,inputHash:call.inputHash,version:call.version,usage:call.usage,evidenceIds});
   }
-  async observe(raw:unknown[],frames:ContextFrame[]=[]):Promise<BrainView> {
+  async observe(raw:unknown[],frames:ContextFrame[]=[],observation?:IntervalEvidence):Promise<BrainView> {
     if (this.busy) throw new Error('context-busy');
     if (raw.length>64 || frames.length>2) throw new Error('context-batch-limit');
     const now=this.clock();
@@ -86,7 +87,7 @@ export class ContextBrain {
       this.state.recent=[...this.state.recent,...fresh].sort((a,b)=>Date.parse(a.at)-Date.parse(b.at)).filter(event=>now-Date.parse(event.at)<RECENT_MS).slice(-12);
       this.log('evidence-received',{eventIds:fresh.map(event=>event.id),frames:frames.map(frame=>({at:frame.at,hash:createHash('sha256').update(frame.image.base64).digest('hex')}))});
       if (!this.state.recent.length) {this.log('fast-path',{reason:'evidence-outside-working-window'});return this.view();}
-      if (fresh.every(event=>['pointer','scroll'].includes(event.kind))) {
+      if (!observation && fresh.every(event=>['pointer','scroll'].includes(event.kind))) {
         this.log('fast-path',{reason:'passive-metadata-only; no inference call'});return this.view();
       }
       const events=this.state.recent;
@@ -104,7 +105,7 @@ export class ContextBrain {
       }
       let decision:ContextDecision;
       try {
-        const result=await this.providers.context({previous:this.state.working,events,signals,tabs:this.state.tabs,freshEventIds:fresh.map(event=>event.id),candidate:this.pendingIntent?{intent:this.pendingIntent,confirmations:this.state.pendingSwitches}:null});
+        const result=await this.providers.context({previous:this.state.working,events,signals,tabs:this.state.tabs,observation,freshEventIds:fresh.map(event=>event.id),candidate:this.pendingIntent?{intent:this.pendingIntent,confirmations:this.state.pendingSwitches}:null});
         this.measured('context',result,events.map(event=>event.id));decision=ContextDecision.parse(result.value);
         if (decision.nextAction.evidenceIds.some(id=>!events.some(event=>event.id===id))) throw new Error('unknown-evidence-reference');
         if (!decision.nextAction.evidenceIds.some(id=>fresh.some(event=>event.id===id))) throw new Error('decision-must-cite-fresh-evidence');
@@ -117,7 +118,9 @@ export class ContextBrain {
         this.log('provider-unavailable',{provider:'context',code:safeFailure(error),reason:'Context update unavailable or invalid; no inferred replacement.'});
         return this.view();
       }
-      this.log('intent-assessment',{...decision});
+      this.log('intent-assessment',{...decision,observationId:observation?.id});
+      this.state.assumptions.push({id:randomUUID(),at:new Date(this.clock()).toISOString(),decision,observation});
+      this.state.assumptions=this.state.assumptions.slice(-30);
       const current=this.state.working;
       if(current)current.nextAction=decision.nextAction;
       if (!current) {

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Cobrowser local recorder",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "permissions": [
     "debugger",
     "nativeMessaging",
@@ -11,8 +11,7 @@
     "scripting"
   ],
   "host_permissions": [
-    "http://*/*",
-    "https://*/*"
+    "<all_urls>"
   ],
   "incognito": "not_allowed",
   "background": {

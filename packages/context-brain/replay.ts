@@ -12,6 +12,7 @@ export function syntheticContextProviders():BrainProviders {
       const signals:SnapSignals={taskRelation:input.previous && action==='submit'?'different':'uncertain',relationConfidence:.9,screenChanged:null,actionClass:action==='submit'?'submission':editing?'editing':'inspection',actionConfidence:.9,visualTask:input.images.length?'report_export':'unknown',visualState:input.images.length?'form_entry':'unknown',visualConfidence:input.images.length?.9:0};
       return result(signals,'synthetic-snap',input);
     },
+    async vision(frames) {return result({summary:'Synthetic image summary; no model inspected these screenshots.',changes:[],confidence:0},`synthetic-${contextModel}`,{frameCount:frames.length});},
     async context(input) {
       const latest=input.events.filter(event=>!input.freshEventIds || input.freshEventIds.includes(event.id)).at(-1)!;
       const submit=latest.kind==='submit';

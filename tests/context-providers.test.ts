@@ -79,3 +79,21 @@ test('Gemini is the default context provider and uses a separate key with struct
     ]) {globalThis.fetch=async()=>Response.json(response);await assert.rejects(providers.context(input),/invalid-envelope/);}
   } finally {globalThis.fetch=saved;}
 });
+
+test('Gemini summarizes chronological screenshots separately from rolling context and rejects incomplete captions',async()=>{
+  const saved=globalThis.fetch;const requests:any[]=[];let finish='STOP';
+  const summary={summary:'A report form is visible.',changes:['The result panel appeared.'],confidence:.8};
+  globalThis.fetch=async(_url,options)=>{
+    const body=JSON.parse(options!.body as string);requests.push(body);
+    return Response.json({modelVersion:'gemini-3.8-flash',candidates:[{finishReason:finish,content:{parts:[{thought:true,text:'private reasoning excluded'},{text:JSON.stringify(body.contents[0].parts.some((part:any)=>part.inlineData)?summary:decision)}]}}]});
+  };
+  try{
+    const providers=liveContextProviders({HARNESS_CLOUD_ENABLED:'1',SUBQ_API_KEY:'synthetic-subq-key',GEMINI_API_KEY:'synthetic-google-key'});
+    const frame={at:event.at,origin:event.origin,tabId:1,sessionId:event.sessionId,image:{mediaType:'image/png' as const,base64:'iVBORw0KGgo='}};
+    const caption=await providers.vision!([frame,frame]);assert.deepEqual(caption.value,summary);
+    assert.equal(requests[0].contents[0].parts.filter((part:any)=>part.inlineData).length,2);
+    assert(!JSON.stringify(caption).includes('private reasoning excluded'));
+    await providers.context(input);assert(!JSON.stringify(requests[1]).includes('iVBORw0KGgo='));
+    finish='MAX_TOKENS';await assert.rejects(providers.vision!([frame]),/context-vision-invalid-envelope/);
+  }finally{globalThis.fetch=saved;}
+});

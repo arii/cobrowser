@@ -4,11 +4,12 @@ root.innerHTML = `<header><p>COBROWSER · LOCAL RECORDER</p><h1 id="recording-st
 <div class="controls"><button id="record-start">Start recording</button><button id="record-pause">Pause</button><button id="record-fixture">Open fixture</button><button id="record-export">Export JSON</button><button id="record-clear">Clear saved data</button></div>
 <p id="record-error" role="alert"></p><section class="stats"><div><strong id="record-count">0</strong><span>events saved locally</span></div><div><strong id="record-last">—</strong><span>last saved</span></div><div><strong>24 hours</strong><span>retention · latest 2,000 events</span></div></section>
 <p id="record-detail" role="status" aria-live="polite"></p><section id="brain-panel"><h2>Rolling context brain</h2><p id="brain-mode">Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.</p>
-<h3 id="brain-intent">Waiting for evidence</h3><p id="brain-summary"></p><p id="brain-status"></p><p id="brain-metrics"></p><p id="brain-error" role="alert"></p><h3>Likely next action · a guess</h3><p id="brain-next">Waiting for a prediction</p><p id="brain-next-detail"></p><details><summary>Context decisions and provider log</summary><pre id="brain-journal"></pre></details></section><h2>Open tabs</h2><p id="tab-count"></p><table><thead><tr><th>Tab</th><th>Page</th><th>Origin</th><th>Read status</th></tr></thead><tbody id="open-tabs"></tbody></table><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
+<h3 id="brain-intent">Waiting for evidence</h3><p id="brain-summary"></p><p id="brain-status"></p><p id="brain-phase" role="status" aria-live="polite"></p><p id="visual-status"></p><p id="brain-metrics"></p><p id="brain-error" role="alert"></p><h3>Likely next action · a guess</h3><p id="brain-next">Waiting for a prediction</p><p id="brain-next-detail"></p><details><summary>Context decisions and provider log</summary><pre id="brain-journal"></pre></details></section><section id="assumption-panel"><h2>Context assumptions over time</h2><p>About every 10 seconds while a web page is focused. These are revisable guesses based on visible evidence.</p><div id="assumption-timeline"></div></section><h2>Open tabs</h2><p id="tab-count"></p><table><thead><tr><th>Tab</th><th>Page</th><th>Origin</th><th>Read status / page content</th></tr></thead><tbody id="open-tabs"></tbody></table><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
 <table><thead><tr><th>Time</th><th>Interaction</th><th>Element</th><th>Input metadata</th><th>Origin / tab</th></tr></thead><tbody id="record-events"></tbody></table>
-<footer>Local Chrome extension storage in this browser profile. Typed values, page text and printable keys are excluded from event recording. Live brain mode sends masked active-tab screenshots to Snap and open-tab titles, headings, page excerpts and action/context summaries to the configured context model; the preview uses synthetic responses. Incognito and browser-internal pages are excluded, as is the agent's own debugger input. Predictions are guesses and never trigger actions. Browser restart pauses capture; saved events remain until expiry or deletion. Exported files are yours to manage.</footer>`;
+<footer>Local Chrome extension storage in this browser profile. Typed values, page text and printable keys are excluded from event recording. Live brain mode sends masked active-tab screenshots to Snap and Gemini for visual summaries, and open-tab titles, headings, page excerpts, bounded before/after DOM snapshots and motion/context summaries to the context model. Raw screenshots stay in memory; derived summaries and assumptions are saved locally; the preview uses synthetic responses. Incognito and browser-internal pages are excluded, as is the agent's own debugger input. Predictions are guesses and never trigger actions. Browser restart pauses capture; saved events remain until expiry or deletion. Exported files are yours to manage.</footer>`;
 let state;
 let busy = false;
+let renderedTabsKey='',renderedAssumptionsKey='';
 const el = id => document.getElementById(id);
 async function request(kind) {
   const result = await chrome.runtime.sendMessage({kind:`recording:${kind}`});
@@ -38,21 +39,36 @@ function render(value) {
   });
   el('record-events').replaceChildren(...rows);
   el('tab-count').textContent=`${value.tabs?.length??0} of ${value.tabCount??value.tabs?.length??0} supported tabs (up to 200 recent tabs).`;
+  const tabsKey=JSON.stringify((value.tabs??[]).map(({observedAt:_observedAt,...tab})=>tab));
+  if(tabsKey!==renderedTabsKey){
+  const open=new Set([...el('open-tabs').querySelectorAll('details[open]')].map(detail=>detail.dataset.tab));
+  renderedTabsKey=tabsKey;
   el('open-tabs').replaceChildren(...(value.tabs??[]).map(tab=>{
     const row=document.createElement('tr');
-    for(const text of [String(tab.tabId),tab.title||'(untitled)',tab.origin,`${tab.active?'active · ':''}${tab.readStatus}`]) {const cell=document.createElement('td');cell.textContent=text;row.append(cell);}
+    for(const text of [String(tab.tabId),tab.title||'(untitled)',tab.origin]) {const cell=document.createElement('td');cell.textContent=text;row.append(cell);}
+    const cell=document.createElement('td');
+    const details=document.createElement('details');details.dataset.tab=String(tab.tabId);details.open=open.has(String(tab.tabId));const summary=document.createElement('summary');
+    summary.textContent=`${tab.readStatus} · ${tab.excerpt?.length??0} characters · ${tab.headings?.length??0} headings`;details.append(summary);
+    for(const text of [tab.readError??'',...(tab.headings??[]),tab.excerpt||'No readable page text returned.']){if(!text)continue;const paragraph=document.createElement('p');paragraph.textContent=text;details.append(paragraph);}
+    cell.append(details);row.append(cell);
     return row;
   }));
+  }
 }
 function renderBrain(brain) {
+  const activity=state?.brainActivity;
+  el('brain-phase').textContent=!state?.enabled?'Observation paused':activity?.sessionId===state?.sessionId?`Activity: ${activity.phase}`:'Waiting for the next observation';
+  el('visual-status').textContent=state?.visualCapture?`Screenshot capture: ${state.visualCapture.status} · ${new Date(state.visualCapture.at).toLocaleTimeString()}`:'Screenshot capture waits for a focused HTTP/HTTPS page.';
+  renderAssumptions(brain?.assumptions??[]);
   if (!brain) {
-    el('brain-mode').textContent='Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.';
+    const connection=state?.brainConnection;
+    el('brain-mode').textContent=connection?.status==='connecting'?'Connecting this Chrome profile to the local brain…':connection?.status==='unavailable'?'Local brain unavailable. Run pnpm install:context-host, then retry recording.':connection?.status==='error'?`Local brain error: ${connection.code}`:'Waiting for the local brain connection. Start recording to connect this Chrome profile.';
     el('brain-intent').textContent='Waiting for evidence';
     for (const id of ['brain-summary','brain-status','brain-metrics','brain-journal','brain-next-detail','brain-error']) el(id).textContent='';
     el('brain-next').textContent='Waiting for a prediction';
     return;
   }
-  const connected=Date.now()-Date.parse(brain.connectedAt)<10000;
+  const connected=Date.now()-Date.parse(brain.connectedAt)<10000 || (state?.brainConnection?.status==='connected' && activity?.sessionId===state?.sessionId && Date.now()-Date.parse(activity.at)<65000);
   el('brain-mode').textContent=`${brain.mode==='live'?`LIVE · SubQ Snap + ${brain.contextModel??'context model'}`:'SYNTHETIC PREVIEW · no model calls'} · ${connected?'connected':'feed disconnected or waiting on providers'}`;
   el('brain-intent').textContent=brain.working?.intent??'Waiting for task evidence';
   el('brain-summary').textContent=brain.working?.summary??'';
@@ -88,3 +104,29 @@ async function refresh() {
 }
 void refresh();
 setInterval(refresh,1000);
+
+function renderAssumptions(assumptions){
+  const key=assumptions.map(item=>item.id).join('|');
+  if(key===renderedAssumptionsKey)return;renderedAssumptionsKey=key;
+  el('assumption-timeline').replaceChildren(...assumptions.slice(-12).reverse().map(item=>{
+    const card=document.createElement('article');card.className='assumption';
+    const add=(tag,text)=>{const node=document.createElement(tag);node.textContent=text;card.append(node);return node;};
+    add('time',new Date(item.at).toLocaleTimeString());add('h3',item.decision.intent);
+    add('p',`${Math.round(item.decision.confidence*100)}% confidence · ${item.decision.status}`);
+    add('p',item.decision.summary);add('p',`Evidence behind this guess: ${item.decision.explanation}`);
+    add('p',`Possible next action: ${item.decision.nextAction.description}`);
+    const observation=item.observation;
+    if(observation){
+      add('h4','Model summary of screenshots');
+      add('p',observation.visualSummary?.summary??'Image summary unavailable; this assumption uses other evidence.');
+      if(observation.visualSummary?.changes.length)add('p',`Visual changes: ${observation.visualSummary.changes.join('; ')}`);
+      const motion=observation.motion;
+      add('p',`Movement: ${motion.samples.length} pointer samples · ${motion.distance.toFixed(2)} viewport units traveled · ${motion.clicks} clicks · ${motion.scrolls} scrolls · ${motion.keys} control keys`);
+      add('p',observation.before?(observation.before.documentId===observation.after.documentId?`DOM: ${observation.before.nodes.length} → ${observation.after.nodes.length} sampled elements; ${observation.before.excerpt===observation.after.excerpt?'text unchanged':'visible text changed'}`:'DOM: navigation or a new document'):'DOM: first snapshot; no earlier baseline');
+      const details=document.createElement('details');const summary=document.createElement('summary');summary.textContent='Inspect before / after DOM snapshots';details.append(summary);
+      for(const [label,dom] of [['Before (previous interval)',observation.before],['After (this interval)',observation.after]]){const heading=document.createElement('h4');heading.textContent=label;const pre=document.createElement('pre');pre.textContent=dom?JSON.stringify(dom,null,2):'No previous snapshot';details.append(heading,pre);}
+      card.append(details);
+    }
+    return card;
+  }));
+}

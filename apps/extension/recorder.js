@@ -1,3 +1,6 @@
+import { captureVisualContext, clearVisualEvidence } from './visual-context.js';
+import { nativeBrainLink } from './native-brain.js';
+const brainLink=nativeBrainLink();
 // Opt-in observation across HTTP(S) tabs, independent of execution assignment.
 // Independent of debugger/native probe execution.
 const webOrigin = value => {try {const url=new URL(value);return ['http:','https:'].includes(url.protocol)?url.origin:null;} catch {return null;}};
@@ -28,6 +31,11 @@ async function badge(enabled) {
   await chrome.action.setBadgeText({text:enabled?'REC':''});
   await chrome.action.setBadgeBackgroundColor({color:'#b42318'});
 }
+async function tabMessage(tabId) {
+  let timeout;
+  try{return await Promise.race([chrome.tabs.sendMessage(tabId,{kind:'recording:context-request'},{frameId:0}),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(new Error('page-read-timeout')),1500);})]);}
+  finally{clearTimeout(timeout);}
+}
 async function refreshTabs(state, force=false) {
   if (!force && Date.now()-lastTabRefresh<5000) return;
   lastTabRefresh=Date.now();
@@ -37,32 +45,33 @@ async function refreshTabs(state, force=false) {
     const base={tabId:tab.id,origin:webOrigin(tab.url),title:(tab.title??'').slice(0,160),headings:[],excerpt:'',active:tab.active,observedAt:new Date().toISOString(),readStatus:'unavailable'};
     try {
       let context;
-      try {context=await chrome.tabs.sendMessage(tab.id,{kind:'recording:context-request'},{frameId:0});}
+      try {context=await tabMessage(tab.id);if(context?.recorderVersion!==2)throw new Error('old-content-script');}
       catch {
         const files=chrome.runtime.getManifest().content_scripts?.flatMap(script=>script.js??[])??[];
         if (!files.length) return base;
         await chrome.scripting.executeScript({target:{tabId:tab.id},files});
-        context=await chrome.tabs.sendMessage(tab.id,{kind:'recording:context-request'},{frameId:0});
+        context=await tabMessage(tab.id);
       }
       const current=await chrome.tabs.get(tab.id);
       if (current.url!==tab.url || current.incognito) return base;
+      if(!context || typeof context.title!=='string' || !Array.isArray(context.headings) || typeof context.excerpt!=='string')return {...base,readError:'page-did-not-respond'};
       return {...base,title:typeof context?.title==='string'?context.title.slice(0,160):base.title,
         headings:Array.isArray(context?.headings)?context.headings.filter(value=>typeof value==='string').slice(0,3).map(value=>value.slice(0,120)):[],
-        excerpt:typeof context?.excerpt==='string'?context.excerpt.slice(0,400):'',readStatus:'ready'};
-    } catch {return base;}
+        excerpt:typeof context?.excerpt==='string'?context.excerpt.slice(0,1200):'',readStatus:context.excerpt.trim()||context.headings.length?'ready':'empty'};
+    } catch {return {...base,readError:'page-access-unavailable-reload-site'};}
   }));
 }
 async function snapshot() {
   const state = await read();
   const {recordingEnabled = false, recordingError = null} = await chrome.storage.session.get(['recordingEnabled','recordingError']);
-  if (recordingEnabled) {await refreshTabs(state);await save(state);}
-  const {contextBrain:storedBrain=null} = await chrome.storage.local.get('contextBrain');
+  if (recordingEnabled) {await refreshTabs(state);await captureVisualContext(state);await save(state);}
+  const {contextBrain:storedBrain=null,brainConnection=null,brainActivity=null} = await chrome.storage.local.get(['contextBrain','brainConnection','brainActivity']);
   const contextBrain=storedBrain?.providers?.context?storedBrain:null;
   const brain=contextBrain && Date.now()-Date.parse(contextBrain.connectedAt)>120000?{...contextBrain,working:null,recent:[],pendingSwitches:0}:contextBrain;
-  return {...state, brain, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:'all open HTTP/HTTPS tabs'};
+  return {...state, brain, brainConnection, brainActivity, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:'all open HTTP/HTTPS tabs'};
 }
 async function save(state) {
-  try { await chrome.storage.local.set({[KEY]:state}); }
+  try { await chrome.storage.local.set({[KEY]:state});brainLink.schedule(state); }
   catch {
     await chrome.storage.session.set({recordingEnabled:false,recordingError:'Local storage failed. Recording stopped.'});
     await badge(false);
@@ -114,9 +123,11 @@ export function installRecorder() {
         await chrome.storage.session.set({recordingEnabled:true,recordingError:null});
         await badge(true);
       } else if (message.kind === 'recording:pause') {
+        clearVisualEvidence();
         await chrome.storage.session.set({recordingEnabled:false});
         await badge(false);
       } else if (message.kind === 'recording:clear') {
+        clearVisualEvidence();
         await chrome.storage.session.set({recordingEnabled:false,recordingError:null});
         await save(empty());
         await chrome.storage.local.remove('contextBrain');
@@ -126,13 +137,15 @@ export function installRecorder() {
     }).then(value => respond({ok:true,value}), error => respond({ok:false,error:error.message}));
     return true;
   });
+  // A native port keeps the worker alive; this drives intervals even with the monitor closed.
+  setInterval(()=>{void serial(async()=>{if(!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled)return;const state=await read();await refreshTabs(state);await captureVisualContext(state);await save(state);}).catch(()=>{});},10000);
   chrome.alarms.create('recording-retention', {periodInMinutes:.5});
   const tabsChanged=()=>{lastTabRefresh=0;void serial(async()=>{if(!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled)return;const state=await read();await refreshTabs(state);await save(state);}).catch(()=>{});};
   chrome.tabs.onActivated.addListener(tabsChanged);
   chrome.tabs.onRemoved.addListener(tabsChanged);
   chrome.tabs.onUpdated.addListener((_id,change)=>{if(change.status==='complete')tabsChanged();});
   chrome.alarms.onAlarm.addListener(alarm => {
-    if (alarm.name === 'recording-retention') void serial(async () => {const state=await read();if ((await chrome.storage.session.get('recordingEnabled')).recordingEnabled) await refreshTabs(state);await save(state);}).catch(() => {});
+    if (alarm.name === 'recording-retention') void serial(async () => {const state=await read();if ((await chrome.storage.session.get('recordingEnabled')).recordingEnabled) {await refreshTabs(state);await captureVisualContext(state);}await save(state);}).catch(() => {});
   });
   void serial(async () => { await save(await read()); await badge((await snapshot()).enabled); }).catch(() => {});
 }
