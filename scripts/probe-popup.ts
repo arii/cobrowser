@@ -1,4 +1,4 @@
-import { chromium } from 'playwright';
+import { chromium, type Page } from 'playwright';
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -14,6 +14,7 @@ const context = await chromium.launchPersistentContext(profile, {
   args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
 });
 const pageErrors: string[] = [];
+let other: Awaited<ReturnType<typeof startFixture>> | undefined;
 try {
   const worker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker');
   const id = worker.url().split('/')[2];
@@ -54,13 +55,15 @@ try {
   // the popup tab would activate it and adoption would reject it.
   const send = (message: {kind:string; args?:unknown}) =>
     page.evaluate((m: {kind:string; args?:unknown}) => (window as any).chrome.runtime.sendMessage(m), message);
-  const other = await startFixture(false, 0);
+  other = await startFixture(false, 0);
+  const adoptedOrigin = other.origin;
+  let target: Page | undefined;
   try {
     await page.bringToFront();
     const rejected = await send({kind:'assign', args:{adopt:true}});
     assert.equal(rejected.ok, false);
     assert.equal(rejected.error, 'adopt-requires-http-tab');
-    const target = await context.newPage();
+    target = await context.newPage();
     await target.goto(`${other.origin}/`);
     await target.bringToFront();
     const adopted = await send({kind:'assign', args:{adopt:true}});
@@ -84,7 +87,7 @@ try {
     }
     assert.equal(recorded.ok, true, JSON.stringify(recorded));
     assert.ok(recorded.value.events.length >= 2, JSON.stringify(recorded.value));
-    assert.ok(recorded.value.events.every((event: any) => event.origin === other.origin && event.provenance === 'human' && event.sessionId === recorded.value.sessionId),
+    assert.ok(recorded.value.events.every((event: any) => event.origin === adoptedOrigin && event.provenance === 'human' && event.sessionId === recorded.value.sessionId),
       JSON.stringify(recorded.value.events));
     const shot2 = await send({kind:'screenshot'});
     assert.equal(shot2.ok, true, JSON.stringify(shot2));
@@ -100,12 +103,15 @@ try {
     assert.equal(released.ok, true, JSON.stringify(released));
     results.push({button:'Adopt active tab', ok:true});
   } finally {
-    await other.close();
+    await target?.close();
+    // `other` closes after the browser context below: pooled sockets outlive pages.
   }
   assert.deepEqual(pageErrors, []);
+  let inputValue = 'unavailable';
+  try { inputValue = await agent.locator('#probe').inputValue(); } catch { /* asserted mid-run; the report tolerates a dead page */ }
   const report = { mode: 'live-extension-popup-UI', directFile: 'setup instructions visible; all six controls disabled', results,
-    inputValue: await agent.locator('#probe').inputValue(), missingNativeHost: 'visible progress then native-timeout with setup guidance', pageErrors };
+    inputValue, missingNativeHost: 'visible progress then native-timeout with setup guidance', pageErrors };
   await mkdir('.local/evidence', { recursive: true });
   await writeFile('.local/evidence/popup-ui.json', JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
-} finally { await context.close(); await fixture.close(); await rm(profile, { recursive: true, force: true }); }
+} finally { await context.close(); await other?.close(); await fixture.close(); await rm(profile, { recursive: true, force: true }); }
