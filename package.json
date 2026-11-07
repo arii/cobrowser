@@ -1,0 +1,26 @@
+{
+  "name": "cobrowse-hackathon-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "setup": "pnpm install && uv sync && uv run pre-commit install",
+    "dev": "bash scripts/dev-bringup.sh",
+    "dev:browser": "docker compose -f docker/docker-compose.cobrowse.yml up -d",
+    "dev:api": "cd services/agent-orchestrator/src && uv run uvicorn server:app --reload --port 8000",
+    "dev:uagent": "uv run python services/agent-orchestrator/src/sponsors/fetch_uagent.py",
+    "dev:web": "pnpm --filter @cobrowse/web-canvas dev",
+    "lint": "biome check . && uv run ruff check . && uv run python3 .agents/scripts/audit-ai-slop.py",
+    "format": "biome format --write . && uv run ruff format .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "uv run pytest && pnpm -r test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "concurrently": "^9.1.0",
+    "typescript": "^5.7.2"
+  }
+}
