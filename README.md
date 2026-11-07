@@ -16,7 +16,7 @@ This opens a separate Chrome for Testing profile with recording **on**, the loca
 
 Use **Pause**, **Start recording**, **Export JSON**, or **Clear saved data** in the monitor. The export contains all retained events, while the table displays the latest 50. Clear pauses recording and deletes saved events. Exported files are managed separately. To use an already installed extension, rebuild/reload `apps/extension/.output/chrome-mv3`, open its popup, and follow **Open live recording monitor**; run `pnpm fixture` separately and press Start recording.
 
-This first recorder saves click, committed field-change, submit, throttled scroll, and page-visible **metadata** only at exactly `http://127.0.0.1:3210/`, in an active tab and focused browser window. Query URLs, other sites, subframes, incognito, and assigned agent tabs are excluded. Password/payment/marked-sensitive targets are excluded; typed values, page text, identifiers, screenshots and keystrokes are never collected. It uses content events without attaching the debugger. This is a separate extension recording format, not yet a learner input or a connection to the Electron storage dashboard.
+This first recorder saves click, committed field-change, submit, throttled scroll/pointer, safe control-key, and page-visible **metadata** only at exactly `http://127.0.0.1:3210/`, in an active tab and focused browser window. Query URLs, other sites, subframes, incognito, and assigned agent tabs are excluded. Password/payment/marked-sensitive targets are excluded; typed values, page text, identifiers and printable keystrokes are never collected by the event recorder. The optional brain runner captures masked fixture screenshots as described below. It uses content events without attaching the debugger. This is a separate extension recording format, not yet a learner input or a connection to the Electron storage dashboard.
 
 Data stays in **unencrypted Chrome extension local storage** in the demo profile at `.local/recording-profile` (ignored by Git). Retention is 24 hours with a once-per-minute sweep, plus immediate read filtering; the limit is 2,000 events. Capture stops when full or on a write failure. Browser restart leaves saved events intact and capture paused until Start recording (the demo launcher explicitly starts it). No cloud service is used. This profile is separate from your everyday browser.
 
@@ -26,6 +26,37 @@ pnpm verify:recording --raw  # same checks against the unpacked source extension
 ```
 
 The checks write synthetic evidence to `.local/evidence/recording.json`, `recording-export.json`, and `recording-monitor.png`. They use a temporary isolated browser profile and remove it afterward.
+
+## Rolling context brain: Snap + Gemini Flash (SubQ Preview selectable)
+
+The context pipeline is implemented in `packages/context-brain/` and `packages/model-adapters/context.ts`:
+
+- **SubQ Snap (`subq-snap-1.1`)** classifies images and narrow action questions: screen change, task relation, editing/navigation/submission/inspection, visible task affordances (such as reporting/search/editing), and visible workflow state. It returns typed evidence signals, not a generated task narrative. See the [Decisions API](https://docs.subq.ai/endpoints/decisions-api/).
+- **Gemini Flash** currently owns the recursive context update: previous compact summary + recent events + Snap signals → tentative intent, replacement summary, confidence, cited evidence, and continue/new-task/uncertain/completed. Set `CONTEXT_PROVIDER=gemini` (default), `GEMINI_API_KEY`, and `GEMINI_MODEL` (default `gemini-3.8-flash`) to use structured output on the [Gemini API](https://ai.google.dev/gemini-api/docs/structured-output). To switch back after approval, set `CONTEXT_PROVIDER=subq`; that uses `subq-preview` on the [SubQ Chat Completions API](https://docs.subq.ai/endpoints/chat-completions-api/) with strict structured output, `store: false`, and reasoning effort `none` for short rolling updates.
+- Pointer movement, scroll and visibility alone take a local path with no model calls. Meaningful action batches go through the selected context model. Action-only Snap analysis is bypassed after three measured calls when its average latency exceeds the context model's; images always go through Snap, and pending task candidates force corroboration. This is a routing heuristic, not a claim that one provider is universally faster.
+
+Working evidence is bounded to 12 events / 90 seconds. Every update replaces the working summary instead of growing a transcript. New session/tab/origin, 2 minutes of inactivity, or the next meaningful action after completion retires the old context. A semantic switch requires **two matching candidate intents**, each with context-model confidence ≥ 0.8 and Snap “different task” confidence ≥ 0.8. Thresholds are initial policy choices, not calibrated accuracy. Retired context stays available for inspection but is excluded from future model input. Unsupported decisions remain uncertain. No action execution or skill training is enabled.
+
+The recorder now also samples normalized mouse coordinates (at most once per second) and control keys: Tab, Enter, Escape, Backspace, Delete, and arrows. It excludes printable keys and typed values. In the browser brain runner, screenshots are limited to the reporting fixture's active, focused tab; editable/sensitive elements and iframes are masked. Screenshots are sampled every four seconds and after meaningful actions; changed frame hashes trigger reassessment even without clicks. Unchanged periodic frames produce no provider calls. At most two timestamped frames go to Snap. Images stay in memory; only hashes and timestamps reach local logs. The context model receives action metadata and Snap signals, without screenshots. Broader site screenshots and native desktop capture are not wired into this runner.
+
+```sh
+pnpm build:extension
+pnpm brain:demo             # terminal-only synthetic task changes and context retirement
+pnpm brain:preview          # visible browser + real recorder input + synthetic model responses
+pnpm verify:brain           # headless browser/monitor check; synthetic model responses
+```
+
+The recording monitor now shows the current intent, summary, confidence, retired-context count, provider timings, and a decision log. Synthetic mode is explicitly labeled and does not call either API. To use the actual providers, export private shell variables (scripts do not automatically load `.env`): `HARNESS_CLOUD_ENABLED=1`, `SUBQ_API_KEY`, and `GEMINI_API_KEY` for the default Gemini configuration, then run:
+
+```sh
+node --env-file=.env --import=tsx scripts/context-brain.ts --record
+# Or analyze a recorder export without screenshots:
+pnpm brain --input /absolute/path/to/recording-export.json
+```
+
+Live mode makes billable cloud requests. Keys stay in the Node runner and never enter extension storage or logs. Missing credentials fail startup; provider failures remain explicit and never fall back to synthetic responses. Provider responses are schema-checked; truncated context-model output, unknown evidence IDs, model mismatches, and invalid Snap choices are rejected.
+
+Use one brain runner at a time. The browser runner uses `.local/context-brain-profile`, separate from the original demo and your everyday Chrome profile. Its unencrypted, owner-only snapshots are `.local/context-brain/state.json` and `journal.jsonl`. The journal retains up to 200 entries and 20 retired contexts, filtered to 24 hours while the runner operates. Stopping the runner leaves those files in place until the next run or manual deletion. Raw events keep the recorder's separate retention. Clear saved data also clears the connected brain's derived memory on its next poll; exports and stopped-runner files are managed separately. The runner starts with fresh working memory after restart, never silently reinstating an old hypothesis. The monitor marks a disconnected feed and hides its active hypothesis after 2 minutes; extension-side brain snapshots expire after 24 hours while the extension runs.
 
 ## Setup
 

@@ -3,9 +3,10 @@ root.innerHTML = `<header><p>COBROWSER · LOCAL RECORDER</p><h1 id="recording-st
 <p>Records human interaction metadata on <strong id="record-origin">…</strong> while its tab is active and its browser window is focused.</p></header>
 <div class="controls"><button id="record-start">Start recording</button><button id="record-pause">Pause</button><button id="record-fixture">Open fixture</button><button id="record-export">Export JSON</button><button id="record-clear">Clear saved data</button></div>
 <p id="record-error" role="alert"></p><section class="stats"><div><strong id="record-count">0</strong><span>events saved locally</span></div><div><strong id="record-last">—</strong><span>last saved</span></div><div><strong>24 hours</strong><span>retention · 2,000 event limit</span></div></section>
-<p id="record-detail" role="status" aria-live="polite"></p><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
-<table><thead><tr><th>Time</th><th>Interaction</th><th>Element</th><th>Tab</th></tr></thead><tbody id="record-events"></tbody></table>
-<footer>Local Chrome extension storage in this browser profile. No typed values, page text, screenshots or cloud uploads. Other origins are excluded, as is the agent's own debugger input. Browser restart pauses capture; saved events remain until expiry or deletion. Exported files are yours to manage.</footer>`;
+<p id="record-detail" role="status" aria-live="polite"></p><section id="brain-panel"><h2>Rolling context brain</h2><p id="brain-mode">Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.</p>
+<h3 id="brain-intent">Waiting for evidence</h3><p id="brain-summary"></p><p id="brain-status"></p><p id="brain-metrics"></p><details><summary>Context decisions and provider log</summary><pre id="brain-journal"></pre></details></section><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
+<table><thead><tr><th>Time</th><th>Interaction</th><th>Element</th><th>Input metadata</th><th>Tab</th></tr></thead><tbody id="record-events"></tbody></table>
+<footer>Local Chrome extension storage in this browser profile. Typed values, page text and printable keys are excluded from event recording. Live brain mode sends masked fixture screenshots to Snap and action/context summaries to the configured context model; the preview uses synthetic responses. Other origins are excluded, as is the agent's own debugger input. Browser restart pauses capture; saved events remain until expiry or deletion. Exported files are yours to manage.</footer>`;
 let state;
 let busy = false;
 const el = id => document.getElementById(id);
@@ -16,6 +17,7 @@ async function request(kind) {
 }
 function render(value) {
   state = value;
+  renderBrain(value.brain);
   el('recording-state').textContent = value.enabled ? 'Recording is on' : 'Recording is paused';
   el('recording-state').dataset.enabled = String(value.enabled);
   el('record-start').disabled = value.enabled || busy;
@@ -29,12 +31,27 @@ function render(value) {
   el('record-empty').hidden = value.events.length > 0;
   const rows = value.events.slice(-50).reverse().map(event => {
     const row = document.createElement('tr');
-    for (const text of [new Date(event.at).toLocaleTimeString(),event.kind,event.tag,String(event.tabId)]) {
+    for (const text of [new Date(event.at).toLocaleTimeString(),event.kind,event.tag,event.key??(event.x===undefined?'—':`${Math.round(event.x*100)}%, ${Math.round(event.y*100)}%`),String(event.tabId)]) {
       const cell = document.createElement('td');cell.textContent = text;row.append(cell);
     }
     return row;
   });
   el('record-events').replaceChildren(...rows);
+}
+function renderBrain(brain) {
+  if (!brain) {
+    el('brain-mode').textContent='Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.';
+    el('brain-intent').textContent='Waiting for evidence';
+    for (const id of ['brain-summary','brain-status','brain-metrics','brain-journal']) el(id).textContent='';
+    return;
+  }
+  const connected=Date.now()-Date.parse(brain.connectedAt)<10000;
+  el('brain-mode').textContent=`${brain.mode==='live'?`LIVE · SubQ Snap + ${brain.contextModel??'context model'}`:'SYNTHETIC PREVIEW · no model calls'} · ${connected?'connected':'feed disconnected or waiting on providers'}`;
+  el('brain-intent').textContent=brain.working?.intent??'Waiting for task evidence';
+  el('brain-summary').textContent=brain.working?.summary??'';
+  el('brain-status').textContent=brain.working?`${brain.working.status} · confidence ${Math.round(brain.working.confidence*100)}% · ${brain.recent.length} recent events · ${brain.archived.length} retired contexts · ${brain.pendingSwitches} task-change confirmations`:'No active task context.';
+  el('brain-metrics').textContent=`Snap: ${brain.providers.snap.calls} calls, average ${Math.round(brain.providers.snap.averageMs)} ms · Context: ${brain.providers.context.calls} calls, average ${Math.round(brain.providers.context.averageMs)} ms`;
+  el('brain-journal').textContent=brain.journal.slice(-15).map(entry=>JSON.stringify(entry,null,2)).join('\n');
 }
 for (const action of ['start','pause','clear']) el(`record-${action}`).onclick = async () => {
   busy = true;

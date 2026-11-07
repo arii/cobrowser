@@ -31,7 +31,12 @@
     "worker:registry": "node dist/workers/registry.mjs",
     "smoke:companion:unencrypted": "electron dist/companion/main.cjs --smoke-unencrypted",
     "recording": "tsx scripts/recording.ts --demo",
-    "verify:recording": "tsx scripts/recording.ts"
+    "verify:recording": "tsx scripts/recording.ts",
+    "brain": "tsx scripts/context-brain.ts",
+    "brain:demo": "tsx scripts/context-brain.ts --demo",
+    "brain:record": "tsx scripts/context-brain.ts --record",
+    "brain:preview": "tsx scripts/context-brain.ts --record --replay",
+    "verify:brain": "tsx scripts/context-brain.ts --record --replay --headless --smoke"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

@@ -15,7 +15,9 @@ function serial(task) {
   return result;
 }
 async function read() {
-  const state = (await chrome.storage.local.get(KEY))[KEY] ?? empty();
+  const saved = await chrome.storage.local.get([KEY,'contextBrain']);
+  const state = saved[KEY] ?? empty();
+  if (saved.contextBrain && Date.now()-Date.parse(saved.contextBrain.connectedAt)>TTL) await chrome.storage.local.remove('contextBrain');
   const cutoff = Date.now() - TTL;
   state.events = state.events.filter(event => Date.parse(event.at) > cutoff);
   return state;
@@ -27,7 +29,10 @@ async function badge(enabled) {
 async function snapshot() {
   const state = await read();
   const {recordingEnabled = false, recordingError = null, assigned} = await chrome.storage.session.get(['recordingEnabled','recordingError','assigned']);
-  return {...state, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:assigned?.origin ?? ORIGIN};
+  const {contextBrain:storedBrain=null} = await chrome.storage.local.get('contextBrain');
+  const contextBrain=storedBrain?.providers?.context?storedBrain:null;
+  const brain=contextBrain && Date.now()-Date.parse(contextBrain.connectedAt)>120000?{...contextBrain,working:null,recent:[],pendingSwitches:0}:contextBrain;
+  return {...state, brain, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:assigned?.origin ?? ORIGIN};
 }
 async function save(state) {
   try { await chrome.storage.local.set({[KEY]:state}); }
@@ -38,9 +43,11 @@ async function save(state) {
   }
 }
 function validEvent(value) {
-  if (!value || typeof value !== 'object' || Object.keys(value).some(key => !['kind','tag'].includes(key))) return false;
-  return ['click','change','submit','scroll','page-visible'].includes(value.kind)
-    && ['INPUT','SELECT','TEXTAREA','BUTTON','A','FORM','PAGE','OTHER'].includes(value.tag);
+  if (!value || typeof value !== 'object' || Object.keys(value).some(key => !['kind','tag','x','y','key'].includes(key))) return false;
+  return ['click','change','submit','scroll','page-visible','pointer','key'].includes(value.kind)
+    && ['INPUT','SELECT','TEXTAREA','BUTTON','A','FORM','PAGE','OTHER'].includes(value.tag)
+    && ((value.x === undefined && value.y === undefined) || (['pointer','click'].includes(value.kind) && Number.isFinite(value.x) && Number.isFinite(value.y) && value.x>=0 && value.x<=1 && value.y>=0 && value.y<=1))
+    && (value.key === undefined || (value.kind === 'key' && ['Tab','Enter','Escape','Backspace','Delete','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(value.key)));
 }
 export function installRecorder() {
   chrome.runtime.onMessage.addListener((message, sender, respond) => {
@@ -87,6 +94,7 @@ export function installRecorder() {
       } else if (message.kind === 'recording:clear') {
         await chrome.storage.session.set({recordingEnabled:false,recordingError:null});
         await save(empty());
+        await chrome.storage.local.remove('contextBrain');
         await badge(false);
       }
       return snapshot();
