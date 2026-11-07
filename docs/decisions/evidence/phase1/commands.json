@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "completedUTC": "2026-11-07T19:41:21.495Z",
+  "node": "v24.13.0",
+  "commands": [
+    {
+      "command": "pnpm install --frozen-lockfile",
+      "exitCode": 0,
+      "durationMs": 187,
+      "log": "01-install.log"
+    },
+    {
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "durationMs": 533,
+      "log": "02-lint.log"
+    },
+    {
+      "command": "pnpm typecheck",
+      "exitCode": 0,
+      "durationMs": 1541,
+      "log": "03-typecheck.log"
+    },
+    {
+      "command": "pnpm test",
+      "exitCode": 0,
+      "durationMs": 458,
+      "log": "04-test.log"
+    },
+    {
+      "command": "pnpm build",
+      "exitCode": 0,
+      "durationMs": 1370,
+      "log": "05-build.log"
+    },
+    {
+      "command": "pnpm rebuild:electron",
+      "exitCode": 0,
+      "durationMs": 11833,
+      "log": "06-rebuild-electron.log"
+    },
+    {
+      "command": "pnpm smoke:companion",
+      "exitCode": 0,
+      "durationMs": 1374,
+      "log": "07-smoke-companion.log"
+    },
+    {
+      "command": "pnpm verify:foundation",
+      "exitCode": 0,
+      "durationMs": 332,
+      "log": "08-verify-foundation.log"
+    },
+    {
+      "command": "pnpm test:integration",
+      "exitCode": 0,
+      "durationMs": 24026,
+      "log": "09-test-integration.log"
+    },
+    {
+      "command": "node dist/workers/learner.mjs",
+      "exitCode": 0,
+      "durationMs": 39,
+      "log": "10-dist-workers-learner.mjs.log"
+    },
+    {
+      "command": "node dist/workers/verifier.mjs",
+      "exitCode": 0,
+      "durationMs": 35,
+      "log": "11-dist-workers-verifier.mjs.log"
+    },
+    {
+      "command": "node dist/workers/registry.mjs",
+      "exitCode": 0,
+      "durationMs": 35,
+      "log": "12-dist-workers-registry.mjs.log"
+    }
+  ]
+}

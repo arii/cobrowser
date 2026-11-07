@@ -1,0 +1,58 @@
+{
+  "name": "visual-harness",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=24.13.0 <25"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit && tsc -p apps/companion/tsconfig.renderer.json && tsc -p apps/extension/tsconfig.json",
+    "test": "tsx --test tests/*.test.ts",
+    "fixture": "tsx apps/fixture-site/server.ts",
+    "verify:fixtures": "tsx scripts/verify-fixtures.ts",
+    "probe:browser": "tsx scripts/probe-browser.ts",
+    "probe:models": "tsx scripts/probe-models.ts",
+    "build:native": "swift build --package-path native/macos-capture",
+    "relay": "node native/messaging-host/coordinator.mjs",
+    "lint": "eslint .",
+    "build": "tsx scripts/build.ts",
+    "build:extension": "pnpm --filter @harness/extension build",
+    "dev:extension": "pnpm --filter @harness/extension dev",
+    "dev:companion": "electron dist/companion/main.cjs",
+    "rebuild:electron": "tsx scripts/rebuild-electron.ts",
+    "smoke:companion": "electron dist/companion/main.cjs --smoke",
+    "verify:foundation": "tsx scripts/verify-foundation.ts",
+    "test:integration": "tsx scripts/verify-fixtures.ts && tsx scripts/probe-popup.ts && tsx scripts/probe-popup.ts --built",
+    "probe:popup": "tsx scripts/probe-popup.ts",
+    "verify:phase1": "tsx scripts/check-phase1.ts",
+    "worker:learner": "node dist/workers/learner.mjs",
+    "worker:verifier": "node dist/workers/verifier.mjs",
+    "worker:registry": "node dist/workers/registry.mjs",
+    "smoke:companion:unencrypted": "electron dist/companion/main.cjs --smoke-unencrypted"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "playwright": "1.65.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "electron": "45.2.3",
+    "@electron/rebuild": "4.2.1",
+    "vite": "8.3.6",
+    "@vitejs/plugin-react": "6.2.1",
+    "wxt": "0.21.5",
+    "eslint": "10.14.0",
+    "typescript-eslint": "8.72.1",
+    "@types/better-sqlite3": "7.6.13",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/chrome": "0.3.7",
+    "esbuild": "0.28.2"
+  },
+  "dependencies": {
+    "zod": "4.6.7",
+    "better-sqlite3": "13.0.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}

@@ -1,0 +1,3 @@
+{"event":"storage-unavailable","code":"keychain-encryption-failed","message":"macOS Keychain could not protect the storage key. Check authentication and access in Keychain Access, then retry."}
+{"event":"storage-unavailable","code":"keychain-encryption-failed","message":"macOS Keychain could not protect the storage key. Check authentication and access in Keychain Access, then retry."}
+{"mode":"live-electron-shell-with-mocked-keychain-denial","rendererLoaded":true,"isolatedPreloadIPC":true,"storageState":"unavailable","errorCode":"keychain-encryption-failed","retryResponded":true,"observationEnabled":false,"keychainTested":false}

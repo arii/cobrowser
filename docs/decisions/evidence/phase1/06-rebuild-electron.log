@@ -1,0 +1,2 @@
+$ tsx scripts/rebuild-electron.ts
+{"electron":"45.2.3","module":"better-sqlite3","sourceRebuild":"completed","location":"dist/companion/node_modules/better-sqlite3","nodeTestBinding":"untouched"}

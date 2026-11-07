@@ -1,0 +1,187 @@
+{
+  "mode": "live-local-fixture",
+  "browser": "158.0.8127.18",
+  "isolation": "fresh context; fixture-only routed page traffic; no Docker security sandbox",
+  "results": [
+    {
+      "task": {
+        "team": "red",
+        "asOf": "2026-11-07T20:00:00Z",
+        "timezone": "America/Los_Angeles"
+      },
+      "mutation": "none",
+      "status": "Export successful",
+      "verdict": "passed",
+      "range": {
+        "start": "2026-10-26",
+        "end": "2026-11-02",
+        "timezone": "America/Los_Angeles"
+      },
+      "team": "red",
+      "assertions": {
+        "schema": true,
+        "exactRows": true
+      },
+      "expected": "team,date,value\nred,2026-10-26,126\nred,2026-10-27,127\nred,2026-10-28,128\nred,2026-10-29,129\nred,2026-10-30,130\nred,2026-10-31,131\nred,2026-11-01,101\n",
+      "actual": "team,date,value\nred,2026-10-26,126\nred,2026-10-27,127\nred,2026-10-28,128\nred,2026-10-29,129\nred,2026-10-30,130\nred,2026-10-31,131\nred,2026-11-01,101\n",
+      "audit": [
+        {
+          "team": "red",
+          "start": "2026-10-26",
+          "end": "2026-11-02"
+        }
+      ],
+      "sha256": "42903d42f027c2b50a918174ae376668acdbf3eefce59c52384b0b9e66bd392c"
+    },
+    {
+      "task": {
+        "team": "red",
+        "asOf": "2026-11-07T20:00:00Z",
+        "timezone": "America/Los_Angeles"
+      },
+      "mutation": "wrong-week-demo",
+      "status": "Export successful",
+      "verdict": "failed",
+      "range": {
+        "start": "2026-10-26",
+        "end": "2026-11-02",
+        "timezone": "America/Los_Angeles"
+      },
+      "team": "red",
+      "assertions": {
+        "schema": true,
+        "exactRows": false
+      },
+      "expected": "team,date,value\nred,2026-10-26,126\nred,2026-10-27,127\nred,2026-10-28,128\nred,2026-10-29,129\nred,2026-10-30,130\nred,2026-10-31,131\nred,2026-11-01,101\n",
+      "actual": "team,date,value\nred,2026-11-02,102\nred,2026-11-03,103\nred,2026-11-04,104\nred,2026-11-05,105\nred,2026-11-06,106\nred,2026-11-07,107\nred,2026-11-08,108\n",
+      "audit": [
+        {
+          "team": "red",
+          "start": "2026-11-02",
+          "end": "2026-11-09"
+        }
+      ],
+      "sha256": "05f30751cec7115f85e193a437c011c60a5297a65c6679f27c61533aa9253822"
+    },
+    {
+      "task": {
+        "team": "blue",
+        "asOf": "2026-11-02T00:30:00Z",
+        "timezone": "America/Los_Angeles"
+      },
+      "mutation": "none",
+      "status": "Export successful",
+      "verdict": "passed",
+      "range": {
+        "start": "2026-10-19",
+        "end": "2026-10-26",
+        "timezone": "America/Los_Angeles"
+      },
+      "team": "blue",
+      "assertions": {
+        "schema": true,
+        "exactRows": true
+      },
+      "expected": "team,date,value\nblue,2026-10-19,219\nblue,2026-10-20,220\nblue,2026-10-21,221\nblue,2026-10-22,222\nblue,2026-10-23,223\nblue,2026-10-24,224\nblue,2026-10-25,225\n",
+      "actual": "team,date,value\nblue,2026-10-19,219\nblue,2026-10-20,220\nblue,2026-10-21,221\nblue,2026-10-22,222\nblue,2026-10-23,223\nblue,2026-10-24,224\nblue,2026-10-25,225\n",
+      "audit": [
+        {
+          "team": "blue",
+          "start": "2026-10-19",
+          "end": "2026-10-26"
+        }
+      ],
+      "sha256": "4849906a66b9fb79a0a24580949e0d1b712755afbf218748758d5ca208c97281"
+    },
+    {
+      "task": {
+        "team": "blue",
+        "asOf": "2026-11-02T00:30:00Z",
+        "timezone": "America/Los_Angeles"
+      },
+      "mutation": "wrong-week-demo",
+      "status": "Export successful",
+      "verdict": "failed",
+      "range": {
+        "start": "2026-10-19",
+        "end": "2026-10-26",
+        "timezone": "America/Los_Angeles"
+      },
+      "team": "blue",
+      "assertions": {
+        "schema": true,
+        "exactRows": false
+      },
+      "expected": "team,date,value\nblue,2026-10-19,219\nblue,2026-10-20,220\nblue,2026-10-21,221\nblue,2026-10-22,222\nblue,2026-10-23,223\nblue,2026-10-24,224\nblue,2026-10-25,225\n",
+      "actual": "team,date,value\nblue,2026-10-26,226\nblue,2026-10-27,227\nblue,2026-10-28,228\nblue,2026-10-29,229\nblue,2026-10-30,230\nblue,2026-10-31,231\nblue,2026-11-01,201\n",
+      "audit": [
+        {
+          "team": "blue",
+          "start": "2026-10-26",
+          "end": "2026-11-02"
+        }
+      ],
+      "sha256": "4c216e79de66109d586ae82922251b591631beaf98e2cadc863e15de32021c76"
+    },
+    {
+      "task": {
+        "team": "blue",
+        "asOf": "2026-11-02T00:30:00Z",
+        "timezone": "Asia/Tokyo"
+      },
+      "mutation": "none",
+      "status": "Export successful",
+      "verdict": "passed",
+      "range": {
+        "start": "2026-10-26",
+        "end": "2026-11-02",
+        "timezone": "Asia/Tokyo"
+      },
+      "team": "blue",
+      "assertions": {
+        "schema": true,
+        "exactRows": true
+      },
+      "expected": "team,date,value\nblue,2026-10-26,226\nblue,2026-10-27,227\nblue,2026-10-28,228\nblue,2026-10-29,229\nblue,2026-10-30,230\nblue,2026-10-31,231\nblue,2026-11-01,201\n",
+      "actual": "team,date,value\nblue,2026-10-26,226\nblue,2026-10-27,227\nblue,2026-10-28,228\nblue,2026-10-29,229\nblue,2026-10-30,230\nblue,2026-10-31,231\nblue,2026-11-01,201\n",
+      "audit": [
+        {
+          "team": "blue",
+          "start": "2026-10-26",
+          "end": "2026-11-02"
+        }
+      ],
+      "sha256": "4c216e79de66109d586ae82922251b591631beaf98e2cadc863e15de32021c76"
+    },
+    {
+      "task": {
+        "team": "blue",
+        "asOf": "2026-11-02T00:30:00Z",
+        "timezone": "Asia/Tokyo"
+      },
+      "mutation": "wrong-week-demo",
+      "status": "Export successful",
+      "verdict": "failed",
+      "range": {
+        "start": "2026-10-26",
+        "end": "2026-11-02",
+        "timezone": "Asia/Tokyo"
+      },
+      "team": "blue",
+      "assertions": {
+        "schema": true,
+        "exactRows": false
+      },
+      "expected": "team,date,value\nblue,2026-10-26,226\nblue,2026-10-27,227\nblue,2026-10-28,228\nblue,2026-10-29,229\nblue,2026-10-30,230\nblue,2026-10-31,231\nblue,2026-11-01,201\n",
+      "actual": "team,date,value\nblue,2026-11-02,202\nblue,2026-11-03,203\nblue,2026-11-04,204\nblue,2026-11-05,205\nblue,2026-11-06,206\nblue,2026-11-07,207\nblue,2026-11-08,208\n",
+      "audit": [
+        {
+          "team": "blue",
+          "start": "2026-11-02",
+          "end": "2026-11-09"
+        }
+      ],
+      "sha256": "555441b042f05a6a292b9548eae7c9db0eb9086bb3c3d570aacab4e685b7b030"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@harness/registry",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@harness/contracts": "workspace:*",
+    "@harness/storage": "workspace:*"
+  }
+}

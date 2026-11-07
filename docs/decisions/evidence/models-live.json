@@ -1,0 +1,26 @@
+{
+  "mode": "live",
+  "results": [
+    {
+      "provider": "llama",
+      "mode": "live",
+      "verdict": "inconclusive",
+      "reason": "missing-LLAMA_SCHEMA",
+      "missing": [
+        "LLAMA_SCHEMA",
+        "LLAMA_ENDPOINT",
+        "LLAMA_MODEL",
+        "LLAMA_API_KEY"
+      ]
+    },
+    {
+      "provider": "snap",
+      "mode": "live",
+      "verdict": "inconclusive",
+      "reason": "missing-SUBQ_API_KEY",
+      "missing": [
+        "SUBQ_API_KEY"
+      ]
+    }
+  ]
+}

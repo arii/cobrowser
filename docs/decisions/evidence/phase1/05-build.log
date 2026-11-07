@@ -1,0 +1,24 @@
+$ tsx scripts/build.ts
+vite v8.3.6 building client environment for production...
+transforming...
+✓ 15 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/companion/renderer/index.html                   0.44 kB │ gzip:  0.28 kB
+dist/companion/renderer/assets/index-Cu0xHWjf.css    0.34 kB │ gzip:  0.25 kB
+dist/companion/renderer/assets/index-CaxopsE0.js   221.14 kB │ gzip: 69.29 kB
+
+✓ built in 69ms
+$ wxt build --browser chrome
+
+WXT 0.21.5
+ℹ Building chrome-mv3 for production with Vite 8.3.6
+[?25l⠋ Preparing...[K⠋ [1/2] background[K⠋ [2/2] popup[K[K[?25h[K[?25h✔ Built extension in 104 ms
+  ├─ .output/chrome-mv3/manifest.json             731 B    
+  ├─ .output/chrome-mv3/popup.html                204 B    
+  ├─ .output/chrome-mv3/background.js             5.22 kB  
+  ├─ .output/chrome-mv3/chunks/popup-C7PKT_nk.js  1.68 kB  
+  └─ .output/chrome-mv3/chunks/popup-CMQJeu-A.js  222.74 kB
+Σ Total size: 230.57 kB                         
+✔ Finished in 178 ms
+Built companion, Chrome MV3 extension, packages and worker scaffolds. No workflow execution enabled.

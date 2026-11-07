@@ -1,0 +1,7 @@
+# 008: Keychain recovery requires reauthentication and a fresh process
+
+November 7, 2026. Merely opening Keychain Access did not help or produce a prompt. Apple's `security show-keychain-info` also failed with an authentication error, matching an [Apple Developer Forums report](https://developer.apple.com/forums/thread/822120) about stale authentication despite unlocked status. That report describes manual login-keychain lock/unlock as a workaround. This is a matching symptom, not a confirmed diagnosis of this machine.
+
+Electron's pinned safeStorage implementation caches its async encryptor after initialization. A new key-provider JavaScript object and another encrypt call do not reconstruct it. The blocked-state UI now gives explicit lock/unlock instructions and a Restart companion button. Restart is exposed only through the trusted main-frame IPC boundary and launches a fresh process. No keychain settings/permissions are changed automatically; users enter any password only into macOS. No reset, deletion, replacement key or plaintext fallback is introduced.
+
+Typecheck, lint, build and all 19 tests passed. The denied-provider smoke verified restart IPC while deliberately suppressing relaunch: [evidence](evidence/keychain-restart/smoke.log). The real rebuilt companion was launched and its accessibility tree showed the new instructions and Restart companion control. Production storage is still blocked until native authorization succeeds; no successful Keychain recovery is claimed.

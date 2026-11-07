@@ -1,0 +1,14 @@
+{
+  "name": "@harness/companion",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@harness/storage": "workspace:*",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "scripts": {
+    "dev": "electron ../../dist/companion/main.cjs"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "provenance": "hand-authored-synthetic",
+  "llama": {"model":"replay-llama-vision","choices":[{"message":{"content":"{\"text\":\"PHASE0\",\"color\":\"red\"}"}}],"usage":{"prompt_tokens":0,"completion_tokens":0}},
+  "snap": {"model":"subq-snap-1.1","answers":{
+    "matches":{"type":"noul","noul":0.99},
+    "evidence":{"type":"choice","choice":"match","probabilities":{"match":0.98,"mismatch":0.01,"insufficient":0.01},"confidence":0.98},
+    "quality":{"type":"score","score":1.9,"legend":{"0":"Unreadable","1":"Partly legible","2":"Clearly legible"},"probabilities":{"0":0,"1":0.1,"2":0.9},"confidence":0.9}
+  },"usage":{"input_tokens":0,"output_tokens":0}}
+}

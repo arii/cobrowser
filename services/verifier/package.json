@@ -1,0 +1,10 @@
+{
+  "name": "@harness/verifier",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@harness/contracts": "workspace:*",
+    "@harness/model-adapters": "workspace:*"
+  }
+}

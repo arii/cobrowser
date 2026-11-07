@@ -1,0 +1,11 @@
+{
+  "name": "@harness/storage",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@harness/contracts": "workspace:*",
+    "better-sqlite3": "13.0.3"
+  },
+  "exports": "./src/index.ts"
+}

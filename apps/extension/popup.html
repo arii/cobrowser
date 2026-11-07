@@ -1,0 +1,14 @@
+<!doctype html><html><body style="width:360px;font:14px system-ui">
+<p>Phase 0 synthetic fixture only (127.0.0.1:3210).</p>
+<div id="setup" hidden>
+<p><strong>This page must run as an installed Chrome extension.</strong></p>
+<ol><li>Open <code>chrome://extensions</code> and enable Developer mode.</li>
+<li>Choose Load unpacked and select this repository's <code>apps/extension</code> folder.</li>
+<li>Open Harness Phase 0 probe from Chrome's Extensions toolbar menu.</li>
+<li>Start the fixture and native relay using the root README instructions.</li></ol>
+</div>
+<button id="ping">Relay ping</button><button id="assign">Create agent tab</button><button id="screenshot">Screenshot/context</button><button id="stop">Detach</button>
+<p>Screenshot first. Input uses CSS viewport coordinates.</p>
+<label>X <input id="x" type="number" value="65" size="5"></label><label>Y <input id="y" type="number" value="425" size="5"></label>
+<input id="text" value="manual-CDP-probe"><button id="clickType">Click and type</button>
+<pre id="status" role="status" aria-live="polite" style="white-space:pre-wrap"></pre><img id="preview" style="width:100%"><script src="popup.js"></script></body></html>

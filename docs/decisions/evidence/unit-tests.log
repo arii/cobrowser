@@ -1,0 +1,14 @@
+$ tsx --test tests/*.test.ts
+✔ real subprocess host, fragmented frames, coalescing, duplicate acknowledgment, invalid length (49.847292ms)
+✔ replay is explicitly labeled; invalid model results cannot pass (3.463959ms)
+✔ image limits and explicit cloud gate (0.11ms)
+✔ provider outages and malformed live responses remain errors; never replay fallback (7.592291ms)
+✔ explicit timezone determines previous calendar week across local Sunday/Monday (9.591167ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 140.315667
