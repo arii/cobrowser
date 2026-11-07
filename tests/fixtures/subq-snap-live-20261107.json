@@ -1,0 +1,15 @@
+{
+  "collectedUTC": "2026-11-07T23:51:06.414Z",
+  "provenance": "live-subq-snap-run-2026-11-07",
+  "model": "subq-snap-1.1",
+  "questionVersion": "snap-probe-v1",
+  "latencyMs": 478,
+  "capabilityPassed": true,
+  "verdict": "probe-passed",
+  "answers": {
+    "matchesNoul": 0.99826580286026,
+    "evidenceChoice": "match",
+    "evidenceConfidence": 0.992680698633194,
+    "qualityScore": 1.9837012505158782
+  }
+}

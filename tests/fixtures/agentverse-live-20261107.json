@@ -1,0 +1,72 @@
+{
+  "asOf": "2026-11-07",
+  "endpoint": "https://api.asi1.ai/v1/chat/completions",
+  "model": "asi1-mini",
+  "collectedUTC": "2026-11-07T23:51:06.413Z",
+  "provenance": "live-asi1-run-2026-11-07",
+  "results": [
+    {
+      "id": "sf-hackathons",
+      "latencyMs": 1795,
+      "chars": 1128,
+      "refused": true,
+      "temporalStale": false,
+      "unitsPassed": null,
+      "excerpt": "I do not have access to real-time data or live internet browsing capabilities to retrieve the current schedule of hackathons for late 2026. My training data has a cutoff and does not include specific event listings for f"
+    },
+    {
+      "id": "sf-weather",
+      "latencyMs": 1472,
+      "chars": 1042,
+      "refused": true,
+      "temporalStale": false,
+      "unitsPassed": true,
+      "excerpt": "I do not have access to real-time weather data, so I cannot tell you the exact current temperature in San Francisco.\n\nHowever, here is some general guidance based on San Francisco's typical climate:\n\n*   **San Francisco "
+    },
+    {
+      "id": "asics-cheapest",
+      "latencyMs": 1155,
+      "chars": 1402,
+      "refused": true,
+      "temporalStale": false,
+      "unitsPassed": null,
+      "excerpt": "I cannot browse live inventory or real-time prices from specific retailers (such as Amazon, Zappos, Foot Locker, or Asics.com) to provide the exact current cheapest price and store for a specific size. Prices fluctuate d"
+    },
+    {
+      "id": "linkedin-reply",
+      "latencyMs": 671,
+      "chars": 320,
+      "refused": false,
+      "temporalStale": false,
+      "unitsPassed": null,
+      "excerpt": "Hi [Recruiter Name],\n\nThanks for reaching out! I’m interested in learning more about the senior agent-infra role and your startup’s vision. I’d be happy to hop on a 15-minute call next week. Please let me know what days "
+    },
+    {
+      "id": "discord-summary",
+      "latencyMs": 699,
+      "chars": 298,
+      "refused": false,
+      "temporalStale": false,
+      "unitsPassed": null,
+      "excerpt": "Here are the 3 action items derived from the Discord messages:\n\n1.  **Update Calendar**: Change the standup meeting time to 9:30.\n2.  **Code Review**: Review Pull Request #123 by end of day (EOD).\n3.  **Prepare for Demo*"
+    },
+    {
+      "id": "grocery-list",
+      "latencyMs": 2999,
+      "chars": 3870,
+      "refused": false,
+      "temporalStale": true,
+      "unitsPassed": null,
+      "excerpt": "Here is a practical, budget-friendly grocery list for 4 dinners for 2 people, totaling under $60.\n\n**Assumptions:**\n*   Prices are estimated based on average US supermarket costs (e.g., Walmart, Aldi, or Kroger) in late "
+    },
+    {
+      "id": "job-application",
+      "latencyMs": 2650,
+      "chars": 2522,
+      "refused": false,
+      "temporalStale": false,
+      "unitsPassed": null,
+      "excerpt": "Here are the key requirements typically associated with a **Senior AI Engineer, Agents** role, followed by three tailored bullet points for a candidate with specific browser-agent and evaluation experience.\n\n### Key Requ"
+    }
+  ]
+}
