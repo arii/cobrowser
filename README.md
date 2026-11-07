@@ -1,13 +1,38 @@
 # Visual Harness: foundation and feasibility probes
 
-Read [plan.md](plan.md) first. Phase 1 provides versioned contracts, encrypted SQLite-backed persistence, a minimal Electron/React foundation shell, a WXT/React Chrome extension build, and worker entry points. Observation, learning, task execution and promotion are not enabled. [Phase 1 results](docs/decisions/006-phase1-foundation.md) and [Phase 0 open gates](docs/decisions/000-phase0-results.md) distinguish implemented behavior from scaffolding and live integrations.
+Read [plan.md](plan.md) first. Phase 1 provides versioned contracts, encrypted SQLite-backed persistence, a minimal Electron/React foundation shell, a WXT/React Chrome extension build, and worker entry points. The extension now includes fixture-only interaction recording and a live monitor; desktop observation, learning, task execution and promotion remain disabled. [Phase 1 results](docs/decisions/006-phase1-foundation.md) and [Phase 0 open gates](docs/decisions/000-phase0-results.md) distinguish implemented behavior from scaffolding and live integrations.
+
+## Record data and see it working
+
+From this `cobrowser` folder:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm build:extension
+pnpm recording
+```
+
+This opens a separate Chrome for Testing profile with recording **on**, the local reporting fixture, and a **Cobrowser recording monitor** tab. Click fixture controls, change a field and leave it, or export its CSV; switch to the monitor to see the saved count, last-save timestamp, and recent events. The first few events are an automated setup check, explicitly labeled in the terminal and fixture. The monitor refreshes every second after Chrome confirms persistence. The extension toolbar badge shows `REC` while armed. Close this browser to stop; run `pnpm recording` again to reopen the profile and start a new session.
+
+Use **Pause**, **Start recording**, **Export JSON**, or **Clear saved data** in the monitor. The export contains all retained events, while the table displays the latest 50. Clear pauses recording and deletes saved events. Exported files are managed separately. To use an already installed extension, rebuild/reload `apps/extension/.output/chrome-mv3`, open its popup, and follow **Open live recording monitor**; run `pnpm fixture` separately and press Start recording.
+
+This first recorder saves click, committed field-change, submit, throttled scroll, and page-visible **metadata** only at exactly `http://127.0.0.1:3210/`, in an active tab and focused browser window. Query URLs, other sites, subframes, incognito, and assigned agent tabs are excluded. Password/payment/marked-sensitive targets are excluded; typed values, page text, identifiers, screenshots and keystrokes are never collected. It uses content events without attaching the debugger. This is a separate extension recording format, not yet a learner input or a connection to the Electron storage dashboard.
+
+Data stays in **unencrypted Chrome extension local storage** in the demo profile at `.local/recording-profile` (ignored by Git). Retention is 24 hours with a once-per-minute sweep, plus immediate read filtering; the limit is 2,000 events. Capture stops when full or on a write failure. Browser restart leaves saved events intact and capture paused until Start recording (the demo launcher explicitly starts it). No cloud service is used. This profile is separate from your everyday browser.
+
+```sh
+pnpm verify:recording        # real-browser recording, privacy, pause, restart, retention, clear, export
+pnpm verify:recording --raw  # same checks against the unpacked source extension
+```
+
+The checks write synthetic evidence to `.local/evidence/recording.json`, `recording-export.json`, and `recording-monitor.png`. They use a temporary isolated browser profile and remove it afterward.
 
 ## Setup
 
 Tested on Apple silicon macOS 26.5.2, Xcode command-line Swift 6.3.3, Node **24.13.0**, pnpm **11.25.0**, Playwright **1.65.0**, bundled Chrome for Testing **158.0.8127.18**. Dependencies are exact-pinned in `package.json` and `pnpm-lock.yaml`. `.node-version` selects Node; pnpm itself ran under a separate bundled Node 24.22.1 on the original machine. Docker is absent. Use a Node version manager and Corepack or an existing pnpm installation; this repo does not install global tooling.
 
 ```sh
-cd /Users/tolui/Documents/ChatGPT/Harness
+cd /Users/tolui/Documents/GitHub/cobrowser
 pnpm install --frozen-lockfile
 pnpm exec playwright install chromium
 pnpm lint

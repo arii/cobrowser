@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Harness Phase 0 probe",
+  "name": "Cobrowser local recorder",
   "version": "0.0.1",
   "permissions": [
     "debugger",
@@ -20,5 +20,16 @@
   "action": {
     "default_popup": "popup.html"
   },
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuZsaVpFchFjesTC1i0tRKoPR6TK5yfsowkV/WfDsEaq3r0WduLsXWqPVvXOY5gERvavStA8CH8GR7RiP+KulnBTv/MFCUuUtUtvlinKuNUjKhgkEURYhiRjfgDMHQf0giERJSnjZEE0mHijkhTZImgOHlUN7lfMn5nMB8Ij7BjTVJoXZVfviL2U9TI6FfkCdZjLY9/nICd5hMr47h/YS9vdYukml026Dda3FW14ghFhJm3udHnjq8cEAwnO7h8qKTVlfrlNthjLN8ESJq3y2ppvtb0neau4oCmdBcnkY/20G1MPNdGmrzKYuYs6XwKlqwYV5jkjyX5tLhbdw8/MYQwIDAQAB"
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuZsaVpFchFjesTC1i0tRKoPR6TK5yfsowkV/WfDsEaq3r0WduLsXWqPVvXOY5gERvavStA8CH8GR7RiP+KulnBTv/MFCUuUtUtvlinKuNUjKhgkEURYhiRjfgDMHQf0giERJSnjZEE0mHijkhTZImgOHlUN7lfMn5nMB8Ij7BjTVJoXZVfviL2U9TI6FfkCdZjLY9/nICd5hMr47h/YS9vdYukml026Dda3FW14ghFhJm3udHnjq8cEAwnO7h8qKTVlfrlNthjLN8ESJq3y2ppvtb0neau4oCmdBcnkY/20G1MPNdGmrzKYuYs6XwKlqwYV5jkjyX5tLhbdw8/MYQwIDAQAB",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://127.0.0.1/*"
+      ],
+      "js": [
+        "recording-content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
 }

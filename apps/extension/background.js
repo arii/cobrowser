@@ -1,3 +1,5 @@
+import { installRecorder } from './recorder.js';
+installRecorder();
 const ORIGIN = 'http://127.0.0.1:3210';
 let port, retry = 100;
 const pending = new Map();

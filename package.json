@@ -29,7 +29,9 @@
     "worker:learner": "node dist/workers/learner.mjs",
     "worker:verifier": "node dist/workers/verifier.mjs",
     "worker:registry": "node dist/workers/registry.mjs",
-    "smoke:companion:unencrypted": "electron dist/companion/main.cjs --smoke-unencrypted"
+    "smoke:companion:unencrypted": "electron dist/companion/main.cjs --smoke-unencrypted",
+    "recording": "tsx scripts/recording.ts --demo",
+    "verify:recording": "tsx scripts/recording.ts"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

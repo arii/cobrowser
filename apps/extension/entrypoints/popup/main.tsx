@@ -4,7 +4,8 @@ function Popup() {
   // Keep one set of probe handlers shared with Phase 0, including error feedback.
   useEffect(() => { void import('../../popup.js'); }, []);
   return <main style={{width:360,font:'14px system-ui'}}>
-    <p>Phase 1 extension · synthetic fixture only (127.0.0.1:3210).</p>
+    <p><a href="recording.html" target="_blank">Open live recording monitor</a></p>
+    <p>Fixture recording and synthetic probes (127.0.0.1:3210).</p>
     <div id="setup" hidden>Load this popup from the installed extension toolbar menu.</div>
     <button id="ping">Relay ping</button><button id="assign">Create agent tab</button>
     <button id="screenshot">Screenshot/context</button><button id="stop">Detach</button>
