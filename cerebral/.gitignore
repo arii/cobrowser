@@ -1,0 +1,20 @@
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# node
+node_modules/
+.next/
+dist/
+*.tsbuildinfo
+# local state
+runs/*.json
+skills/*.json
+!skills/example-*.json
+.env
+.pytest_cache/
+runs/demos/
+.browser-profile/
+logs/
+runs/*.log.jsonl

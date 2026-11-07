@@ -1,0 +1,39 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "api",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": [
+        "run",
+        "--directory",
+        "apps/api",
+        "uvicorn",
+        "cerebral.api:app",
+        "--port",
+        "8000"
+      ],
+      "port": 8000
+    },
+    {
+      "name": "browser",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--dir",
+        "apps/browser",
+        "start"
+      ],
+      "port": 8011
+    },
+    {
+      "name": "web",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--dir",
+        "apps/web",
+        "dev"
+      ],
+      "port": 3000
+    }
+  ]
+}

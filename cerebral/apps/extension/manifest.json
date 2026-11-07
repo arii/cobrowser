@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Cerebral Demonstrator",
+  "version": "0.1.0",
+  "description": "Press to demonstrate a web task in your own browser. Press again and the agent learns it as a verified skill.",
+  "action": {
+    "default_title": "Cerebral: start demonstrating",
+    "default_icon": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" }
+  },
+  "icons": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" },
+  "background": { "service_worker": "background.js", "type": "module" },
+  "permissions": ["storage", "scripting", "tabs", "webRequest", "webNavigation"],
+  "host_permissions": ["<all_urls>"],
+  "options_ui": { "page": "options.html", "open_in_tab": false }
+}

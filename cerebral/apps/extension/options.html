@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cerebral settings</title>
+<style>
+  :root { --bg: #fff; --fg: #1a1a1a; --muted: #6b6b6b; --line: #e3e3e3; --accent: #5b8def; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #121212; --fg: #ececec; --muted: #9a9a9a; --line: #2c2c2c; } }
+  body { margin: 0; padding: 16px; min-width: 320px; background: var(--bg); color: var(--fg); font: 14px/1.4 system-ui, sans-serif; }
+  label { display: block; margin-top: 10px; color: var(--muted); font-size: 12px; }
+  input { width: 100%; box-sizing: border-box; padding: 8px 10px; margin-top: 4px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--fg); font: inherit; }
+  button { margin-top: 14px; padding: 8px 14px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: #fff; font: inherit; cursor: pointer; }
+  .muted { color: var(--muted); }
+</style>
+</head>
+<body>
+  <strong>Cerebral</strong>
+  <label>API URL</label><input id="apiUrl">
+  <label>Web app URL</label><input id="webUrl">
+  <button id="save">Save</button> <span id="status" class="muted"></span>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

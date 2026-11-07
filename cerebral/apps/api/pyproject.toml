@@ -1,0 +1,31 @@
+[project]
+name = "cerebral-api"
+version = "0.1.0"
+description = "Verification-first browser skill agent: run loop, verifier, receipts, ledger"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "pydantic>=2.8",
+  "httpx>=0.27",
+  "langgraph>=0.2",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+agents = ["uagents>=0.22"]  # Fetch.ai receipt publisher; optional, not on the run path
+
+[dependency-groups]
+dev = ["pytest>=8", "pytest-asyncio>=0.24"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["cerebral"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
