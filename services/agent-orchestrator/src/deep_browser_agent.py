@@ -71,9 +71,10 @@ def request_human_cobrowse_handoff(thread_id: str, reason: str, current_url: str
 async def build_cobrowse_deep_agent(
     thread_id: str,
     repo_root: str = ".",
-    model_name: str = "openai:muse-spark-1.3",
+    model_name: str | None = None,
 ):
     """Constructs the Deep Agent with isolated Stagehand browser subagent and checkpointer."""
+    resolved_model = model_name or os.environ.get("COBROWSE_MODEL", "openai:muse-spark-1.3")
     session = await get_or_create_stagehand_session(thread_id)
     stagehand_mw = StagehandMiddleware(stagehand=session["stagehand"])
 
@@ -95,7 +96,7 @@ async def build_cobrowse_deep_agent(
 
     checkpointer = InMemorySaver()
     return create_deep_agent(
-        model=model_name,
+        model=resolved_model,
         system_prompt=(
             "You are the Lead Co-Browsing & Skill-Compilation Agent. Delegate web interactions to "
             "`browser-cobrowse-specialist` and compile demonstrated trajectories into reusable skills."

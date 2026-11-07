@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "echo 'web-canvas: Next.js viewport not scaffolded yet' && exit 1",
+    "dev": "PORT=3001 STEEL_BASE_URL=http://127.0.0.1:3000 PUBLIC_LIVE=http://127.0.0.1:3001/cobrowse/live node ../../cobrowse/server.mjs",
     "typecheck": "tsc --noEmit",
     "test": "echo 'web-canvas: no unit tests yet'"
   },

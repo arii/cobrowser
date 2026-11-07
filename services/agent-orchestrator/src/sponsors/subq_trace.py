@@ -6,6 +6,8 @@ from openai import OpenAI
 
 def analyze_long_dom_trace_diff(run1_trace: str, run2_failed_trace: str) -> str:
     """Routes multi-run DOM & execution logs through SubQ Snap 1.1 to pinpoint selector drift."""
+    if not os.environ.get("SUBQ_API_KEY"):
+        raise RuntimeError("SUBQ_API_KEY is not set; SubQ trace analysis needs a SubQ API key.")
     client = OpenAI(
         base_url=os.environ.get("SUBQ_BASE_URL", "https://api.subq.ai/v1"),
         api_key=os.environ.get("SUBQ_API_KEY", ""),

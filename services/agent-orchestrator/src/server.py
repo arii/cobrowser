@@ -34,11 +34,14 @@ async def health() -> dict[str, str]:
 
 @app.post("/api/sessions/{thread_id}/run")
 async def run_session(thread_id: str, body: RunRequest) -> dict:
-    if thread_id not in AGENTS_BY_THREAD:
-        AGENTS_BY_THREAD[thread_id] = await build_cobrowse_deep_agent(thread_id=thread_id)
-    agent = AGENTS_BY_THREAD[thread_id]
-    config = {"configurable": {"thread_id": thread_id}}
-    state = await agent.ainvoke({"messages": [("user", body.prompt)]}, config=config)
+    try:
+        if thread_id not in AGENTS_BY_THREAD:
+            AGENTS_BY_THREAD[thread_id] = await build_cobrowse_deep_agent(thread_id=thread_id)
+        agent = AGENTS_BY_THREAD[thread_id]
+        config = {"configurable": {"thread_id": thread_id}}
+        state = await agent.ainvoke({"messages": [("user", body.prompt)]}, config=config)
+    except Exception as exc:
+        return {"status": "ERROR", "thread_id": thread_id, "detail": str(exc)[:300]}
 
     if "__interrupt__" in state:
         return {

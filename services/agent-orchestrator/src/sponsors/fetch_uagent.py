@@ -1,4 +1,5 @@
 # File: services/agent-orchestrator/src/sponsors/fetch_uagent.py
+import asyncio
 import os
 import sys
 from datetime import UTC, datetime
@@ -16,6 +17,11 @@ from uagents_core.contrib.protocols.chat import (
     TextContent,
     chat_protocol_spec,
 )
+
+try:
+    asyncio.get_event_loop()
+except RuntimeError:
+    asyncio.set_event_loop(asyncio.new_event_loop())
 
 agent = Agent(
     name="cobrowse_skill_agent",
@@ -39,18 +45,24 @@ async def handle_chat(ctx: Context, sender: str, msg: ChatMessage) -> None:
     if not user_text:
         return
 
-    client = get_meta_client()
-    completion = client.chat.completions.create(
-        model="muse-spark-1.3",
-        messages=[
-            {
-                "role": "system",
-                "content": "You are the Fetch.ai Co-Browse Skill Coordinator powered by Meta Muse Spark 1.3.",
-            },
-            {"role": "user", "content": user_text},
-        ],
-    )
-    reply_text = completion.choices[0].message.content or "Task queued for co-browsing."
+    if not os.environ.get("MODEL_API_KEY"):
+        reply_text = (
+            "Local mode: MODEL_API_KEY is not set, so Muse Spark chat is disabled. "
+            f"Received {len(user_text)} chars; set MODEL_API_KEY to enable AI replies."
+        )
+    else:
+        client = get_meta_client()
+        completion = client.chat.completions.create(
+            model="muse-spark-1.3",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are the Fetch.ai Co-Browse Skill Coordinator powered by Meta Muse Spark 1.3.",
+                },
+                {"role": "user", "content": user_text},
+            ],
+        )
+        reply_text = completion.choices[0].message.content or "Task queued for co-browsing."
 
     await ctx.send(
         sender,

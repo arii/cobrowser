@@ -10,7 +10,9 @@ class AtlasSkillMemory:
     """MongoDB Atlas Vector Search store for compiled browser skills and DOM embeddings."""
 
     def __init__(self, uri: str | None = None, db_name: str = "cobrowse_agent") -> None:
-        mongo_uri = uri or os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
+        raw = uri or os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
+        mongo_uri = "mongodb://localhost:27017" if "<" in raw else raw
+        self.uri = mongo_uri
         self.client: MongoClient = MongoClient(mongo_uri)
         self.db = self.client[db_name]
         self.skills = self.db["compiled_skills"]

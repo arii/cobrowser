@@ -1,6 +1,9 @@
 # AGENTS.md
 ## Commands
 - `pnpm dev` - start the project
+- `pnpm test` - run the full test suite
+- `pnpm lint` - run the lint task
+- `pnpm format` - run the format task
 ## Code Map
 - `packages/` - packages
 - `services/` - application source

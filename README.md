@@ -9,6 +9,6 @@
 - **Category:** Innovation Lab
 
 ## Quickstart
-1. `cp .env.example .env` (Fill in `MODEL_API_KEY`, `MONGODB_URI`, `SUBQ_API_KEY`)
+1. `cp .env.example .env` (keys optional for local browser use; only AI run/chat/skill features need `MODEL_API_KEY`, `MONGODB_URI`, or `SUBQ_API_KEY`)
 2. `pnpm setup`
 3. `pnpm dev`
