@@ -1,3 +1,5 @@
+import { join } from 'node:path';
+import { homedir } from 'node:os';
 import { nativeFrame, nativeDecoder } from '../packages/context-brain/native-protocol.js';
 import { nativeBrainHandler } from '../packages/context-brain/native-handler.js';
 import { liveContextProviders } from '../packages/model-adapters/context.js';
@@ -9,7 +11,7 @@ if(process.argv[2]!==allowed)process.exit(2);
 const send=(value:unknown)=>process.stdout.write(nativeFrame(value));
 try {
   const providers=process.env.COBROWSER_CONTEXT_REPLAY==='1'?syntheticContextProviders():liveContextProviders();
-  const handle=nativeBrainHandler(providers,send);
+  const handle=nativeBrainHandler(providers,send,{historyRoot:process.env.COBROWSER_HISTORY_ROOT??join(homedir(),'Library/Application Support/Cobrowser/context-history')});
   process.stdin.on('data',nativeDecoder(message=>{
     void handle(message).then(send,error=>{
       const seq=(message as {seq?:number})?.seq;

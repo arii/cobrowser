@@ -7,7 +7,9 @@ import assert from 'node:assert/strict';
 import { startFixture } from '../apps/fixture-site/server.js';
 
 const profile = await mkdtemp(join(tmpdir(), 'harness-popup-'));
-const fixture = await startFixture(false, 3210);
+const existingFixture=await fetch('http://127.0.0.1:3210/',{signal:AbortSignal.timeout(2000)}).catch(()=>null);
+if(existingFixture && !(await existingFixture.text()).includes('<title>Harness fixture phase0-agent-7f3a91</title>'))throw new Error('port-3210-is-not-the-reporting-fixture');
+const fixture=existingFixture?{origin:'http://127.0.0.1:3210',close:async()=>{}}:await startFixture(false,3210);
 const extension = resolve(process.argv.includes('--built') ? 'apps/extension/.output/chrome-mv3' : 'apps/extension');
 const context = await chromium.launchPersistentContext(profile, {
   channel: 'chromium', headless: true,
@@ -27,6 +29,8 @@ try {
 
   await page.goto(`chrome-extension://${id}/popup.html`);
   await page.waitForFunction(() => document.getElementById('status')?.textContent?.startsWith('Ready.'));
+  const probes=page.getByText('Developer probes',{exact:true});
+  if(await probes.count())await probes.click();
   const results = [];
   for (const name of ['Detach', 'Create agent tab', 'Screenshot/context', 'Click and type']) {
     await page.getByRole('button', { name, exact: true }).click();

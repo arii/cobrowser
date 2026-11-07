@@ -1,7 +1,9 @@
+import { installSkills } from './skills.js';
 import { installRecorder } from './recorder.js';
 import { ORIGIN, scope, command } from './agent-tab.js';
 import './playback.js';
 installRecorder();
+installSkills();
 let port, retry = 100;
 const pending = new Map();
 let clientPromise = chrome.storage.local.get('client').then(async ({client}) => {

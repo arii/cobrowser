@@ -1,3 +1,5 @@
+import { retainAction, readAllActions, clearActions } from './action-history.js';
+import { validTarget } from './skill-learning.js';
 import { captureVisualContext, clearVisualEvidence } from './visual-context.js';
 import { nativeBrainLink } from './native-brain.js';
 import { cancelReplayForReset, getAgentTab, getReplaySnapshot } from './playback.js';
@@ -12,7 +14,7 @@ function messageOrigin(value) {
 const KEY = 'fixtureRecording';
 const TTL = 24 * 60 * 60 * 1000;
 const LIMIT = 2000;
-const empty = () => ({schemaVersion:1, sessionId:null, startedAt:null, events:[], tabs:[], tabCount:0, dropped:0});
+const empty = () => ({schemaVersion:1, historyGeneration:crypto.randomUUID(),sessionId:null, startedAt:null, events:[], tabs:[], tabCount:0, dropped:0});
 let queue = Promise.resolve();
 function serial(task) {
   const result = queue.then(task);
@@ -22,6 +24,7 @@ function serial(task) {
 async function read() {
   const saved = await chrome.storage.local.get([KEY,'contextBrain']);
   const state = saved[KEY] ?? empty();
+  if(!state.historyGeneration)state.historyGeneration=crypto.randomUUID();
   if (saved.contextBrain && Date.now()-Date.parse(saved.contextBrain.connectedAt)>TTL) await chrome.storage.local.remove('contextBrain');
   const cutoff = Date.now() - TTL;
   state.tabs=(state.tabs??[]).filter(tab=>Date.parse(tab.observedAt)>cutoff);
@@ -46,7 +49,7 @@ async function refreshTabs(state, force=false) {
     const base={tabId:tab.id,origin:webOrigin(tab.url),title:(tab.title??'').slice(0,160),headings:[],excerpt:'',active:tab.active,observedAt:new Date().toISOString(),readStatus:'unavailable'};
     try {
       let context;
-      try {context=await tabMessage(tab.id);if(context?.recorderVersion!==2)throw new Error('old-content-script');}
+      try {context=await tabMessage(tab.id);if(context?.recorderVersion!==3)throw new Error('old-content-script');}
       catch {
         const files=chrome.runtime.getManifest().content_scripts?.flatMap(script=>script.js??[])??[];
         if (!files.length) return base;
@@ -71,6 +74,12 @@ async function snapshot() {
   const brain=contextBrain && Date.now()-Date.parse(contextBrain.connectedAt)>120000?{...contextBrain,working:null,recent:[],pendingSwitches:0}:contextBrain;
   return {...state, brain, brainConnection, brainActivity, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:'all open HTTP/HTTPS tabs', replay:await getReplaySnapshot(), agentTab:await getAgentTab()};
 }
+async function archiveAction(event,generation){
+  try{await retainAction(event,generation);}catch{
+    await chrome.storage.session.set({recordingEnabled:false,recordingError:'Local task history could not be saved. Recording stopped.'});
+    await badge(false);throw new Error('recording-history-storage-failed');
+  }
+}
 async function save(state) {
   try { await chrome.storage.local.set({[KEY]:state});brainLink.schedule(state); }
   catch {
@@ -80,8 +89,10 @@ async function save(state) {
   }
 }
 function validEvent(value) {
-  if (!value || typeof value !== 'object' || Object.keys(value).some(key => !['kind','tag','x','y','key'].includes(key))) return false;
-  return ['click','change','submit','scroll','page-visible','pointer','key'].includes(value.kind)
+  if (!value || typeof value !== 'object' || Object.keys(value).some(key => !['kind','tag','x','y','key','target','formTargets'].includes(key))) return false;
+  return (value.formTargets===undefined || (value.kind==='click' && Array.isArray(value.formTargets) && value.formTargets.length<=12 && value.formTargets.every(target=>validTarget(target) && ['INPUT','SELECT','TEXTAREA'].includes(target.tag))))
+    && (value.target===undefined || (['click','change'].includes(value.kind) && validTarget(value.target)))
+    && ['click','change','submit','scroll','page-visible','pointer','key'].includes(value.kind)
     && ['INPUT','SELECT','TEXTAREA','BUTTON','A','FORM','PAGE','OTHER'].includes(value.tag)
     && ((value.x === undefined && value.y === undefined) || (['pointer','click'].includes(value.kind) && Number.isFinite(value.x) && Number.isFinite(value.y) && value.x>=0 && value.x<=1 && value.y>=0 && value.y<=1))
     && (value.key === undefined || (value.kind === 'key' && ['Tab','Enter','Escape','Backspace','Delete','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(value.key)));
@@ -89,13 +100,22 @@ function validEvent(value) {
 export function installRecorder() {
   chrome.runtime.onMessage.addListener((message, sender, respond) => {
     const isView = sender.id === chrome.runtime.id && !sender.tab?.incognito
-      && [chrome.runtime.getURL('recording.html'),chrome.runtime.getURL('popup.html')].includes(sender.url);
+      && [chrome.runtime.getURL('recording.html'),chrome.runtime.getURL('popup.html'),chrome.runtime.getURL('skills.html')].includes(sender.url);
     const isContent = sender.id === chrome.runtime.id && sender.tab && !sender.tab.incognito && sender.frameId === 0;
+    if(message?.kind==='recording:effect' && isContent){
+      serial(async()=>{
+        if(!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled)return;
+        const state=await read();
+        const event=state.events.find(item=>item.id===message.id && item.tabId===sender.tab.id && item.sessionId===state.sessionId && item.origin===webOrigin(sender.url));
+        if(event?.kind==='click' && Date.now()-Date.parse(event.at)<5000){if(event.effect!=='content-changed')event.effect=message.effect==='form-submitted'?'form-submitted':'content-changed';await archiveAction(event,state.historyGeneration);await save(state);}
+      }).then(()=>respond({ok:true}),error=>respond({ok:false,error:error.message}));return true;
+    }
     if (message?.kind === 'recording:event' && isContent) {
       serial(async () => {
         if (!validEvent(message.event)) throw new Error('invalid-recording-event');
         if (!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled) return;
-        const {lastDispatch} = await chrome.storage.session.get(['lastDispatch']);
+        const {lastDispatch,skillRun} = await chrome.storage.session.get(['lastDispatch','skillRun']);
+        if(skillRun?.status==='running' && skillRun.tabId===sender.tab.id)return;
         const expected = webOrigin(sender.url);
         if (!expected) return;
         if (messageOrigin(sender.url) !== expected || messageOrigin(sender.tab?.url) !== expected) return;
@@ -107,14 +127,18 @@ export function installRecorder() {
           const removed=state.events.splice(0,state.events.length-LIMIT+1);
           state.dropped+=removed.length;
         }
-        state.events.push({id:crypto.randomUUID(),sessionId:state.sessionId,at:new Date().toISOString(),
+        const id=crypto.randomUUID();
+        state.events.push({id,sessionId:state.sessionId,at:new Date().toISOString(),
           origin:expected,tabId:sender.tab.id,provenance:'human',...message.event});
+        await archiveAction(state.events.at(-1),state.historyGeneration);
         await save(state);
-      }).then(() => respond({ok:true}), error => respond({ok:false,error:error.message}));
+        return {id};
+      }).then(value => respond({ok:true,value}), error => respond({ok:false,error:error.message}));
       return true;
     }
-    if (!isView || !['recording:status','recording:start','recording:pause','recording:clear'].includes(message?.kind)) return;
+    if (!isView || !['recording:status','recording:start','recording:pause','recording:clear','recording:export'].includes(message?.kind)) return;
     serial(async () => {
+      if(message.kind==='recording:export')return {...await snapshot(),events:await readAllActions(),historyScope:'Full locally retained action history; no 24-hour truncation.'};
       if (message.kind === 'recording:start') {
         const state = await read();
         await refreshTabs(state,true);
@@ -132,6 +156,7 @@ export function installRecorder() {
         clearVisualEvidence();
         await chrome.storage.session.set({recordingEnabled:false,recordingError:null});
         await cancelReplayForReset('recording-cleared');
+        await clearActions();
         await save(empty());
         await chrome.storage.local.remove('contextBrain');
         await badge(false);
@@ -150,5 +175,5 @@ export function installRecorder() {
   chrome.alarms.onAlarm.addListener(alarm => {
     if (alarm.name === 'recording-retention') void serial(async () => {const state=await read();if ((await chrome.storage.session.get('recordingEnabled')).recordingEnabled) {await refreshTabs(state);await captureVisualContext(state);}await save(state);}).catch(() => {});
   });
-  void serial(async () => { await save(await read()); await badge((await snapshot()).enabled); }).catch(() => {});
+  void serial(async () => {const state=await read();for(const event of state.events)await archiveAction(event,state.historyGeneration);await save(state); await badge((await snapshot()).enabled); }).catch(() => {});
 }

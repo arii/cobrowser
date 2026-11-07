@@ -12,7 +12,7 @@ await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));
 const origin=`http://127.0.0.1:${(server.address() as {port:number}).port}`;
 const quote=(s:string)=>`'${s.replaceAll("'","'\\''")}'`;
 await build({entryPoints:['scripts/context-brain-host.ts'],outfile:join(root,'host.cjs'),platform:'node',format:'cjs',bundle:true,target:'node24'});
-const launcher=join(root,'host');await writeFile(launcher,`#!/bin/sh\nexport COBROWSER_CONTEXT_REPLAY=1\nexec ${quote(process.execPath)} ${quote(join(root,'host.cjs'))} "$@"\n`,{mode:0o700});
+const launcher=join(root,'host');await writeFile(launcher,`#!/bin/sh\nexport COBROWSER_CONTEXT_REPLAY=1\nexport COBROWSER_HISTORY_ROOT=${quote(join(root,'history'))}\nexec ${quote(process.execPath)} ${quote(join(root,'host.cjs'))} "$@"\n`,{mode:0o700});
 const profile=join(root,'profile');await mkdir(join(profile,'NativeMessagingHosts'),{recursive:true});
 await writeFile(join(profile,'NativeMessagingHosts/com.cobrowser.context.json'),JSON.stringify({name:'com.cobrowser.context',description:'Synthetic visual test only',path:launcher,type:'stdio',allowed_origins:['chrome-extension://afchllcepipgheklaapddihncbpmfocl/']}));
 const extension=resolve('apps/extension/.output/chrome-mv3');

@@ -1,3 +1,4 @@
+import { TaskHistoryStore } from '../packages/context-brain/history.js';
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
@@ -9,7 +10,7 @@ import { BrainEvent } from '../packages/context-brain/contracts.js';
 const args=process.argv.slice(2);
 const synthetic=args.includes('--demo') || args.includes('--replay');
 const providers=synthetic?syntheticContextProviders():liveContextProviders();
-const brain=new ContextBrain(providers);
+const brain=new ContextBrain(providers,undefined,args.includes('--record')&&!synthetic?new TaskHistoryStore(resolve('.local/context-brain/task-history')):undefined);
 const output=resolve('.local/context-brain');
 await mkdir(output,{recursive:true,mode:0o700});
 async function persist(view:BrainView) {
