@@ -57,6 +57,7 @@ const REWRITES = [
   ["`/ui/", "`/cobrowse/live/ui/"],
   ['"/ui', '"/cobrowse/live/ui'],
   ["'/ui", "'/cobrowse/live/ui"],
+  ["url(/ui", "url(/cobrowse/live/ui"],
 ];
 
 function rewriteBody(text) {
@@ -65,17 +66,75 @@ function rewriteBody(text) {
   return out;
 }
 
-function proxyHttp(req, res) {
-  const target = new URL(
-    steelPath(new URL(req.url || "/", "http://localhost").pathname),
-    STEEL_BASE_URL,
-  );
+function steelJson(path, method, body) {
+  return new Promise((resolve) => {
+    const target = new URL(path, STEEL_BASE_URL);
+    const payload = body === undefined ? null : JSON.stringify(body);
+    const out = http.request(
+      target,
+      {
+        method: method || "GET",
+        headers: { "content-type": "application/json", host: target.host },
+      },
+      (steelRes) => {
+        const chunks = [];
+        steelRes.on("data", (c) => chunks.push(c));
+        steelRes.on("end", () => {
+          try {
+            resolve(JSON.parse(Buffer.concat(chunks).toString("utf8")));
+          } catch {
+            resolve(null);
+          }
+        });
+      },
+    );
+    out.on("error", () => resolve(null));
+    if (payload) out.write(payload);
+    out.end();
+  });
+}
+
+let cachedSession = { id: null, at: 0 };
+
+async function liveSessionId() {
+  if (cachedSession.id && Date.now() - cachedSession.at < 10000) return cachedSession.id;
+  const data = await steelJson("/v1/sessions");
+  const list = data?.sessions ?? [];
+  let current = list.find((s) => s?.status === "live") || list[0];
+  if (!current) {
+    const created = await steelJson("/v1/sessions", "POST", {});
+    current = created?.id ? created : null;
+  }
+  cachedSession = { id: current ? current.id : null, at: Date.now() };
+  return cachedSession.id;
+}
+
+// Steel's tab-discovery client calls /v1/sessions/cast with no id; Steel only
+// answers /v1/sessions/<id>/cast. Route id-less discovery at the newest session.
+async function withSessionId(steelRest) {
+  if (steelRest !== "/v1/sessions/cast") return steelRest;
+  const id = await liveSessionId().catch(() => null);
+  if (id) console.log(`cast discovery -> session ${id}`);
+  return id ? `/v1/sessions/${id}/cast` : steelRest;
+}
+
+async function proxyHttp(req, res) {
+  let steelRest = steelPath(new URL(req.url || "/", "http://localhost").pathname);
+  try {
+    steelRest = await withSessionId(steelRest);
+  } catch (err) {
+    console.error(`session lookup failed: ${err}`);
+  }
+  const target = new URL(steelRest, STEEL_BASE_URL);
   const { "content-length": _dropped, ...rest } = req.headers;
   const headers = { ...rest, host: target.host, "accept-encoding": "identity" };
   const out = http.request(target, { method: req.method, headers }, (steelRes) => {
     const type = steelRes.headers["content-type"] || "";
     const rewrite =
-      type.includes("text/html") || type.includes("javascript") || type.includes("json");
+      type.includes("text/html") ||
+      type.includes("javascript") ||
+      type.includes("json") ||
+      type.includes("css");
     const outHeaders = { ...steelRes.headers };
     for (const h of ["location", "refresh"]) {
       if (typeof outHeaders[h] === "string" && outHeaders[h].startsWith("/")) {
@@ -92,6 +151,7 @@ function proxyHttp(req, res) {
     steelRes.on("end", () => {
       const body = rewriteBody(Buffer.concat(chunks).toString("utf8"));
       outHeaders["content-length"] = String(Buffer.byteLength(body));
+      outHeaders["cache-control"] = "no-store";
       res.writeHead(steelRes.statusCode || 502, outHeaders);
       res.end(body);
     });
@@ -150,22 +210,43 @@ server.on("upgrade", (req, socket) => {
     socket.destroy();
     return;
   }
-  const target = new URL(steelPath(url.pathname) + url.search, STEEL_BASE_URL);
-  const out = http.request(target, {
-    method: req.method,
-    headers: { ...req.headers, host: target.host },
-  });
-  out.on("upgrade", (steelRes, steelSocket) => {
-    socket.write("HTTP/1.1 101 Switching Protocols\r\n");
-    for (const [k, v] of Object.entries(steelRes.headers)) {
-      if (v !== undefined) socket.write(`${k}: ${Array.isArray(v) ? v.join(", ") : v}\r\n`);
+  (async () => {
+    let rest = steelPath(url.pathname);
+    try {
+      rest = await withSessionId(rest);
+    } catch (err) {
+      console.error(`session lookup failed: ${err}`);
     }
-    socket.write("\r\n");
-    steelSocket.pipe(socket);
-    socket.pipe(steelSocket);
-  });
-  out.on("error", () => socket.destroy());
-  out.end();
+    const target = new URL(rest + url.search, STEEL_BASE_URL);
+    console.log(`upgrade ${url.pathname} -> ${rest}`);
+    const out = http.request(target, {
+      method: req.method,
+      headers: { ...req.headers, host: target.host },
+    });
+    out.on("upgrade", (steelRes, steelSocket) => {
+      socket.write("HTTP/1.1 101 Switching Protocols\r\n");
+      for (const [k, v] of Object.entries(steelRes.headers)) {
+        if (v !== undefined) socket.write(`${k}: ${Array.isArray(v) ? v.join(", ") : v}\r\n`);
+      }
+      socket.write("\r\n");
+      steelSocket.pipe(socket);
+      socket.pipe(steelSocket);
+    });
+    out.on("response", (steelRes) => {
+      console.error(`steel answered upgrade with ${steelRes.statusCode} for ${rest}`);
+      socket.write(`HTTP/1.1 ${steelRes.statusCode} ${steelRes.statusMessage || ""}\r\n`);
+      for (const [k, v] of Object.entries(steelRes.headers)) {
+        if (v !== undefined) socket.write(`${k}: ${Array.isArray(v) ? v.join(", ") : v}\r\n`);
+      }
+      socket.write("\r\n");
+      steelRes.pipe(socket);
+    });
+    out.on("error", (err) => {
+      console.error(`upgrade to ${rest} failed: ${err.message}`);
+      socket.destroy();
+    });
+    out.end();
+  })().catch(() => socket.destroy());
 });
 
 server.listen(PORT, HOST, () => {
