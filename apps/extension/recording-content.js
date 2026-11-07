@@ -26,7 +26,19 @@
     if (event.isTrusted && Date.now() - lastScroll > 1000) { lastScroll = Date.now(); send('scroll'); }
   }, {passive:true,capture:true});
   document.addEventListener('visibilitychange', () => send('page-visible'));
+  const context = () => {
+    const excluded='input,textarea,select,[contenteditable],[data-sensitive],[autocomplete^="cc-"],script,style,noscript,iframe,[hidden],[aria-hidden="true"]';
+    const headings=[...document.querySelectorAll('h1,h2,[role="heading"]')].filter(element=>!element.closest(excluded)).slice(0,3).map(element=>element.textContent.replace(/\s+/g,' ').trim().slice(0,120));
+    const walker=document.createTreeWalker(document.body??document.documentElement,NodeFilter.SHOW_TEXT);
+    let excerpt='',visited=0,node;
+    while ((node=walker.nextNode()) && visited++<500 && excerpt.length<400) {
+      const parent=node.parentElement;
+      if (parent && !parent.closest(excluded) && parent.getClientRects().length) excerpt+=' '+node.textContent.replace(/\s+/g,' ').trim();
+    }
+    return {title:document.title.slice(0,160),headings,excerpt:excerpt.trim().slice(0,400)};
+  };
   chrome.runtime.onMessage.addListener((message, _sender, respond) => {
+    if (message?.kind === 'recording:context-request') respond(context());
     if (message?.kind === 'recording:ping') respond({ok:true});
   });
   send('page-visible');

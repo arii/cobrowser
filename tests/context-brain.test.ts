@@ -13,7 +13,7 @@ function setup() {
   const result=<T>(value:T):CallResult<T>=>({value,model:'synthetic',mode:'replay',latencyMs:10,inputHash:'synthetic-hash',usage:{},version:'test-v1'});
   const providers:BrainProviders={mode:'replay',snap:async()=>{if(failSnap) throw new Error('private provider failure');return result(signals);},context:async input=>{
     calls.push(structuredClone(input));if(failPreview) throw new Error('private provider failure');
-    return result({intent:'Task A',summary:'Task A summary',status:'continuing',confidence:.9,evidenceIds:[input.events.at(-1)!.id],explanation:'Observed field change',...decision});
+    return result({intent:'Task A',summary:'Task A summary',status:'continuing',confidence:.9,evidenceIds:[input.events.at(-1)!.id],explanation:'Observed field change',nextAction:{kind:'unknown',description:'Insufficient evidence',confidence:0,targetTabId:null,evidenceIds:[input.events.at(-1)!.id]},...decision});
   }};
   const brain=new ContextBrain(providers,()=>now);
   const event=(extra:Partial<BrainEvent>={}):BrainEvent=>{now+=100;return {id:`event-${++index}`,at:new Date(now).toISOString(),sessionId:'session-a',origin:'http://127.0.0.1:3210',tabId:1,kind:'change',tag:'INPUT',provenance:'human',...extra};};
@@ -49,13 +49,13 @@ test('inconsistent candidates and unsupported change hypotheses cannot erase act
   s.setDecision({intent:'Task C',status:'new_task'});await s.brain.observe([s.event()]);
   assert.equal(s.brain.view().working!.intent,'Task A');assert.equal(s.brain.view().pendingSwitches,1);
 });
-test('new tab/session/origin and idle expiry begin without previous context',async()=>{
+test('tab and origin changes preserve a task; new sessions and idle expiry retire it',async()=>{
   const s=setup();await s.brain.observe([s.event()]);
-  await s.brain.observe([s.event({tabId:2})]);assert.equal(s.calls.at(-1)!.previous,null);assert.equal(s.calls.at(-1)!.events.length,1);
+  await s.brain.observe([s.event({tabId:2})]);assert.equal(s.calls.at(-1)!.previous!.intent,'Task A');assert.equal(s.calls.at(-1)!.events.length,2);
   s.advance(121000);assert.equal(s.brain.view().working,null);
   await s.brain.observe([s.event({tabId:2})]);assert.equal(s.calls.at(-1)!.previous,null);
   await s.brain.observe([s.event({sessionId:'session-b',tabId:2})]);assert.equal(s.calls.at(-1)!.previous,null);
-  await s.brain.observe([s.event({sessionId:'session-b',tabId:2,origin:'https://example.org'})]);assert.equal(s.calls.at(-1)!.previous,null);
+  await s.brain.observe([s.event({sessionId:'session-b',tabId:2,origin:'https://example.org'})]);assert.equal(s.calls.at(-1)!.previous!.intent,'Task A');
   s.advance(25*3600000);assert.equal(s.brain.view().archived.length,0);assert(s.brain.view().journal.every(entry=>entry.kind==='context-retired'));
 });
 test('completed tasks are retired before the next meaningful action; clear removes all derived state',async()=>{

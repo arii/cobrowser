@@ -1,13 +1,14 @@
-// Human interaction metadata for the assigned origin (fixture when unassigned).
+// Opt-in observation across HTTP(S) tabs, independent of execution assignment.
 // Independent of debugger/native probe execution.
-const ORIGIN = 'http://127.0.0.1:3210';
+const webOrigin = value => {try {const url=new URL(value);return ['http:','https:'].includes(url.protocol)?url.origin:null;} catch {return null;}};
+let lastTabRefresh=0;
 function messageOrigin(value) {
   try { return new URL(value ?? '').origin; } catch { return ''; }
 }
 const KEY = 'fixtureRecording';
 const TTL = 24 * 60 * 60 * 1000;
 const LIMIT = 2000;
-const empty = () => ({schemaVersion:1, sessionId:null, startedAt:null, events:[], dropped:0});
+const empty = () => ({schemaVersion:1, sessionId:null, startedAt:null, events:[], tabs:[], tabCount:0, dropped:0});
 let queue = Promise.resolve();
 function serial(task) {
   const result = queue.then(task);
@@ -19,6 +20,7 @@ async function read() {
   const state = saved[KEY] ?? empty();
   if (saved.contextBrain && Date.now()-Date.parse(saved.contextBrain.connectedAt)>TTL) await chrome.storage.local.remove('contextBrain');
   const cutoff = Date.now() - TTL;
+  state.tabs=(state.tabs??[]).filter(tab=>Date.parse(tab.observedAt)>cutoff);
   state.events = state.events.filter(event => Date.parse(event.at) > cutoff);
   return state;
 }
@@ -26,13 +28,38 @@ async function badge(enabled) {
   await chrome.action.setBadgeText({text:enabled?'REC':''});
   await chrome.action.setBadgeBackgroundColor({color:'#b42318'});
 }
+async function refreshTabs(state, force=false) {
+  if (!force && Date.now()-lastTabRefresh<5000) return;
+  lastTabRefresh=Date.now();
+  const tabs=(await chrome.tabs.query({})).filter(tab=>!tab.incognito && webOrigin(tab.url));
+  state.tabCount=tabs.length;
+  state.tabs=await Promise.all(tabs.sort((a,b)=>Number(b.active)-Number(a.active)||(b.lastAccessed??0)-(a.lastAccessed??0)).slice(0,200).map(async tab=>{
+    const base={tabId:tab.id,origin:webOrigin(tab.url),title:(tab.title??'').slice(0,160),headings:[],excerpt:'',active:tab.active,observedAt:new Date().toISOString(),readStatus:'unavailable'};
+    try {
+      let context;
+      try {context=await chrome.tabs.sendMessage(tab.id,{kind:'recording:context-request'},{frameId:0});}
+      catch {
+        const files=chrome.runtime.getManifest().content_scripts?.flatMap(script=>script.js??[])??[];
+        if (!files.length) return base;
+        await chrome.scripting.executeScript({target:{tabId:tab.id},files});
+        context=await chrome.tabs.sendMessage(tab.id,{kind:'recording:context-request'},{frameId:0});
+      }
+      const current=await chrome.tabs.get(tab.id);
+      if (current.url!==tab.url || current.incognito) return base;
+      return {...base,title:typeof context?.title==='string'?context.title.slice(0,160):base.title,
+        headings:Array.isArray(context?.headings)?context.headings.filter(value=>typeof value==='string').slice(0,3).map(value=>value.slice(0,120)):[],
+        excerpt:typeof context?.excerpt==='string'?context.excerpt.slice(0,400):'',readStatus:'ready'};
+    } catch {return base;}
+  }));
+}
 async function snapshot() {
   const state = await read();
-  const {recordingEnabled = false, recordingError = null, assigned} = await chrome.storage.session.get(['recordingEnabled','recordingError','assigned']);
+  const {recordingEnabled = false, recordingError = null} = await chrome.storage.session.get(['recordingEnabled','recordingError']);
+  if (recordingEnabled) {await refreshTabs(state);await save(state);}
   const {contextBrain:storedBrain=null} = await chrome.storage.local.get('contextBrain');
   const contextBrain=storedBrain?.providers?.context?storedBrain:null;
   const brain=contextBrain && Date.now()-Date.parse(contextBrain.connectedAt)>120000?{...contextBrain,working:null,recent:[],pendingSwitches:0}:contextBrain;
-  return {...state, brain, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:assigned?.origin ?? ORIGIN};
+  return {...state, brain, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:'all open HTTP/HTTPS tabs'};
 }
 async function save(state) {
   try { await chrome.storage.local.set({[KEY]:state}); }
@@ -58,19 +85,17 @@ export function installRecorder() {
       serial(async () => {
         if (!validEvent(message.event)) throw new Error('invalid-recording-event');
         if (!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled) return;
-        const {assigned, lastDispatch} = await chrome.storage.session.get(['assigned','lastDispatch']);
-        const expected = assigned?.origin ?? ORIGIN;
+        const {lastDispatch} = await chrome.storage.session.get(['lastDispatch']);
+        const expected = webOrigin(sender.url);
+        if (!expected) return;
         if (messageOrigin(sender.url) !== expected || messageOrigin(sender.tab?.url) !== expected) return;
         if (lastDispatch?.tabId === sender.tab.id && Date.now() - lastDispatch.at < 750) return; // Own debugger input is not a human observation.
         const tab = await chrome.tabs.get(sender.tab.id);
         if (!tab.active || messageOrigin(tab.url) !== expected || !(await chrome.windows.get(tab.windowId)).focused) return;
         const state = await read();
         if (state.events.length >= LIMIT) {
-          state.dropped++;
-          await save(state);
-          await chrome.storage.session.set({recordingEnabled:false,recordingError:'Recording limit reached. Export a copy, then clear saved events to continue.'});
-          await badge(false);
-          return;
+          const removed=state.events.splice(0,state.events.length-LIMIT+1);
+          state.dropped+=removed.length;
         }
         state.events.push({id:crypto.randomUUID(),sessionId:state.sessionId,at:new Date().toISOString(),
           origin:expected,tabId:sender.tab.id,provenance:'human',...message.event});
@@ -82,7 +107,7 @@ export function installRecorder() {
     serial(async () => {
       if (message.kind === 'recording:start') {
         const state = await read();
-        if (state.events.length >= LIMIT) throw new Error('Clear the full recording first; export a copy to keep it.');
+        await refreshTabs(state,true);
         state.sessionId = crypto.randomUUID();
         state.startedAt = new Date().toISOString();
         await save(state);
@@ -101,9 +126,13 @@ export function installRecorder() {
     }).then(value => respond({ok:true,value}), error => respond({ok:false,error:error.message}));
     return true;
   });
-  chrome.alarms.create('recording-retention', {periodInMinutes:1});
+  chrome.alarms.create('recording-retention', {periodInMinutes:.5});
+  const tabsChanged=()=>{lastTabRefresh=0;void serial(async()=>{if(!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled)return;const state=await read();await refreshTabs(state);await save(state);}).catch(()=>{});};
+  chrome.tabs.onActivated.addListener(tabsChanged);
+  chrome.tabs.onRemoved.addListener(tabsChanged);
+  chrome.tabs.onUpdated.addListener((_id,change)=>{if(change.status==='complete')tabsChanged();});
   chrome.alarms.onAlarm.addListener(alarm => {
-    if (alarm.name === 'recording-retention') void serial(async () => save(await read())).catch(() => {});
+    if (alarm.name === 'recording-retention') void serial(async () => {const state=await read();if ((await chrome.storage.session.get('recordingEnabled')).recordingEnabled) await refreshTabs(state);await save(state);}).catch(() => {});
   });
   void serial(async () => { await save(await read()); await badge((await snapshot()).enabled); }).catch(() => {});
 }

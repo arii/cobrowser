@@ -15,7 +15,7 @@ export function syntheticContextProviders():BrainProviders {
     async context(input) {
       const latest=input.events.filter(event=>!input.freshEventIds || input.freshEventIds.includes(event.id)).at(-1)!;
       const submit=latest.kind==='submit';
-      const decision:ContextDecision={intent:submit?'Submit a report request':'Inspect or edit the reporting form',summary:submit?'Recent evidence shows form submission; download success is not established.':'Recent metadata suggests form interaction. Exact goal and field values are unknown.',status:submit && input.previous?'new_task':'continuing',confidence:.85,evidenceIds:[latest.id],explanation:'Synthetic demonstration rule based on the latest event; no model was called.'};
+      const decision:ContextDecision={intent:submit?'Submit a report request':'Inspect or edit the reporting form',summary:submit?'Recent evidence shows form submission; download success is not established.':'Recent metadata suggests form interaction. Exact goal and field values are unknown.',status:submit && input.previous?'new_task':'continuing',confidence:.85,evidenceIds:[latest.id],explanation:'Synthetic demonstration rule based on the latest event; no model was called.',nextAction:{kind:'unknown',description:'Synthetic preview: no real next-action inference was performed.',targetTabId:null,confidence:0,evidenceIds:[latest.id]}};
       return result(decision,`synthetic-${contextModel}`,input);
     },
   };

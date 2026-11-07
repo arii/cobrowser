@@ -15,11 +15,23 @@ export const BrainEvent = z.object({
   if (event.key && event.kind !== 'key') context.addIssue({code:'custom',message:'unexpected-key'});
 });
 export type BrainEvent = z.infer<typeof BrainEvent>;
+export const TabContext = z.object({
+  tabId:z.number().int().nonnegative(),origin:z.url().refine(value=>{const u=new URL(value);return ['http:','https:'].includes(u.protocol)&&u.origin===value;}),
+  title:z.string().max(160),headings:z.array(z.string().max(120)).max(3),excerpt:z.string().max(400),
+  active:z.boolean(),observedAt:z.iso.datetime(),readStatus:z.enum(['ready','unavailable']),
+}).strict();
+export type TabContext=z.infer<typeof TabContext>;
+export const NextAction=z.object({
+  kind:z.enum(['click','type','scroll','switch-tab','navigate','submit','wait','unknown']),
+  description:z.string().min(1).max(300),targetTabId:z.number().int().nonnegative().nullable(),
+  confidence:z.number().min(0).max(1),evidenceIds:z.array(label).min(1).max(12),
+}).strict();
+export type NextAction=z.infer<typeof NextAction>;
 export const ContextDecision = z.object({
   intent:label, summary:z.string().min(1).max(1200),
   status:z.enum(['continuing','new_task','uncertain','completed']),
   confidence:z.number().min(0).max(1), evidenceIds:z.array(label).min(1).max(12),
-  explanation:z.string().min(1).max(500),
+  explanation:z.string().min(1).max(500),nextAction:NextAction,
 }).strict();
 export type ContextDecision = z.infer<typeof ContextDecision>;
 export const SnapSignals = z.object({
@@ -36,10 +48,11 @@ export type SnapSignals = z.infer<typeof SnapSignals>;
 export type CallResult<T> = {value:T; model:string; mode:'live'|'replay'; latencyMs:number; inputHash:string; usage:Record<string,unknown>; version:string};
 export type WorkingContext = {
   taskId:string; scope:string; openedAt:string; updatedAt:string;
-  intent:string; summary:string; confidence:number; status:ContextDecision['status'];
+  intent:string; summary:string; confidence:number; status:ContextDecision['status'];nextAction:NextAction;
 };
 export type BrainInput = {
   previous:WorkingContext|null; events:BrainEvent[]; signals:SnapSignals|null;
+  tabs?:TabContext[];
   freshEventIds?:string[];
   candidate?:{intent:string;confirmations:number}|null;
 };

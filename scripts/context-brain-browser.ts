@@ -26,11 +26,10 @@ export async function runBrowserBrain(brain:ContextBrain,persist:(view:BrainView
     const monitor=await context.newPage();await monitor.goto(`chrome-extension://${id}/recording.html`);
     await monitor.getByRole('button',{name:'Start recording',exact:true}).click();
     const page=await context.newPage();await page.goto(`${origin}/`);await page.bringToFront();
-    const sourceTabId=(await worker.evaluate(()=>chrome.tabs.query({active:true,lastFocusedWindow:true})))[0]?.id;
-    console.log(`Context brain: ${brain.view().mode.toUpperCase()}${brain.view().mode==='replay'?' — synthetic model responses; no provider calls':''}.\nInteract with the fixture, then open the Cobrowser recording monitor tab.\nLogs: ${resolve('.local/context-brain')}\nClose this browser to stop.`);
+    console.log(`Context brain: ${brain.view().mode.toUpperCase()}${brain.view().mode==='replay'?' — synthetic model responses; no provider calls':''}.\nBrowse any HTTP/HTTPS tab in this browser, then open the Cobrowser recording monitor tab.\nLogs: ${resolve('.local/context-brain')}\nClose this browser to stop.`);
     await page.evaluate(mode=>{
       const note=document.createElement('p');
-      note.textContent=mode==='replay'?'Context brain preview: real interactions, simulated analysis. Switch to the Cobrowser recording monitor tab to inspect the current task and decision log.':'Context brain is live. Masked fixture screenshots go to Snap; action metadata and context go to the configured context model (shown in the monitor). Inspect or pause it in the Cobrowser recording monitor tab.';
+      note.textContent=mode==='replay'?'Context brain preview: real interactions, simulated analysis. Switch to the Cobrowser recording monitor tab to inspect the current task and decision log.':'Context brain is live. Masked screenshots from the active browser tab go to Snap; action metadata and context go to the configured context model (shown in the monitor). Inspect or pause it in the Cobrowser recording monitor tab.';
       note.style.cssText='padding:16px;background:#dcefe5;max-width:700px';document.body.prepend(note);
     },brain.view().mode);
     const beganAt=Date.now();
@@ -40,7 +39,7 @@ export async function runBrowserBrain(brain:ContextBrain,persist:(view:BrainView
     }
     while (!closed && Date.now()<deadline) {
       const {fixtureRecording:recording,recordingEnabled}=await worker.evaluate(async()=>({
-        ...(await chrome.storage.local.get<{fixtureRecording?:{sessionId:string|null;events:unknown[]}}>('fixtureRecording')),
+        ...(await chrome.storage.local.get<{fixtureRecording?:{sessionId:string|null;events:unknown[];tabs?:unknown[]}}>('fixtureRecording')),
         ...(await chrome.storage.session.get<{recordingEnabled?:boolean}>('recordingEnabled')),
       }));
       if ((recording?.sessionId??null)!==observedSession || !recording?.sessionId) {
@@ -50,29 +49,34 @@ export async function runBrowserBrain(brain:ContextBrain,persist:(view:BrainView
         await page.locator('h1').evaluate(element=>{element.textContent='Reporting fixture: asynchronous screen update';});smokeChanged=true;
       }
       if (!recordingEnabled) previousFrame=undefined;
+      brain.setTabs(recording?.tabs??[]);
       const inputs=recordingEnabled?(recording?.events??[]).map(event=>BrainEvent.parse(event)).filter(event=>event.sessionId===recording?.sessionId && !seen.has(event.id)):[];
       // Bounded backlog; old records stay in the recorder but are not replayed forever.
       const pending=inputs.slice(-64);
       for (const event of inputs) seen.add(event.id);
       if (seen.size>4000) {seen.clear();for (const event of recording?.events??[]) seen.add(BrainEvent.parse(event).id);}
       if (recordingEnabled && recording?.sessionId) {
-        // A single currently focused fixture tab is eligible for screenshot analysis.
+        // Capture only the focused HTTP(S) tab. Background tabs contribute text summaries.
         const tabs=await worker.evaluate(()=>chrome.tabs.query({active:true,lastFocusedWindow:true}));
         const active=tabs[0];const focused=active?await worker.evaluate(id=>chrome.windows.get(id),active.windowId):null;const latest=pending.at(-1);
         let frame:ContextFrame|undefined;
         const significant=pending.some(event=>!['pointer','scroll','page-visible'].includes(event.kind));
-        if ((significant || Date.now()-lastCaptureAt>=4000) && focused?.focused && active?.id===sourceTabId && (!latest || active?.id===latest.tabId) && active.url===`${origin}/` && page.url()===`${origin}/`) {
+        const activeOrigin=active?.url && /^https?:/.test(active.url)?new URL(active.url).origin:null;
+        const matchingPages=context.pages().filter(candidate=>candidate.url()===active?.url);
+        // Duplicate URLs are ambiguous; skip pixels while retaining tab summaries.
+        const sourcePage=matchingPages.length===1?matchingPages[0]:undefined;
+        if ((significant || Date.now()-lastCaptureAt>=4000) && focused?.focused && activeOrigin && sourcePage && !active?.incognito && (!latest || active?.id===latest.tabId)) {
           // Mask editable/sensitive surfaces and frames before creating the screenshot.
-          const bytes=await page.screenshot({type:'png',mask:[page.locator('input,textarea,select,[contenteditable],[data-sensitive],iframe')],maskColor:'#000000'});
+          const bytes=await sourcePage.screenshot({type:'png',mask:[sourcePage.locator('input,textarea,select,[contenteditable],[data-sensitive],iframe')],maskColor:'#000000'});
           lastCaptureAt=Date.now();
           const after=await worker.evaluate(()=>chrome.tabs.query({active:true,lastFocusedWindow:true}));
           const afterWindow=after[0]?await worker.evaluate(id=>chrome.windows.get(id),after[0].windowId):null;
-          if (afterWindow?.focused && after[0]?.id===active.id && after[0]?.url===`${origin}/` && page.url()===`${origin}/`) {
+          if (afterWindow?.focused && after[0]?.id===active.id && after[0]?.url===active.url && sourcePage.url()===active.url) {
             const imageHash=createHash('sha256').update(bytes).digest('hex');
-            frame={image:{mediaType:'image/png',base64:bytes.toString('base64')},at:new Date().toISOString(),sessionId:recording.sessionId,origin,tabId:active.id!};
+            frame={image:{mediaType:'image/png',base64:bytes.toString('base64')},at:new Date().toISOString(),sessionId:recording.sessionId,origin:activeOrigin,tabId:active.id!};
             if (imageHash!==lastFrameHash) {
               if (pending.length>=64) pending.shift();
-              pending.push({id:`screen-${randomUUID()}`,at:frame.at,sessionId:frame.sessionId,origin,tabId:frame.tabId,kind:'screen-change',tag:'PAGE',provenance:'human'});
+              pending.push({id:`screen-${randomUUID()}`,at:frame.at,sessionId:frame.sessionId,origin:frame.origin,tabId:frame.tabId,kind:'screen-change',tag:'PAGE',provenance:'human'});
               lastFrameHash=imageHash;
             }
           }
@@ -82,10 +86,10 @@ export async function runBrowserBrain(brain:ContextBrain,persist:(view:BrainView
           if (!group.length) return;
           const last=group.at(-1)!;
           const working=brain.view().working;
-          const previousAllowed=working && working.scope===`${last.sessionId}|${last.origin}|${last.tabId}` && working.status!=='completed';
+          const previousAllowed=working && working.scope===last.sessionId && working.status!=='completed';
           const frames=frame && last.tabId===frame.tabId && last.sessionId===frame.sessionId && last.origin===frame.origin
             ? [previousAllowed?previousFrame:undefined,frame].filter((item):item is ContextFrame=>Boolean(item && item.sessionId===last.sessionId && item.tabId===last.tabId && Date.now()-Date.parse(item.at)<90_000)) : [];
-          await brain.observe(group,frames);group=[];
+          while(group.length){await brain.observe(group.slice(0,64),frames);group=group.slice(64);}
         };
         for (const event of pending) {
           if (group.length && (event.tabId!==group[0].tabId || event.sessionId!==group[0].sessionId || event.origin!==group[0].origin)) await flush();
