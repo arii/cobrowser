@@ -32,3 +32,20 @@ test('native image evidence with another session or tab is rejected before any m
   message.observation.frames[0].sessionId='session-1';message.observation.frames[0].tabId=999;
   await assert.rejects(handle(message),/observation-scope-invalid/);
 });
+
+test('profile task history survives native-host recreation and explicit clear removes it',async()=>{
+  const { mkdtemp,rm,readFile }=await import('node:fs/promises');const { tmpdir }=await import('node:os');const { join }=await import('node:path');
+  const root=await mkdtemp(join(tmpdir(),'native-task-history-'));
+  const clientId='11111111-1111-4111-8111-111111111111',historyGeneration='22222222-2222-4222-8222-222222222222';
+  try{
+    const original=nativeBrainHandler(syntheticContextProviders(),undefined,{historyRoot:root});
+    const first=await original({...batch(),clientId,historyGeneration});assert.ok(first.state.history.totalActions>0);
+    const restored=nativeBrainHandler(syntheticContextProviders(),undefined,{historyRoot:root});
+    const second=await restored({...batch(),seq:2,clientId,historyGeneration,events:[],observation:undefined});
+    assert.ok(second.state.history.totalActions>=first.state.history.totalActions);assert.equal(second.state.working!.taskId,first.state.working!.taskId);
+    const text=await readFile(join(root,clientId,'tasks.jsonl'),'utf8');assert.equal(text.includes('iVBORw0KGgo='),false);
+    const cleared=await restored({...batch(),seq:3,clientId,historyGeneration:'33333333-3333-4333-8333-333333333333',enabled:false,sessionId:null,events:[],tabs:[],observation:undefined});
+    assert.equal(cleared.state.history.totalActions,0);assert.equal(cleared.state.working,null);
+    assert.equal((await readFile(join(root,clientId,'tasks.jsonl'),'utf8')).length,0);
+  }finally{await rm(root,{recursive:true,force:true});}
+});

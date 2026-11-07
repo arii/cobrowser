@@ -1,24 +1,35 @@
-import { discoverSkills, riskyAction, validTarget, skillIssues, defaultSkillName } from './skill-learning.js';
+import { readTaskActions } from './action-history.js';
+import { analyzeSkills, riskyAction, validTarget, skillIssues, defaultSkillName, skillGoalKey } from './skill-learning.js';
 const KEY='skillLibrary';
 let queue=Promise.resolve();
 let executing=false;
 const serial=task=>{const next=queue.then(task);queue=next.catch(()=>{});return next;};
 const library=async()=>((await chrome.storage.local.get(KEY))[KEY]??[]).map(skill=>{
   const blockers=skillIssues(skill);
-  return {...skill,title:skill.customTitle?skill.title:defaultSkillName(skill.steps),blockers,active:skill.active===true && !blockers.length,needsExamples:blockers.length>0};
+  return {...skill,goalKey:validTarget(skill.steps?.at(-1)?.target)?skillGoalKey(skill.origin,skill.steps.at(-1).target):skill.goalKey,title:skill.customTitle?skill.title:defaultSkillName(skill.steps),blockers,active:skill.active===true && !blockers.length,needsExamples:blockers.length>0};
 });
 function skillName(value){
   if(typeof value!=='string' || !value.trim() || value.trim().length>80 || /[\u0000-\u001f]/.test(value))throw new Error('Enter a skill name from 1 to 80 characters.');
   return value.trim();
 }
-async function candidates(){
-  const {fixtureRecording,contextBrain,dismissedSkillGoals=[]}=await chrome.storage.local.get(['fixtureRecording','contextBrain','dismissedSkillGoals']);
-  return discoverSkills((fixtureRecording?.events??[]).filter(event=>Date.parse(event.at)>Date.now()-86400000),contextBrain).filter(skill=>!dismissedSkillGoals.includes(skill.goalKey));
+async function discovery(){
+  const {fixtureRecording,contextBrain,brainConnection,dismissedSkillGoals=[]}=await chrome.storage.local.get(['fixtureRecording','contextBrain','brainConnection','dismissedSkillGoals']);
+  const actions=await readTaskActions(contextBrain?.working?.openedAt??fixtureRecording?.startedAt);
+  const value=analyzeSkills(actions.length?actions:fixtureRecording?.events??[],contextBrain?{...contextBrain,modelAvailable:!['unavailable','error'].includes(brainConnection?.status)}:null);
+  return {candidates:value.candidates.filter(skill=>!dismissedSkillGoals.includes(skill.goalKey)),learning:value.learning.filter(skill=>!dismissedSkillGoals.includes(skill.goalKey))};
 }
+const candidates=async()=>(await discovery()).candidates;
 async function state(){
-  const {skillRun}=await chrome.storage.session.get('skillRun');
-  const skills=await library();
-  return {skills,candidates:(await candidates()).filter(candidate=>!skills.some(skill=>!skill.needsExamples && skill.goalKey===candidate.goalKey)),run:skillRun??null};
+  const {skillRun,recordingEnabled=false}=await chrome.storage.session.get(['skillRun','recordingEnabled']);
+  const skills=await library(),value=await discovery();
+  let learned=false;
+  for(const candidate of value.candidates){
+    if(skills.some(skill=>!skill.needsExamples && skill.goalKey===candidate.goalKey) || skills.filter(skill=>!skill.needsExamples).length>=30)continue;
+    skills.push({...candidate,id:crypto.randomUUID(),active:false,learnedAutomatically:true,savedAt:new Date().toISOString()});learned=true;
+  }
+  if(learned)await chrome.storage.local.set({[KEY]:skills});
+  const {contextBrain}=await chrome.storage.local.get('contextBrain');
+  return {history:contextBrain?.history??null,skills,candidates:value.candidates.filter(candidate=>!skills.some(skill=>!skill.needsExamples && skill.goalKey===candidate.goalKey)),learning:value.learning,recordingEnabled,run:skillRun??null};
 }
 // Runs use declarative control descriptors. No generated scripts or stored CSS selectors execute.
 function locate(target, parameter, origin, applySelection=false, verifyInput=false){
@@ -61,7 +72,7 @@ async function assertRunning(id){const {skillRun}=await chrome.storage.session.g
 async function pageResult(tabId){
   const value=await chrome.tabs.sendMessage(tabId,{kind:'recording:context-request'},{frameId:0});
   if(!value || typeof value.excerpt!=='string')throw new Error('The page result cannot be observed.');
-  return JSON.stringify([value.title,value.headings,value.excerpt]);
+  return JSON.stringify([value.title,value.headings,value.excerpt,value.submissionSequence??0]);
 }
 async function perform(skill,parameters,run,source){
   let attached=false;
@@ -125,10 +136,10 @@ async function perform(skill,parameters,run,source){
           if(await pageResult(tab.id)!==beforeResult){observed=true;break;}
           await new Promise(resolve=>setTimeout(resolve,250));
         }
-        if(!observed)throw new Error('The result action produced no observed page change. Review the workflow before trying again.');
+        if(!observed)throw new Error('The result action produced no observed page change or native form submission. Review the workflow before trying again.');
       }
     }
-    await assertRunning(run.id);run.status='finished';run.message='Steps completed and a visible result change was observed. Check that the result matches your task.';
+    await assertRunning(run.id);run.status='finished';run.message='The result action was observed. Check the page or downloaded artifact to confirm your task.';
   }catch(error){
     const {skillRun}=await chrome.storage.session.get('skillRun');
     run.status=skillRun?.status==='cancelled'?'cancelled':'failed';run.message=error.message;
@@ -140,6 +151,9 @@ async function perform(skill,parameters,run,source){
   }
 }
 export function installSkills(){
+  chrome.storage.onChanged.addListener((changes,area)=>{
+    if(area==='local' && (changes.fixtureRecording || changes.contextBrain))void serial(()=>state()).catch(()=>{});
+  });
   // A terminated worker must never automatically replay a partially completed run.
   void chrome.storage.session.get('skillRun').then(async({skillRun})=>{if(skillRun?.status==='running')await update({...skillRun,status:'interrupted',message:'The worker restarted. Review the page before starting another run.'});});
   chrome.runtime.onMessage.addListener((message,sender,respond)=>{
@@ -165,7 +179,10 @@ export function installSkills(){
         await chrome.storage.local.set({dismissedSkillGoals:[...new Set([...dismissedSkillGoals,candidate.goalKey])].slice(-100)});
       }else if(message.kind==='skills:activate' || message.kind==='skills:delete'){
         const skill=skills.find(item=>item.id===message.id);if(!skill)throw new Error('Skill not found.');
-        if(message.kind==='skills:delete')await chrome.storage.local.set({[KEY]:skills.filter(item=>item.id!==skill.id)});
+        if(message.kind==='skills:delete'){
+          const {dismissedSkillGoals=[]}=await chrome.storage.local.get('dismissedSkillGoals');
+          await chrome.storage.local.set({[KEY]:skills.filter(item=>item.id!==skill.id),dismissedSkillGoals:skill.goalKey?[...new Set([...dismissedSkillGoals,skill.goalKey])].slice(-100):dismissedSkillGoals});
+        }
         else{
           if(message.active && skillIssues(skill).length)throw new Error('This skill has replay blockers.');
           if(message.active && message.reviewed!==true)throw new Error('Review the steps before activation.');

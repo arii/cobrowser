@@ -11,7 +11,13 @@
   let maskRoot,maskToken,maskSignature;
   const removeMask=()=>{maskRoot?.remove();maskRoot=undefined;};
   controller.signal.addEventListener('abort',removeMask);
-  let interactionSequence=0;
+  let interactionSequence=0,lastSubmitClick,submissionSequence=0;
+  const describeControl=control=>{
+    if(!control || control.closest('[contenteditable],[data-sensitive],[autocomplete^="cc-"],[autocomplete="current-password"],[autocomplete="new-password"]') || ['password','hidden','file','checkbox','radio'].includes(control.type))return;
+    const name=control.tagName,copy=control.cloneNode(true);copy.querySelectorAll('input,select,textarea,[data-sensitive],[contenteditable],script,style').forEach(node=>node.remove());
+    const label=(control.getAttribute('aria-label') || (control.labels?[...control.labels].map(label=>{const node=label.cloneNode(true);node.querySelectorAll('input,select,textarea,[data-sensitive]').forEach(child=>child.remove());return node.textContent;}).join(' '):'') || (['BUTTON','A'].includes(name)?copy.textContent:'')).replace(/\s+/g,' ').trim().slice(0,100);
+    if(label)return {tag:name,label,type:(control.getAttribute('type') || (name==='BUTTON' && control.form?'submit':'')).toLowerCase()};
+  };
   const send = (kind, target, metadata = {}) => {
     if (document.visibilityState !== 'visible') return;
     const element = target instanceof Element ? target : null;
@@ -19,16 +25,13 @@
     if (element?.closest('[data-sensitive], [autocomplete^="cc-"], [autocomplete="current-password"], [autocomplete="new-password"], input[type="password"], input[type="hidden"]')) return;
     const control = element?.closest('input,select,textarea,button,a');
     const name = control?.tagName ?? element?.closest('form')?.tagName;
-    let replayTarget;
-    if (control && !control.closest('[contenteditable]') && !['password','hidden','file'].includes(control.type)) {
-      const copy=control.cloneNode(true);copy.querySelectorAll('input,select,textarea,[data-sensitive],[contenteditable],script,style').forEach(node=>node.remove());
-      const label=(control.getAttribute('aria-label') || (control.labels ? [...control.labels].map(label=>{const node=label.cloneNode(true);node.querySelectorAll('input,select,textarea,[data-sensitive]').forEach(child=>child.remove());return node.textContent;}).join(' ') : '') || (['BUTTON','A'].includes(name)?copy.textContent:'')).replace(/\s+/g,' ').trim().slice(0,100);
-      if(label)replayTarget={tag:name,label,type:(control.getAttribute('type') || (name==='BUTTON' && control.form?'submit':'')).toLowerCase()};
-    }
+    const replayTarget=describeControl(control);
+    const formTargets=kind==='click' && control?.form && control.type==='submit'?[...control.form.elements].filter(node=>['INPUT','SELECT','TEXTAREA'].includes(node.tagName)).map(describeControl).filter(Boolean).slice(0,12):null;
     const tag = kind === 'scroll' || kind === 'page-visible' ? 'PAGE' : name ?? 'OTHER';
     const sequence=['click','change','key'].includes(kind)?++interactionSequence:interactionSequence;
     const before=kind==='click' && replayTarget?JSON.stringify(context()):null;
-    const saved=chrome.runtime.sendMessage({kind:'recording:event',event:{kind,tag,...metadata,...(['click','change'].includes(kind) && replayTarget?{target:replayTarget}:{})}});
+    const saved=chrome.runtime.sendMessage({kind:'recording:event',event:{kind,tag,...metadata,...(['click','change'].includes(kind) && replayTarget?{target:replayTarget}:{}),...(formTargets?.length?{formTargets}:{})}});
+    if(kind==='click')lastSubmitClick=control?.form && control.type==='submit'?{control,saved,at:Date.now()}:null;
     // Attribute only a visible content change before the next interaction. Keep page
     // text transient: persist just a boolean effect signal bound to the saved action.
     if(before!==null){
@@ -47,6 +50,17 @@
   for (const kind of ['click','change','submit']) {
     document.addEventListener(kind, event => { if (event.isTrusted) send(kind,event.target,kind === 'click' && event.detail>0 ? {x:Math.max(0,Math.min(1,event.clientX/innerWidth)),y:Math.max(0,Math.min(1,event.clientY/innerHeight))} : {}); }, {capture:true,signal:controller.signal});
   }
+  document.addEventListener('submit',event=>{
+    if(!event.isTrusted)return;
+    const click=lastSubmitClick,form=event.target;
+    // Observe a real, uncancelled native GET submission. A repeated download need
+    // not change the DOM. This proves submission, never downloaded-file correctness.
+    setTimeout(()=>{
+      if(event.defaultPrevented || !click || Date.now()-click.at>1500 || click.control.form!==form || form.method.toLowerCase()!=='get' || new URL(form.action,location.href).origin!==location.origin || !/^(export|download|search|filter)\b/i.test(describeControl(click.control)?.label??''))return;
+      submissionSequence++;
+      void click.saved.then(result=>{if(result?.value?.id)return chrome.runtime.sendMessage({kind:'recording:effect',id:result.value.id,effect:'form-submitted'});}).catch(()=>{});
+    },0);
+  },{capture:true,signal:controller.signal});
   document.addEventListener('mousemove', event => {
     if (event.isTrusted && Date.now()-lastPointer>1000) {lastPointer=Date.now();send('pointer',event.target,{x:Math.max(0,Math.min(1,event.clientX/innerWidth)),y:Math.max(0,Math.min(1,event.clientY/innerHeight))});}
   }, {passive:true,signal:controller.signal});
@@ -97,7 +111,7 @@
       removeMask();respond({valid:Boolean(valid),documentId,dom:snapshot()});return;
     }
 
-    if (message?.kind === 'recording:context-request') respond({...context(),recorderVersion:2});
+    if (message?.kind === 'recording:context-request') respond({...context(),submissionSequence,recorderVersion:3});
     if (message?.kind === 'recording:ping') respond({ok:true});
   };
   chrome.runtime.onMessage.addListener(messageListener);

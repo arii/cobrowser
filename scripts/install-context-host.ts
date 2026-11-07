@@ -10,6 +10,7 @@ await mkdir(root,{recursive:true,mode:0o700});
 const stat=await lstat(root);if(!stat.isDirectory()||stat.isSymbolicLink()||stat.uid!==process.getuid?.()||(stat.mode&0o077))throw new Error('context-host-directory-must-be-private');
 const module=join(root,'host.cjs');
 await build({entryPoints:['scripts/context-brain-host.ts'],outfile:module,bundle:true,format:'cjs',platform:'node',target:'node24'});await chmod(module,0o600);
+if(process.argv.includes('--runtime-only')){console.log(JSON.stringify({updated:true,runtime:root,credentials:'unchanged'}));process.exit(0);}
 const quote=(value:string)=>`'${value.replaceAll("'","'\\''")}'`;
 const settings=parseEnv(await readFile(resolve('.env'),'utf8'));
 liveContextProviders({...process.env,...settings});

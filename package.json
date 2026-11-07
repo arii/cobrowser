@@ -40,7 +40,8 @@
     "verify:all-tabs": "tsx scripts/verify-all-tabs.ts",
     "install:context-host": "tsx scripts/install-context-host.ts",
     "verify:visual-context": "tsx scripts/verify-visual-context.ts",
-    "verify:skills": "tsx scripts/verify-skills.ts"
+    "verify:skills": "tsx scripts/verify-skills.ts",
+    "verify:report-skill": "tsx scripts/verify-report-skill.ts"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

@@ -6,7 +6,8 @@ export const BrainEvent = z.object({
   documentId:label.optional(), provenance:z.literal('human'),
   kind:z.enum(['click','change','submit','scroll','page-visible','pointer','key','screen-change','page-content']),
   tag:z.enum(['INPUT','SELECT','TEXTAREA','BUTTON','A','FORM','PAGE','OTHER']),
-  effect:z.literal('content-changed').optional(),
+  effect:z.enum(['content-changed','form-submitted']).optional(),
+  formTargets:z.array(z.object({tag:z.enum(['INPUT','SELECT','TEXTAREA']),label:z.string().min(1).max(100),type:z.string().max(30)}).strict()).max(12).optional(),
   target:z.object({tag:z.enum(['BUTTON','A','INPUT','SELECT','TEXTAREA']),label:z.string().min(1).max(100),type:z.string().max(30)}).strict().optional(),
   x:z.number().min(0).max(1).optional(), y:z.number().min(0).max(1).optional(),
   key:z.enum(['Tab','Enter','Escape','Backspace','Delete','ArrowUp','ArrowDown','ArrowLeft','ArrowRight']).optional(),
@@ -48,7 +49,10 @@ export const NextAction=z.object({
   confidence:z.number().min(0).max(1),evidenceIds:z.array(label).min(1).max(12),
 }).strict();
 export type NextAction=z.infer<typeof NextAction>;
+export const SkillAssessment=z.object({reusable:z.boolean(),confidence:z.number().min(0).max(1),title:z.string().min(1).max(80),reason:z.string().min(1).max(500),evidenceIds:z.array(label).min(1).max(12)}).strict();
 export const ContextDecision = z.object({
+  skillAssessment:SkillAssessment.nullable().optional(),
+  historyQuery:z.string().min(1).max(200).nullable().optional(),
   intent:label, summary:z.string().min(1).max(1200),
   status:z.enum(['continuing','new_task','uncertain','completed']),
   confidence:z.number().min(0).max(1), evidenceIds:z.array(label).min(1).max(12),
@@ -77,6 +81,7 @@ export type BrainInput = {
   observation?:IntervalEvidence;
   freshEventIds?:string[];
   candidate?:{intent:string;confirmations:number}|null;
+  history?:{taskId:string;totalActions:number;olderActionsAvailable:number;retrievedEvents:BrainEvent[];query:string|null};
 };
 export type ContextFrame = {image:import('../model-adapters/index.js').Image;at:string;sessionId:string;origin:string;tabId:number};
 export interface BrainProviders {

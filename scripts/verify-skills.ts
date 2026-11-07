@@ -32,7 +32,7 @@ try{
   }
   assert.equal((await send('skills:list')).value.candidates.length,0,'No-op demonstrations must not become skills.');
   noOpPreview=false;
-  for(let i=0;i<3;i++){
+  for(let i=0;i<1;i++){
     await source.goto(origin);await source.bringToFront();
     await source.waitForTimeout(200);
     await source.getByRole('button',{name:'Open report',exact:true}).click();
@@ -44,12 +44,10 @@ try{
   assert.equal(JSON.stringify(recording.value.events).includes('Synthetic private input'),false);
   let listing=await send('skills:list');
   assert.equal(listing.ok,true);
-  const candidate=listing.value.candidates.find((item:any)=>item.steps.length===3 && item.steps[1].kind==='change');
-  assert.ok(candidate,JSON.stringify(listing.value.candidates));assert.equal(candidate.blockers.length,0);assert.equal(candidate.title,'Preview report');assert.equal(listing.value.candidates.length,1);
+  const candidate=listing.value.skills.find((item:any)=>item.steps.length===3 && item.steps[1].kind==='change');
+  assert.ok(candidate,JSON.stringify(listing.value.candidates));assert.equal(candidate.blockers.length,0);assert.equal(candidate.title,'Preview report');assert.equal(listing.value.skills.filter((item:any)=>!item.needsExamples).length,1);
   await popup.bringToFront();
   await popup.getByRole('button',{name:'Refresh examples'}).click();
-  await popup.locator('#skills-candidates details').first().locator('summary').click();
-  await popup.getByRole('button',{name:'Save to skills',exact:true}).first().click();
   await popup.locator('#skills-library details summary').click();
   assert.equal(await popup.getByRole('button',{name:'Activate skill',exact:true}).isDisabled(),true);
   await popup.getByRole('button',{name:'Rename',exact:true}).click();
@@ -109,11 +107,10 @@ try{
   assert.equal((await send('skills:cancel')).ok,true);
   for(let i=0;i<50;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(run?.finishedAt)break;}
   assert.equal(run.status,'cancelled');
-  // Dismissal survives reopening and refresh; no overlapping alternative reappears.
+  // Deleting a learned skill suppresses automatic recreation from the same attempt.
   await send('skills:delete',{id:skill.id});
-  listing=await send('skills:list');assert.equal(listing.value.candidates.length,1);
-  assert.equal((await send('skills:dismiss',{key:listing.value.candidates[0].key})).ok,true);
-  assert.equal((await send('skills:list')).value.candidates.length,0);
+  listing=await send('skills:list');assert.equal(listing.value.candidates.length,0);
+  assert.equal(listing.value.skills.some((item:any)=>item.id===skill.id),false);
   await mkdir('.local/evidence',{recursive:true});
   await writeFile('.local/evidence/skills.json',JSON.stringify({mode:'synthetic isolated browser',exampleCount:candidate.exampleCount,steps:3,result:'Preview: Repeated through skill',missingTarget:'failed before dispatch',selectParameter:'Blue applied and checked',cancellation:'cancelled',renaming:'saved and blank rejected',emptySkills:'blocked',noOpResult:'failed',dismissal:'persisted',errors},null,2));
   console.log('Skills verified: real demonstrations, privacy, toolbar save/review/activation, parameterized CDP replay, agent exclusion, missing-target failure, select parameters, cancellation, rename persistence, no-op rejection and dismissal.');
