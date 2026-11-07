@@ -1,0 +1,14 @@
+{
+  "name": "@cobrowse/cobrowse-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "echo 'cobrowse-core: no unit tests yet'"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

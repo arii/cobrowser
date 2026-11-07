@@ -1,0 +1,18 @@
+services:
+  steel-browser:
+    image: ghcr.io/steel-dev/steel-browser:latest
+    container_name: cobrowse-steel-sandbox
+    ports:
+      - "3000:3000" # Steel Sessions API & Live Viewer (/ui)
+      - "9223:9223" # Chrome DevTools Protocol (CDP) WebSocket Proxy
+    shm_size: "1gb"
+    environment:
+      - CDP_REDIRECT_PORT=9223
+    volumes:
+      - steel_files:/app/files
+      - steel_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  steel_files:
+  steel_data:

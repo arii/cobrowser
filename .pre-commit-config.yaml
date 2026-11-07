@@ -1,0 +1,30 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.2
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: biome-check
+        name: Biome Format & Lint (TS/JS/JSON)
+        entry: pnpm biome check --write --no-errors-on-unmatched
+        language: system
+        types_or: [javascript, jsx, ts, tsx, json]
+      - id: audit-ai-slop
+        name: Block Silent Exception Swallowing & Unimplemented Placeholders
+        entry: uv run python3 .agents/scripts/audit-ai-slop.py
+        language: system
+        pass_filenames: false

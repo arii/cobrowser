@@ -1,0 +1,14 @@
+{
+  "name": "@cobrowse/web-canvas",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'web-canvas: Next.js viewport not scaffolded yet' && exit 1",
+    "typecheck": "tsc --noEmit",
+    "test": "echo 'web-canvas: no unit tests yet'"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
