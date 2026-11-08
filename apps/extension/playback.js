@@ -244,6 +244,7 @@ async function assignTab(tabId) {
     throw new Error('adopt-requires-http-tab');
   }
   await chrome.storage.session.set({ assigned: { tabId: tab.id, windowId: tab.windowId, origin } });
+  {const {automationTabIds=[]}=await chrome.storage.session.get('automationTabIds');await chrome.storage.session.set({automationTabIds:[...new Set([...automationTabIds,tab.id])]});}
   try {
     await chrome.debugger.attach({ tabId: tab.id }, '1.3');
     await command('Page.enable');

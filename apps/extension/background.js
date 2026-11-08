@@ -53,6 +53,7 @@ async function assign({adopt = false} = {}) {
     origin = ORIGIN;
   }
   const assigned = {tabId:tab.id, windowId:tab.windowId, origin};
+  {const {automationTabIds=[]}=await chrome.storage.session.get('automationTabIds');await chrome.storage.session.set({automationTabIds:[...new Set([...automationTabIds,tab.id])]});}
   await chrome.storage.session.set({assigned});
   let reloaded = false;
   try {

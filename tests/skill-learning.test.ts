@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 // @ts-expect-error Legacy extension JavaScript has no declaration file.
-import { discoverSkills, skillIssues, defaultSkillName } from '../apps/extension/skill-learning.js';
+import { repairSkill, analyzeSkills, discoverSkills, skillIssues, defaultSkillName } from '../apps/extension/skill-learning.js';
 const target=(label:string)=>({tag:'BUTTON',label,type:'button'});
 function examples(labels=['Open report','Preview report']){
   return Array.from({length:3},(_,session)=>labels.map((label,index)=>({id:`${session}-${index}`,sessionId:`session-${session}`,tabId:1,origin:'https://example.test',at:new Date(Date.UTC(2026,10,7,0,session,index)).toISOString(),provenance:'human',kind:'click',tag:'BUTTON',target:target(label),...(index===labels.length-1?{effect:'content-changed'}:{})}))).flat();
@@ -31,9 +31,9 @@ test('does not generate sliding fragments or multiple suggestions for the same r
   assert.equal(discoverSkills([...events,...variants]).length,1);
   assert.equal(discoverSkills([...events,...events.map(event=>({...event,origin:'https://different.test',id:`other-${event.id}`}))]).length,2);
 });
-test('caps suggestions at three concrete outcomes',()=>{
+test('keeps all distinct outcomes available for automatic learning',()=>{
   const events=Array.from({length:6},(_,index)=>examples(['Open report',`Preview report ${index}`]).map(event=>({...event,id:`${index}-${event.id}`,sessionId:`${index}-${event.sessionId}`}))).flat();
-  assert.equal(discoverSkills(events).length,3);
+  assert.equal(discoverSkills(events).length,6);
 });
 test('does not combine tabs or scopes or use guesses as actions or default names',()=>{
   const split=discoverSkills(examples().map((event,index)=>({...event,tabId:index%2})));
@@ -55,11 +55,50 @@ test('native form submissions normalize field editing and retain every declared 
   assert.equal(skill.exampleCount,3);assert.equal(skillIssues(skill).length,0);
 });
 
-test('a cited model judgment can accept or reject the first attempt without repetitions',()=>{
+test('model assessments enrich first-attempt skills without delaying or vetoing supported local evidence',()=>{
   const events=examples().slice(0,2),decision={intent:'Prepare report',confidence:.9,status:'continuing',explanation:'Report controls observed',evidenceIds:['0-1']};
   const assessment={reusable:true,confidence:.95,title:'Prepare report preview',reason:'A useful supported workflow',evidenceIds:['0-1']};
   const accepted=discoverSkills(events,{mode:'live',assumptions:[{decision:{...decision,skillAssessment:assessment}}]});
   assert.equal(accepted.length,1);assert.equal(accepted[0].title,assessment.title);assert.equal(accepted[0].reusability.source,'model');
-  assert.equal(discoverSkills(events,{mode:'live',assumptions:[{decision:{...decision,skillAssessment:{...assessment,reusable:false}}}]}).length,0);
-  assert.equal(discoverSkills(events,{mode:'live',assumptions:[]}).length,0);
+  assert.equal(discoverSkills(events,{mode:'live',assumptions:[{decision:{...decision,skillAssessment:{...assessment,reusable:false}}}]}).length,1);
+  assert.equal(discoverSkills(events,{mode:'live',assumptions:[]}).length,1);
+  assert.equal(discoverSkills(events,{mode:'live',assumptions:[{decision:{...decision,skillAssessment:{...assessment,confidence:.3}}}]}).length,1);
+});
+
+test('decision feed explains missing outcomes, unsupported actions and model disagreement',()=>{
+  const events=examples().slice(0,2);
+  const noResult=analyzeSkills(events.map(({effect:_effect,...event})=>event),{mode:'live',assumptions:[]});
+  assert.equal(noResult.candidates.length,0);assert.match(noResult.learning[0].reason,/observed result/);
+  assert.deepEqual(noResult.learning[0].evidenceIds,['0-0','0-1']);
+  const blocked=analyzeSkills(examples(['Delete report','Preview report']).slice(0,2));
+  assert.equal(blocked.learning[0].blocked,true);assert.match(blocked.learning[0].reason,/irreversible/);
+  const pending=analyzeSkills(events.slice(0,1));
+  assert.equal(pending.learning.length,1);assert.match(pending.learning[0].reason,/Still observing/);
+  const rejected={reusable:false,confidence:.95,title:'Preview',reason:'May only be used once',evidenceIds:['0-1']};
+  const learned=analyzeSkills(events,{mode:'live',assumptions:[{decision:{evidenceIds:['0-1'],skillAssessment:rejected}}]});
+  assert.equal(learned.candidates.length,1);assert.equal(learned.learning[0].modelAssessment.reason,rejected.reason);
+  assert.equal(learned.learning[0].blocked,false);
+});
+
+test('probe and agent observations cannot be used or bridge an episode; legacy form probes are filtered',()=>{
+  const events=examples().slice(0,2);
+  const probe={...events[0],id:'probe',target:{tag:'INPUT',label:'CDP typing probe',type:''},kind:'change'};
+  const [skill]=discoverSkills([events[0],probe,events[1]]);
+  assert.equal(skill.steps.length,1);assert.equal(skill.evidenceIds.includes('probe'),false);
+  assert.equal(discoverSkills(events.map(event=>({...event,provenance:'agent'}))).length,0);
+  assert.equal(discoverSkills(events.map(event=>({...event,source:'probe'}))).length,0);
+  assert.equal(discoverSkills([events[0],{...probe,provenance:'agent'},events[1]])[0].steps.length,1);
+  const captured=discoverSkills([{...events[1],formTargets:[probe.target,{tag:'INPUT',label:'Start inclusive',type:''}]}])[0];
+  assert.deepEqual(captured.steps.map((step:any)=>step.target.label),['Start inclusive','Preview report']);
+});
+test('saved probe skills are quarantined and repair removes selected steps with review and audit',()=>{
+  const good=discoverSkills(examples().slice(0,2))[0];
+  const bad={...good,active:true,steps:[{kind:'change',parameter:'input_1',target:{tag:'INPUT',label:'CDP typing probe',type:''}},...good.steps]};
+  assert.match(skillIssues(bad)[0],/developer probe/);
+  const repaired=repairSkill(bad);
+  assert.equal(repaired.active,false);assert.equal(skillIssues(repaired).length,0);
+  assert.equal(repaired.steps.length,good.steps.length);assert.equal(repaired.repairHistory[0].removed[0].target.label,'CDP typing probe');
+  assert.equal(bad.steps.length,good.steps.length+1);
+  assert.throws(()=>repairSkill(good,[1]),/supported result action/);
+  assert.throws(()=>repairSkill(bad,[-1]),/valid steps/);
 });

@@ -1,3 +1,4 @@
+import { probeTarget } from './skill-learning.js';
 import { workflowSites } from './skill-workflow.js';
 const root=document.getElementById('skills');
 root.innerHTML=`<style>
@@ -36,6 +37,13 @@ function card(skill,saved){
   const list=document.createElement('ol');
   for(const step of (skill.steps??[]).filter(step=>step?.target?.label?.trim() && ['click','change'].includes(step.kind))){list.append(text('li',`${step.kind==='change'?'Enter input for':'Click'} “${step.target?.label??'unknown target'}”${step.parameter?' · chosen from your instruction and source pages':''}${step.siteId?' · '+(displaySites(skill).find(site=>site.id===step.siteId)?.url??'website missing'):''}`));}
   if(list.children.length)details.append(list);
+  if(saved){
+    if(skill.steps.some(step=>probeTarget(step.target)))details.append(button('Remove probe steps and review',()=>request('repair',{id:skill.id})));
+    const repair=document.createElement('details');repair.dataset.key=skill.id+'-repair';repair.append(text('summary','Repair saved steps'));
+    repair.append(text('p','Remove an unrelated recorded step. Repair preserves an audit of removed steps and requires reviewing and activating the skill again. Stop any active run first.','muted'));
+    skill.steps.forEach((step,index)=>repair.append(button(`Remove step ${index+1}: ${step.target?.label??step.kind}`,()=>request('repair',{id:skill.id,removeSteps:[index]}))));
+    details.append(repair);
+  }
   if(!skill.needsExamples)details.append(text('p','Review the observed steps and supplied form inputs before repeating this task.','muted'));
   for(const example of skill.examples??[])details.append(text('p',`${new Date(example.at).toLocaleString()} · ${example.eventIds.length} cited actions`,'muted'));
   for(const blocker of skill.blockers)details.append(text('p',blocker,'blocker'));
@@ -85,7 +93,7 @@ function render(value){
   el('learning-progress').replaceChildren(...(pending.length?pending.map(item=>{const node=document.createElement('article');node.append(text('strong',`${item.title} · ${item.observedExamples?'Attempt observed':'Waiting for result'}`),text('p',item.reason));return node;}):[text('p',value.recordingEnabled?'Waiting for a supported task result. Exports, downloads, previews and searches can be learned.':'No new examples are captured while paused.','muted')]));
   const history=value.history;el('task-history-info').textContent=history?`Current task: ${history.totalActions} actions retained locally · ${history.archivedTasks} archived tasks · ${history.retrievedEventIds?.length??0} older actions retrieved for the latest update.`:'Full action history is retained locally; model requests use a rolling summary and selected evidence.';
   const run=el('skills-run');run.hidden=!value.run;
-  const newRunKey=JSON.stringify([value.run?.id,value.run?.status,value.run?.question]);
+  const newRunKey=JSON.stringify([value.run?.id,value.run?.status,value.run?.question,value.run?.helpToken]);
   if(newRunKey!==runViewKey){
     runViewKey=newRunKey;run.replaceChildren();
     if(value.run){
@@ -93,7 +101,11 @@ function render(value){
       if(value.run.tabId)run.append(button('View run tab',async()=>{await chrome.tabs.update(value.run.tabId,{active:true});return latest;}));
       if(value.run.status==='needs_input'){
         const label=text('label',value.run.question),answer=document.createElement('textarea');answer.rows=3;answer.maxLength=2000;label.append(answer);run.append(label);
-        run.append(button('Continue run',()=>request('answer',{runId:value.run.id,answer:answer.value}),true));
+        if(value.run.pendingInput){
+          run.append(text('p',`Exact value for “${value.run.pendingInput.label}” · no model call.${value.run.pendingInput.tag==='SELECT'?' Available options: '+value.run.pendingInput.options.join(', '):' Empty text clears the field.'}`));
+          run.append(button('Use exact value',()=>request('answer',{runId:value.run.id,helpToken:value.run.helpToken,mode:'value',value:answer.value}),true));
+        }
+        if(value.run.issue?.kind!=='provider')run.append(button('Continue run',()=>request('answer',{runId:value.run.id,helpToken:value.run.helpToken,mode:'clarification',answer:answer.value}),true));
       }
       if(['running','needs_input'].includes(value.run.status))run.append(button('Stop run',()=>request('cancel')));
       const decisions=document.createElement('details');decisions.append(text('summary','Input sources'));decisions.className='run-decisions';run.append(decisions);

@@ -44,6 +44,7 @@
     "install:context-host": "tsx scripts/install-context-host.ts",
     "verify:visual-context": "tsx scripts/verify-visual-context.ts",
     "verify:skills": "tsx scripts/verify-skills.ts",
+    "verify:skill-recovery": "tsx scripts/verify-skill-recovery.ts",
     "verify:report-skill": "tsx scripts/verify-report-skill.ts"
   },
   "devDependencies": {

@@ -8,7 +8,7 @@ let noOpPreview=false;
 const server=createServer((_req,res)=>res.end(`<!doctype html><html><head><title>Skill test</title></head><body>
 <h1>Reports</h1><label>Team <select><option>Red</option><option>Blue</option></select></label><button type="button" onclick="document.querySelector('#editor').hidden=false">Open report</button>
 <section id="editor" hidden><label>Report title <input id="title" type="text"></label>
-<button type="button" onclick="${noOpPreview?'':`document.querySelector('output').textContent='Preview: '+document.querySelector('input').value`}">Preview report</button></section><output></output>
+<button type="button" onclick="window.previewCount=(window.previewCount||0)+1;${noOpPreview?'':`document.querySelector('output').textContent='Preview: '+document.querySelector('input').value`}">Preview report</button></section><output></output>
 </body></html>`));
 await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));
 const origin=`http://127.0.0.1:${(server.address() as {port:number}).port}`;
@@ -84,7 +84,16 @@ try{
   await popup.evaluate(async()=>{const chrome=(globalThis as any).chrome;const {skillLibrary}=await chrome.storage.local.get('skillLibrary');skillLibrary[0].steps[0].target.label='Missing control';await chrome.storage.local.set({skillLibrary});});
   const failedStart=await send('skills:run',{id:skill.id,parameters:{input_2:'Synthetic'}});assert.equal(failedStart.ok,true);
   for(let i=0;i<100;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(run?.status!=='running')break;}
-  assert.equal(run.status,'failed');assert.equal(run.completed,0);
+  assert.equal(run.status,'needs_input');assert.equal(run.completed,0);
+  const missingPage=context.pages().filter(page=>page!==source && page.url().startsWith(origin)).at(-1)!;
+  await missingPage.locator('[data-cobrowser-skill-help]').waitFor({state:'attached'});
+  assert.equal(await missingPage.locator('[data-cobrowser-skill-help]').evaluate(node=>node.getBoundingClientRect().top),16);
+  assert.equal(await missingPage.evaluate(()=>document.querySelector('[data-cobrowser-skill-help]')!.shadowRoot),null,'Website JavaScript cannot read the closed help panel.');
+  await missingPage.getByRole('button',{name:'Open report',exact:true}).evaluate(node=>{node.textContent='Missing control';});
+  await missingPage.keyboard.type('The report button is now available.');await missingPage.keyboard.press('Control+Enter');
+  for(let i=0;i<100;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(!['running','needs_input'].includes(run?.status))break;}
+  assert.equal(run.status,'finished',JSON.stringify(run));assert.equal(run.completed,3);
+  assert.equal(await missingPage.locator('[data-cobrowser-skill-help]').count(),0);
   assert.equal(errors.length,0,errors.join('\n'));
   // A saved empty legacy skill stays unavailable even if its old active flag was true.
   await popup.evaluate(async()=>{const chrome=(globalThis as any).chrome;const {skillLibrary}=await chrome.storage.local.get('skillLibrary');skillLibrary.push({id:'empty',title:'Empty old skill',steps:[],active:true,blockers:[],examples:[]});await chrome.storage.local.set({skillLibrary});});
@@ -104,7 +113,13 @@ try{
   await source.bringToFront();
   assert.equal((await send('skills:run',{id:skill.id,parameters:{input_1:'Blue'}})).ok,true);
   for(let i=0;i<100;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(run?.status!=='running')break;}
-  assert.equal(run.status,'failed');assert.match(run.message,/no observed page change/);
+  assert.equal(run.status,'needs_input');assert.match(run.question,/no observed page change/);
+  const noOpPage=context.pages().filter(page=>page!==source && page.url().startsWith(origin)).at(-1)!;
+  await noOpPage.locator('[data-cobrowser-skill-help]').waitFor({state:'attached'});
+  await noOpPage.evaluate(()=>{document.querySelector('output')!.textContent='Manually completed report';});
+  await noOpPage.keyboard.type('I completed the report preview manually.');await noOpPage.keyboard.press('Control+Enter');
+  for(let i=0;i<100;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(!['running','needs_input'].includes(run?.status))break;}
+  assert.equal(run.status,'finished',JSON.stringify(run));assert.equal(await noOpPage.evaluate(()=>(window as any).previewCount),1,'Recovery never repeats a dispatched result action.');
   noOpPreview=false;
   await source.bringToFront();
   assert.equal((await send('skills:run',{id:skill.id,parameters:{input_1:'Red'}})).ok,true);
@@ -134,9 +149,16 @@ try{
     for(let i=0;i<100;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(run?.status==='needs_input'||run?.status==='failed')break;}
     console.log('Multiple-site run status:',run?.status,run?.message);
     assert.equal(run.status,'needs_input',JSON.stringify(run));assert.equal(run.completed,0,'No field is entered before clarification.');
-    assert.equal((await send('skills:answer',{runId:run.id,answer:'Yes, use the source report.'})).ok,true);
+    const helpPage=context.pages().filter(page=>page.url().startsWith(origin)).at(-1)!;
+    await helpPage.locator('[data-cobrowser-skill-help]').waitFor({state:'attached'});
+    const wrongAnswer=await worker.evaluate(`chrome.scripting.executeScript({target:{tabId:${Number(run.tabIds[1])}},func:async function(id,helpToken){return chrome.runtime.sendMessage({kind:'skills:answer',runId:id,helpToken,answer:'Wrong tab'});},args:${JSON.stringify([run.id,run.helpToken])}})`);
+    assert.equal((wrongAnswer as any)[0].result.ok,false,'Another site cannot answer the active prompt.');
+    await mkdir('.local/evidence',{recursive:true});await helpPage.screenshot({path:'.local/evidence/skill-help.png'});
+    await helpPage.keyboard.type('Yes, use the source report.');await helpPage.keyboard.press('Control+Enter');
     for(let i=0;i<150;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(!['running','needs_input'].includes(run?.status))break;}
     assert.equal(run.status,'finished',JSON.stringify(run));assert.equal(run.completed,5);assert.equal(run.tabIds.length,2);assert.equal(run.decisions.length,2);assert.equal(run.answers,undefined);
+    const requests=await worker.evaluate(()=>(globalThis as any).__skillInputs);assert(requests.some((request:any)=>request.answers.some((answer:any)=>answer.answer==='Yes, use the source report.')),'Popup response reaches the agent context.');
+    assert.equal(await helpPage.locator('[data-cobrowser-skill-help]').count(),0);
     const result=await worker.evaluate(`chrome.scripting.executeScript({target:{tabId:${Number(run.tabId)}},func:()=>document.querySelector('output')?.textContent})`);
     assert.equal((result as any)[0].result,'Preview: Cross-site report');
     const monitor=await context.newPage();await monitor.goto(`chrome-extension://${id}/recording.html`);assert.equal(await monitor.getByRole('heading',{name:'Agent playback',exact:true}).count(),0);
@@ -144,13 +166,17 @@ try{
     await worker.evaluate(()=>{(globalThis as any).chrome.runtime.sendNativeMessage=async()=>{throw new Error('Provider offline');};});
     assert.equal((await send('skills:run',{id:skill.id})).ok,true);
     for(let i=0;i<100;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(run?.status!=='running')break;}
-    assert.equal(run.status,'failed');assert.equal(run.completed,0);assert.match(run.message,/reasoning is unavailable/);
+    assert.equal(run.status,'needs_input');assert.equal(run.completed,0);assert.match(run.question,/Input provider unavailable/);
+    assert.equal((await send('skills:cancel')).ok,true);
+    for(let i=0;i<50;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(run?.finishedAt)break;}
+    assert.equal(run.status,'cancelled');
+    for(const page of context.pages())assert.equal(await page.locator('[data-cobrowser-skill-help]').count(),0,'Stopping removes help prompts.');
   }finally{sourceServer.closeAllConnections();await new Promise<void>(resolve=>sourceServer.close(()=>resolve()));}
   // Deleting a learned skill suppresses automatic recreation from the same attempt.
   await send('skills:delete',{id:skill.id});
   listing=await send('skills:list');assert.equal(listing.value.candidates.length,0);
   assert.equal(listing.value.skills.some((item:any)=>item.id===skill.id),false);
   await mkdir('.local/evidence',{recursive:true});
-  await writeFile('.local/evidence/skills.json',JSON.stringify({mode:'synthetic isolated browser',exampleCount:candidate.exampleCount,steps:3,result:'Preview: Repeated through skill',missingTarget:'failed before dispatch',selectParameter:'Blue applied and checked',cancellation:'cancelled',renaming:'saved and blank rejected',emptySkills:'blocked',noOpResult:'failed',dismissal:'persisted',multipleWebsites:'two configured sites opened and five steps completed',inputReasoning:'source-page values applied through real browser input; provider stub',clarification:'paused before input and continued after one answer',providerFailure:'failed before input',agentPlaybackPanel:'removed',errors},null,2));
+  await writeFile('.local/evidence/skills.json',JSON.stringify({mode:'synthetic isolated browser',exampleCount:candidate.exampleCount,steps:3,result:'Preview: Repeated through skill',missingTarget:'popup, manual fix and continuation before dispatch',selectParameter:'Blue applied and checked',cancellation:'cancelled',renaming:'saved and blank rejected',emptySkills:'blocked',noOpResult:'popup and manual recovery without repeating result action',dismissal:'persisted',multipleWebsites:'two configured sites opened and five steps completed',inputReasoning:'source-page values applied through real browser input; provider stub',clarification:'paused before input and continued after one answer',providerFailure:'popup before input, cancellable',agentPlaybackPanel:'removed',errors},null,2));
   console.log('Skills verified: real demonstrations, privacy, toolbar save/review/activation, parameterized CDP replay, agent exclusion, missing-target failure, select parameters, cancellation, rename persistence, no-op rejection dismissal, multiple websites, instruction-based inputs, clarification, provider failure and removed playback panel.');
 }finally{await context.close();await rm(profile,{recursive:true,force:true});await new Promise<void>(resolve=>server.close(()=>resolve()));}

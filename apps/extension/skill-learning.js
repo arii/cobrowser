@@ -1,7 +1,9 @@
 import { workflowSites } from './skill-workflow.js';
-// Conservative local discovery: complete examples with an observed visible result.
+// Save supported workflows after one attempt; model judgments enrich local evidence.
 export const QUALITY_VERSION=3;
 export const riskyAction=/\b(send|pay|purchase|buy|checkout|delete|remove|destroy|publish|transfer|unsubscribe|confirm order|sign out|log out)\b/i;
+// Exact legacy fixture label; avoid classifying arbitrary business fields as probes.
+export const probeTarget=target=>/^CDP typing probe$/i.test(target?.label?.trim()??'');
 export function validTarget(target){
   return target && Object.keys(target).every(key=>['tag','label','type'].includes(key))
     && ['BUTTON','A','INPUT','SELECT','TEXTAREA'].includes(target.tag)
@@ -25,6 +27,7 @@ export function skillIssues(skill){
   if(skill.sites){try{const sites=workflowSites(skill);if(skill.steps?.some(step=>!sites.some(site=>site.id===(step.siteId??'main'))))issues.push('A workflow step has no configured website.');}catch{issues.push('The website configuration is invalid.');}}
   if(!Array.isArray(skill.steps) || !skill.steps.length || skill.steps.length>48)return ['This workflow has no complete, supported action sequence.'];
   for(const [index,step] of skill.steps.entries()){
+    if(probeTarget(step?.target))issues.push(`Step ${index+1} is a developer probe. Remove it and review the repaired skill.`);
     if(!validTarget(step?.target) || !['click','change'].includes(step.kind))issues.push(`Step ${index+1} has no supported, named action.`);
     if(step?.target && riskyAction.test(step.target.label))issues.push(`Step ${index+1} may have an irreversible effect.`);
     if(step?.kind==='change' && (!['INPUT','SELECT','TEXTAREA'].includes(step.target?.tag) || !/^input_\d+$/.test(step.parameter??'')))issues.push(`Step ${index+1} has no usable input parameter.`);
@@ -33,14 +36,13 @@ export function skillIssues(skill){
   }
   if(!outcomeAction(skill.steps.at(-1)))issues.push('This workflow does not end with a supported result action.');
   if(![2,QUALITY_VERSION].includes(skill.qualityVersion) || !Array.isArray(skill.examples) || !skill.examples.some(example=>['content-changed','form-submitted'].includes(example.effect)))issues.push('Complete one workflow with an observed result or form submission to learn this skill.');
-  if(skill.reusability && (skill.reusability.confidence<.8 || skill.reusability.reusable!==true))issues.push('This attempt is not yet supported as a reusable skill.');
   return [...new Set(issues)];
 }
 const targetKey=target=>target?[target.tag,target.label,target.type]:null;
 export const skillGoalKey=(origin,target)=>JSON.stringify([origin,targetKey(target)]);
 const signature=event=>JSON.stringify([event.kind,targetKey(event.target)]);
 function normalizeExample(items){
-  const outcome=items.at(-1),fields=outcome.formTargets??[];
+  const outcome=items.at(-1),fields=(outcome.formTargets??[]).filter(target=>!probeTarget(target));
   const fieldKey=target=>JSON.stringify(targetKey(target));
   const fieldsSet=new Set(fields.map(fieldKey));
   const result=[];
@@ -62,7 +64,7 @@ function normalizeExample(items){
 export function analyzeSkills(events,brain=null){
   const episodes=[],pairedSubmits=new Map();let episode=[];let previous;
   for(const event of events){
-    if(event.provenance!=='human')continue;
+    if(event.provenance!=='human' || event.source==='probe' || event.source==='agent' || probeTarget(event.target)){episode=[];previous=undefined;continue;}
     // Never mine arbitrary sliding windows: a boundary or an outcome closes an example.
     if(previous && (event.sessionId!==previous.sessionId || event.tabId!==previous.tabId || event.origin!==previous.origin || Date.parse(event.at)-Date.parse(previous.at)>30000 || event.kind==='page-visible'))episode=[];
     previous=event;
@@ -98,24 +100,43 @@ export function analyzeSkills(events,brain=null){
     const possible=assumption?.decision.skillAssessment;
     const model=possible?.evidenceIds?.some(id=>evidenceIds.includes(id))?possible:null;
     const localConfidence=steps.length>1?.88:.82;
-    const awaitingModel=brain?.mode==='live' && brain.modelAvailable!==false && !model;
-    const reusability=model?{...model,source:'model'}:{reusable:!awaitingModel,confidence:awaitingModel?0:localConfidence,source:'local',reason:awaitingModel?'Waiting for the context model to assess this attempt.':'A completed, named workflow with an observed result and supported replay actions.'};
+    const reusability={reusable:true,confidence:localConfidence,source:'local',reason:'One completed attempt with named replay actions and an observed result is enough to save an inactive skill.'};
+    if(model?.reusable){Object.assign(reusability,model,{source:'model'});reusability.reusable=true;}
     const candidate={reusability,qualityVersion:QUALITY_VERSION,key:pattern.key,goalKey:skillGoalKey(pattern.origin,steps.at(-1).target),origin:pattern.origin,steps,examples,evidenceIds,exampleCount:confirmed.length,
       title:model?.reusable?model.title:defaultSkillName(steps),outcome:steps.at(-1).target.label,
       context:assumption?{intent:assumption.decision.intent,confidence:assumption.decision.confidence,status:assumption.decision.status,explanation:assumption.decision.explanation}:null,
       assessment:'Learned from a completed workflow with an observed page change or native form submission. One good attempt is sufficient. Review the steps before activation.'};
     candidate.blockers=skillIssues(candidate);
     learning.push({goalKey:candidate.goalKey,title:candidate.title,observedExamples:confirmed.length,requiredExamples:1,blocked:candidate.blockers.some(issue=>!issue.startsWith('Complete one')),
-      reason:awaitingModel?reusability.reason:candidate.blockers[0]??(confirmed.length?'Skill ready from this attempt.':'Waiting for an observed task result or native form submission.')});
+      evidenceIds:pattern.examples.at(-1).raw.map(event=>event.id),at:pattern.examples.at(-1).raw.at(-1).at,
+      blockers:candidate.blockers,modelAssessment:model,
+      reason:candidate.blockers[0]??reusability.reason});
     if(!candidate.blockers.length)candidates.push(candidate);
   }
   // One suggestion per site/result, not one for every overlapping click combination.
   const goals=new Set();
   const suggestions=candidates.sort((a,b)=>b.exampleCount-a.exampleCount || a.steps.length-b.steps.length).filter(candidate=>{
     if(goals.has(candidate.goalKey))return false;goals.add(candidate.goalKey);return true;
-  }).slice(0,3);
+  });
   const progress=new Map();
   for(const item of learning.sort((a,b)=>Number(a.blocked)-Number(b.blocked) || b.observedExamples-a.observedExamples))if(!progress.has(item.goalKey))progress.set(item.goalKey,item);
-  return {candidates:suggestions,learning:[...progress.values()].slice(0,3)};
+  if(episode.length){
+    const last=episode.at(-1);
+    learning.push({goalKey:skillGoalKey(last.origin,last.target),title:defaultSkillName(episode),at:last.at,
+      observedExamples:0,requiredExamples:1,blocked:false,evidenceIds:episode.map(event=>event.id),
+      blockers:[],modelAssessment:null,reason:outcomeAction(last)?'Waiting for an observed result.':'Still observing: finish with a supported result action such as Preview, Search, Export or Download.'});
+  }
+  for(const item of learning)if(!progress.has(item.goalKey))progress.set(item.goalKey,item);
+  return {candidates:suggestions,learning:[...progress.values()].sort((a,b)=>Date.parse(b.at)-Date.parse(a.at)).slice(0,20)};
 }
 export const discoverSkills=(events,brain=null)=>analyzeSkills(events,brain).candidates;
+
+export function repairSkill(skill,removeSteps){
+  const indexes=removeSteps??skill.steps.map((step,index)=>probeTarget(step.target)?index:-1).filter(index=>index>=0);
+  if(!Array.isArray(indexes) || !indexes.length || indexes.some(index=>!Number.isInteger(index) || index<0 || index>=skill.steps.length))throw new Error('Choose valid steps to remove.');
+  const steps=skill.steps.filter((_step,index)=>!indexes.includes(index));
+  const repaired={...skill,steps,active:false,repairedAt:new Date().toISOString(),
+    repairHistory:[...(skill.repairHistory??[]),{at:new Date().toISOString(),removed:skill.steps.filter((_step,index)=>indexes.includes(index))}].slice(-5)};
+  const issues=skillIssues(repaired);if(issues.length)throw new Error(issues[0]);
+  return repaired;
+}

@@ -60,7 +60,6 @@ try {
   const send = (message: {kind:string; args?:unknown}) =>
     page.evaluate((m: {kind:string; args?:unknown}) => (window as any).chrome.runtime.sendMessage(m), message);
   other = await startFixture(false, 0);
-  const adoptedOrigin = other.origin;
   let target: Page | undefined;
   try {
     await page.bringToFront();
@@ -84,15 +83,10 @@ try {
     await target.bringToFront();
     await target.locator('#probe').click();
     await target.locator('select[name="team"]').click();
-    let recorded: any = {ok:true, value:{events:[]}};
-    for (let i = 0; i < 25 && recorded.value.events.length < 2; i++) {
-      await new Promise(resolve => setTimeout(resolve, 200));
-      recorded = await send({kind:'recording:status'});
-    }
-    assert.equal(recorded.ok, true, JSON.stringify(recorded));
-    assert.ok(recorded.value.events.length >= 2, JSON.stringify(recorded.value));
-    assert.ok(recorded.value.events.every((event: any) => event.origin === adoptedOrigin && event.provenance === 'human' && event.sessionId === recorded.value.sessionId),
-      JSON.stringify(recorded.value.events));
+    await new Promise(resolve=>setTimeout(resolve,1000));
+    const recorded=await send({kind:'recording:status'});
+    assert.equal(recorded.ok,true,JSON.stringify(recorded));
+    assert.equal(recorded.value.events.some((event:any)=>event.tabId===adopted.value.tabId),false,'Assigned probe tabs must never enter human learning.');
     const shot2 = await send({kind:'screenshot'});
     assert.equal(shot2.ok, true, JSON.stringify(shot2));
     const typed = await send({kind:'clickType', args:{observationId:shot2.value.observation.id, x:65, y:425, text:'adopt-probe'}});

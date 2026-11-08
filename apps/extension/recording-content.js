@@ -13,20 +13,22 @@
   controller.signal.addEventListener('abort',removeMask);
   let interactionSequence=0,lastSubmitClick,submissionSequence=0;
   const describeControl=control=>{
-    if(!control || control.closest('[contenteditable],[data-sensitive],[autocomplete^="cc-"],[autocomplete="current-password"],[autocomplete="new-password"]') || ['password','hidden','file','checkbox','radio'].includes(control.type))return;
+    if(!control || control.disabled || control.readOnly || !control.getClientRects().length || getComputedStyle(control).visibility==='hidden' || control.closest('[data-cobrowser-probe],[data-cobrowser-agent],[contenteditable],[data-sensitive],[autocomplete^="cc-"],[autocomplete="current-password"],[autocomplete="new-password"]') || ['password','hidden','file','checkbox','radio'].includes(control.type))return;
     const name=control.tagName,copy=control.cloneNode(true);copy.querySelectorAll('input,select,textarea,[data-sensitive],[contenteditable],script,style').forEach(node=>node.remove());
     const label=(control.getAttribute('aria-label') || (control.labels?[...control.labels].map(label=>{const node=label.cloneNode(true);node.querySelectorAll('input,select,textarea,[data-sensitive]').forEach(child=>child.remove());return node.textContent;}).join(' '):'') || (['BUTTON','A'].includes(name)?copy.textContent:'')).replace(/\s+/g,' ').trim().slice(0,100);
+    if(/^CDP typing probe$/i.test(label))return;
     if(label)return {tag:name,label,type:(control.getAttribute('type') || (name==='BUTTON' && control.form?'submit':'')).toLowerCase()};
   };
   const send = (kind, target, metadata = {}) => {
     if (document.visibilityState !== 'visible') return;
     const element = target instanceof Element ? target : null;
     // Capture bounded control labels for replay, never values or printable keystrokes.
-    if (element?.closest('[data-sensitive], [autocomplete^="cc-"], [autocomplete="current-password"], [autocomplete="new-password"], input[type="password"], input[type="hidden"]')) return;
+    if (element?.closest('[data-cobrowser-probe], [data-cobrowser-agent], [data-sensitive], [autocomplete^="cc-"], [autocomplete="current-password"], [autocomplete="new-password"], input[type="password"], input[type="hidden"]')) return;
     const control = element?.closest('input,select,textarea,button,a');
+    if(control && /^CDP typing probe$/i.test(control.getAttribute('aria-label')??''))return;
     const name = control?.tagName ?? element?.closest('form')?.tagName;
     const replayTarget=describeControl(control);
-    const formTargets=kind==='click' && control?.form && control.type==='submit'?[...control.form.elements].filter(node=>['INPUT','SELECT','TEXTAREA'].includes(node.tagName)).map(describeControl).filter(Boolean).slice(0,12):null;
+    const formTargets=kind==='click' && control?.form && control.type==='submit'?[...control.form.elements].filter(node=>['INPUT','SELECT','TEXTAREA'].includes(node.tagName) && node.name && !node.disabled).map(describeControl).filter(Boolean).slice(0,12):null;
     const tag = kind === 'scroll' || kind === 'page-visible' ? 'PAGE' : name ?? 'OTHER';
     const sequence=['click','change','key'].includes(kind)?++interactionSequence:interactionSequence;
     const before=kind==='click' && replayTarget?JSON.stringify(context()):null;
@@ -111,7 +113,7 @@
       removeMask();respond({valid:Boolean(valid),documentId,dom:snapshot()});return;
     }
 
-    if (message?.kind === 'recording:context-request') respond({...context(),submissionSequence,recorderVersion:3});
+    if (message?.kind === 'recording:context-request') respond({...context(),submissionSequence,recorderVersion:4});
     if (message?.kind === 'recording:ping') respond({ok:true});
   };
   chrome.runtime.onMessage.addListener(messageListener);

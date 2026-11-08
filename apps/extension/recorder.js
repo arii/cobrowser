@@ -1,5 +1,5 @@
 import { retainAction, readAllActions, clearActions } from './action-history.js';
-import { validTarget } from './skill-learning.js';
+import { validTarget, probeTarget } from './skill-learning.js';
 import { captureVisualContext, clearVisualEvidence } from './visual-context.js';
 import { nativeBrainLink } from './native-brain.js';
 const brainLink=nativeBrainLink();
@@ -48,7 +48,7 @@ async function refreshTabs(state, force=false) {
     const base={tabId:tab.id,origin:webOrigin(tab.url),title:(tab.title??'').slice(0,160),headings:[],excerpt:'',active:tab.active,observedAt:new Date().toISOString(),readStatus:'unavailable'};
     try {
       let context;
-      try {context=await tabMessage(tab.id);if(context?.recorderVersion!==3)throw new Error('old-content-script');}
+      try {context=await tabMessage(tab.id);if(context?.recorderVersion!==4)throw new Error('old-content-script');}
       catch {
         const files=chrome.runtime.getManifest().content_scripts?.flatMap(script=>script.js??[])??[];
         if (!files.length) return base;
@@ -104,6 +104,8 @@ export function installRecorder() {
     if(message?.kind==='recording:effect' && isContent){
       serial(async()=>{
         if(!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled)return;
+        const {assigned,automationTabIds=[],skillRun}=await chrome.storage.session.get(['assigned','automationTabIds','skillRun']);
+        if(assigned?.tabId===sender.tab.id || automationTabIds.includes(sender.tab.id) || skillRun?.tabIds?.includes(sender.tab.id))return;
         const state=await read();
         const event=state.events.find(item=>item.id===message.id && item.tabId===sender.tab.id && item.sessionId===state.sessionId && item.origin===webOrigin(sender.url));
         if(event?.kind==='click' && Date.now()-Date.parse(event.at)<5000){if(event.effect!=='content-changed')event.effect=message.effect==='form-submitted'?'form-submitted':'content-changed';await archiveAction(event,state.historyGeneration);await save(state);}
@@ -113,7 +115,8 @@ export function installRecorder() {
       serial(async () => {
         if (!validEvent(message.event)) throw new Error('invalid-recording-event');
         if (!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled) return;
-        const {lastDispatch,skillRun} = await chrome.storage.session.get(['lastDispatch','skillRun']);
+        const {lastDispatch,skillRun,assigned,automationTabIds=[]} = await chrome.storage.session.get(['lastDispatch','skillRun','assigned','automationTabIds']);
+        if(assigned?.tabId===sender.tab.id || automationTabIds.includes(sender.tab.id) || probeTarget(message.event.target))return;
         if(['running','needs_input'].includes(skillRun?.status) && skillRun.tabIds?.includes(sender.tab.id))return;
         const expected = webOrigin(sender.url);
         if (!expected) return;
@@ -137,7 +140,7 @@ export function installRecorder() {
           }
         }
         state.events.push({id,sessionId:state.sessionId,at:new Date().toISOString(),
-          origin:expected,tabId:sender.tab.id,provenance:'human',...message.event});
+          origin:expected,tabId:sender.tab.id,provenance:'human',...message.event,...(message.event.formTargets?{formTargets:message.event.formTargets.filter(target=>!probeTarget(target))}:{})});
         await archiveAction(state.events.at(-1),state.historyGeneration);
         await save(state);
         return {id};
@@ -176,7 +179,7 @@ export function installRecorder() {
   chrome.alarms.create('recording-retention', {periodInMinutes:.5});
   const tabsChanged=()=>{lastTabRefresh=0;void serial(async()=>{if(!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled)return;const state=await read();await refreshTabs(state);await save(state);}).catch(()=>{});};
   chrome.tabs.onActivated.addListener(tabsChanged);
-  chrome.tabs.onRemoved.addListener(tabsChanged);
+  chrome.tabs.onRemoved.addListener(id=>{tabsChanged();void serial(async()=>{const {automationTabIds=[]}=await chrome.storage.session.get('automationTabIds');await chrome.storage.session.set({automationTabIds:automationTabIds.filter(tabId=>tabId!==id)});});});
   chrome.tabs.onUpdated.addListener((_id,change)=>{if(change.status==='complete')tabsChanged();});
   chrome.alarms.onAlarm.addListener(alarm => {
     if (alarm.name === 'recording-retention') void serial(async () => {const state=await read();if ((await chrome.storage.session.get('recordingEnabled')).recordingEnabled) {await refreshTabs(state);await captureVisualContext(state);}await save(state);}).catch(() => {});

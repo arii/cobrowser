@@ -46,7 +46,8 @@ try{
   assert.ok(events.some((event:any)=>event.effect==='form-submitted'));
   assert.equal(JSON.stringify(events).includes('2026-10-26'),false,'Input values must not enter evidence.');
   await popup.bringToFront();await popup.getByRole('button',{name:'Refresh examples',exact:true}).click();
-  await popup.locator('#skills-library summary').click();await popup.getByRole('checkbox').check();await popup.getByRole('button',{name:'Activate skill',exact:true}).click();
+  await popup.locator('#skills-library > article > details > summary').click();await popup.getByRole('checkbox').check();await popup.getByRole('button',{name:'Activate skill',exact:true}).click();
+  await popup.getByText('Optional input overrides',{exact:true}).click();
   const card=popup.locator('#skills-library');
   await card.getByLabel('Team',{exact:true}).fill('blue');await card.getByLabel('Start inclusive',{exact:true}).fill('2026-10-26');await card.getByLabel('End exclusive',{exact:true}).fill('2026-11-02');
   await source.bringToFront();

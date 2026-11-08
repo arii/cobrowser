@@ -4,12 +4,12 @@ root.innerHTML = `<header><p>COBROWSER · LOCAL RECORDER</p><p><a href="skills.h
 <div class="controls"><button id="record-start">Start recording</button><button id="record-pause">Pause</button><button id="record-fixture">Open fixture</button><button id="record-export">Export JSON</button><button id="record-clear">Clear saved data</button></div>
 <p id="record-error" role="alert"></p><section class="stats"><div><strong id="record-count">0</strong><span>events saved locally</span></div><div><strong id="record-last">—</strong><span>last saved</span></div><div><strong>24 hours</strong><span>live window · latest 2,000 events</span></div></section>
 <p id="record-detail" role="status" aria-live="polite"></p><section id="brain-panel"><h2>Rolling context brain</h2><p id="brain-mode">Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.</p>
-<h3 id="brain-intent">Waiting for evidence</h3><p id="brain-summary"></p><p id="brain-status"></p><p id="brain-phase" role="status" aria-live="polite"></p><p id="visual-status"></p><p id="brain-metrics"></p><p id="brain-error" role="alert"></p><h3>Likely next action · a guess</h3><p id="brain-next">Waiting for a prediction</p><p id="brain-next-detail"></p><details><summary>Context decisions and provider log</summary><pre id="brain-journal"></pre></details></section><section id="assumption-panel"><h2>Context assumptions over time</h2><p>About every 10 seconds while a web page is focused. These are revisable guesses based on visible evidence.</p><div id="assumption-timeline"></div></section><h2>Open tabs</h2><p id="tab-count"></p><table><thead><tr><th>Tab</th><th>Page</th><th>Origin</th><th>Read status / page content</th></tr></thead><tbody id="open-tabs"></tbody></table><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
+<h3 id="brain-intent">Waiting for evidence</h3><p id="brain-summary"></p><p id="brain-status"></p><p id="brain-phase" role="status" aria-live="polite"></p><p id="visual-status"></p><p id="brain-metrics"></p><p id="brain-error" role="alert"></p><h3>Likely next action · a guess</h3><p id="brain-next">Waiting for a prediction</p><p id="brain-next-detail"></p><details><summary>Context decisions and provider log</summary><pre id="brain-journal"></pre></details></section><section id="skill-decisions-panel"><h2>Live skill decisions</h2><p>One supported attempt saves an inactive skill immediately. This feed shows current activity, observed evidence, model assessments and concrete blockers.</p><p id="skill-decision-status" role="status" aria-live="polite">Checking workflows…</p><p id="skill-run-status" role="status" aria-live="polite"></p><p id="skill-model-assessment"></p><div id="skill-decisions"></div></section><section id="assumption-panel"><h2>Context assumptions over time</h2><p>About every 10 seconds while a web page is focused. These are revisable guesses based on visible evidence.</p><div id="assumption-timeline"></div></section><h2>Open tabs</h2><p id="tab-count"></p><table><thead><tr><th>Tab</th><th>Page</th><th>Origin</th><th>Read status / page content</th></tr></thead><tbody id="open-tabs"></tbody></table><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
 <table><thead><tr><th>Time</th><th>Interaction</th><th>Element</th><th>Input metadata</th><th>Origin / tab</th></tr></thead><tbody id="record-events"></tbody></table>
 <footer>Local Chrome extension storage in this browser profile. Typed values, page text and printable keys are excluded from event recording. Bounded control labels are saved to identify replay targets. Run workflows from the skills library with an instruction and the websites they need. Skill actions are excluded from human recordings. Live brain mode sends masked active-tab screenshots to Snap and Gemini for visual summaries, and open-tab titles, headings, page excerpts, bounded before/after DOM snapshots and motion/context summaries to the context model. Raw screenshots stay in memory; derived summaries and assumptions are saved locally; the preview uses synthetic responses. Incognito and browser-internal pages are excluded, as is the agent's own debugger input. Predictions are guesses and never trigger actions. Browser restart pauses capture; the live window expires, while full local action history remains until Clear saved data. Exported files are yours to manage.</footer>`;
 let state;
 let busy = false;
-let renderedTabsKey='',renderedAssumptionsKey='';
+let renderedTabsKey='',renderedAssumptionsKey='',renderedSkillDecisionsKey='';
 const el = id => document.getElementById(id);
 async function request(kind) {
   const result = await chrome.runtime.sendMessage({kind:`recording:${kind}`});
@@ -99,8 +99,13 @@ el('record-export').onclick = async () => {
 };
 async function refresh() {
   if (busy) return;
-  try { render(await request('status')); }
-  catch (error) { el('record-error').textContent = error.message; }
+  try {
+    render(await request('status'));
+    const result=await chrome.runtime.sendMessage({kind:'skills:list'});
+    if(!result?.ok)throw new Error(result?.error??'Skill decisions are unavailable.');
+    renderSkillDecisions(result.value);
+  }
+  catch (error) { el('skill-decision-status').textContent = `Monitor update unavailable: ${error.message}`; }
 }
 void refresh();
 setInterval(refresh,1000);
@@ -129,4 +134,26 @@ function renderAssumptions(assumptions){
     }
     return card;
   }));
+}
+
+function renderSkillDecisions(value){
+  el('skill-run-status').textContent=value.run?`${value.run.title} · ${value.run.status} · ${value.run.completed}/${value.run.total} steps dispatched. ${value.run.message??''}`:'';
+  const assessment=state?.brain?.assumptions?.findLast(item=>item.decision?.skillAssessment)?.decision.skillAssessment;
+  el('skill-model-assessment').textContent=assessment?`Latest model assessment: ${assessment.title} · ${assessment.reusable?'supports reuse':'uncertain about reuse'} (${Math.round(assessment.confidence*100)}%) · ${assessment.reason}. Local replay evidence can save a skill immediately.`:'The local learner can save skills while the context model is still assessing the task.';
+  el('skill-decision-status').textContent=`${state?.enabled?'Learning live':'Recording paused'} · ${state?.brainActivity?.phase??'waiting for activity'} · ${value.skills.filter(skill=>!skill.needsExamples).length} supported skills saved · updated ${new Date().toLocaleTimeString()}`;
+  const items=value.learning??[],key=JSON.stringify(items);
+  if(key===renderedSkillDecisionsKey)return;renderedSkillDecisionsKey=key;
+  const cards=items.map(item=>{
+    const card=document.createElement('article');card.className='assumption';
+    const add=(tag,text)=>{const node=document.createElement(tag);node.textContent=text;card.append(node);};
+    add('time',new Date(item.at).toLocaleTimeString());
+    add('h3',`${item.status.toUpperCase()} · ${item.title}`);
+    add('p',item.reason);
+    for(const blocker of item.blockers??[])if(blocker!==item.reason)add('p',`Missing requirement: ${blocker}`);
+    add('p',`Observed completed attempts: ${item.observedExamples} · required: ${item.requiredExamples} · evidence: ${item.evidenceIds.join(', ')}`);
+    if(item.modelAssessment)add('p',`Model assessment: ${item.modelAssessment.reason} (${Math.round(item.modelAssessment.confidence*100)}% confidence). ${item.status==='saved'?'The supported local attempt is sufficient to save this skill.':''}`);
+    return card;
+  });
+  if(!cards.length){const empty=document.createElement('p');empty.textContent='No workflow observed yet. Use a website to complete a task; one supported attempt is enough.';cards.push(empty);}
+  el('skill-decisions').replaceChildren(...cards);
 }

@@ -32,19 +32,22 @@ try {
   await tab.goto(fixture.origin);
   await tab.bringToFront();
   const events = async () => worker.evaluate(async () => (await chrome.storage.local.get<{fixtureRecording:{events:Record<string,unknown>[]}}>('fixtureRecording')).fixtureRecording.events);
-  await tab.locator('#probe').click();
-  await tab.locator('#probe').fill('PRIVATE-VALUE-MUST-NOT-BE-SAVED');
-  await tab.locator('h1').click(); // Commit the change using trusted physical input.
-  await monitor.waitForFunction(() => Number(document.querySelector('#record-count')?.textContent) >= 3);
-  let saved = await events();
-  assert(saved.some(event => event.kind === 'click'));
-  assert(saved.some(event => event.kind === 'change'));
-  assert(!JSON.stringify(saved).includes('PRIVATE-VALUE'));
+  let saved:Record<string,unknown>[]=[];
+  if(!demo){
+    await tab.locator('input[name="start"]').click();
+    await tab.locator('input[name="start"]').fill('PRIVATE-VALUE-MUST-NOT-BE-SAVED');
+    await tab.locator('h1').click(); // Deliberate synthetic demonstration in a disposable profile.
+    await monitor.waitForFunction(() => Number(document.querySelector('#record-count')?.textContent) >= 3);
+    saved=await events();
+    assert(saved.some(event => event.kind === 'click'));
+    assert(saved.some(event => event.kind === 'change'));
+    assert(!JSON.stringify(saved).includes('PRIVATE-VALUE'));
+  }
   if (demo) {
-    console.log(`Recording is ON. Fixture: ${fixture.origin}/\nMonitor: chrome-extension://${id}/recording.html\nProfile: ${profile}\nThe initial events are labeled setup interactions from this script. Your subsequent fixture interactions are recorded too. Close this browser to stop.`);
+    console.log(`Recording is ON. Fixture: ${fixture.origin}/\nMonitor: chrome-extension://${id}/recording.html\nProfile: ${profile}\nNo automated setup inputs are recorded. Your fixture interactions will be recorded. Close this browser to stop.`);
     await tab.evaluate(() => {
       const note = document.createElement('p');
-      note.textContent = 'Cobrowser recording is ON. Click controls or change fields, then switch to the Cobrowser recording monitor tab to see saved events. The initial interactions were an automated setup check.';
+      note.textContent = 'Cobrowser recording is ON. Click controls or change fields, then switch to the Cobrowser recording monitor tab to see saved events. No automated setup inputs were recorded.';
       note.style.cssText = 'padding:16px;background:#dcefe5;max-width:650px';
       document.body.prepend(note);
     });
@@ -81,13 +84,13 @@ try {
     await monitor.getByRole('button',{name:'Pause',exact:true}).click();
     await monitor.waitForFunction(() => document.querySelector('#recording-state')?.textContent === 'Recording is paused');
     const pausedCount = (await events()).length;
-    await tab.bringToFront();await tab.locator('#probe').click();
+    await tab.bringToFront();await tab.locator('input[name="start"]').click();
     await new Promise(resolve => setTimeout(resolve,300));
     assert.equal((await events()).length,pausedCount);
     await monitor.bringToFront();
     await monitor.getByRole('button',{name:'Start recording',exact:true}).click();
     await tab.goto(`${fixture.origin}/?excluded=PRIVATE-QUERY`);
-    await tab.bringToFront();await tab.locator('#probe').click();
+    await tab.bringToFront();await tab.locator('input[name="start"]').click();
     await new Promise(resolve => setTimeout(resolve,300));
     assert((await events()).length>pausedCount);
     assert(!JSON.stringify(await events()).includes('PRIVATE-QUERY'));
