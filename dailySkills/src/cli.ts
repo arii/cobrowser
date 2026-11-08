@@ -1,5 +1,5 @@
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
-import { basename, join } from 'node:path';
+import { basename, dirname, join, relative } from 'node:path';
 import { assembleEach, assembleMerged, type StagedTask, type RecorderState } from './recorder-format.js';
 import { convertPsaiRow, fetchPsaiRows, matchesSite, PSAI_DEFAULTS } from './psai.js';
 import { AGENTNET_DEFAULTS, AGENTNET_FILES, convertAgentNetTask, isBrowserTask, loadAgentNetMeta, streamAgentNetTasks } from './agentnet.js';
@@ -135,7 +135,10 @@ async function label(files: string[], flags: Record<string, string | boolean>) {
     const state = JSON.parse(await readFile(file, 'utf8')) as RecorderState;
     console.log(`${file}: ${state.events.filter(event => event.kind === 'click').length} clicks`);
     const result = await labelState(state, file, { provider: provider as 'auto' | 'llama' | 'none', snap: !flags['no-snap'], ocr: !flags['no-ocr'], dryRun: Boolean(flags['dry-run']), limitClicks: int(flags, 'limit-clicks', 1000), rawDir: text(flags, 'raw', 'data/raw'), log: line => console.log(line) });
-    const target = join(out, `${basename(file, '.json')}.labeled.json`);
+    // Keep the input's subfolder (data/recordings/amazon/x.json -> <out>/amazon/x.labeled.json) so same-named files do not collide.
+    const rel = relative(process.cwd(), file).replace(/^data[\\/]recordings[\\/]/, '').replace(/^(\.\.[\\/])+/, '');
+    const target = join(out, dirname(rel), `${basename(file, '.json')}.labeled.json`);
+    await mkdir(dirname(target), { recursive: true });
     await writeFile(target, JSON.stringify(result.state, null, 2));
     const problems = validateState(result.state);
     console.log(`  → ${target}: ${Object.entries(result.summary).map(([key, value]) => `${key}=${value}`).join(' ')}${problems.length ? `\n  PROBLEMS: ${problems.join('; ')}` : ''}`);

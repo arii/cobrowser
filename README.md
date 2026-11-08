@@ -60,8 +60,9 @@ The monitor has a **Dataset recordings** toggle. Switch on **Use dataset recordi
 [dailySkills](dailySkills/README.md) (`cd dailySkills && pnpm install && pnpm convert psai --length 10 --merge`),
 which converts the PSAI and AgentNet computer-use datasets into this recorder's stored format. Loading validates every
 event with the recorder's own rule, pauses capture and sets the live recording aside; switching the toggle off, or
-pressing Start recording, restores it unchanged. Clear saved data discards both. Converted events carry no control
-labels yet, so they feed the monitor, the brain and the skills view but do not produce skill suggestions.
+pressing Start recording, restores it unchanged. Clear saved data discards both. Plain converted events carry no control
+labels; `pnpm convert label` adds them from the task's screen video with Meta's `muse-spark-1.3` plus SubQ Snap
+(`dailySkills/data/recordings/labeled/`). Dataset tasks are one-offs, so skill suggestions still need repeated workflows.
 
 ```sh
 pnpm build:extension

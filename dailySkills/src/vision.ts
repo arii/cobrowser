@@ -1,4 +1,5 @@
-// Model calls for target labeling. Meta Llama (OpenAI-compatible endpoint) names the control; SubQ Snap cross-checks the class.
+// Model calls for target labeling. Meta's Model API (dev.meta.ai, OpenAI-compatible chat completions; muse-spark-1.3 reads images)
+// names the control; SubQ Snap cross-checks the class. The LLAMA_* names are kept for parity with the repo root .env.example.
 import type { Image } from './frames.js';
 
 export type Tag = 'BUTTON' | 'A' | 'INPUT' | 'SELECT' | 'TEXTAREA' | 'NONE';
@@ -31,13 +32,14 @@ export function pickVlmProvider(env = process.env): VlmProvider | 'none' {
   if (env.LLAMA_API_KEY && env.LLAMA_ENDPOINT && env.LLAMA_MODEL) return 'llama';
   return 'none'; // Snap classifies the control and local OCR reads its text
 }
-export function vlmModelName(_provider: VlmProvider, env = process.env): string { return env.LLAMA_MODEL ?? 'llama'; }
+export function vlmModelName(_provider: VlmProvider, env = process.env): string { return env.LLAMA_MODEL ?? 'muse-spark-1.3'; }
 
 export async function labelWithVlm(_provider: VlmProvider, images: Image[], env = process.env): Promise<{ answer: VlmAnswer; model: string; latencyMs: number }> {
   const started = performance.now();
   if (env.LLAMA_SCHEMA && env.LLAMA_SCHEMA !== 'openai-chat') throw new Error(`unsupported LLAMA_SCHEMA ${env.LLAMA_SCHEMA}`);
   const model = vlmModelName('llama', env);
-  const body = { model, max_tokens: 512, temperature: 0, response_format: { type: 'json_schema', json_schema: { name: 'click_target', strict: true, schema: SCHEMA } },
+  // Meta's reasoning models always reason: give the reasoning room and keep effort low; no temperature/n knobs.
+  const body = { model, max_completion_tokens: 1500, reasoning_effort: 'low', response_format: { type: 'json_schema', json_schema: { name: 'click_target', strict: true, schema: SCHEMA } },
     messages: [{ role: 'system', content: SYSTEM }, { role: 'user', content: [{ type: 'text', text: USER_TEXT }, ...images.map(image => ({ type: 'image_url', image_url: { url: `data:${image.mediaType};base64,${image.base64}` } }))] }] };
   const raw = await post(env.LLAMA_ENDPOINT!, { Authorization: `Bearer ${env.LLAMA_API_KEY}` }, body) as { model?: string; choices?: { message?: { content?: string | { text?: string }[] } }[]; completion_message?: { content?: { text?: string } | string } };
   // Meta's native endpoint returns completion_message; OpenAI-compatible endpoints return choices[].message.

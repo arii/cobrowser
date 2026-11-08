@@ -55,7 +55,7 @@ export async function labelState(state: RecorderState, fileName: string, options
   if (options.snap && !options.dryRun && !env.SUBQ_API_KEY) log('  SUBQ_API_KEY not set: skipping Snap cross-check');
   if (options.ocr && !options.dryRun && !useOcr) log('  tesseract not found: skipping OCR');
   if (!options.dryRun && !provider && !useSnap) throw new Error('Nothing can label clicks: set LLAMA_ENDPOINT + LLAMA_MODEL + LLAMA_API_KEY, or SUBQ_API_KEY for Snap + OCR, in dailySkills/.env');
-  if (!options.dryRun) log(`  labeling with ${provider ? `${provider} (${vlmModelName(provider, env)})` : 'no vision LLM'}${useSnap ? ' + SubQ Snap' : ''}${useOcr ? ' + tesseract OCR' : ''}`);
+  if (!options.dryRun) log(`  labeling with ${provider ? `Meta ${vlmModelName(provider, env)} via ${new URL(env.LLAMA_ENDPOINT!).host}` : 'no vision LLM'}${useSnap ? ' + SubQ Snap' : ''}${useOcr ? ' + tesseract OCR' : ''}`);
   const records: LabelRecord[] = []; const summary: Record<string, number> = { clicks: 0, labeled: 0, changesInherited: 0, skippedTasks: 0 };
   const cacheDir = join(options.rawDir, 'labels'); await mkdir(cacheDir, { recursive: true });
   const stem = basename(fileName, '.json');
@@ -106,8 +106,9 @@ export async function labelState(state: RecorderState, fileName: string, options
         const decided = decideTarget(record.vlm, record.snap, record.ocr);
         record.decision = decided.decision; record.target = decided.target;
       }
-      if (record.target) { click.target = record.target; summary.labeled++; }
-      summary[record.decision.split(':')[0]] = (summary[record.decision.split(':')[0]] ?? 0) + 1;
+      if (record.target) click.target = record.target;
+      const outcome = record.decision.split(':')[0];
+      if (outcome !== 'labeled') summary[outcome] = (summary[outcome] ?? 0) + 1;
       log(`    +${offsetS.toFixed(1)}s ${record.decision}${record.target ? ` → ${record.target.tag} "${record.target.label}"${record.target.type ? ` (${record.target.type})` : ''}` : ''}${record.vlm ? ` [vlm ${record.vlm.tag} ${Math.round(record.vlm.confidence * 100)}%]` : ''}${record.snap ? ` [snap ${record.snap.control} ${Math.round(record.snap.controlConfidence * 100)}%]` : ''}${record.ocr ? ` [ocr "${record.ocr.label}"]` : record.ocr === null ? ' [ocr none]' : ''}`);
       records.push(record);
     }
@@ -122,6 +123,7 @@ export async function labelState(state: RecorderState, fileName: string, options
       }
     });
   }
+  summary.labeled = records.filter(record => record.target).length;
   const source = (next.source ?? {}) as Record<string, unknown>;
   next.source = { ...source, labeling: { provider: options.dryRun ? 'dry-run' : provider ?? 'none', model: provider ? vlmModelName(provider, env) : null, snap: useSnap ? (env.SUBQ_SNAP_MODEL ?? 'subq-snap-1.1') : null, ocr: useOcr ? 'tesseract' : null, labeledAt: new Date().toISOString(), summary, records } };
   return { state: next, records, summary };

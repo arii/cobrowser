@@ -233,7 +233,7 @@
       "y": 0.1768,
       "target": {
         "tag": "A",
-        "label": "Our",
+        "label": "Our Locations",
         "type": ""
       }
     },
@@ -322,7 +322,7 @@
       "y": 0.1838,
       "target": {
         "tag": "A",
-        "label": "Executive",
+        "label": "Executive Leadership",
         "type": ""
       }
     },
@@ -451,8 +451,8 @@
       "y": 0.3717,
       "effect": "content-changed",
       "target": {
-        "tag": "A",
-        "label": "suzanne Scott",
+        "tag": "BUTTON",
+        "label": "View Bio",
         "type": ""
       }
     },
@@ -703,18 +703,17 @@
     "tabId": 1,
     "placedStartedAt": "2026-11-08T00:21:29.565Z",
     "labeling": {
-      "provider": "none",
-      "model": null,
+      "provider": "llama",
+      "model": "muse-spark-1.3",
       "snap": "subq-snap-1.1",
       "ocr": "tesseract",
-      "labeledAt": "2026-11-08T00:28:28.174Z",
+      "labeledAt": "2026-11-08T00:45:54.400Z",
       "summary": {
         "clicks": 5,
         "labeled": 3,
         "changesInherited": 0,
         "skippedTasks": 0,
-        "no-ocr-text-at-click": 1,
-        "snap+ocr": 3,
+        "vlm-says-not-a-control": 1,
         "snap-says-not-a-control": 1
       },
       "records": [
@@ -727,14 +726,22 @@
             "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-09acd0bd-crop.jpg",
             "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-09acd0bd-ocr.png"
           ],
-          "decision": "no-ocr-text-at-click",
+          "decision": "vlm-says-not-a-control",
           "target": null,
+          "vlm": {
+            "tag": "NONE",
+            "label": "",
+            "type": "",
+            "confidence": 0.55,
+            "model": "muse-spark-1.3",
+            "latencyMs": 7774
+          },
           "snap": {
             "control": "button",
             "controlConfidence": 0.6089294910430908,
             "clickable": 0.7676069736480713,
             "model": "subq-snap-1.1",
-            "latencyMs": 671
+            "latencyMs": 919
           },
           "ocr": null
         },
@@ -747,18 +754,26 @@
             "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-0532e528-crop.jpg",
             "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-0532e528-ocr.png"
           ],
-          "decision": "snap+ocr",
+          "decision": "labeled",
           "target": {
             "tag": "A",
-            "label": "Our",
+            "label": "Our Locations",
             "type": ""
+          },
+          "vlm": {
+            "tag": "A",
+            "label": "Our Locations",
+            "type": "",
+            "confidence": 0.92,
+            "model": "muse-spark-1.3",
+            "latencyMs": 6668
           },
           "snap": {
             "control": "link",
             "controlConfidence": 0.8358541011810303,
             "clickable": 0.9122557044029236,
             "model": "subq-snap-1.1",
-            "latencyMs": 799
+            "latencyMs": 1487
           },
           "ocr": {
             "label": "Our",
@@ -779,12 +794,20 @@
           ],
           "decision": "snap-says-not-a-control",
           "target": null,
+          "vlm": {
+            "tag": "NONE",
+            "label": "",
+            "type": "",
+            "confidence": 0.95,
+            "model": "muse-spark-1.3",
+            "latencyMs": 4198
+          },
           "snap": {
             "control": "none",
             "controlConfidence": 0.7291423082351685,
             "clickable": 0.09901343286037445,
             "model": "subq-snap-1.1",
-            "latencyMs": 868
+            "latencyMs": 835
           },
           "ocr": {
             "label": "New York (Headquarters)",
@@ -805,18 +828,26 @@
             "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-dfc3dbbd-crop.jpg",
             "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-dfc3dbbd-ocr.png"
           ],
-          "decision": "snap+ocr",
+          "decision": "labeled",
           "target": {
             "tag": "A",
-            "label": "Executive",
+            "label": "Executive Leadership",
             "type": ""
+          },
+          "vlm": {
+            "tag": "A",
+            "label": "Executive Leadership",
+            "type": "",
+            "confidence": 0.95,
+            "model": "muse-spark-1.3",
+            "latencyMs": 2849
           },
           "snap": {
             "control": "link",
             "controlConfidence": 0.7770550012588501,
             "clickable": 0.8950726985931396,
             "model": "subq-snap-1.1",
-            "latencyMs": 731
+            "latencyMs": 1023
           },
           "ocr": {
             "label": "Executive",
@@ -835,18 +866,26 @@
             "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-638f55eb-crop.jpg",
             "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-638f55eb-ocr.png"
           ],
-          "decision": "snap+ocr",
+          "decision": "labeled",
           "target": {
-            "tag": "A",
-            "label": "suzanne Scott",
+            "tag": "BUTTON",
+            "label": "View Bio",
             "type": ""
+          },
+          "vlm": {
+            "tag": "BUTTON",
+            "label": "View Bio",
+            "type": "",
+            "confidence": 0.96,
+            "model": "muse-spark-1.3",
+            "latencyMs": 3370
           },
           "snap": {
             "control": "link",
             "controlConfidence": 0.4039467811584473,
             "clickable": 0.8996928334236145,
             "model": "subq-snap-1.1",
-            "latencyMs": 475
+            "latencyMs": 865
           },
           "ocr": {
             "label": "suzanne Scott",

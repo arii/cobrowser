@@ -31,7 +31,7 @@ Datasets:
 | `src/cli.ts` | `psai`, `agentnet`, `validate`, `label` commands. |
 | `src/label.ts`, `src/frames.ts`, `src/vision.ts`, `src/ocr.ts`, `src/env.ts` | Labeling pass: frame extraction with ffmpeg, Llama / SubQ Snap calls, tesseract fallback, `.env` loading. |
 | `data/recordings/` | Sample output: FoxNews, Squarespace and Amazon tasks from PSAI, five AgentNet tasks, and `*-merged.json` "day" files. |
-| `.env.example` | Keys for the labeling pass (Meta Llama API, SubQ). Copy to `.env`; `.env` is gitignored. Read by `pnpm convert label` only. |
+| `.env.example` | Keys for the labeling pass (Meta Model API from dev.meta.ai, SubQ). Copy to `.env`; `.env` is gitignored. Read by `pnpm convert label` only (then the repo root `.env` as fallback). |
 
 ## Run
 
@@ -135,9 +135,9 @@ the frame at the click's time with `ffmpeg` (event clock and video clock are ali
 
 | Provider (from `.env`) | Role | Status |
 |---|---|---|
-| `LLAMA_ENDPOINT` + `LLAMA_MODEL` + `LLAMA_API_KEY` | Vision LLM (Meta Llama 4 through any OpenAI-compatible endpoint): names the control (`tag`, `label`, `type`, confidence) from the full frame and a zoomed crop. | Request shape verified; api.llama.com answered 401 `invalid_api_key` with the key tried, so the live path is unexercised. Check the key with `curl https://api.llama.com/compat/v1/models -H "Authorization: Bearer $LLAMA_API_KEY"`, or point the endpoint at the provider that issued the key. |
+| `LLAMA_ENDPOINT` + `LLAMA_MODEL` + `LLAMA_API_KEY` | Vision LLM: Meta's Model API at `https://api.meta.ai/v1/chat/completions` with `muse-spark-1.3` (reads images, OpenAI-compatible, strict `response_format` JSON schema). Names the control (`tag`, `label`, `type`, confidence) from the full frame and a zoomed crop. Keys come from https://dev.meta.ai. | Works. On the FoxNews sample it returned "Our Locations", "Executive Leadership" and the small "View Bio" button at 92–96% confidence, about 3 s and ~2k tokens per click (300 reasoning tokens at `reasoning_effort: low`). The old `api.llama.com` host rejects these keys. |
 | `SUBQ_API_KEY` (Snap) | Classifies the control kind (button, link, text field, dropdown, text area, none) and whether the click is on something interactive. Cross-checks the LLM, or stands in for it. SubQ's chat model does not accept images. | Works. |
-| tesseract (local) | Reads the text on the click's row from a clean 2x crop when no vision LLM is available (`--provider none`). | Works, approximate: misses small buttons, and the mouse pointer sits on the clicked word. |
+| tesseract (local) | Reads the text on the click's row from a clean 2x crop when no vision LLM is available (`--provider none`), or when the LLM returns an empty label. | Works, approximate: misses small buttons, and the mouse pointer sits on the clicked word. Use Meta when you can. |
 
 SubQ Preview (chat completions) accepts only text and PDF/text files, not images, so it cannot label screenshots.
 Decision rules live in `decideTarget()` in `src/label.ts`: Snap can veto a non-control or override the LLM's tag
@@ -147,9 +147,10 @@ it when that click hit a field. Clicks that get no target stay as they were.
 
 AgentNet clicks are not labeled: its screenshots ship as 5 GB zip volumes, so there is no cheap way to fetch one frame.
 
-Labeled output still needs the same workflow repeated three times with an observed effect before `discoverSkills()`
-suggests anything; dataset tasks are mostly one-offs, so expect the labels to feed the monitor, the brain and manual
-inspection first.
+`data/recordings/labeled/` holds Meta-labeled versions of the sample "day" files; load those through the monitor's
+dataset toggle when you want targets present. Labeled output still needs the same workflow repeated three times with
+an observed effect before `discoverSkills()` suggests anything; dataset tasks are mostly one-offs, so expect the
+labels to feed the monitor, the brain and manual inspection first.
 
 ## Loading a recording into the extension
 
