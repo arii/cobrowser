@@ -1,0 +1,9 @@
+# 005: Explain extension-only startup and surface control errors
+
+November 7, 2026 follow-up. The user reported that all buttons were unresponsive. Chrome's tab inventory showed `apps/extension/popup.html` opened directly with a `file://` URL. That page has no extension messaging API, and the original click handlers left rejected promises unhandled. This was a setup/error-feedback defect, not an intentionally inert mock UI.
+
+The popup now detects a missing extension context on startup, displays unpacked-extension installation instructions, and disables unavailable controls. In the installed extension it shows immediate progress, catches messaging failures, and explains native timeout, missing assignment and stale screenshot errors. The README explicitly warns against opening the HTML directly.
+
+Command: `pnpm exec tsx scripts/probe-popup.ts`; `pnpm typecheck`. Both passed. The new probe uses a real temporary extension profile and exercises the popup's click handlers and background message route, rather than invoking worker functions directly. Local-file startup showed instructions with all five controls disabled; installed-extension Detach/Create agent tab/Screenshot/Click and type succeeded and produced actual input text; a deliberately absent native host showed progress then an actionable timeout. No page exceptions occurred. See [popup UI evidence](evidence/popup-ui.json). The missing-host case is not a live relay success claim; the original bridge evidence remains separate.
+
+The initial Phase 0 manifest remains a historical snapshot. Popup sources and README changed in this follow-up; use this probe for their current UI behavior. Installing the unpacked extension into the user's existing Chrome profile remains a manual setup step, since it grants debugger/native messaging privileges.

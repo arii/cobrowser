@@ -1,0 +1,1 @@
+$ tsc --noEmit && tsc -p apps/companion/tsconfig.renderer.json && tsc -p apps/extension/tsconfig.json

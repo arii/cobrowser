@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "dayskill-1",
+  "id": "a5fe088e-6192-4ccd-90de-822802be926e",
+  "title": "Filter Amazon results to 4 Stars & Up",
+  "summary": "Apply customer-review filter to show only highly rated products.",
+  "whenToUse": "Use when browsing Amazon search results and you want only items rated 4 stars and above.",
+  "sites": [
+    {
+      "id": "main",
+      "url": "https://www.amazon.com/"
+    }
+  ],
+  "steps": [
+    {
+      "kind": "click",
+      "siteId": "main",
+      "target": {
+        "tag": "A",
+        "label": "4 Stars & Up",
+        "type": ""
+      },
+      "intent": "Apply the 4-star-and-up customer rating filter.",
+      "evidence": [
+        "785b89c7-16d6-4d82-9b42-c945844c6d70"
+      ]
+    }
+  ],
+  "outcome": {
+    "kind": "page-changed",
+    "description": "Results filter to show only products rated 4 stars and above."
+  },
+  "examples": [
+    {
+      "at": "2026-11-08T00:13:12.729Z",
+      "eventIds": [
+        "785b89c7-16d6-4d82-9b42-c945844c6d70"
+      ],
+      "effect": "unobserved"
+    }
+  ],
+  "evidence": {
+    "sessionIds": [
+      "434f6570-abca-4b76-9f3a-21e35027d6fd"
+    ],
+    "day": "2026-11-08",
+    "eventIds": [
+      "785b89c7-16d6-4d82-9b42-c945844c6d70"
+    ]
+  },
+  "generator": {
+    "provider": "llama",
+    "model": "muse-spark-1.3",
+    "promptVersion": "day-miner-v1"
+  },
+  "confidence": 0.75,
+  "notes": "Single-click filter; common stable control on Amazon result pages.",
+  "blockers": [
+    "Complete one workflow with an observed result or form submission to learn this skill."
+  ]
+}

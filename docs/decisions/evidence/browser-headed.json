@@ -1,0 +1,388 @@
+{
+  "mode": "live-extension-in-isolated-Chrome-for-Testing",
+  "headed": true,
+  "extensionId": "afchllcepipgheklaapddihncbpmfocl",
+  "results": [
+    {
+      "bridge": "live-native-messaging",
+      "ack": {
+        "v": 1,
+        "kind": "ack",
+        "client": "6b46d06e-d4df-4720-927a-d8ed5b85ee02",
+        "seq": 1,
+        "duplicate": false,
+        "coordinator": "phase0-local-process"
+      },
+      "duplicate": {
+        "v": 1,
+        "kind": "ack",
+        "client": "6b46d06e-d4df-4720-927a-d8ed5b85ee02",
+        "seq": 1,
+        "duplicate": true,
+        "coordinator": "phase0-local-process"
+      },
+      "recovered": {
+        "v": 1,
+        "kind": "ack",
+        "client": "6b46d06e-d4df-4720-927a-d8ed5b85ee02",
+        "seq": 2,
+        "duplicate": false,
+        "coordinator": "phase0-local-process"
+      },
+      "limitation": "deduplication is bounded in memory and resets on coordinator restart; ping only"
+    },
+    {
+      "dpr": 1,
+      "zoom": 1,
+      "active": true,
+      "context": {
+        "chromeWindowId": 140394750,
+        "title": "Harness fixture phase0-agent-7f3a91",
+        "active": true,
+        "focused": true,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1002,
+          "height": 826
+        }
+      },
+      "viewport": {
+        "clientHeight": 700,
+        "clientWidth": 1000,
+        "offsetX": 0,
+        "offsetY": 0,
+        "pageX": 0,
+        "pageY": 0,
+        "scale": 1,
+        "zoom": 1
+      },
+      "screenshot": {
+        "width": 2004,
+        "height": 1464,
+        "pixelsPerCSS": 2.004
+      },
+      "input": "passed",
+      "reusedObservation": "rejected"
+    },
+    {
+      "dpr": 1,
+      "zoom": 1,
+      "active": false,
+      "context": {
+        "chromeWindowId": 140394750,
+        "title": "Harness fixture phase0-agent-7f3a91",
+        "active": false,
+        "focused": true,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1002,
+          "height": 826
+        }
+      },
+      "viewport": {
+        "clientHeight": 700,
+        "clientWidth": 1000,
+        "offsetX": 0,
+        "offsetY": 0,
+        "pageX": 0,
+        "pageY": 0,
+        "scale": 1,
+        "zoom": 1
+      },
+      "screenshot": {
+        "width": 2004,
+        "height": 1402,
+        "pixelsPerCSS": 2.004
+      },
+      "input": "passed",
+      "reusedObservation": "rejected"
+    },
+    {
+      "dpr": 1,
+      "zoom": 1.25,
+      "active": true,
+      "context": {
+        "chromeWindowId": 140394750,
+        "title": "Harness fixture phase0-agent-7f3a91",
+        "active": true,
+        "focused": true,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1002,
+          "height": 826
+        }
+      },
+      "viewport": {
+        "clientHeight": 560,
+        "clientWidth": 800,
+        "offsetX": 0,
+        "offsetY": 0,
+        "pageX": 0,
+        "pageY": 0,
+        "scale": 1,
+        "zoom": 1.25
+      },
+      "screenshot": {
+        "width": 2004,
+        "height": 1366,
+        "pixelsPerCSS": 2.505
+      },
+      "input": "passed",
+      "reusedObservation": "rejected"
+    },
+    {
+      "dpr": 1,
+      "zoom": 1.25,
+      "active": false,
+      "context": {
+        "chromeWindowId": 140394750,
+        "title": "Harness fixture phase0-agent-7f3a91",
+        "active": false,
+        "focused": true,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1002,
+          "height": 826
+        }
+      },
+      "viewport": {
+        "clientHeight": 560,
+        "clientWidth": 800,
+        "offsetX": 0,
+        "offsetY": 0,
+        "pageX": 0,
+        "pageY": 0,
+        "scale": 1,
+        "zoom": 1.25
+      },
+      "screenshot": {
+        "width": 2004,
+        "height": 1366,
+        "pixelsPerCSS": 2.505
+      },
+      "input": "passed",
+      "reusedObservation": "rejected"
+    },
+    {
+      "native": {
+        "verdict": "passed",
+        "events": [
+          {
+            "monotonicNs": 849085567905916,
+            "nativeWindowId": 32072,
+            "pid": 56820,
+            "utc": "2026-11-07T19:17:07Z",
+            "event": "started"
+          },
+          {
+            "width": 2004,
+            "ptsSeconds": 849085.560375583,
+            "sha256": "6ce055c83c42015d6b6ac272c83875a9b51d9c867f87d953fafafc4f8885560f",
+            "contentScale": 1,
+            "height": 1652,
+            "event": "frame",
+            "utc": "2026-11-07T19:17:07Z",
+            "monotonicNs": 849085580254541
+          },
+          {
+            "utc": "2026-11-07T19:17:07Z",
+            "monotonicNs": 849085623375625,
+            "event": "paused"
+          },
+          {
+            "utc": "2026-11-07T19:17:08Z",
+            "monotonicNs": 849087008746500,
+            "event": "resumed"
+          },
+          {
+            "width": 2004,
+            "contentScale": 1,
+            "sha256": "b7adb7e15e4c9b2adf0d75cd27ac9bda0f613bb011fc06f3c4250683ea8664c7",
+            "event": "frame",
+            "ptsSeconds": 849087.004312041,
+            "height": 1652,
+            "utc": "2026-11-07T19:17:08Z",
+            "monotonicNs": 849087019653375
+          },
+          {
+            "reason": "identity-or-title-lost",
+            "monotonicNs": 849087383609041,
+            "event": "stopped",
+            "utc": "2026-11-07T19:17:09Z"
+          },
+          {
+            "monotonicNs": 849088637983875,
+            "utc": "2026-11-07T19:17:10Z",
+            "event": "stopped",
+            "reason": "quit"
+          }
+        ],
+        "matching": {
+          "height": 826,
+          "monotonicNs": 849085414515791,
+          "utc": "2026-11-07T19:17:07Z",
+          "x": 22,
+          "width": 1002,
+          "y": 55,
+          "title": "Harness fixture phase0-agent-7f3a91",
+          "pid": 56820,
+          "event": "window",
+          "nativeWindowId": 32072
+        }
+      },
+      "extensionBinding": {
+        "chromeWindowId": 140394750,
+        "title": "Harness fixture phase0-agent-7f3a91",
+        "active": true,
+        "focused": true,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1002,
+          "height": 826
+        }
+      },
+      "tabId": 140394752
+    },
+    {
+      "dpr": 2,
+      "zoom": 1,
+      "active": true,
+      "context": {
+        "chromeWindowId": 250660836,
+        "title": "Harness fixture phase0-agent-7f3a91",
+        "active": true,
+        "focused": true,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1002,
+          "height": 826
+        }
+      },
+      "viewport": {
+        "clientHeight": 700,
+        "clientWidth": 1000,
+        "offsetX": 0,
+        "offsetY": 0,
+        "pageX": 0,
+        "pageY": 0,
+        "scale": 1,
+        "zoom": 1
+      },
+      "screenshot": {
+        "width": 2004,
+        "height": 1464,
+        "pixelsPerCSS": 2.004
+      },
+      "input": "passed",
+      "reusedObservation": "rejected"
+    },
+    {
+      "dpr": 2,
+      "zoom": 1,
+      "active": false,
+      "context": {
+        "chromeWindowId": 250660836,
+        "title": "Harness fixture phase0-agent-7f3a91",
+        "active": false,
+        "focused": true,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1002,
+          "height": 826
+        }
+      },
+      "viewport": {
+        "clientHeight": 700,
+        "clientWidth": 1000,
+        "offsetX": 0,
+        "offsetY": 0,
+        "pageX": 0,
+        "pageY": 0,
+        "scale": 1,
+        "zoom": 1
+      },
+      "screenshot": {
+        "width": 2004,
+        "height": 1392,
+        "pixelsPerCSS": 2.004
+      },
+      "input": "passed",
+      "reusedObservation": "rejected"
+    },
+    {
+      "dpr": 2,
+      "zoom": 1.25,
+      "active": true,
+      "context": {
+        "chromeWindowId": 250660836,
+        "title": "Harness fixture phase0-agent-7f3a91",
+        "active": true,
+        "focused": true,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1002,
+          "height": 826
+        }
+      },
+      "viewport": {
+        "clientHeight": 560,
+        "clientWidth": 800,
+        "offsetX": 0,
+        "offsetY": 0,
+        "pageX": 0,
+        "pageY": 0,
+        "scale": 1,
+        "zoom": 1.25
+      },
+      "screenshot": {
+        "width": 2004,
+        "height": 1366,
+        "pixelsPerCSS": 2.505
+      },
+      "input": "passed",
+      "reusedObservation": "rejected"
+    },
+    {
+      "dpr": 2,
+      "zoom": 1.25,
+      "active": false,
+      "context": {
+        "chromeWindowId": 250660836,
+        "title": "Harness fixture phase0-agent-7f3a91",
+        "active": false,
+        "focused": true,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1002,
+          "height": 826
+        }
+      },
+      "viewport": {
+        "clientHeight": 560,
+        "clientWidth": 800,
+        "offsetX": 0,
+        "offsetY": 0,
+        "pageX": 0,
+        "pageY": 0,
+        "scale": 1,
+        "zoom": 1.25
+      },
+      "screenshot": {
+        "width": 2004,
+        "height": 1366,
+        "pixelsPerCSS": 2.505
+      },
+      "input": "passed",
+      "reusedObservation": "rejected"
+    }
+  ]
+}

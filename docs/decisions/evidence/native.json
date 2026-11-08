@@ -1,0 +1,66 @@
+{
+  "mode": "live-selected-synthetic-window",
+  "matching": {
+    "height": 826,
+    "monotonicNs": 849085414515791,
+    "utc": "2026-11-07T19:17:07Z",
+    "x": 22,
+    "width": 1002,
+    "y": 55,
+    "title": "Harness fixture phase0-agent-7f3a91",
+    "pid": 56820,
+    "event": "window",
+    "nativeWindowId": 32072
+  },
+  "events": [
+    {
+      "monotonicNs": 849085567905916,
+      "nativeWindowId": 32072,
+      "pid": 56820,
+      "utc": "2026-11-07T19:17:07Z",
+      "event": "started"
+    },
+    {
+      "width": 2004,
+      "ptsSeconds": 849085.560375583,
+      "sha256": "6ce055c83c42015d6b6ac272c83875a9b51d9c867f87d953fafafc4f8885560f",
+      "contentScale": 1,
+      "height": 1652,
+      "event": "frame",
+      "utc": "2026-11-07T19:17:07Z",
+      "monotonicNs": 849085580254541
+    },
+    {
+      "utc": "2026-11-07T19:17:07Z",
+      "monotonicNs": 849085623375625,
+      "event": "paused"
+    },
+    {
+      "utc": "2026-11-07T19:17:08Z",
+      "monotonicNs": 849087008746500,
+      "event": "resumed"
+    },
+    {
+      "width": 2004,
+      "contentScale": 1,
+      "sha256": "b7adb7e15e4c9b2adf0d75cd27ac9bda0f613bb011fc06f3c4250683ea8664c7",
+      "event": "frame",
+      "ptsSeconds": 849087.004312041,
+      "height": 1652,
+      "utc": "2026-11-07T19:17:08Z",
+      "monotonicNs": 849087019653375
+    },
+    {
+      "reason": "identity-or-title-lost",
+      "monotonicNs": 849087383609041,
+      "event": "stopped",
+      "utc": "2026-11-07T19:17:09Z"
+    },
+    {
+      "monotonicNs": 849088637983875,
+      "utc": "2026-11-07T19:17:10Z",
+      "event": "stopped",
+      "reason": "quit"
+    }
+  ]
+}

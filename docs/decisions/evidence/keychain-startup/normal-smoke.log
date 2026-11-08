@@ -1,0 +1,2 @@
+$ electron dist/companion/main.cjs --smoke
+{"mode":"live-electron-smoke","electron":"45.2.3","node":"24.22.2","sqlite":"read-write-encrypted-artifact-passed","rendererLoaded":true,"isolatedPreloadIPC":true,"keyProvider":"synthetic-ephemeral","keychainTested":false,"initialStorage":{"records":0,"artifacts":0,"bytes":0}}

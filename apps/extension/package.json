@@ -1,0 +1,14 @@
+{
+  "name": "@harness/extension",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "scripts": {
+    "dev": "wxt --browser chrome",
+    "build": "wxt build --browser chrome"
+  }
+}

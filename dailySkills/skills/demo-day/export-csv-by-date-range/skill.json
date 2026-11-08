@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "dayskill-1",
+  "id": "0986e94d-adb4-4b96-a806-110185d6c6ee",
+  "title": "Export CSV by date range",
+  "summary": "Set inclusive start and exclusive end dates then export the filtered results to CSV.",
+  "whenToUse": "Use when you need to export filtered data to CSV for a specific date range.",
+  "sites": [
+    {
+      "id": "main",
+      "url": "http://127.0.0.1:55440/"
+    }
+  ],
+  "steps": [
+    {
+      "kind": "change",
+      "siteId": "main",
+      "target": {
+        "tag": "INPUT",
+        "label": "Start inclusive",
+        "type": ""
+      },
+      "intent": "Enter the inclusive start date for the export",
+      "parameter": {
+        "name": "input_1",
+        "description": "Inclusive start date limiting the export range"
+      },
+      "evidence": [
+        "a177638f-3218-45cc-ae62-c93eb852009d"
+      ]
+    },
+    {
+      "kind": "change",
+      "siteId": "main",
+      "target": {
+        "tag": "INPUT",
+        "label": "End exclusive",
+        "type": ""
+      },
+      "intent": "Enter the exclusive end date for the export",
+      "parameter": {
+        "name": "input_2",
+        "description": "Exclusive end date limiting the export range"
+      },
+      "evidence": [
+        "4008687b-e232-4eed-8c67-077bf25699c5"
+      ]
+    },
+    {
+      "kind": "click",
+      "siteId": "main",
+      "target": {
+        "label": "Export CSV",
+        "tag": "BUTTON",
+        "type": "submit"
+      },
+      "intent": "Click Export CSV to generate the file",
+      "evidence": [
+        "9ca6cafa-936f-4474-93f6-22e4fa1f943b"
+      ]
+    }
+  ],
+  "outcome": {
+    "kind": "page-changed",
+    "description": "CSV export triggered and page content updated to confirm export"
+  },
+  "examples": [
+    {
+      "at": "2026-11-08T00:45:42.664Z",
+      "eventIds": [
+        "a177638f-3218-45cc-ae62-c93eb852009d",
+        "4008687b-e232-4eed-8c67-077bf25699c5",
+        "9ca6cafa-936f-4474-93f6-22e4fa1f943b"
+      ],
+      "effect": "content-changed"
+    }
+  ],
+  "evidence": {
+    "sessionIds": [
+      "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f"
+    ],
+    "day": "2026-11-08",
+    "eventIds": [
+      "a177638f-3218-45cc-ae62-c93eb852009d",
+      "4008687b-e232-4eed-8c67-077bf25699c5",
+      "9ca6cafa-936f-4474-93f6-22e4fa1f943b",
+      "000287f2-26aa-4437-b4f9-eda129d5153b",
+      "c96a1ed4-0935-43c9-a7d3-8445f40a4822",
+      "f35fd8c8-bd59-4614-b8f5-547ba86a6a53"
+    ]
+  },
+  "generator": {
+    "provider": "llama",
+    "model": "muse-spark-1.3",
+    "promptVersion": "day-miner-v1"
+  },
+  "confidence": 0.85,
+  "notes": "Repeated twice; second run includes explicit date inputs and export confirmation.",
+  "blockers": []
+}

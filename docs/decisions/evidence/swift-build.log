@@ -1,0 +1,10 @@
+$ swift build --package-path native/macos-capture
+Building for debugging...
+[0/4] Write sources
+[1/4] Write swift-version--1AB21518FC5DEDBE.txt
+[3/6] Compiling CaptureProbe main.swift
+[4/6] Emitting module CaptureProbe
+[4/7] Write Objects.LinkFileList
+[5/7] Linking CaptureProbe
+[6/7] Applying CaptureProbe
+Build complete! (0.74s)

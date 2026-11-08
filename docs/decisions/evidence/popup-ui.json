@@ -1,0 +1,25 @@
+{
+  "mode": "live-extension-popup-UI",
+  "directFile": "setup instructions visible; all five controls disabled",
+  "results": [
+    {
+      "button": "Detach",
+      "ok": true
+    },
+    {
+      "button": "Create agent tab",
+      "ok": true
+    },
+    {
+      "button": "Screenshot/context",
+      "ok": true
+    },
+    {
+      "button": "Click and type",
+      "ok": true
+    }
+  ],
+  "inputValue": "manual-CDP-probe",
+  "missingNativeHost": "visible progress then native-timeout with setup guidance",
+  "pageErrors": []
+}

@@ -1,0 +1,547 @@
+{
+  "schemaVersion": 1,
+  "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+  "startedAt": "2026-11-08T00:45:35.265Z",
+  "events": [
+    {
+      "id": "7e3bf472-f440-499e-a333-89edef1a2509",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:35.311Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "page-visible",
+      "tag": "PAGE"
+    },
+    {
+      "id": "0cf5c025-acb5-4f2e-9d1e-3401c9094064",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:35.686Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "INPUT",
+      "x": 0.08125,
+      "y": 0.4305555555555556
+    },
+    {
+      "id": "000287f2-26aa-4437-b4f9-eda129d5153b",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:35.687Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "click",
+      "tag": "INPUT",
+      "x": 0.08125,
+      "y": 0.4305555555555556,
+      "target": {
+        "tag": "INPUT",
+        "label": "Start inclusive",
+        "type": ""
+      }
+    },
+    {
+      "id": "20a4998c-ec2d-4d18-a073-c45d1e95be98",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:35.702Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "key",
+      "tag": "INPUT",
+      "key": "Tab"
+    },
+    {
+      "id": "c96a1ed4-0935-43c9-a7d3-8445f40a4822",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:35.736Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "click",
+      "tag": "INPUT",
+      "x": 0.2015625,
+      "y": 0.4305555555555556,
+      "target": {
+        "tag": "INPUT",
+        "label": "End exclusive",
+        "type": ""
+      }
+    },
+    {
+      "id": "2c7f2eb6-0d61-4bb4-b3b9-11d32f67ba65",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:35.747Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "key",
+      "tag": "INPUT",
+      "key": "Tab"
+    },
+    {
+      "at": "2026-11-08T00:45:35.779Z",
+      "effect": "content-changed",
+      "formTargets": [
+        {
+          "label": "Team",
+          "tag": "SELECT",
+          "type": ""
+        },
+        {
+          "label": "Start inclusive",
+          "tag": "INPUT",
+          "type": ""
+        },
+        {
+          "label": "End exclusive",
+          "tag": "INPUT",
+          "type": ""
+        }
+      ],
+      "id": "f35fd8c8-bd59-4614-b8f5-547ba86a6a53",
+      "kind": "click",
+      "origin": "http://127.0.0.1:55440",
+      "provenance": "human",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "tabId": 222683416,
+      "tag": "BUTTON",
+      "target": {
+        "label": "Export CSV",
+        "tag": "BUTTON",
+        "type": "submit"
+      },
+      "x": 0.14140625,
+      "y": 0.5041666666666667
+    },
+    {
+      "id": "e5e7a5c2-7e90-477c-aaf3-641f5481fa36",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:35.781Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "submit",
+      "tag": "FORM"
+    },
+    {
+      "id": "85a7513f-1c05-42a9-bcdd-91f218d4ab3b",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:37.753Z",
+      "origin": "http://127.0.0.1:55439",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "page-visible",
+      "tag": "PAGE"
+    },
+    {
+      "id": "c07afe33-19c5-4444-ae8e-6c1675a33970",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:38.119Z",
+      "origin": "http://127.0.0.1:55439",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "BUTTON",
+      "x": 0.10546875,
+      "y": 0.125
+    },
+    {
+      "at": "2026-11-08T00:45:38.123Z",
+      "id": "112e323b-e808-4a12-8fe1-4c17288fde64",
+      "kind": "click",
+      "origin": "http://127.0.0.1:55439",
+      "provenance": "human",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "tabId": 222683416,
+      "tag": "BUTTON",
+      "target": {
+        "label": "Open report",
+        "tag": "BUTTON",
+        "type": "button"
+      },
+      "x": 0.10546875,
+      "y": 0.125,
+      "effect": "content-changed"
+    },
+    {
+      "id": "06d22dca-d154-438f-925f-3adc1800f4b6",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:38.360Z",
+      "origin": "http://127.0.0.1:55439",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "change",
+      "tag": "INPUT",
+      "target": {
+        "tag": "INPUT",
+        "label": "Report title",
+        "type": "text"
+      }
+    },
+    {
+      "at": "2026-11-08T00:45:38.362Z",
+      "id": "358e7e97-5577-44ca-83c9-9307dd825d18",
+      "kind": "click",
+      "origin": "http://127.0.0.1:55439",
+      "provenance": "human",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "tabId": 222683416,
+      "tag": "BUTTON",
+      "target": {
+        "label": "Preview report",
+        "tag": "BUTTON",
+        "type": "button"
+      },
+      "x": 0.228125,
+      "y": 0.15416666666666667,
+      "effect": "content-changed"
+    },
+    {
+      "id": "5e840dbe-2aa1-4783-bfee-ca86d04e5655",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:40.609Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "page-visible",
+      "tag": "PAGE"
+    },
+    {
+      "id": "f6cef64a-c1f7-4da5-b52d-18304febacf1",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:40.948Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "BUTTON",
+      "x": 0.9296875,
+      "y": 0.1986111111111111
+    },
+    {
+      "at": "2026-11-08T00:45:40.952Z",
+      "id": "0c72d3e7-19ba-4c3f-803b-32f132c1b93d",
+      "kind": "click",
+      "origin": "http://127.0.0.1:55440",
+      "provenance": "human",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "tabId": 222683416,
+      "tag": "BUTTON",
+      "target": {
+        "label": "Reset filters ↺",
+        "tag": "BUTTON",
+        "type": "button"
+      },
+      "x": 0.9296875,
+      "y": 0.1986111111111111,
+      "effect": "content-changed"
+    },
+    {
+      "id": "b3dfded7-195f-4676-af45-2dfc96324e91",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:42.295Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "page-visible",
+      "tag": "PAGE"
+    },
+    {
+      "id": "8e159daf-e469-4661-b975-856f84c91559",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:42.648Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "INPUT",
+      "x": 0.08125,
+      "y": 0.4305555555555556
+    },
+    {
+      "id": "b05f9ba1-62c4-4d79-9d9f-12b615ff490e",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:42.650Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "click",
+      "tag": "INPUT",
+      "x": 0.08125,
+      "y": 0.4305555555555556,
+      "target": {
+        "tag": "INPUT",
+        "label": "Start inclusive",
+        "type": ""
+      }
+    },
+    {
+      "id": "476a5845-b019-4c3b-9d64-f1c78ae6a178",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:42.662Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "key",
+      "tag": "INPUT",
+      "key": "Tab"
+    },
+    {
+      "id": "a177638f-3218-45cc-ae62-c93eb852009d",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:42.664Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "change",
+      "tag": "INPUT",
+      "target": {
+        "tag": "INPUT",
+        "label": "Start inclusive",
+        "type": ""
+      }
+    },
+    {
+      "id": "ff9f317a-bb3f-449d-bd93-81cbf6c69541",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:42.695Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "click",
+      "tag": "INPUT",
+      "x": 0.2015625,
+      "y": 0.4305555555555556,
+      "target": {
+        "tag": "INPUT",
+        "label": "End exclusive",
+        "type": ""
+      }
+    },
+    {
+      "id": "6814cc22-6cd4-4d64-8342-66d41bd89b7b",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:42.706Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "key",
+      "tag": "INPUT",
+      "key": "Tab"
+    },
+    {
+      "id": "4008687b-e232-4eed-8c67-077bf25699c5",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:42.708Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "change",
+      "tag": "INPUT",
+      "target": {
+        "tag": "INPUT",
+        "label": "End exclusive",
+        "type": ""
+      }
+    },
+    {
+      "at": "2026-11-08T00:45:42.747Z",
+      "effect": "content-changed",
+      "formTargets": [
+        {
+          "label": "Team",
+          "tag": "SELECT",
+          "type": ""
+        },
+        {
+          "label": "Start inclusive",
+          "tag": "INPUT",
+          "type": ""
+        },
+        {
+          "label": "End exclusive",
+          "tag": "INPUT",
+          "type": ""
+        }
+      ],
+      "id": "9ca6cafa-936f-4474-93f6-22e4fa1f943b",
+      "kind": "click",
+      "origin": "http://127.0.0.1:55440",
+      "provenance": "human",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "tabId": 222683416,
+      "tag": "BUTTON",
+      "target": {
+        "label": "Export CSV",
+        "tag": "BUTTON",
+        "type": "submit"
+      },
+      "x": 0.14140625,
+      "y": 0.5041666666666667
+    },
+    {
+      "id": "53ea69ef-0c02-4c0b-94ac-149e627dbbbe",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:42.749Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "submit",
+      "tag": "FORM"
+    },
+    {
+      "id": "06a608f7-ed13-47ae-87c7-afb9b25f043f",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:44.712Z",
+      "origin": "http://127.0.0.1:55439",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "page-visible",
+      "tag": "PAGE"
+    },
+    {
+      "id": "2c8130cf-12bf-407f-8002-2f0653fdea2b",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:45.046Z",
+      "origin": "http://127.0.0.1:55439",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "BUTTON",
+      "x": 0.10546875,
+      "y": 0.125
+    },
+    {
+      "at": "2026-11-08T00:45:45.048Z",
+      "id": "7e257af9-b605-4aa8-b28f-cd9b77dbbae2",
+      "kind": "click",
+      "origin": "http://127.0.0.1:55439",
+      "provenance": "human",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "tabId": 222683416,
+      "tag": "BUTTON",
+      "target": {
+        "label": "Open report",
+        "tag": "BUTTON",
+        "type": "button"
+      },
+      "x": 0.10546875,
+      "y": 0.125,
+      "effect": "content-changed"
+    },
+    {
+      "id": "08f6a57b-3616-441d-84c0-7d1c71519170",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:45.304Z",
+      "origin": "http://127.0.0.1:55439",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "change",
+      "tag": "INPUT",
+      "target": {
+        "tag": "INPUT",
+        "label": "Report title",
+        "type": "text"
+      }
+    },
+    {
+      "at": "2026-11-08T00:45:45.306Z",
+      "id": "8df71e71-f5af-4551-8fd3-b09030243f6c",
+      "kind": "click",
+      "origin": "http://127.0.0.1:55439",
+      "provenance": "human",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "tabId": 222683416,
+      "tag": "BUTTON",
+      "target": {
+        "label": "Preview report",
+        "tag": "BUTTON",
+        "type": "button"
+      },
+      "x": 0.228125,
+      "y": 0.15416666666666667,
+      "effect": "content-changed"
+    },
+    {
+      "id": "edc72a4a-7dbb-4400-9872-6014e21d5997",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:46.829Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "page-visible",
+      "tag": "PAGE"
+    },
+    {
+      "id": "712323fa-f94b-4669-b885-43d3324dd64f",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:47.183Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "SELECT",
+      "x": 0.14140625,
+      "y": 0.3375
+    },
+    {
+      "id": "fc148183-145d-41a7-937c-908f95c76db6",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:47.187Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "change",
+      "tag": "INPUT",
+      "target": {
+        "tag": "INPUT",
+        "label": "CDP typing probe",
+        "type": ""
+      }
+    },
+    {
+      "id": "9d49266b-e561-4d51-ac57-b874f86b7113",
+      "sessionId": "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f",
+      "at": "2026-11-08T00:45:47.189Z",
+      "origin": "http://127.0.0.1:55440",
+      "tabId": 222683416,
+      "provenance": "human",
+      "kind": "click",
+      "tag": "SELECT",
+      "x": 0.14140625,
+      "y": 0.3375,
+      "target": {
+        "tag": "SELECT",
+        "label": "Team",
+        "type": ""
+      }
+    }
+  ],
+  "tabs": [
+    {
+      "active": true,
+      "excerpt": "Workspace / Analytics Weekly performance A small report. A complete workflow. Reset filters ↺  Total activity 872 ● Synthetic activity units Daily average 124.6 Across the selected period Report rows 7 End date excluded  Activity over time Red team 2026-10-26 Daily totals · preview 2026-11-01  Report preview 7 rows Date Team Activity units 2026-10-26 red 126 2026-10-27 red 127 2026-10-28 red 128 2026-10-29 red 129 2026-10-30 red 130 2026-10-31 red 131 2026-11-01 red 101  Preview uses local sample data. Verify the downloaded CSV independently. Practice field changed",
+      "headings": [
+        "Make a little progress.",
+        "Weekly performance",
+        "Activity over time"
+      ],
+      "observedAt": "2026-11-08T00:45:51.835Z",
+      "origin": "http://127.0.0.1:55440",
+      "readStatus": "ready",
+      "tabId": 222683416,
+      "title": "Harness fixture phase0-agent-7f3a91"
+    }
+  ],
+  "tabCount": 1,
+  "dropped": 0,
+  "source": {
+    "dataset": "recorded-demo-day",
+    "fixture": "http://127.0.0.1:55440",
+    "reports": "http://127.0.0.1:55439",
+    "note": "Real recorder output from the built extension driving two local fixture sites."
+  }
+}

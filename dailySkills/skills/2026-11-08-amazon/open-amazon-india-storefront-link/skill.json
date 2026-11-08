@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "dayskill-1",
+  "id": "c5c0c8a9-c446-4d9c-a2b9-c7fec1ee75df",
+  "title": "Open Amazon India storefront link",
+  "summary": "Follow the Shop online at Amazon India link to switch to the India storefront.",
+  "whenToUse": "Use when you need to switch from Amazon.com context to Amazon India shopping.",
+  "sites": [
+    {
+      "id": "main",
+      "url": "https://www.amazon.com/"
+    }
+  ],
+  "steps": [
+    {
+      "kind": "click",
+      "siteId": "main",
+      "target": {
+        "tag": "A",
+        "label": "Shop online at Amazon India",
+        "type": ""
+      },
+      "intent": "Navigate to the Amazon India storefront.",
+      "evidence": [
+        "480dee4b-3004-4a36-943a-1b5b82e0f8ea"
+      ]
+    }
+  ],
+  "outcome": {
+    "kind": "page-changed",
+    "description": "Page navigates to Amazon India storefront content."
+  },
+  "examples": [
+    {
+      "at": "2026-11-08T00:18:31.632Z",
+      "eventIds": [
+        "480dee4b-3004-4a36-943a-1b5b82e0f8ea"
+      ],
+      "effect": "content-changed"
+    }
+  ],
+  "evidence": {
+    "sessionIds": [
+      "434f6570-abca-4b76-9f3a-21e35027d6fd"
+    ],
+    "day": "2026-11-08",
+    "eventIds": [
+      "480dee4b-3004-4a36-943a-1b5b82e0f8ea",
+      "35757f49-9f08-4476-97e8-bf3b6cc968ce"
+    ]
+  },
+  "generator": {
+    "provider": "llama",
+    "model": "muse-spark-1.3",
+    "promptVersion": "day-miner-v1"
+  },
+  "confidence": 0.8,
+  "notes": "Observed twice in day; same link label both times.",
+  "blockers": []
+}

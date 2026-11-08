@@ -1,0 +1,4 @@
+body { margin: 0; background: #f6f5f1; color: #202c29; font: 16px system-ui; }
+main { max-width: 600px; padding: 32px; } h1 { margin: 8px 0 16px; } p { line-height: 1.55; }
+main > p:first-child { font-size: 12px; letter-spacing: .12em; } dt { font-weight: 600; } dd { margin: 4px 0 12px; }
+button { background: #23483e; color: white; border: 0; border-radius: 6px; padding: 12px 18px; font: inherit; cursor: pointer; }

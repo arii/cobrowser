@@ -1,0 +1,13 @@
+{
+  "name": "@harness/model-adapters",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "zod": "4.6.7"
+  },
+  "exports": {
+    ".": "./index.ts",
+    "./interfaces": "./interfaces.ts"
+  }
+}

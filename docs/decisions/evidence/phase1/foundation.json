@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "mode": "live-local-synthetic-storage",
+  "keyProvider": "ephemeral-test-key-not-Keychain",
+  "sqlite": "better-sqlite3-13.0.3",
+  "before": {
+    "records": 5,
+    "artifacts": 6,
+    "bytes": 3111
+  },
+  "after": {
+    "records": 0,
+    "artifacts": 0,
+    "bytes": 0
+  },
+  "checks": {
+    "store": true,
+    "retrieve": true,
+    "reopen": true,
+    "expire": true,
+    "delete": true,
+    "immutableRevision": true,
+    "invalidTransitionRejected": true,
+    "derivedRevisionStale": true
+  },
+  "note": "No model call, browser execution or promotion. Ephemeral key and temporary store removed after this check."
+}

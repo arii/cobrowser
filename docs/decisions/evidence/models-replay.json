@@ -1,0 +1,79 @@
+{
+  "mode": "replay",
+  "results": [
+    {
+      "provider": "llama",
+      "result": {
+        "mode": "replay",
+        "provenance": "hand-authored-synthetic",
+        "model": "replay-llama-vision",
+        "promptVersion": "vision-probe-v1",
+        "latencyMs": 0,
+        "inputHash": "edf0412fd41e37487bdee2a90b455201c14103c9c8ce7b2804b66d95c3139995",
+        "requestIdHash": null,
+        "value": {
+          "text": "PHASE0",
+          "color": "red"
+        },
+        "usage": {
+          "prompt_tokens": 0,
+          "completion_tokens": 0
+        },
+        "imageHash": "8707050d292c540a38dbfdc42afdc2b6608c821a252d5536df40d37c43b86632",
+        "capabilityPassed": true
+      }
+    },
+    {
+      "provider": "snap",
+      "result": {
+        "mode": "replay",
+        "provenance": "hand-authored-synthetic",
+        "model": "subq-snap-1.1",
+        "questionVersion": "snap-probe-v1",
+        "latencyMs": 0,
+        "inputHash": "26ddd5e147164963a8643690f459b7f67d6f47d61740d3ac5f23ce9b0a9802e4",
+        "requestIdHash": null,
+        "answers": {
+          "matches": {
+            "type": "noul",
+            "noul": 0.99
+          },
+          "evidence": {
+            "type": "choice",
+            "choice": "match",
+            "probabilities": {
+              "match": 0.98,
+              "mismatch": 0.01,
+              "insufficient": 0.01
+            },
+            "confidence": 0.98
+          },
+          "quality": {
+            "type": "score",
+            "score": 1.9,
+            "legend": {
+              "0": "Unreadable",
+              "1": "Partly legible",
+              "2": "Clearly legible"
+            },
+            "probabilities": {
+              "0": 0,
+              "1": 0.1,
+              "2": 0.9
+            },
+            "confidence": 0.9
+          }
+        },
+        "usage": {
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        "imageHashes": [
+          "8707050d292c540a38dbfdc42afdc2b6608c821a252d5536df40d37c43b86632"
+        ],
+        "capabilityPassed": true,
+        "verdict": "probe-passed"
+      }
+    }
+  ]
+}

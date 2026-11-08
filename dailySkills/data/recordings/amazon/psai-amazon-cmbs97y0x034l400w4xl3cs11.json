@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+  "startedAt": "2026-11-08T00:21:54.781Z",
+  "events": [
+    {
+      "id": "e68fcdb4-29f8-45b9-88af-7d0412d738dc",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:11.628Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.5771,
+      "y": 0.0071
+    },
+    {
+      "id": "65b5b2fc-f0b9-4435-a2c9-752dc8c8b1dd",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:24.125Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.4771,
+      "y": 0.6586
+    },
+    {
+      "id": "ec1e29f7-ee24-4da3-84f6-22a65c2d9c56",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:28.281Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.5594,
+      "y": 0.6586
+    },
+    {
+      "id": "d071cf01-2d13-4f34-87f4-85daa4528564",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:29.285Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.4156,
+      "y": 0.1354
+    },
+    {
+      "id": "56c1f2bb-d6e4-4944-9990-261c1d500a8a",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:30.419Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "click",
+      "tag": "OTHER",
+      "x": 0.4432,
+      "y": 0.0838
+    },
+    {
+      "id": "c051d8f5-0ed4-4e6a-ba90-6383fe80602c",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:30.733Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.4432,
+      "y": 0.0848
+    },
+    {
+      "id": "71974ac8-8d6b-49b4-95ad-71f4f8f24e72",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:42.252Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.4432,
+      "y": 0.0879
+    },
+    {
+      "id": "ed8686e9-efa3-4870-a4fa-dc2aa3933738",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:46.432Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.3792,
+      "y": 0.3131
+    },
+    {
+      "id": "b3b51b8e-0692-40f6-a670-ab50a2e1d87d",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:56.553Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.5255,
+      "y": 0.3616
+    },
+    {
+      "id": "9dc3ccc1-edba-41c5-927c-29dd5dd41902",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:56.964Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "scroll",
+      "tag": "PAGE"
+    },
+    {
+      "id": "cf5b9b46-76e5-4c98-8515-f44f8430d337",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:22:57.916Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.5266,
+      "y": 0.3616
+    },
+    {
+      "id": "f74b79b7-2a12-41e6-ab25-44dec0fe2f5c",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:23:08.765Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.5094,
+      "y": 0.3778
+    },
+    {
+      "id": "ecf0bb8f-f685-4102-8dbe-e533bd0d889d",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:23:10.573Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.5885,
+      "y": 0.3263
+    },
+    {
+      "id": "1f5d1efd-6e67-470e-8325-30f49415dedf",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:23:20.949Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.5927,
+      "y": 0.5051
+    },
+    {
+      "id": "0711f52e-9678-4b54-aac4-d8b36be6f60a",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:23:22.124Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.5245,
+      "y": 0.5323
+    },
+    {
+      "id": "8f1fbfb2-2a5e-4662-b175-a3f84ea3dda8",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:23:26.229Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.7151,
+      "y": 0.5313
+    },
+    {
+      "id": "037b66a1-7cb3-4193-bca4-c0a3e2d0f90c",
+      "sessionId": "54d54698-5812-4cc2-886d-1d094caea830",
+      "at": "2026-11-08T00:23:31.684Z",
+      "origin": "https://www.amazon.com",
+      "tabId": 1,
+      "provenance": "human",
+      "kind": "pointer",
+      "tag": "OTHER",
+      "x": 0.5531,
+      "y": 0.9667
+    }
+  ],
+  "tabs": [
+    {
+      "tabId": 1,
+      "origin": "https://www.amazon.com",
+      "title": "Amazon.com. Spend less. Smile more.",
+      "headings": [],
+      "excerpt": "",
+      "active": true,
+      "observedAt": "2026-11-08T00:23:32.660Z",
+      "readStatus": "unavailable"
+    }
+  ],
+  "tabCount": 1,
+  "dropped": 0,
+  "source": {
+    "dataset": "anaisleila/computer-use-data-psai",
+    "id": "cmbs97y0x034l400w4xl3cs11",
+    "taskId": "cmbs97wga023r400w08m4281t",
+    "task": "Find the product page for \"Amazon Basics AA Batteries\" and record the pack size and pricing information.\n Only use http://amazon.com to achieve the task. Don't go to any other site. The task is achievable with just navigation from this site.",
+    "site": "Amazon",
+    "category": "BROWSER_TASK",
+    "subCategory": [
+      "Shopping & E-commerce"
+    ],
+    "tags": [
+      "Information Retrieval & Analysis:Search",
+      "Navigation & Workflow Control:Navigation",
+      "Information Retrieval & Analysis:Extraction"
+    ],
+    "difficulty": "EASY",
+    "originResolvedBy": "site-map",
+    "screen": {
+      "width": 1920,
+      "height": 1080,
+      "chromeTopPx": 90
+    },
+    "screenshots": [],
+    "reasoningSteps": [],
+    "timing": {
+      "firstEventTimestamp": 1172866.1484225,
+      "videoStartTimestamp": 1172866.1580295
+    },
+    "videoFile": "videos/cmbs97y0x034l400w4xl3cs11.mp4",
+    "domSnapsFile": "dom_snaps/cmbs97y0x034l400w4xl3cs11.zip",
+    "tabId": 1,
+    "placedStartedAt": "2026-11-08T00:21:54.781Z"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "dayskill-1",
+  "id": "2b6c595e-f42c-451e-8800-af97ee27e034",
+  "title": "View executive leadership bio",
+  "summary": "Open Executive Leadership list then open a View Bio to show details.",
+  "whenToUse": "Use when asked to find Fox News corporate leaders and read an executive biography.",
+  "sites": [
+    {
+      "id": "main",
+      "url": "https://www.foxnews.com/"
+    }
+  ],
+  "steps": [
+    {
+      "kind": "click",
+      "siteId": "main",
+      "target": {
+        "tag": "A",
+        "label": "Executive Leadership",
+        "type": ""
+      },
+      "intent": "Open the Executive Leadership section to list leaders",
+      "evidence": [
+        "4c84e7f8-8710-4b3c-81ff-8e02387d27ac"
+      ]
+    },
+    {
+      "kind": "click",
+      "siteId": "main",
+      "target": {
+        "tag": "BUTTON",
+        "label": "View Bio",
+        "type": ""
+      },
+      "intent": "Open a leader's detailed biography",
+      "evidence": [
+        "098b9bcb-f547-4d65-bc67-f44591ca68bf"
+      ]
+    }
+  ],
+  "outcome": {
+    "kind": "page-changed",
+    "description": "Executive biography details displayed in place"
+  },
+  "examples": [
+    {
+      "at": "2026-11-08T00:06:57.884Z",
+      "eventIds": [
+        "4c84e7f8-8710-4b3c-81ff-8e02387d27ac",
+        "098b9bcb-f547-4d65-bc67-f44591ca68bf"
+      ],
+      "effect": "content-changed"
+    }
+  ],
+  "evidence": {
+    "sessionIds": [
+      "f407b73e-f796-4da2-b362-1214b69fce12"
+    ],
+    "day": "2026-11-08",
+    "eventIds": [
+      "4c84e7f8-8710-4b3c-81ff-8e02387d27ac",
+      "098b9bcb-f547-4d65-bc67-f44591ca68bf"
+    ]
+  },
+  "generator": {
+    "provider": "llama",
+    "model": "muse-spark-1.3",
+    "promptVersion": "day-miner-v1"
+  },
+  "confidence": 0.72,
+  "notes": "View Bio is generic; agent must pick the intended person's button in the leadership list.",
+  "blockers": []
+}

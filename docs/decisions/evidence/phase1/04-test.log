@@ -1,0 +1,25 @@
+$ tsx --test tests/*.test.ts
+✔ real subprocess host, fragmented frames, coalescing, duplicate acknowledgment, invalid length (51.198084ms)
+✔ canonical hashes preserve meaning, reject non-JSON and strict schemas exclude executable skills (15.786208ms)
+✔ stale, expired, off-tab, wrong-document and out-of-bounds actions are rejected in measured CSS coordinates (1.275792ms)
+✔ report schemas cannot approve deterministic failures or missing required assertions (0.667375ms)
+✔ provider interfaces require explicit replay and never attach a replay fallback to live mode (2.998875ms)
+✔ replay is explicitly labeled; invalid model results cannot pass (0.5435ms)
+✔ image limits and explicit cloud gate (0.092125ms)
+✔ provider outages and malformed live responses remain errors; never replay fallback (6.911541ms)
+✔ explicit timezone determines previous calendar week across local Sunday/Monday (10.735958ms)
+✔ synthetic evidence survives reopen, is encrypted on disk, expires and invalidates immutable derived revisions (33.582584ms)
+✔ privacy deletion removes owned evidence and files, held-out/agent evidence cannot train, and duplicate revisions cannot mutate (8.960375ms)
+✔ authenticated encryption rejects tampering and wrong keys; quotas and exclusive writer fail closed (7.544417ms)
+✔ revision/run transitions use compare-and-swap; action results append once and terminal states stay terminal (10.497667ms)
+✔ migrations detect changed history and catalog triggers reject body mutation (5.957333ms)
+✔ task contracts and frozen suites are immutable, hash-bound, and require an existing contract (7.104ms)
+✔ failed unlink blocks reads/writes and deletion resumes after reopen; unregistered crash artifacts are collected (8.094292ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 210.772209
