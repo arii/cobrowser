@@ -1,0 +1,17 @@
+{
+  "name": "dailyskills-recordings",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Converts public computer-use datasets (PSAI, AgentNet) into the cobrowser recorder's stored recording format.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "convert": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.3",
+    "tsx": "4.19.4",
+    "typescript": "5.8.3"
+  }
+}
