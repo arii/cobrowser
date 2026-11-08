@@ -66,8 +66,8 @@ export const SkillRevision = z.object({
   contractHash: Hash, createdAt: UTC, parameterSchema: z.record(z.string(), z.json()),
   procedure: z.array(Step).min(1).max(100),
   requestedCapabilities: z.array(z.enum(['observe-approved-tab', 'input-assigned-tab', 'download-approved-artifact'])).max(3),
-  demonstrationIds: IDs.min(1), generator: z.object({ provider: z.literal('meta-llama'), model: Label, promptVersion: Label, mode: z.enum(['live', 'replay']) }).strict(),
-}).strict();
+  demonstrationIds: IDs, reviewedImport: z.object({ bindingHash: Hash, reviewedAt: UTC }).strict().optional(), generator: z.object({ provider: z.literal('meta-llama'), model: Label, promptVersion: Label, mode: z.enum(['live', 'replay']) }).strict(),
+}).strict().refine(value => value.demonstrationIds.length > 0 || value.reviewedImport !== undefined, 'A training demonstration or explicit reviewed import is required');
 export type SkillRevision = z.infer<typeof SkillRevision>;
 export const RevisionState = z.enum(['draft', 'queued', 'verifying', 'approved', 'blocked', 'inconclusive']);
 export type RevisionState = z.infer<typeof RevisionState>;

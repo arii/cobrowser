@@ -2,7 +2,7 @@ import { digest } from '../model-adapters/context.js';
 import type { BrainProviders, CallResult, ContextDecision, SnapSignals } from './contracts.js';
 // Explicit synthetic development mode. These rules are not model inference.
 export function syntheticContextProviders():BrainProviders {
-  const contextModel=process.env.CONTEXT_PROVIDER==='subq'?'subq-preview':process.env.GEMINI_MODEL??'gemini-3.8-flash';
+  const contextModel=process.env.CONTEXT_PROVIDER==='subq'?'subq-preview':process.env.LLAMA_MODEL||'unconfigured-llama';
   const result=<T>(value:T,model:string,input:unknown):CallResult<T>=>({value,model,mode:'replay',latencyMs:0,inputHash:digest(input),usage:{},version:'hand-authored-synthetic-v1'});
   return {
     mode:'replay',contextModel,

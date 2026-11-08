@@ -43,10 +43,13 @@
     "verify:all-tabs": "tsx scripts/verify-all-tabs.ts",
     "install:context-host": "tsx scripts/install-context-host.ts",
     "verify:visual-context": "tsx scripts/verify-visual-context.ts",
-    "verify:skills": "tsx scripts/verify-skills.ts",
-    "verify:skill-recovery": "tsx scripts/verify-skill-recovery.ts",
+    "verify:skills": "tsx scripts/verify-extension-gate.ts",
+    "verify:skill-recovery": "tsx --test tests/skill-recovery.test.ts tests/procedure-runtime.test.ts && tsx scripts/verify-extension-gate.ts",
+    "verify:networking": "tsx scripts/verify-networking.ts",
     "verify:dataset": "tsx scripts/verify-dataset.ts",
-    "verify:report-skill": "tsx scripts/verify-report-skill.ts"
+    "verify:report-skill": "tsx scripts/verify-extension-gate.ts",
+    "verify:promotion": "tsx scripts/verify-promotion.ts",
+    "verify:extension-gate": "tsx scripts/verify-extension-gate.ts"
   },
   "devDependencies": {
     "@types/node": "24.10.1",

@@ -79,6 +79,14 @@ try{
   await worker.evaluate(()=>{const global=globalThis as any;global.__calls=[];global.chrome.runtime.sendNativeMessage=async(_host:string,message:any)=>{global.__calls.push(message.target.label);return global.__calls.length<3?{kind:'skill-input-error',seq:message.seq,code:'context-provider-http-503'}:{kind:'skill-input-result',seq:message.seq,decision:{status:'resolved',value:'Blue',question:null,sourceSiteIds:[],explanation:'Explicit instruction.'}};};});
   assert.equal((await send('skills:run',{id:skill.id,instruction:'Use Blue.',parameters:{input_3:'date'}})).ok,true);
   run=await waitRun(run=>run?.status==='finished');assert.equal(run.completed,4);assert.equal((await worker.evaluate(()=>(globalThis as any).__calls)).length,3);
+  // One starting instruction resolves all fields and carries verified earlier choices forward.
+  await worker.evaluate(()=>{const global=globalThis as any;global.__inputs=[];global.chrome.runtime.sendNativeMessage=async(_host:string,message:any)=>{global.__inputs.push(message);return {kind:'skill-input-result',seq:message.seq,decision:{status:'resolved',value:message.target.label==='Team'?'Blue':'2026-11-01',question:null,sourceSiteIds:[],explanation:'Derived from the starting goal.'}};};});
+  assert.equal((await send('skills:run',{id:skill.id,instruction:'Preview the Blue team report for November 1, 2026.'})).ok,true);
+  run=await waitRun(run=>run?.status==='finished');assert.equal(run.completed,4);
+  const planned=await worker.evaluate(()=>(globalThis as any).__inputs);
+  assert.equal(planned.length,2);assert.deepEqual(planned[0].previousInputs,[]);
+  assert.deepEqual(planned[1].previousInputs,[{label:'Team',value:'Blue'}]);
+  assert.equal(run.resolvedInputs,undefined,'Resolved task values are cleared at completion.');
   // Previously saved probe fields cannot be activated; repair is explicit and auditable.
   await worker.evaluate(async({skill,steps})=>{await (globalThis as any).chrome.storage.local.set({skillLibrary:[{...skill,id:'contaminated',steps:[{kind:'change',parameter:'input_9',target:{tag:'INPUT',label:'CDP typing probe',type:''}},...steps]}]});},{skill,steps});
   let listing=(await send('skills:list')).value;

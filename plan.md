@@ -4,6 +4,16 @@ Updated: November 7, 2026
 
 Status: User-authorized local-development exception (November 7): default companion storage is unencrypted and Keychain-free in a separate directory; encrypted mode remains opt-in. See [decision 009](docs/decisions/009-unencrypted-local-storage.md). Phase 1 local foundation implemented; see [contracts/storage results](docs/decisions/006-phase1-foundation.md). Phase 0 live-model and manual browser/permission gates remain open; see [feasibility results](docs/decisions/000-phase0-results.md). The full application is not built. Interfaces, commands, and milestones below remain proposed unless recorded evidence explicitly establishes them.
 
+### Local verifier follow-up (November 7)
+
+A partial Phase 2/4/5 vertical slice is implemented: authenticated exact-context reports, required-assertion/evidence checks, transactional reviewed promotion with generation checks, quarantine/compatible rollback, and a shared bounded procedure interpreter. `pnpm verify:promotion` exercises real browser input and CSV downloads, ten fixed normal executions, wrong-week/wrong-team rejection, and a distinct post-promotion rollback. Reports and registry audit are saved under `.local/evidence/promotion.json`. See [decision 010](docs/decisions/010-local-verification-gate.md).
+
+This does not complete those phases: the extension gate currently supports only the explicit synthetic weekly CSV task (see decision 011), candidate generation is imported/hand-authored/replay, required semantic judgments remain inconclusive without a provider, and candidate isolation/held-out protection/full scenario coverage/manual desktop acceptance remain open. Historical phase summaries below describe the earlier foundation snapshot.
+
+### Extension gate follow-up (November 7)
+
+`pnpm verify:extension-gate` now exercises the actual Skills UI, Chrome native messaging, ten trusted-fixture candidate runs, authenticated promotion and an authorized Chrome download. Host checks bind the exact executable projection and task before tabs open and before input. Unsupported workflows, stale local active flags, modified inputs/steps, revoked approval and an offline host cannot authorize execution. Host authority, database and run leases are private and scoped per extension profile. Recorded Chrome-local skills enter as explicit reviewed imports, without fabricating human demonstration records. See [decision 011](docs/decisions/011-extension-approval-gate.md). The installed-browser path still uses its existing bounded descriptor loop; protected candidate isolation, general workflow verification, model generation/judgment and comprehensive acceptance remain open.
+
 ## 1. Product objective
 
 Build a companion for existing browsers that continuously observes permitted browsing activity, learns recurring tasks, proposes and maintains reusable skills, and executes an activated skill in a dedicated agent tab. Every generated skill revision must pass an independent verifier before becoming active.

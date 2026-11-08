@@ -1,6 +1,7 @@
 import { createServer } from 'node:http';
 import { pathToFileURL } from 'node:url';
 import { fixturePage } from './page.js';
+import { dispatchPage } from './dispatch.js';
 
 // Public synthetic fixture. Mutation is supervisor construction-time configuration,
 // never a page-accessible reset/admin endpoint.
@@ -30,6 +31,10 @@ export async function startFixture(wrongWeek = false, port = 0) {
       res.writeHead(200, { 'Content-Type': 'text/csv', 'Content-Disposition': 'attachment; filename="report.csv"' });
       res.end(rows.join('\n') + '\n'); return;
     }
+    if (url.pathname === '/dispatch') {
+      res.writeHead(200, { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' });
+      res.end(dispatchPage); return;
+    }
     if (url.pathname !== '/') { res.writeHead(404).end(); return; }
     res.writeHead(200, { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' });
     res.end(fixturePage);
@@ -39,6 +44,7 @@ export async function startFixture(wrongWeek = false, port = 0) {
   return { origin: `http://127.0.0.1:${address.port}`, audit, close: () => new Promise<void>((resolve, reject) => server.close(e => e ? reject(e) : resolve())) };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const fixture = await startFixture(process.argv.includes('--wrong-week'), 3210);
-  console.log(JSON.stringify({ origin: fixture.origin, mutation: process.argv.includes('--wrong-week') ? 'wrong-week-demo' : 'none' }));
+  void startFixture(process.argv.includes('--wrong-week'), 3210).then(fixture => {
+    console.log(JSON.stringify({ origin: fixture.origin, mutation: process.argv.includes('--wrong-week') ? 'wrong-week-demo' : 'none' }));
+  });
 }

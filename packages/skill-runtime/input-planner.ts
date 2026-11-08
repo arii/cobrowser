@@ -4,6 +4,7 @@ export const SkillInputRequest=z.object({
   v:z.literal(1),kind:z.literal('skill-input'),seq:z.number().int().positive(),
   instruction:z.string().min(1).max(4000),at:z.iso.datetime(),timezone:z.string().max(100),
   skill:z.object({title:z.string().max(80),step:z.number().int().nonnegative(),total:z.number().int().min(1).max(48)}).strict(),
+  previousInputs:z.array(z.object({label:z.string().min(1).max(100),value:z.string().max(2000)}).strict()).max(48).optional(),
   target:Target,options:z.array(z.string().max(500)).max(100),
   pages:z.array(z.object({siteId:z.string().max(60),origin:z.string().max(2000),title:z.string().max(160),text:z.string().max(12000)}).strict()).min(1).max(8),
   answers:z.array(z.object({question:z.string().max(500),answer:z.string().max(2000)}).strict()).max(12),
@@ -25,5 +26,10 @@ export function validateInputDecision(raw:unknown,input:SkillInputRequest):Skill
   return decision;
 }
 export function skillInputHandler(resolve:(input:SkillInputRequest)=>Promise<unknown>){
-  return async(raw:unknown)=>{const input=SkillInputRequest.parse(raw);return {v:1,kind:'skill-input-result',seq:input.seq,decision:validateInputDecision(await resolve(input),input)};};
+  return async(raw:unknown)=>{
+    const input=SkillInputRequest.parse(raw);
+    const output=await resolve(input);
+    try{return {v:1,kind:'skill-input-result',seq:input.seq,decision:validateInputDecision(output,input)};}
+    catch{throw new Error('skill-provider-invalid-output');}
+  };
 }

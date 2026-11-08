@@ -1,3 +1,8 @@
+import { NETWORKING, discoverNetworking, networkingIssues } from './networking.ts';
+import { gateRequest } from './skill-gate.ts';
+import { currentVisualEvidence } from './visual-context.js';
+import { attachSkillMemory, confirmSkillIntent } from './skill-memory.ts';
+import { expectedFixtureCsv, watchFixtureExport } from './export-verification.js';
 import { skillHelpPrompt } from './skill-help.js';
 import { workflowSites, configureWorkflow } from './skill-workflow.js';
 import { readSkillPage } from './skill-page.js';
@@ -8,8 +13,9 @@ let queue=Promise.resolve();
 let executing=false;
 const serial=task=>{const next=queue.then(task);queue=next.catch(()=>{});return next;};
 const library=async()=>((await chrome.storage.local.get(KEY))[KEY]??[]).map(skill=>{
-  const blockers=skillIssues(skill);
-  return {...skill,goalKey:validTarget(skill.steps?.at(-1)?.target)?skillGoalKey(skill.origin,skill.steps.at(-1).target):skill.goalKey,title:skill.customTitle?skill.title:defaultSkillName(skill.steps),blockers,active:skill.active===true && !blockers.length,needsExamples:blockers.length>0};
+  const blockers=skill.family===NETWORKING?networkingIssues(skill):skillIssues(skill);
+  if(skill.family===NETWORKING)return {...skill,blockers,active:false,needsVerifier:true,needsExamples:blockers.length>0};
+  return {...skill,goalKey:validTarget(skill.steps?.at(-1)?.target)?skillGoalKey(skill.origin,skill.steps.at(-1).target):skill.goalKey,title:skill.customTitle?skill.title:defaultSkillName(skill.steps),blockers,active:skill.active===true && skill.approval?.verdict==='approved' && !blockers.length,needsExamples:blockers.length>0};
 });
 function skillName(value){
   if(typeof value!=='string' || !value.trim() || value.trim().length>80 || /[\u0000-\u001f]/.test(value))throw new Error('Enter a skill name from 1 to 80 characters.');
@@ -19,10 +25,13 @@ async function discovery(){
   const {fixtureRecording,contextBrain,brainConnection,dismissedSkillGoals=[],skillWebsiteStarts={}}=await chrome.storage.local.get(['fixtureRecording','contextBrain','brainConnection','dismissedSkillGoals','skillWebsiteStarts']);
   const actions=await readTaskActions(contextBrain?.working?.openedAt??fixtureRecording?.startedAt);
   const value=analyzeSkills(actions.length?actions:fixtureRecording?.events??[],contextBrain?{...contextBrain,modelAvailable:!['unavailable','error'].includes(brainConnection?.status)}:null);
+  value.candidates.push(...discoverNetworking(actions.length?actions:fixtureRecording?.events??[],skillWebsiteStarts,await chrome.tabs.query({})));
   for(const candidate of value.candidates){
-    const first=(actions.length?actions:fixtureRecording?.events??[]).find(event=>candidate.evidenceIds.includes(event.id));
+    const sourceEvents=actions.length?actions:fixtureRecording?.events??[];
+    attachSkillMemory(candidate,sourceEvents,currentVisualEvidence());
+    const first=sourceEvents.find(event=>candidate.evidenceIds.includes(event.id));
     const url=first?skillWebsiteStarts[`${first.sessionId}:${first.tabId}:${first.origin}`]:null;
-    if(url && new URL(url).origin===candidate.origin)candidate.sites=[{id:'main',url}];
+    if(candidate.family!==NETWORKING && url && new URL(url).origin===candidate.origin)candidate.sites=[{id:'main',url}];
   }
   return {candidates:value.candidates.filter(skill=>!dismissedSkillGoals.includes(skill.goalKey)),learning:value.learning.map(item=>({...item,dismissed:dismissedSkillGoals.includes(item.goalKey)}))};
 }
@@ -30,14 +39,8 @@ const candidates=async()=>(await discovery()).candidates;
 async function state(){
   const {skillRun,recordingEnabled=false}=await chrome.storage.session.get(['skillRun','recordingEnabled']);
   const skills=await library(),value=await discovery();
-  let learned=false;
-  for(const candidate of value.candidates){
-    if(skills.some(skill=>!skill.needsExamples && skill.goalKey===candidate.goalKey) || skills.filter(skill=>!skill.needsExamples).length>=30)continue;
-    skills.push({...candidate,id:crypto.randomUUID(),active:false,learnedAutomatically:true,savedAt:new Date().toISOString()});learned=true;
-  }
-  if(learned)await chrome.storage.local.set({[KEY]:skills});
   const {contextBrain}=await chrome.storage.local.get('contextBrain');
-  return {history:contextBrain?.history??null,skills,candidates:value.candidates.filter(candidate=>!skills.some(skill=>!skill.needsExamples && skill.goalKey===candidate.goalKey)),learning:value.learning.map(item=>{const saved=skills.find(skill=>!skill.needsExamples && skill.goalKey===item.goalKey);return {...item,status:saved?'saved':item.dismissed?'dismissed':item.blocked?'blocked':value.candidates.some(candidate=>candidate.goalKey===item.goalKey)?'capacity':'observing',reason:saved?'Saved from the first supported attempt. Review and activate it in the skills library.':item.dismissed?'You dismissed this workflow.':value.candidates.some(candidate=>candidate.goalKey===item.goalKey)?'The library has 30 supported skills. Delete a skill to make room.':item.reason};}),recordingEnabled,run:skillRun??null};
+  return {history:contextBrain?.history??null,skills,candidates:value.candidates.filter(candidate=>!skills.some(skill=>!skill.needsExamples && skill.goalKey===candidate.goalKey)),learning:value.learning.map(item=>{const saved=skills.find(skill=>!skill.needsExamples && skill.goalKey===item.goalKey);return {...item,status:saved?'saved':item.dismissed?'dismissed':item.blocked?'blocked':value.candidates.some(candidate=>candidate.goalKey===item.goalKey)?'needs_intent':'observing',reason:saved?'Saved from the first supported attempt. Review and activate it in the skills library.':item.dismissed?'You dismissed this workflow.':value.candidates.some(candidate=>candidate.goalKey===item.goalKey)?'What should this skill accomplish? Add its intent to save it.':item.reason};}),recordingEnabled,run:skillRun??null};
 }
 // Runs use declarative control descriptors. No generated scripts or stored CSS selectors execute.
 function locate(target, parameter, origin, applySelection=false, verifyInput=false){
@@ -65,13 +68,7 @@ function locate(target, parameter, origin, applySelection=false, verifyInput=fal
   const rect=control.getBoundingClientRect(),x=rect.left+rect.width/2,y=rect.top+rect.height/2;
   const hit=document.elementFromPoint(x,y);
   if(!hit || !(hit===control || control.contains(hit)))throw new Error('The target is covered by another element.');
-  if(applySelection){
-    if(control.tagName!=='SELECT' || optionIndex===null)throw new Error('Invalid selection.');
-    control.selectedIndex=optionIndex;
-    control.dispatchEvent(new Event('input',{bubbles:true}));
-    control.dispatchEvent(new Event('change',{bubbles:true}));
-    if(control.selectedOptions[0]?.textContent.trim()!==parameter)throw new Error('The page did not retain the requested selection.');
-  }
+  if(applySelection)throw new Error('Selection requires browser input.');
   return {x,y,optionIndex,tag:control.tagName};
 }
 async function update(run){await chrome.storage.session.set({skillRun:run});}
@@ -111,7 +108,7 @@ async function askForHelp(run,question,issue=null,input=null){
   run.status='needs_input';run.question=question.slice(0,500);run.helpToken=crypto.randomUUID();run.issue=issue;run.pendingInput=input;
   run.message=issue?.kind==='provider'?'Input provider unavailable. Completed steps are preserved. Enter an exact value to continue without the model.':issue?'Paused for help with a workflow issue.':'One detail is needed to continue.';await progress(run);
   const tabId=run.tabId??run.tabIds.at(-1);
-  const prompt=()=>({runId:run.id,token:run.helpToken,title:run.title,question:run.question,input:run.pendingInput,providerFailure:run.issue?.kind==='provider'});
+  const prompt=()=>({runId:run.id,token:run.helpToken,title:run.title,question:run.question,input:run.pendingInput,invalidOutput:run.issue?.kind==='invalid-output',providerFailure:['provider','invalid-output'].includes(run.issue?.kind)});
   try{
     await chrome.tabs.update(tabId,{active:true});
     await chrome.scripting.executeScript({target:{tabId},func:skillHelpPrompt,args:[prompt()]});
@@ -139,11 +136,17 @@ export async function requestInputWithRetries(message,{send,onRetry,check=async(
     let response,code;
     try{response=await send(message);}catch{code='skill-native-host-unavailable';}
     await check();
-    if(response?.kind==='skill-input-result' && response.seq===message.seq)return response;
+    if(response?.kind==='skill-input-result' && response.seq===message.seq){
+      const decision=response.decision;
+      if(!message.target || (decision && Array.isArray(decision.sourceSiteIds) && decision.sourceSiteIds.every(id=>message.pages.some(page=>page.siteId===id)) &&
+        (decision.status==='resolved'?typeof decision.value==='string' && decision.value.length<=2000 && (message.target.tag!=='SELECT' || message.options.includes(decision.value)):
+          decision.status==='needs_input' && typeof decision.question==='string' && decision.question.trim() && decision.question.length<=500)))return response;
+      code='skill-provider-invalid-output';
+    }
     code??=typeof response?.code==='string' && /^[a-z0-9-]{1,100}$/.test(response.code)?response.code:'skill-provider-invalid-response';
     const transient=/native-host-unavailable|network-or-timeout|response-read-failed|http-(408|429|5[0-9]{2})$/.test(code);
     if(transient && attempt<3){await onRetry({attempt:attempt+1,total:3,code});await wait(500*attempt);continue;}
-    throw Object.assign(new Error(code),{providerFailure:true,attempts:attempt});
+    throw Object.assign(new Error(code),{providerFailure:true,issueKind:/invalid|envelope|content|output|json/.test(code)?'invalid-output':'provider',attempts:attempt});
   }
 }
 export function exactInputValue(value,input){
@@ -157,6 +160,11 @@ async function withHelp(run,task,question){
     try{return await task();}catch(error){
       await assertRunning(run.id);
       if(attempt===3)throw error;
+      if(attempt<2){
+        run.message=`Rechecking the page (${attempt+2} / 3): ${error.message}`;await progress(run);
+        await new Promise(resolve=>setTimeout(resolve,500*(attempt+1)));
+        continue;
+      }
       await askForHelp(run,`${error.message} ${question}`,error.message);
     }
   }
@@ -171,7 +179,7 @@ async function resolveParameter(skill,step,index,tabs,sites,run){
     run.message=`Choosing an input for “${step.target.label}” from your instruction and listed websites…`;await progress(run);
     const message={v:1,kind:'skill-input',seq:index*10+attempt+1,instruction:run.instruction,at:new Date().toISOString(),timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
       skill:{title:skill.title,step:index,total:skill.steps.length},target:step.target,options:control.options,
-      pages:pages.map(({controls:_controls,...page})=>page),answers:run.answers};
+      pages:pages.map(({controls:_controls,...page})=>page),answers:run.answers,previousInputs:(run.resolvedInputs??[]).map(input=>({...input}))};
     let response;
     const input={step:index,parameter:step.parameter,label:step.target.label,tag:step.target.tag,options:control.options};
     try{
@@ -183,7 +191,7 @@ async function resolveParameter(skill,step,index,tabs,sites,run){
     }catch(error){
       if(!error.providerFailure)throw error;
       run.retry=null;
-      const reply=await askForHelp(run,`Input provider unavailable (${error.message}) after ${error.attempts} attempt(s). No input was dispatched for “${step.target.label}”. Supply its exact value to continue without a model call.`,{kind:'provider',code:error.message},input);
+      const reply=await askForHelp(run,`Input provider unavailable (${error.message}) after ${error.attempts} attempt(s). No input was dispatched for “${step.target.label}”. Supply its exact value to continue without a model call.`,{kind:error.issueKind??'provider',code:error.message},input);
       if(reply?.mode==='value'){
         run.decisions.push({step:index,label:step.target.label,explanation:'Exact value supplied by you; no model call.',sourceSiteIds:[]});
         return exactInputValue(reply.value,input);
@@ -206,19 +214,30 @@ async function resolveParameter(skill,step,index,tabs,sites,run){
   }
   throw new Error('The field remains ambiguous. Refine the instruction and source websites.');
 }
+async function approvedRun(skill,run){
+  await assertRunning(run.id);
+  await gateRequest('check',skill,{runId:run.id,step:run.completed});
+}
+async function revokeApproval(skill){
+  if(skill.family===NETWORKING){skill.active=false;delete skill.networkingReview;return;}
+  // Local state always becomes inactive, even when the host is offline.
+  skill.active=false;delete skill.approval;delete skill.verificationTask;
+  await gateRequest('deactivate',skill).catch(()=>{});
+}
 async function perform(skill,parameters,run,windowId){
-  const attached=new Set(),tabs=new Map(),sites=workflowSites(skill);
+  const attached=new Set(),tabs=new Map(),sites=workflowSites(skill),verifiers=[];
   try{
     for(const site of sites){
-      await assertRunning(run.id);
+      await approvedRun(skill,run);
       const tab=await chrome.tabs.create({url:site.url,active:false,windowId});tabs.set(site.id,tab.id);run.tabIds.push(tab.id);await progress(run);
       run.tabId=tab.id;
       const {automationTabIds=[]}=await chrome.storage.session.get('automationTabIds');
       await chrome.storage.session.set({automationTabIds:[...new Set([...automationTabIds,tab.id])]});
       await withHelp(run,async()=>{await waitForPage(tab.id,run);await checkSite(tab.id,site);},'Fix or finish loading the configured page, then tell me what changed.');
     }
+    run.resolvedInputs=[];
     for(let index=0;index<skill.steps.length;index++){
-      await assertRunning(run.id);
+      await approvedRun(skill,run);
       const step=skill.steps[index],site=sites.find(item=>item.id===(step.siteId??'main'));
       if(!site)throw new Error('A step has no configured website.');
       const tabId=tabs.get(site.id);run.tabId=tabId;run.currentSite=site.url;await progress(run);
@@ -241,7 +260,14 @@ async function perform(skill,parameters,run,windowId){
         return {parameter,beforeResult,point};
       },`No action has been dispatched for this step. Fix the page or provide the missing detail for “${step.target.label}”, then continue.`);
       const {parameter,beforeResult,point}=prepared;
-      const command=async(method,params={})=>{await assertRunning(run.id);await checkSite(tabId,site);return chrome.debugger.sendCommand({tabId},method,params);};
+      if(step.target.label==='Export CSV' && outcomeAction(step) && new URL(origin).hostname==='127.0.0.1'){
+        const title=await chrome.tabs.get(tabId);
+        const explicit=Object.fromEntries(skill.steps.filter(item=>item.kind==='change' && Object.hasOwn(parameters,item.parameter)).map(item=>[item.target.label,parameters[item.parameter]]));
+        const expected=expectedFixtureCsv(explicit);
+        if(title.title==='Harness fixture phase0-agent-7f3a91' && expected!==null)verifiers.push(await watchFixtureExport(tabId,origin,expected));
+      }
+
+      const command=async(method,params={})=>{await approvedRun(skill,run);await checkSite(tabId,site);return chrome.debugger.sendCommand({tabId},method,params);};
       await assertRunning(run.id);await checkSite(tabId,site);
       await chrome.storage.session.set({lastDispatch:{tabId,at:Date.now()}});
       try{
@@ -251,9 +277,13 @@ async function perform(skill,parameters,run,windowId){
       }
       if(step.kind==='change'){
         if(point.tag==='SELECT'){
-          await assertRunning(run.id);await checkSite(tabId,site);
-          const selected=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[step.target,parameter,origin,true]});
-          if(!selected[0]?.result)throw new Error('The requested option was not selected.');
+          await approvedRun(skill,run);await checkSite(tabId,site);
+          const key=parameter[0];
+          await command('Input.dispatchKeyEvent',{type:'keyDown',key,text:key,unmodifiedText:key});
+          await command('Input.dispatchKeyEvent',{type:'keyUp',key});
+          await command('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab'});await command('Input.dispatchKeyEvent',{type:'keyUp',key:'Tab'});
+          const selected=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[step.target,parameter,origin,false,true]});
+          if(selected[0]?.result?.matches!==true)throw new Error('The requested option was not selected.');
         }else if(['INPUT','TEXTAREA'].includes(point.tag)){
           await command('Input.dispatchKeyEvent',{type:'keyDown',key:'a',code:'KeyA',modifiers:4,commands:['selectAll']});
           await command('Input.dispatchKeyEvent',{type:'keyUp',key:'a',code:'KeyA',modifiers:4});
@@ -265,6 +295,7 @@ async function perform(skill,parameters,run,windowId){
         }else throw new Error('Unsupported input control.');
       }
       }catch(error){
+        if(error.gateFailure)throw error;
         await assertRunning(run.id);
         await askForHelp(run,`${error.message} Some input may already have reached the page. Complete this step manually and describe what you did; the skill will continue without repeating it.`,error.message);
         await withHelp(run,async()=>{
@@ -275,6 +306,7 @@ async function perform(skill,parameters,run,windowId){
           }
         },'Fix the page to match this step, then describe the change. No action will be repeated.');
       }
+      if(step.kind==='change')run.resolvedInputs.push({label:step.target.label,value:parameter});
       await assertRunning(run.id);run.completed=index+1;run.message=`Completed “${step.target.label}”.`;await progress(run);
       await new Promise(resolve=>setTimeout(resolve,300));
       if(beforeResult!==null){
@@ -288,16 +320,23 @@ async function perform(skill,parameters,run,windowId){
         },'The action was already dispatched and will not be repeated. Fix or finish the result on the page, then describe what changed.');
       }
     }
-    await assertRunning(run.id);run.status='finished';run.message='Workflow finished. Check the pages or downloaded artifacts to confirm the result.';
+    await approvedRun(skill,run);
+    for(const verifier of verifiers){
+      for(let attempt=0;attempt<40 && !verifier.result();attempt++){await assertRunning(run.id);await new Promise(resolve=>setTimeout(resolve,100));}
+    }
+    run.verification=verifiers.length?verifiers.map(item=>item.result()??{status:'failed',message:'No export response observed.'}):[{status:'unverified',message:'Actions finished; no independent result verifier applies.'}];
+    run.status=run.verification.some(item=>item.status==='failed')?'failed':'finished';run.message=run.verification.every(item=>item.status==='verified')?'Actions finished. Synthetic fixture CSV response verified against explicit overrides.':run.verification.some(item=>item.status==='failed')?'Actions finished. Export result verification failed.':'Actions finished. Result unverified; inspect the pages or downloaded artifacts.';
   }catch(error){
     const {skillRun}=await chrome.storage.session.get('skillRun');
     run.status=skillRun?.status==='cancelled'?'cancelled':'failed';run.message=error.message;
   }finally{
+    await gateRequest('finish',skill,{runId:run.id,status:run.status==='cancelled'?'cancelled':run.status==='finished'?'finished':'failed'}).catch(()=>{});
+    for(const verifier of verifiers)await verifier.close();
     for(const tabId of attached)await chrome.debugger.detach({tabId}).catch(()=>{});
     run.finishedAt=new Date().toISOString();run.question=null;run.helpToken=null;run.issue=null;run.pendingInput=null;run.retry=null;delete run.inputReply;
     for(const tabId of run.tabIds)await chrome.scripting.executeScript({target:{tabId},func:skillHelpPrompt,args:[null]}).catch(()=>{});
     // Instructions/answers may contain task data; keep them only during this run.
-    delete run.answers;delete run.instruction;
+    delete run.answers;delete run.instruction;delete run.resolvedInputs;
     await serial(async()=>{const {skillRun}=await chrome.storage.session.get('skillRun');if(skillRun?.id===run.id){if(skillRun.status==='cancelled'){run.status='cancelled';run.message=skillRun.message;}await update(run);}});
     executing=false;
   }
@@ -309,6 +348,8 @@ export function installSkills(){
   // A terminated worker must never automatically replay a partially completed run.
   void chrome.storage.session.get('skillRun').then(async({skillRun})=>{
     if(!['running','needs_input'].includes(skillRun?.status))return;
+    const interruptedSkill=(await library()).find(skill=>skill.id===skillRun.skillId);
+    if(interruptedSkill)await gateRequest('finish',interruptedSkill,{runId:skillRun.id,status:'failed'}).catch(()=>{});
     delete skillRun.instruction;delete skillRun.answers;delete skillRun.inputReply;
     await update({...skillRun,status:'interrupted',question:null,helpToken:null,pendingInput:null,issue:null,retry:null,message:'The worker restarted. Review the page before starting another run. Completed actions will not be replayed automatically.'});
   });
@@ -326,26 +367,31 @@ export function installSkills(){
       if(message.kind==='skills:help-status')return {waiting:true};
       if(message.kind==='skills:list')return state();
       const skills=await library();
+      if((message.kind==='skills:run'||(message.kind==='skills:activate'&&message.active))&&skills.find(skill=>skill.id===message.id)?.family===NETWORKING)throw new Error('Networking requires independent verification before activation or execution. No supported verifier is available yet.');
       if(message.kind==='skills:save'){
         const candidate=(await candidates()).find(item=>item.key===message.key);
         if(!candidate)throw new Error('Evidence expired or changed. Refresh the suggestions.');
-        if(skillIssues(candidate).length)throw new Error('This workflow has no complete, replayable actions.');
+        if((candidate.family===NETWORKING?networkingIssues(candidate):skillIssues(candidate)).length)throw new Error('This workflow has no complete, replayable actions.');
         if(!skills.some(item=>!item.needsExamples && item.goalKey===candidate.goalKey)){
           if(skills.filter(item=>!item.needsExamples).length>=30)throw new Error('The local library is full. Delete a skill first.');
-          skills.push({...candidate,title:skillName(message.title??candidate.title),customTitle:message.title!==undefined,id:crypto.randomUUID(),active:false,savedAt:new Date().toISOString()});
+          skills.push({...confirmSkillIntent(candidate,message.intent),title:skillName(message.title??candidate.title),customTitle:message.title!==undefined,id:crypto.randomUUID(),active:false,savedAt:new Date().toISOString()});
           await chrome.storage.local.set({[KEY]:skills});
         }
       }else if(message.kind==='skills:configure'){
         const skill=skills.find(item=>item.id===message.id);if(!skill)throw new Error('Skill not found.');
+        if(skill.family===NETWORKING)throw new Error('Networking recipes keep their learned guest-list address. Demonstrate another guest list to learn a new recipe.');
         const addition=message.appendSkillId?skills.find(item=>item.id===message.appendSkillId):null;
         if(message.appendSkillId && (!addition || addition.needsExamples || addition.id===skill.id))throw new Error('Choose another supported skill to append.');
         const configured=configureWorkflow(skill,message.urls,message.instruction,addition);
         if(skillIssues(configured).length)throw new Error('The combined workflow has unsupported steps.');
+        await revokeApproval(skill);delete configured.approval;delete configured.verificationTask;
         skills[skills.indexOf(skill)]=configured;await chrome.storage.local.set({[KEY]:skills});
       }else if(message.kind==='skills:repair'){
         const skill=skills.find(item=>item.id===message.id);if(!skill)throw new Error('Skill not found.');
+        if(skill.family===NETWORKING)throw new Error('Networking recipes cannot be repaired as recorded click steps.');
         const {skillRun}=await chrome.storage.session.get('skillRun');
         if(['running','needs_input'].includes(skillRun?.status) && skillRun.skillId===skill.id)throw new Error('Stop this run before repairing its saved steps.');
+        await revokeApproval(skill);
         skills[skills.indexOf(skill)]=repairSkill(skill,message.removeSteps);
         await chrome.storage.local.set({[KEY]:skills});
       }else if(message.kind==='skills:rename'){
@@ -358,16 +404,23 @@ export function installSkills(){
       }else if(message.kind==='skills:activate' || message.kind==='skills:delete'){
         const skill=skills.find(item=>item.id===message.id);if(!skill)throw new Error('Skill not found.');
         if(message.kind==='skills:delete'){
+          await revokeApproval(skill);
           const {dismissedSkillGoals=[]}=await chrome.storage.local.get('dismissedSkillGoals');
           await chrome.storage.local.set({[KEY]:skills.filter(item=>item.id!==skill.id),dismissedSkillGoals:skill.goalKey?[...new Set([...dismissedSkillGoals,skill.goalKey])].slice(-100):dismissedSkillGoals});
         }
         else{
-          if(message.active && skillIssues(skill).length)throw new Error('This skill has replay blockers.');
+          if(message.active && (skill.family===NETWORKING?networkingIssues(skill):skillIssues(skill)).length)throw new Error('This skill has replay blockers.');
           if(message.active && message.reviewed!==true)throw new Error('Review the steps before activation.');
-          skill.active=message.active===true;await chrome.storage.local.set({[KEY]:skills});
+          if(message.active){
+            if(!message.verificationTask)throw new Error('Choose the independent verification task before activation. Only the synthetic weekly report is supported.');
+            const verification=await gateRequest('activate',skill,{task:message.verificationTask,reviewed:true});
+            skill.approval=verification.approval;skill.verificationTask=verification.task??message.verificationTask;skill.active=verification.status==='approved';
+            await chrome.storage.local.set({[KEY]:skills});
+            if(!skill.active)throw new Error(verification.message??'Independent verification did not approve this workflow.');
+          }else{await revokeApproval(skill);await chrome.storage.local.set({[KEY]:skills});}
         }
       }else if(message.kind==='skills:run'){
-        const skill=skills.find(item=>item.id===message.id);if(!skill?.active || skillIssues(skill).length)throw new Error('Activate a reviewed, replayable skill first.');
+        const skill=skills.find(item=>item.id===message.id);if(!skill?.active || (skill.family===NETWORKING?networkingIssues(skill):skillIssues(skill)).length)throw new Error('Activate a reviewed, replayable skill first.');
         const {skillRun,assigned}=await chrome.storage.session.get(['skillRun','assigned']);
         if(executing || ['running','needs_input'].includes(skillRun?.status) || assigned)throw new Error('Another run or debugger probe is active. Stop it first.');
         const sites=workflowSites(skill);
@@ -376,11 +429,12 @@ export function installSkills(){
         if(typeof parameters!=='object' || Array.isArray(parameters) || Object.values(parameters).some(value=>typeof value!=='string' || value.length>2000))throw new Error('Invalid input overrides.');
         const instruction=message.instruction??skill.instruction??'';
         if(typeof instruction!=='string' || instruction.length>4000)throw new Error('Keep the instruction under 4,000 characters.');
-        if(skill.steps.some(step=>step.parameter && !Object.hasOwn(parameters,step.parameter)) && !instruction.trim())throw new Error('Add an instruction describing what to do and where to get the input data.');
         const window=await chrome.windows.getCurrent();
         if(window.incognito)throw new Error('Skills cannot run in an incognito window.');
         const run={id:crypto.randomUUID(),skillId:skill.id,title:skill.title,status:'running',completed:0,total:skill.steps.length,startedAt:new Date().toISOString(),tabId:null,tabIds:[],instruction,answers:[],decisions:[]};
-        await update(run);executing=true;void perform(skill,parameters,run,window.id);
+        const authorization=await gateRequest('begin',skill,{runId:run.id,parameters,instruction});
+        run.approvedCandidateHash=authorization.candidateHash;
+        await update(run);executing=true;void perform(skill,authorization.parameters,run,window.id);
       }else if(message.kind==='skills:answer'){
         const {skillRun}=await chrome.storage.session.get('skillRun');
         if(skillRun?.status!=='needs_input' || message.runId!==skillRun.id)throw new Error('This run is no longer waiting for an answer.');
@@ -390,13 +444,16 @@ export function installSkills(){
           const value=exactInputValue(message.value,skillRun.pendingInput);
           await update({...skillRun,status:'running',question:null,inputReply:{mode:'value',value}});
         }else{
-          if(skillRun.issue?.kind==='provider')throw new Error('The provider is unavailable. Supply an exact field value; a clarification would call the same failing provider.');
+          if(['provider','invalid-output'].includes(skillRun.issue?.kind))throw new Error('The provider is unavailable. Supply an exact field value; a clarification would call the same failing provider.');
           if(typeof message.answer!=='string' || !message.answer.trim() || message.answer.length>2000)throw new Error('Enter a brief answer.');
           await update({...skillRun,status:'running',question:null,answers:[...skillRun.answers,{question:skillRun.question,answer:message.answer.trim()}],inputReply:{mode:'clarification'}});
         }
       }else if(message.kind==='skills:cancel'){
         const {skillRun}=await chrome.storage.session.get('skillRun');
-        if(['running','needs_input'].includes(skillRun?.status))await update({...skillRun,status:'cancelled',message:'Stopped. Already dispatched actions remain on the page.'});
+        if(['running','needs_input'].includes(skillRun?.status)){
+          await update({...skillRun,status:'cancelled',message:'Stopped. Already dispatched actions remain on the page.'});
+          const skill=skills.find(item=>item.id===skillRun.skillId);if(skill && skill.family!==NETWORKING)await gateRequest('finish',skill,{runId:skillRun.id,status:'cancelled'}).catch(()=>{});
+        }
       }else throw new Error('Unknown skill command.');
       return state();
     }).then(value=>respond(isView?{ok:true,value}:{ok:true,waiting:message.kind==='skills:help-status'}),error=>respond({ok:false,error:error.message}));return true;

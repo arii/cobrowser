@@ -108,7 +108,7 @@ already in the repo — not a roadmap promise.
   wrong-week mutation, server audit log.
 - `native/macos-capture/` — Swift ScreenCaptureKit browser-window probe
   (metadata + hashes, no retained images).
-- `packages/context-brain/` + `packages/model-adapters/` — Snap + Gemini Flash
+- `packages/context-brain/` + `packages/model-adapters/` — Snap + Meta Llama
   rolling context with bounded evidence, two-candidate task-switch rule,
   synthetic-vs-live labeling.
 

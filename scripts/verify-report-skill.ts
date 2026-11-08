@@ -4,7 +4,8 @@ import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import assert from 'node:assert/strict';
 import { startFixture } from '../apps/fixture-site/server.js';
-const fixture=await startFixture(false,0),profile=await mkdtemp(join(tmpdir(),'cobrowser-report-skill-'));
+const wrongWeek=process.argv.includes('--wrong-week');
+const fixture=await startFixture(wrongWeek,0),profile=await mkdtemp(join(tmpdir(),'cobrowser-report-skill-'));
 const extension=resolve(process.argv.includes('--raw')?'apps/extension':'apps/extension/.output/chrome-mv3');
 const context=await chromium.launchPersistentContext(profile,{channel:'chromium',headless:true,args:[`--disable-extensions-except=${extension}`,`--load-extension=${extension}`]});
 try{
@@ -54,10 +55,12 @@ try{
   const opened=context.waitForEvent('page');await popup.evaluate(()=>{(document.querySelector('[data-run]') as HTMLButtonElement).click();});
   const replay=await opened,download=await replay.waitForEvent('download');
   const csv=await readFile((await download.path())!,'utf8');
-  assert.match(csv,/^team,date,value\nblue,2026-10-26,226\n/);assert.equal(csv.includes('\nred,'),false);
+  assert.match(csv,wrongWeek?/^team,date,value\nblue,2026-11-02,202\n/:/^team,date,value\nblue,2026-10-26,226\n/);assert.equal(csv.includes('\nred,'),false);
   let run:any;
   for(let attempt=0;attempt<60;attempt++){run=(await send('skills:list')).value.run;if(run?.status!=='running')break;await popup.waitForTimeout(100);}
   assert.equal(run.status,'finished',JSON.stringify(run));assert.equal(run.completed,4);
+  assert.equal(run.verification[0].status,wrongWeek?'failed':'verified',JSON.stringify(run));
+  assert.equal(fixture.audit.length,4,'Verification must not dispatch an additional export.');
   // The live recorder window can rotate without deleting the full local task history.
   const archived=(await send('recording:export')).value.events;assert.ok(archived.length>0);
   await popup.evaluate(async()=>{const chrome=(globalThis as any).chrome;const {fixtureRecording}=await chrome.storage.local.get('fixtureRecording');fixtureRecording.events=[];await chrome.storage.local.set({fixtureRecording});});

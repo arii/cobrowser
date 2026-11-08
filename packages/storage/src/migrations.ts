@@ -44,4 +44,27 @@ CREATE TRIGGER append_only_actions BEFORE UPDATE ON action_results
 BEGIN SELECT RAISE(ABORT,'append-only-action-results'); END;
 CREATE INDEX retention_records ON records(expires_at);
 CREATE INDEX retention_artifacts ON artifacts(expires_at);
+` }, { version: 2, sql: `
+CREATE TABLE verification_reports (
+  id TEXT PRIMARY KEY, revision_id TEXT NOT NULL REFERENCES revisions(id),
+  report_json TEXT NOT NULL, verdict TEXT NOT NULL,
+  UNIQUE(revision_id,id)
+);
+CREATE TABLE active_skills (
+  skill_id TEXT PRIMARY KEY, revision_id TEXT REFERENCES revisions(id),
+  generation INTEGER NOT NULL DEFAULT 0
+);
+CREATE TABLE quarantined_revisions (
+  revision_id TEXT PRIMARY KEY REFERENCES revisions(id), report_id TEXT NOT NULL REFERENCES verification_reports(id)
+);
+CREATE TABLE registry_audit (
+  sequence INTEGER PRIMARY KEY AUTOINCREMENT, skill_id TEXT NOT NULL,
+  revision_id TEXT NOT NULL, previous_revision_id TEXT, report_id TEXT NOT NULL REFERENCES verification_reports(id),
+  operation TEXT NOT NULL CHECK(operation IN ('approved','blocked','inconclusive','rollback','disabled')),
+  created_at INTEGER NOT NULL
+);
+CREATE TRIGGER immutable_verification_report BEFORE UPDATE ON verification_reports
+BEGIN SELECT RAISE(ABORT,'immutable-verification-report'); END;
+CREATE TRIGGER append_only_registry_audit BEFORE UPDATE ON registry_audit
+BEGIN SELECT RAISE(ABORT,'append-only-registry-audit'); END;
 ` }] as const;

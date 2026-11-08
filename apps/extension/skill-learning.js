@@ -1,3 +1,4 @@
+import { NETWORKING, networkingIssues } from './networking.ts';
 import { workflowSites } from './skill-workflow.js';
 // Save supported workflows after one attempt; model judgments enrich local evidence.
 export const QUALITY_VERSION=3;
@@ -23,6 +24,7 @@ export function defaultSkillName(steps){
   return (templates[label.toLowerCase()]??label).slice(0,80);
 }
 export function skillIssues(skill){
+  if(skill.family===NETWORKING)return networkingIssues(skill);
   const issues=[];
   if(skill.sites){try{const sites=workflowSites(skill);if(skill.steps?.some(step=>!sites.some(site=>site.id===(step.siteId??'main'))))issues.push('A workflow step has no configured website.');}catch{issues.push('The website configuration is invalid.');}}
   if(!Array.isArray(skill.steps) || !skill.steps.length || skill.steps.length>48)return ['This workflow has no complete, supported action sequence.'];

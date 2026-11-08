@@ -32,3 +32,17 @@ test('direct values preserve exact text and validate selects without model acces
   assert.throws(()=>exactInputValue('blue',{tag:'SELECT',options:['Red','Blue']}),/exact available option/);
   assert.throws(()=>exactInputValue('x'.repeat(2001),{tag:'INPUT'}),/2,000/);
 });
+
+test('fixture CSV verifier compares complete contents with explicit requested parameters',async()=>{
+  // @ts-expect-error Extension JavaScript is exercised directly.
+  const {expectedFixtureCsv}=await import('../apps/extension/export-verification.js');
+  assert.equal(expectedFixtureCsv({Team:'blue','Start inclusive':'2026-10-26','End exclusive':'2026-10-28'}),'team,date,value\nblue,2026-10-26,226\nblue,2026-10-27,227\n');
+  assert.equal(expectedFixtureCsv({Team:'blue'}),null);
+  assert.equal(expectedFixtureCsv({Team:'blue','Start inclusive':'2026-11-02','End exclusive':'2026-10-26'}),null);
+});
+
+test('malformed model decisions pause as invalid output instead of page problems',async()=>{
+  let calls=0;
+  await assert.rejects(requestInputWithRetries({seq:1,target:{tag:'SELECT'},options:['blue'],pages:[{siteId:'main'}]},{send:async()=>{calls++;return {...success,decision:{status:'resolved',value:'invented',sourceSiteIds:[]}};},onRetry:async()=>{}}),(error:any)=>error.issueKind==='invalid-output' && error.attempts===1);
+  assert.equal(calls,1);
+});

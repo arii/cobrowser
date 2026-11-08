@@ -28,4 +28,4 @@ for (const [source,outfile,format] of [
 await build({entryPoints:['packages/contracts/src/schemas.ts','packages/browser-adapters/src/index.ts'],outdir:'dist/browser',bundle:true,format:'esm',platform:'browser',target:'chrome125',entryNames:'[dir]/[name]'});
 await buildVite({configFile:resolve('apps/companion/vite.config.ts')});
 execFileSync('pnpm',['--filter','@harness/extension','build'],{stdio:'inherit'});
-console.log('Built companion, Chrome MV3 extension, packages and worker scaffolds. No workflow execution enabled.');
+console.log('Built companion, Chrome MV3 extension, packages and local workers. Extension execution requires native-host approval; only synthetic reporting is supported.');

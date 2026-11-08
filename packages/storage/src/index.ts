@@ -3,7 +3,7 @@ import { mkdirSync, lstatSync, existsSync, writeFileSync, readFileSync, unlinkSy
 import { join } from 'node:path';
 import { createCipheriv, createDecipheriv, randomBytes } from 'node:crypto';
 import { migrations } from './migrations.js';
-import { ActionResult, Demonstration, ExecutionRun, ObservationEvent, SkillRevision, VisualFrame, TaskContract, VerificationSuite, Id, canonicalJSON, checkContentHash, contentHash, hashBytes, newId, assertRevisionTransition, assertRunTransition, type RevisionState, type RunState } from '../../contracts/src/index.js';
+import { ActionResult, Demonstration, ExecutionRun, ObservationEvent, SkillRevision, VisualFrame, TaskContract, VerificationSuite, Id, canonicalJSON, checkContentHash, contentHash, hashBytes, newId, assertRevisionTransition, assertRunTransition, type RevisionState, type RunState, validateReport, type VerificationAuthority } from '../../contracts/src/index.js';
 
 export interface KeyProvider { getKey(): Promise<Buffer> }
 export class EphemeralKeyProvider implements KeyProvider {
@@ -176,6 +176,7 @@ export class HarnessStore {
   }
   putRevision(input: unknown) {
     const value = SkillRevision.parse(input); checkContentHash(value);
+    if (value.reviewedImport && (Date.parse(value.reviewedImport.reviewedAt) > this.now() || !value.parameterSchema.$extensionWorkflow || contentHash(value.parameterSchema.$extensionWorkflow) !== value.reviewedImport.bindingHash)) throw new Error('reviewed-import-binding-mismatch');
     const contract = this.findHashed('contract',value.contractHash) as TaskContract | null;
     if (!contract) throw new Error('unknown-task-contract');
     if ((value.requestedCapabilities.includes('input-assigned-tab') && !contract.allowedEffects.includes('input'))
@@ -244,6 +245,78 @@ export class HarnessStore {
     if (next === 'approved') throw new Error('authenticated-promotion-gate-not-implemented');
     const result = this.db.prepare('UPDATE revisions SET state=?,generation=generation+1 WHERE id=? AND state=? AND generation=?').run(next,id,expected,generation);
     if (result.changes !== 1) throw new Error('stale-revision-transition');
+  }
+  private verificationContext(revisionId: string, suiteId: string) {
+    const record = this.getRevision(revisionId), suite = this.getVerificationSuite(suiteId);
+    if (!record || record.stale || !suite) throw new Error('verification-context-unavailable');
+    const contract = this.findHashed('contract', record.revision.contractHash) as TaskContract | null;
+    if (!contract) throw new Error('verification-context-unavailable');
+    return { record, suite, contract };
+  }
+  getActiveSkill(skillId: string) {
+    this.ensureOpen(); Id.parse(skillId);
+    const pointer = this.db.prepare('SELECT revision_id,generation FROM active_skills WHERE skill_id=?').get(skillId) as {revision_id: string | null; generation: number} | undefined;
+    if (!pointer?.revision_id) return { revision: null, generation: pointer?.generation ?? 0 };
+    const record = this.getRevision(pointer.revision_id);
+    if (!record || record.stale || record.state !== 'approved' || this.db.prepare('SELECT revision_id FROM quarantined_revisions WHERE revision_id=?').get(pointer.revision_id)) return { revision: null, generation: pointer.generation };
+    return { revision: record.revision, generation: pointer.generation };
+  }
+  authorizeActiveSkill(skillId: string, suiteId: string, authority: VerificationAuthority) {
+    const active = this.getActiveSkill(skillId);
+    if (!active.revision) throw new Error('no-approved-active-revision');
+    const { record, suite, contract } = this.verificationContext(active.revision.id, suiteId);
+    const row = this.db.prepare("SELECT report_json FROM verification_reports WHERE revision_id=? AND verdict='approved' ORDER BY rowid DESC LIMIT 1").get(record.revision.id) as {report_json:string}|undefined;
+    if (!row) throw new Error('active-approval-missing');
+    validateReport(JSON.parse(row.report_json), record.revision, contract, suite, authority, this.now());
+    return { ...active, contract };
+  }
+  // The supervisor supplies its secret authority; never expose this method through learner IPC.
+  applyVerification(input: unknown, options: { revisionId: string; suiteId: string; revisionGeneration: number; activeGeneration: number; userConfirmed: boolean }, authority: VerificationAuthority) {
+    this.ensureOpen();
+    return this.db.transaction(() => {
+      const { record, suite, contract } = this.verificationContext(options.revisionId, options.suiteId);
+      const report = validateReport(input, record.revision, contract, suite, authority, this.now());
+      if (record.state !== 'verifying' || record.generation !== options.revisionGeneration) throw new Error('stale-revision-transition');
+      const skillId = record.revision.skillId;
+      const pointer = this.db.prepare('SELECT revision_id,generation FROM active_skills WHERE skill_id=?').get(skillId) as {revision_id:string|null;generation:number}|undefined;
+      if ((pointer?.generation ?? 0) !== options.activeGeneration) throw new Error('stale-active-pointer');
+      if (report.verdict === 'approved' && !options.userConfirmed) throw new Error('activation-requires-user-review');
+      this.db.prepare('INSERT INTO verification_reports VALUES(?,?,?,?)').run(report.id, record.revision.id, canonicalJSON(report), report.verdict);
+      this.db.prepare('UPDATE revisions SET state=?,generation=generation+1 WHERE id=?').run(report.verdict, record.revision.id);
+      if (report.verdict === 'approved') this.db.prepare(`INSERT INTO active_skills VALUES(?,?,1) ON CONFLICT(skill_id) DO UPDATE SET revision_id=excluded.revision_id,generation=active_skills.generation+1`).run(skillId, record.revision.id);
+      this.db.prepare('INSERT INTO registry_audit(skill_id,revision_id,previous_revision_id,report_id,operation,created_at) VALUES(?,?,?,?,?,?)').run(skillId, record.revision.id, pointer?.revision_id ?? null, report.id, report.verdict, this.now());
+      return { verdict: report.verdict, ...this.getActiveSkill(skillId) };
+    })();
+  }
+  quarantineAndRollback(input: unknown, options: { revisionId: string; suiteId: string; activeGeneration: number }, authority: VerificationAuthority) {
+    this.ensureOpen();
+    return this.db.transaction(() => {
+      const { record, suite, contract } = this.verificationContext(options.revisionId, options.suiteId);
+      const report = validateReport(input, record.revision, contract, suite, authority, this.now());
+      if (report.verdict !== 'blocked' || !report.assertions.some(a => a.result === 'failed')) throw new Error('rollback-requires-failed-assertion');
+      const skillId = record.revision.skillId;
+      const active = this.getActiveSkill(skillId);
+      if (record.state !== 'approved' || active.revision?.id !== record.revision.id || active.generation !== options.activeGeneration) throw new Error('stale-active-pointer');
+      this.db.prepare('INSERT INTO verification_reports VALUES(?,?,?,?)').run(report.id, record.revision.id, canonicalJSON(report), report.verdict);
+      this.db.prepare('INSERT INTO quarantined_revisions VALUES(?,?)').run(record.revision.id, report.id);
+      const previous = this.db.prepare("SELECT previous_revision_id FROM registry_audit WHERE revision_id=? AND operation='approved' ORDER BY sequence DESC LIMIT 1").get(record.revision.id) as {previous_revision_id:string|null}|undefined;
+      let fallback: SkillRevision | null = null;
+      if (previous?.previous_revision_id) {
+        const prior = this.getRevision(previous.previous_revision_id);
+        const approval = this.db.prepare("SELECT report_json FROM verification_reports WHERE revision_id=? AND verdict='approved' ORDER BY rowid DESC LIMIT 1").get(previous.previous_revision_id) as {report_json:string}|undefined;
+        const quarantined = this.db.prepare('SELECT revision_id FROM quarantined_revisions WHERE revision_id=?').get(previous.previous_revision_id);
+        if (prior && !prior.stale && prior.state === 'approved' && !quarantined && approval && prior.revision.contractHash === contract.contentHash && prior.revision.skillId === skillId && prior.revision.requestedCapabilities.every(c => record.revision.requestedCapabilities.includes(c))) {
+          try { validateReport(JSON.parse(approval.report_json), prior.revision, contract, suite, authority, this.now()); fallback = prior.revision; } catch { /* incompatible approval disables execution */ }
+        }
+      }
+      this.db.prepare('UPDATE active_skills SET revision_id=?,generation=generation+1 WHERE skill_id=?').run(fallback?.id ?? null, skillId);
+      this.db.prepare('INSERT INTO registry_audit(skill_id,revision_id,previous_revision_id,report_id,operation,created_at) VALUES(?,?,?,?,?,?)').run(skillId, record.revision.id, fallback?.id ?? null, report.id, fallback ? 'rollback' : 'disabled', this.now());
+      return this.getActiveSkill(skillId);
+    })();
+  }
+  getRegistryAudit(skillId: string) {
+    this.ensureOpen();
+    return this.db.prepare('SELECT * FROM registry_audit WHERE skill_id=? ORDER BY sequence').all(Id.parse(skillId));
   }
   putRun(input: unknown) {
     const value = ExecutionRun.parse(input);

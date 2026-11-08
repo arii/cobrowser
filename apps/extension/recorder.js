@@ -149,7 +149,7 @@ export function installRecorder() {
           state.dropped+=removed.length;
         }
         const id=crypto.randomUUID();
-        if(['click','change'].includes(message.event.kind)){
+        if(['click','change','page-visible'].includes(message.event.kind)){
           const {skillWebsiteStarts={}}=await chrome.storage.local.get('skillWebsiteStarts');
           const siteKey=`${state.sessionId}:${sender.tab.id}:${expected}`;
           if(!skillWebsiteStarts[siteKey]){

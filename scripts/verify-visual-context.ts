@@ -1,6 +1,6 @@
 /// <reference types="chrome" />
 import { chromium } from 'playwright';
-import { build } from 'esbuild';
+import { buildContextHost } from './context-host-runtime.js';
 import { createServer } from 'node:http';
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
@@ -11,7 +11,7 @@ const server=createServer((_req,res)=>res.end('<!doctype html><title>Visual cont
 await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));
 const origin=`http://127.0.0.1:${(server.address() as {port:number}).port}`;
 const quote=(s:string)=>`'${s.replaceAll("'","'\\''")}'`;
-await build({entryPoints:['scripts/context-brain-host.ts'],outfile:join(root,'host.cjs'),platform:'node',format:'cjs',bundle:true,target:'node24'});
+await buildContextHost(root);
 const launcher=join(root,'host');await writeFile(launcher,`#!/bin/sh\nexport COBROWSER_CONTEXT_REPLAY=1\nexport COBROWSER_HISTORY_ROOT=${quote(join(root,'history'))}\nexec ${quote(process.execPath)} ${quote(join(root,'host.cjs'))} "$@"\n`,{mode:0o700});
 const profile=join(root,'profile');await mkdir(join(profile,'NativeMessagingHosts'),{recursive:true});
 await writeFile(join(profile,'NativeMessagingHosts/com.cobrowser.context.json'),JSON.stringify({name:'com.cobrowser.context',description:'Synthetic visual test only',path:launcher,type:'stdio',allowed_origins:['chrome-extension://afchllcepipgheklaapddihncbpmfocl/']}));

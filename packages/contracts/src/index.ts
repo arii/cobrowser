@@ -38,3 +38,4 @@ export function assertRevisionTransition(from: RevisionState, to: RevisionState)
 export function assertRunTransition(from: RunState, to: RunState) {
   if (!runTransitions[RunState.parse(from)].includes(RunState.parse(to))) throw new Error(`invalid-run-transition:${from}:${to}`);
 }
+export * from './verification.js';

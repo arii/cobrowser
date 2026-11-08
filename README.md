@@ -2,6 +2,14 @@
 
 Read [plan.md](plan.md) first. Phase 1 provides versioned contracts, encrypted SQLite-backed persistence, a minimal Electron/React foundation shell, a WXT/React Chrome extension build, and worker entry points. The extension now includes HTTP/HTTPS tab observation, next-action forecasts, and a live monitor; desktop observation and verifier-backed promotion remain disabled. The extension supports reviewed local workflow suggestions and bounded replay, described below. [Phase 1 results](docs/decisions/006-phase1-foundation.md) and [Phase 0 open gates](docs/decisions/000-phase0-results.md) distinguish implemented behavior from scaffolding and live integrations.
 
+## Verify approval, defect blocking, and rollback
+
+Run `pnpm verify:promotion` for the local verifier vertical slice. It uses the same declarative interpreter for candidate verification and approved execution, real browser mouse/keyboard input, actual downloaded CSV bytes, a separately authored oracle, and the fixture server's export audit. It verifies v1, executes it successfully 10/10 times, blocks wrong-week and wrong-team mutations without replacing v1, approves corrected v3, and demonstrates a separate post-promotion regression rolling back to v1. Signed reports and audit evidence are saved to `.local/evidence/promotion.json`.
+
+Reports bind the exact candidate, contract, frozen suite, environment, and runtime. Registry updates are transactional and reject tampering, missing assertions, stale pointers, and unreviewed activation. A regression quarantines the current revision; unavailable or incompatible fallback disables execution. See [implementation and limits](docs/decisions/010-local-verification-gate.md).
+
+This is a local API and reproducible synthetic fixture demo. Candidates are hand-authored and labeled replay; no cloud calls or credentials are needed. The installed extension now requires native-host approval before activation and rechecks it before browser input. Only the synthetic weekly CSV report currently has a supported verifier; other workflows remain inactive. Process/container isolation, live Llama-generated candidates, independent Snap semantic evaluation, the complete case matrix, and desktop acceptance remain unfinished.
+
 ## Record data and see it working
 
 For a quick local test demo, run `pnpm demo`. It opens the reporting dashboard,
@@ -38,6 +46,14 @@ The checks write synthetic evidence to `.local/evidence/recording.json`, `record
 
 ## Instruction-driven skills
 
+**Current activation policy:** saved skills require native-host independent approval. The supported task is the local synthetic weekly CSV report (team, previous calendar week, explicit as-of timestamp and timezone). Other skills may be learned, saved and edited, but cannot execute until a corresponding independent verifier exists. Earlier local `active` flags do not authorize execution. The generic instruction/source-page flow described below remains implemented but is unavailable for unsupported tasks.
+
+After updating code, run `pnpm build:extension` and `pnpm install:context-host --runtime-only`, then reload the unpacked extension at `chrome://extensions`. In Skills, review the report steps, choose the verified report team/timezone/as-of timestamp, check the review box, and press **Verify and activate**. The synthetic task time defaults to November 7, 2026 because the oracle dataset is fixed; this is not a live reporting service. Ten normal candidate runs must pass. **Run approved skill** uses the exact approved task inputs; edits require saving and verification again. An unavailable host prevents new tabs and input.
+
+Run `pnpm verify:extension-gate` (also `pnpm verify:skills` / `pnpm verify:report-skill`) for the real isolated Chrome/native-host/UI acceptance check. See [decision 011](docs/decisions/011-extension-approval-gate.md). No provider credentials or changes to your ordinary Chrome profile are needed for this check.
+
+See [workflow examples](docs/workflow-examples.md), including the AIE Code Summit hackathon guest-list → LinkedIn connection workflow and its acceptance criteria.
+
 Open **Skills** from the extension or recording monitor. A skill opens its saved websites in tabs in the existing Chrome window; the current tab does not need to be its starting page. Newly learned workflows retain the first observed page address without query strings or fragments. Earlier skills default to their original site's root; edit the address under **Websites and workflow** when the task starts at a different path.
 
 Give an **Instruction for this run** describing the result and where its data should come from. For example: “Use the team and weekly total on the source dashboard to preview the report for the previous calendar week.” The configured context model resolves each field from that instruction, the visible text of the listed pages, available selection options, the current date/timezone, and any clarification answers. Fields no longer all require manual entries. Optional input overrides remain available. If a required fact is missing or ambiguous, or a workflow encounters an issue, the skill pauses and shows a help prompt at the top of its page. Your answer becomes context for the running agent. You can minimize the prompt to fix the page, then continue. Unavailable providers pause the run before entering an inferred value. Checks after an action never automatically repeat that action; you can also stop the run from the prompt. The Skills library provides the same question when a page cannot display the prompt.
@@ -49,7 +65,7 @@ Skill instructions and bounded visible text from the listed websites are sent to
 ```sh
 pnpm build:extension
 pnpm install:context-host --runtime-only  # update installed host; preserve credentials
-pnpm exec tsx scripts/verify-skills.ts   # isolated real-browser execution; model stub for reasoning checks
+pnpm verify:skills                      # real native-host approval and Chrome execution; synthetic reporting contract
 ```
 
 The separate Agent playback panel has been removed. Use skills for instruction-driven workflows.
@@ -96,7 +112,7 @@ pnpm install:context-host
 
 The installer reads this folder's `.env`, validates the selected providers, and installs a Chrome native messaging host restricted to this extension. It copies only the required model settings to an owner-only configuration under `~/Library/Application Support/Cobrowser/context-host`. Rerun the installer when keys or model settings change. Chrome launches the host automatically; no separate browser runner is needed. Reload the unpacked extension from `apps/extension/.output/chrome-mv3`, open **Open live recording monitor**, and press **Start recording**.
 
-While a supported web page is focused, the extension captures a masked screenshot about every 10 seconds. Snap supplies narrow visual signals; Gemini Flash summarizes up to two chronological screenshots. The rolling context model receives that summary, normalized movement samples and click/scroll/control-key counts, plus bounded before/after DOM snapshots. “Before” is the preceding observation of the same tab and origin; the first observation has no baseline. Background tabs provide text summaries. Intervals can run slower when a model is busy or Chrome suspends its worker.
+While a supported web page is focused, the extension captures a masked screenshot about every 10 seconds. Snap supplies narrow visual signals; Meta Llama summarizes up to two chronological screenshots. The rolling context model receives that summary, normalized movement samples and click/scroll/control-key counts, plus bounded before/after DOM snapshots. “Before” is the preceding observation of the same tab and origin; the first observation has no baseline. Background tabs provide text summaries. Intervals can run slower when a model is busy or Chrome suspends its worker.
 
 The monitor shows the current processing stage and **Context assumptions over time**: timestamp, tentative intent, confidence, concise evidence explanation, likely next action, image summary, motion counts, and expandable DOM snapshots. These are model conclusions, not hidden reasoning, and can be wrong. The latest 30 assumptions are retained (12 displayed), filtered to 24 hours. Task retirement removes stale context from subsequent model input while retaining the full task action history locally.
 
@@ -129,12 +145,12 @@ pnpm verify:report-skill   # actual reporting fixture: repeated exports, learnin
 
 The check records actual examples, saves/reviews/activates through the toolbar UI, verifies parameterized replay against page output, checks typed-value exclusion and agent exclusion, rejects no-op demonstrations and replay, verifies renaming and dismissal, blocks empty legacy skills, and checks failure before dispatch when a target is missing. Evidence is written under `.local/evidence/skills.json` and `skills.png`.
 
-## Rolling context brain: Snap + Gemini Flash (SubQ Preview selectable)
+## Rolling context brain: Snap + Meta Llama (SubQ Preview selectable)
 
 The context pipeline is implemented in `packages/context-brain/` and `packages/model-adapters/context.ts`:
 
 - **SubQ Snap (`subq-snap-1.1`)** classifies images and narrow action questions: screen change, task relation, editing/navigation/submission/inspection, visible task affordances (such as reporting/search/editing), and visible workflow state. It returns typed evidence signals, not a generated task narrative. See the [Decisions API](https://docs.subq.ai/endpoints/decisions-api/).
-- **Gemini Flash** currently owns the recursive context update: previous compact summary + recent events + Snap signals → tentative intent, replacement summary, confidence, cited evidence, and continue/new-task/uncertain/completed. Set `CONTEXT_PROVIDER=gemini` (default), `GEMINI_API_KEY`, and `GEMINI_MODEL` (default `gemini-3.8-flash`) to use structured output on the [Gemini API](https://ai.google.dev/gemini-api/docs/structured-output). To switch back after approval, set `CONTEXT_PROVIDER=subq`; that uses `subq-preview` on the [SubQ Chat Completions API](https://docs.subq.ai/endpoints/chat-completions-api/) with strict structured output, `store: false`, and reasoning effort `none` for short rolling updates.
+- **Meta Llama** owns screenshot summaries, recursive context updates, and skill input resolution. Set `CONTEXT_PROVIDER=llama` (default), `LLAMA_SCHEMA=openai-chat`, `LLAMA_ENDPOINT` (full HTTPS chat-completions URL), `LLAMA_MODEL` (explicit Meta Llama deployment/revision), and `LLAMA_API_KEY`. The deployment must support image input and strict JSON-schema response output; returned model IDs must exactly match the configured revision. No hosting provider or model is selected automatically. `CONTEXT_PROVIDER=subq` uses `subq-preview` for text context and skill inputs with strict structured output, `store: false`, and reasoning effort `none`; separate screenshot summaries are unavailable in that mode.
 - Pointer movement and scrolling alone take a local path with no model calls, except when a new visual observation interval is available. Meaningful action batches go through the selected context model. Action-only Snap analysis is bypassed after three measured calls when its average latency exceeds the context model's; images always go through Snap, and pending task candidates force corroboration. This is a routing heuristic, not a claim that one provider is universally faster.
 
 The model receives a bounded recent window (12 events / 90 seconds), the current rolling summary, and up to six relevant older actions retrieved from the active task. A model `historyQuery` triggers one additional retrieval/update call when an older detail is needed. Only supplied evidence IDs are accepted, and every update must cite a fresh event. The full history is retained locally rather than appended to each prompt.
@@ -152,7 +168,7 @@ pnpm brain:preview          # visible browser + real recorder input + synthetic 
 pnpm verify:brain           # headless browser/monitor check; synthetic model responses
 ```
 
-The recording monitor now shows the current intent, summary, confidence, retired-context count, provider timings, and a decision log. Synthetic mode is explicitly labeled and does not call either API. To use the actual providers, export private shell variables (scripts do not automatically load `.env`): `HARNESS_CLOUD_ENABLED=1`, `SUBQ_API_KEY`, and `GEMINI_API_KEY` for the default Gemini configuration, then run:
+The recording monitor now shows the current intent, summary, confidence, retired-context count, provider timings, and a decision log. Synthetic mode is explicitly labeled and does not call either API. To use the actual providers, export private shell variables (scripts do not automatically load `.env`): `HARNESS_CLOUD_ENABLED=1`, `SUBQ_API_KEY`, and `LLAMA_SCHEMA=openai-chat`, `LLAMA_ENDPOINT`, `LLAMA_MODEL`, and `LLAMA_API_KEY` for the default Meta Llama configuration, then run:
 
 ```sh
 node --env-file=.env --import=tsx scripts/context-brain.ts --record

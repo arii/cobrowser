@@ -52,48 +52,60 @@ test('malformed, incomplete and error responses fail without logging provider co
     ]) {globalThis.fetch=async()=>Response.json(response);await assert.rejects(providers.context(input),/invalid-envelope/);}
   } finally {globalThis.fetch=saved;}
 });
-test('Gemini is the default context provider and uses a separate key with structured output',async()=>{
-  const saved=globalThis.fetch;
-  const geminiEnv={HARNESS_CLOUD_ENABLED:'1',SUBQ_API_KEY:'synthetic-subq-key',GEMINI_API_KEY:'synthetic-google-key',GEMINI_MODEL:'gemini-3.8-flash'};
-  let sent:any;
+const llamaEnv={HARNESS_CLOUD_ENABLED:'1',SUBQ_API_KEY:'synthetic-subq-key',LLAMA_SCHEMA:'openai-chat',LLAMA_ENDPOINT:'https://llama.example/v1/chat/completions',LLAMA_MODEL:'meta-llama/vision-revision',LLAMA_API_KEY:'synthetic-meta-key'};
+const completion=(value:unknown)=>({model:llamaEnv.LLAMA_MODEL,choices:[{finish_reason:'stop',message:{content:JSON.stringify(value)}}],usage:{prompt_tokens:30,completion_tokens:20,total_tokens:50}});
+test('Meta Llama is the default context provider with separate credentials and strict structured output',async()=>{
+  const saved=globalThis.fetch;let sent:any;
   globalThis.fetch=async(url,options)=>{
     sent={url:String(url),headers:options!.headers,body:JSON.parse(options!.body as string)};
-    return Response.json({modelVersion:'gemini-3.8-flash',candidates:[{finishReason:'STOP',content:{parts:[{thought:true,text:'not an observable conclusion'},{text:JSON.stringify(decision)}]}}],usageMetadata:{promptTokenCount:30,candidatesTokenCount:20,totalTokenCount:50}});
+    return Response.json(completion(decision));
   };
   try {
-    const providers=liveContextProviders(geminiEnv);
-    assert.equal(providers.contextModel,'gemini-3.8-flash');
+    const providers=liveContextProviders(llamaEnv);
+    assert.equal(providers.contextModel,llamaEnv.LLAMA_MODEL);
     const result=await providers.context(input);
     assert.equal(result.value.intent,decision.intent);
-    assert.equal(sent.url,'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent');
-    assert.equal(sent.headers['x-goog-api-key'],'synthetic-google-key');
-    assert(sent.body.generationConfig.responseJsonSchema);
-    assert(!JSON.stringify(result).includes('synthetic-google-key'));
-    assert(!JSON.stringify(result).includes('not an observable conclusion'));
-    assert.throws(()=>liveContextProviders({...geminiEnv,GEMINI_API_KEY:''}),/missing-GEMINI_API_KEY/);
-    assert.throws(()=>liveContextProviders({...geminiEnv,GEMINI_MODEL:'other-model'}),/must-name-a-flash-model/);
-    assert.throws(()=>liveContextProviders({...geminiEnv,CONTEXT_PROVIDER:'other'}),/invalid-CONTEXT_PROVIDER/);
+    assert.equal(sent.url,llamaEnv.LLAMA_ENDPOINT);
+    assert.equal(sent.headers.Authorization,'Bearer synthetic-meta-key');
+    assert.equal(sent.body.response_format.json_schema.strict,true);
+    assert(!JSON.stringify(result).includes('synthetic-meta-key'));
+    for(const name of ['LLAMA_ENDPOINT','LLAMA_MODEL','LLAMA_API_KEY','LLAMA_SCHEMA'])assert.throws(()=>liveContextProviders({...llamaEnv,[name]:''}),new RegExp(`missing-${name}`));
+    assert.throws(()=>liveContextProviders({...llamaEnv,LLAMA_MODEL:'other-model'}),/not-declared-llama/);
+    assert.throws(()=>liveContextProviders({...llamaEnv,LLAMA_SCHEMA:'other'}),/unsupported-LLAMA_SCHEMA/);
+    for(const endpoint of ['http://llama.example','https://user:secret@llama.example','invalid'])assert.throws(()=>liveContextProviders({...llamaEnv,LLAMA_ENDPOINT:endpoint}),/unsafe-LLAMA_ENDPOINT/);
+    assert.throws(()=>liveContextProviders({...llamaEnv,CONTEXT_PROVIDER:'gemini'}),/invalid-CONTEXT_PROVIDER/);
     for (const response of [
-      {modelVersion:'gemini-3.8-flash',candidates:[{finishReason:'MAX_TOKENS',content:{parts:[{text:JSON.stringify(decision)}]}}]},
-      {modelVersion:'gemini-other-flash',candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify(decision)}]}}]},
+      {...completion(decision),model:'other-llama'},
+      {...completion(decision),choices:[{finish_reason:'length',message:{content:JSON.stringify(decision)}}]},
+      {...completion(decision),choices:[{finish_reason:'stop',message:{content:JSON.stringify(decision),refusal:'Declined'}}]},
     ]) {globalThis.fetch=async()=>Response.json(response);await assert.rejects(providers.context(input),/invalid-envelope/);}
+    globalThis.fetch=async()=>Response.json(completion({intent:'invalid'}));
+    await assert.rejects(providers.context(input),/invalid-output/);
+    globalThis.fetch=async()=>Response.json({...completion(decision),choices:[{finish_reason:'stop',message:{content:'not JSON'}}]});
+    await assert.rejects(providers.context(input),/invalid-content/);
   } finally {globalThis.fetch=saved;}
 });
 
-test('Gemini summarizes chronological screenshots separately from rolling context and rejects incomplete captions',async()=>{
-  const saved=globalThis.fetch;const requests:any[]=[];let finish='STOP';
+test('Meta Llama summarizes chronological screenshots separately from rolling context and rejects incomplete captions',async()=>{
+  const saved=globalThis.fetch;const requests:any[]=[];let finish='stop';
   const summary={summary:'A report form is visible.',changes:['The result panel appeared.'],confidence:.8};
   globalThis.fetch=async(_url,options)=>{
     const body=JSON.parse(options!.body as string);requests.push(body);
-    return Response.json({modelVersion:'gemini-3.8-flash',candidates:[{finishReason:finish,content:{parts:[{thought:true,text:'private reasoning excluded'},{text:JSON.stringify(body.contents[0].parts.some((part:any)=>part.inlineData)?summary:decision)}]}}]});
+    const value=Array.isArray(body.messages[1].content)?summary:decision;
+    return Response.json({...completion(value),choices:[{finish_reason:finish,message:{content:JSON.stringify(value),reasoning_content:'private reasoning excluded'}}]});
   };
   try{
-    const providers=liveContextProviders({HARNESS_CLOUD_ENABLED:'1',SUBQ_API_KEY:'synthetic-subq-key',GEMINI_API_KEY:'synthetic-google-key'});
+    const providers=liveContextProviders(llamaEnv);
     const frame={at:event.at,origin:event.origin,tabId:1,sessionId:event.sessionId,image:{mediaType:'image/png' as const,base64:'iVBORw0KGgo='}};
     const caption=await providers.vision!([frame,frame]);assert.deepEqual(caption.value,summary);
-    assert.equal(requests[0].contents[0].parts.filter((part:any)=>part.inlineData).length,2);
+    const parts=requests[0].messages[1].content;
+    assert.equal(parts.filter((part:any)=>part.type==='image_url').length,2);
+    assert.equal(parts[0].text,`Screenshot captured at ${frame.at}`);
+    assert.equal(parts[1].image_url.url,'data:image/png;base64,iVBORw0KGgo=');
     assert(!JSON.stringify(caption).includes('private reasoning excluded'));
     await providers.context(input);assert(!JSON.stringify(requests[1]).includes('iVBORw0KGgo='));
-    finish='MAX_TOKENS';await assert.rejects(providers.vision!([frame]),/context-vision-invalid-envelope/);
+    finish='length';await assert.rejects(providers.vision!([frame]),/invalid-envelope/);
+    finish='stop';globalThis.fetch=async()=>Response.json(completion({summary:123}));
+    await assert.rejects(providers.vision!([frame]),/invalid-output/);
   }finally{globalThis.fetch=saved;}
 });

@@ -1,12 +1,13 @@
+import { NETWORKING } from './networking.ts';
 import { probeTarget } from './skill-learning.js';
 import { workflowSites } from './skill-workflow.js';
 const root=document.getElementById('skills');
 root.innerHTML=`<style>
 #skills{font:14px system-ui;color:#172033;margin:0 0 18px}#skills h1{font-size:24px;margin:10px 0}#skills h2{font-size:17px;margin:18px 0 8px}#skills p{line-height:1.5}#skills .muted{color:#596579;font-size:12px}#skills article{border:1px solid #dce2ea;border-radius:10px;padding:12px;margin:10px 0;background:#fff}#skills summary{cursor:pointer;font-weight:600}#skills button{padding:7px 10px;margin:6px 6px 0 0;border:1px solid #cbd5e1;border-radius:6px;background:#f4f7fb;cursor:pointer}#skills button.primary{background:#244ce0;color:white;border-color:#244ce0}#skills button:disabled{opacity:.5;cursor:default}#skills label{display:block;margin:10px 0}#skills textarea,#skills select,#skills input[type=text]{display:block;box-sizing:border-box;width:100%;padding:8px;margin-top:4px;border:1px solid #cbd5e1;border-radius:5px}#skills .blocker,#skills-error{color:#a32a20}#skills ol{padding-left:22px}#skills li{padding:4px 0}#skills-run{background:#edf2ff;padding:10px;border-radius:8px}#skills-refresh{float:right}
-</style><button id="skills-refresh">Refresh examples</button><p class="muted">COBROWSER · SKILLS</p><h1>Repeat what works</h1><p>A useful completed attempt can become a skill immediately. Review it, activate it, then repeat it.</p><p id="skills-error" role="alert"></p><section><p id="learning-status" role="status"></p><button id="learning-toggle">Start learning</button></section><h2>Learning progress</h2><div id="learning-progress"></div><p id="task-history-info" class="muted"></p><div id="skills-run" role="status" aria-live="polite" hidden></div><h2>Your skills</h2><div id="skills-library"></div><h2>Suggested from your activity</h2><p class="muted">One completed attempt is enough when its actions and result support reuse. New skills are saved automatically and stay inactive until reviewed.</p><div id="skills-candidates"></div><details data-key="legacy-library"><summary id="skills-legacy-count">Earlier skills needing new examples</summary><div id="skills-legacy"></div></details><p class="muted">Give a run instruction and list the websites it needs. Skills open those pages and use the instruction and visible source data to choose inputs. A question appears only when a required detail is unclear. Listed page text and the instruction are sent to your configured model; recorded field values are never saved. Stop prevents further steps; completed effects remain. Saved skills remain until you delete them.</p>`;
+</style><button id="skills-refresh">Refresh examples</button><p class="muted">COBROWSER · SKILLS</p><h1>Repeat what works</h1><p>A useful completed attempt can become a skill immediately. Review it, verify it independently, then repeat the approved task.</p><p id="skills-error" role="alert"></p><section><p id="learning-status" role="status"></p><button id="learning-toggle">Start learning</button></section><h2>Learning progress</h2><div id="learning-progress"></div><p id="task-history-info" class="muted"></p><div id="skills-run" role="status" aria-live="polite" hidden></div><h2>Your skills</h2><div id="skills-library"></div><h2>Suggested from your activity</h2><p class="muted">One completed attempt is enough when its actions and result support reuse. Tell us what each new skill should accomplish before saving it. Skills stay inactive until independent verification passes and you activate them.</p><div id="skills-candidates"></div><details data-key="legacy-library"><summary id="skills-legacy-count">Earlier skills needing new examples</summary><div id="skills-legacy"></div></details><p class="muted">Saved websites, steps and instructions are bound to independent approval. The current verifier supports the synthetic weekly CSV task; its explicit team, week and timezone determine run inputs. Other workflows can be saved but remain inactive. Changing the workflow requires verification again. Stop prevents further steps; completed effects remain. Saved skills remain until you delete them.</p>`;
 const el=id=>document.getElementById(id);
 let busy=false,lastStructure='',latest;
-const nameDrafts=new Map(),workflowDrafts=new Map();
+const nameDrafts=new Map(),intentDrafts=new Map(),workflowDrafts=new Map();
 let runViewKey='';
 async function request(action,args={}){
   const result=await chrome.runtime.sendMessage({kind:`skills:${action}`,...args});
@@ -34,10 +35,18 @@ function card(skill,saved){
   details.append(text('p',skill.assessment));
   if(skill.reusability)details.append(text('p',`${skill.reusability.source==='model'?'Model':'Local'} assessment · ${Math.round(skill.reusability.confidence*100)}% confidence · ${skill.reusability.reason}`,'muted'));
   if(skill.context)details.append(text('p',`Related task assumption: ${skill.context.intent} · ${Math.round(skill.context.confidence*100)}% confidence. ${skill.context.explanation} Task outcome is unverified.`,'muted'));
+  if(skill.memory){
+    details.append(text('p',`Saved intent: ${skill.memory.intent}`));
+    for(const frame of skill.memory.screenshots??[]){
+      if(!['image/jpeg','image/png','image/webp'].includes(frame.image?.mediaType))continue;
+      const image=document.createElement('img');image.src=`data:${frame.image.mediaType};base64,${frame.image.base64}`;
+      image.alt=`Recorded workflow on ${frame.origin} at ${frame.at}`;image.style.maxWidth='100%';image.loading='lazy';details.append(image);
+    }
+  }
   const list=document.createElement('ol');
   for(const step of (skill.steps??[]).filter(step=>step?.target?.label?.trim() && ['click','change'].includes(step.kind))){list.append(text('li',`${step.kind==='change'?'Enter input for':'Click'} “${step.target?.label??'unknown target'}”${step.parameter?' · chosen from your instruction and source pages':''}${step.siteId?' · '+(displaySites(skill).find(site=>site.id===step.siteId)?.url??'website missing'):''}`));}
   if(list.children.length)details.append(list);
-  if(saved){
+  if(saved && skill.family!==NETWORKING){
     if(skill.steps.some(step=>probeTarget(step.target)))details.append(button('Remove probe steps and review',()=>request('repair',{id:skill.id})));
     const repair=document.createElement('details');repair.dataset.key=skill.id+'-repair';repair.append(text('summary','Repair saved steps'));
     repair.append(text('p','Remove an unrelated recorded step. Repair preserves an audit of removed steps and requires reviewing and activating the skill again. Stop any active run first.','muted'));
@@ -48,8 +57,22 @@ function card(skill,saved){
   for(const example of skill.examples??[])details.append(text('p',`${new Date(example.at).toLocaleString()} · ${example.eventIds.length} cited actions`,'muted'));
   for(const blocker of skill.blockers)details.append(text('p',blocker,'blocker'));
   if(!saved){
-    details.append(button('Save to skills',()=>request('save',{key:skill.key,title:nameInput.value}),true));
+    details.open=true;
+    const intentLabel=text('label','What should this skill accomplish?'),intent=document.createElement('textarea');
+    intent.rows=3;intent.maxLength=4000;intent.required=true;intent.value=intentDrafts.get(skill.key)??'';
+    intent.placeholder='Describe your goal and the result you want next time.';
+    const save=button('Save to skills',()=>request('save',{key:skill.key,title:nameInput.value,intent:intent.value}),true);
+    save.disabled=!intent.value.trim();
+    intent.oninput=()=>{intentDrafts.set(skill.key,intent.value);save.disabled=!intent.value.trim();};
+    intentLabel.append(intent);details.append(intentLabel,save);
     details.append(button('Dismiss',()=>request('dismiss',{key:skill.key})));
+  }
+  else if(skill.family===NETWORKING){
+    details.append(text('p',`Saved recipe for up to ${skill.networking.maxGuests} guests: read guest list → match LinkedIn profile → skip existing invitations → connect → verify pending. The recipe requires guest-batch review and persistent invitation tracking when an independently verified runner becomes available.`));
+    for(const instruction of skill.memory?.howTo??[])details.append(text('p',instruction,'muted'));
+    details.append(text('p','Independent verification is required for every workflow. This networking recipe can be saved, but activation and execution are unavailable until a supported verifier exists.','blocker'));
+    const unavailable=button('Independent verifier required',()=>{});unavailable.disabled=true;details.append(unavailable);
+    details.append(button('Delete skill',()=>request('delete',{id:skill.id})));
   }
   else{
     const key=skill.id,draft=workflowDrafts.get(key)??{urls:displaySites(skill).map(site=>site.url).join('\n'),instruction:skill.instruction??'',appendSkillId:''};
@@ -64,21 +87,31 @@ function card(skill,saved){
     for(const other of latest.skills.filter(item=>item.id!==skill.id && !item.needsExamples)){const option=document.createElement('option');option.value=other.id;option.textContent=other.title;append.append(option);}
     append.value=draft.appendSkillId;append.onchange=()=>{draft.appendSkillId=append.value;workflowDrafts.set(key,draft);};appendLabel.append(append);configuration.append(appendLabel);
     configuration.append(button('Save workflow',async()=>{const value=await request('configure',{id:skill.id,urls:websites.value.split('\n').map(url=>url.trim()).filter(Boolean),instruction:instruction.value,appendSkillId:append.value||null});workflowDrafts.delete(key);return value;}));details.append(configuration);
+    if(skill.approval){
+      details.append(text('p',`Independent verification: ${skill.approval.verdict}${skill.approval.normalRuns?` · ${skill.approval.normalRuns}/10 normal fixture runs`:''}.`,'muted'));
+    }
     if(!skill.active && !skill.blockers.length){
+      details.append(text('p','The verifier currently supports the local synthetic weekly CSV report. Other workflows remain inactive until a matching independent verifier is available. Verification runs in a separate test browser and may take a few seconds.','muted'));
+      const teamLabel=text('label','Verified report team'),team=document.createElement('select');
+      for(const value of ['red','blue']){const option=document.createElement('option');option.value=value;option.textContent=value;team.append(option);}team.value=skill.verificationTask?.team??'red';teamLabel.append(team);
+      const dateLabel=text('label','Synthetic task as-of timestamp'),asOf=document.createElement('input');asOf.type='text';asOf.value=skill.verificationTask?.asOf??'2026-11-07T20:00:00.000Z';dateLabel.append(asOf);
+      const zoneLabel=text('label','Report timezone'),timezone=document.createElement('input');timezone.type='text';timezone.value=skill.verificationTask?.timezone??'America/Los_Angeles';zoneLabel.append(timezone);
       const label=document.createElement('label'),review=document.createElement('input');review.type='checkbox';
-      label.append(review,document.createTextNode(' I reviewed these steps and their effects.'));
-      const activate=button('Activate skill',()=>request('activate',{id:skill.id,active:true,reviewed:review.checked}),true);
-      activate.disabled=true;review.onchange=()=>{activate.disabled=!review.checked;};details.append(label,activate);
+      label.append(review,document.createTextNode(' I reviewed these steps and authorize the previous calendar week CSV for this team and timezone.'));
+      const activate=button('Verify and activate',async()=>{
+        activate.disabled=true;activate.textContent='Verifying 10 fixture runs…';
+        try{return await request('activate',{id:skill.id,active:true,reviewed:review.checked,verificationTask:{family:'synthetic-weekly-report-v1',team:team.value,asOf:asOf.value,timezone:timezone.value}});}
+        finally{activate.textContent='Verify and activate';activate.disabled=!review.checked;}
+      },true);
+      activate.disabled=true;review.onchange=()=>{activate.disabled=!review.checked;};details.append(teamLabel,dateLabel,zoneLabel,label,activate);
     }
     if(skill.active){
-      const inputs={},overrides=document.createElement('details');overrides.dataset.key=key+'-overrides';overrides.append(text('summary','Optional input overrides'));
-      for(const step of skill.steps.filter(step=>step.parameter)){
-        const label=text('label',step.target.label),input=document.createElement('input');input.type='text';input.dataset.parameter='true';input.oninput=updateRunButtons;input.maxLength=2000;input.autocomplete='off';input.placeholder=step.target.tag==='SELECT'?'Exact visible option label':'Value for this run';label.append(input);overrides.append(label);inputs[step.parameter]=input;
-      }
-      if(Object.keys(inputs).length)details.append(overrides);
-      details.append(text('p','Run opens the listed websites in this browser window. Use your instruction to specify what to do and which source data to use.','muted'));
-      const runButton=button('Run skill',()=>request('run',{id:skill.id,instruction:instruction.value,parameters:Object.fromEntries(Object.entries(inputs).filter(([_name,input])=>input.value.trim()).map(([name,input])=>[name,input.value]))}),true);
-      runButton.dataset.run='true';runButton.dataset.requiresInput=String(Object.keys(inputs).length>0);runButton.disabled=latest?.run?.status==='running';details.append(runButton);
+      details.append(text('p',`Approved task: ${skill.verificationTask?.team} team · previous calendar week as of ${skill.verificationTask?.asOf} · ${skill.verificationTask?.timezone}. Inputs come from this explicit contract. To change the task or workflow, deactivate and reverify.`));
+      const runButton=button('Run approved skill',()=>{
+        if(instruction.value.trim()!==(skill.instruction??'').trim())throw new Error('Save the changed workflow instruction and verify it again before running.');
+        return request('run',{id:skill.id,instruction:skill.instruction??'',parameters:{}});
+      },true);
+      runButton.dataset.run='true';runButton.disabled=latest?.run?.status==='running';details.append(runButton);
       details.append(button('Deactivate',()=>request('activate',{id:skill.id,active:false})));
     }
     details.append(button('Delete skill',()=>request('delete',{id:skill.id})));
@@ -113,6 +146,8 @@ function render(value){
   }
   if(value.run){
     run.querySelector('.run-progress').textContent=`${value.run.completed} / ${value.run.total} steps dispatched. ${value.run.message??''}`;
+    run.querySelectorAll('.networking-results').forEach(node=>node.remove());
+    if(value.run.guests){const batch=text('div','','networking-results');batch.append(text('p','Guest batch: '+value.run.guests.map(g=>`${g.name}${g.company?' ('+g.company+')':''}`).join(', ')));for(const result of value.run.results??[]){const item=text('p',`${result.name}: ${result.status}${result.reason?' · '+result.reason:''}`);if(result.url){const link=text('a',' View profile');link.href=result.url;link.target='_blank';link.rel='noopener noreferrer';item.append(link);}batch.append(item);}run.append(batch);}
     const decisions=run.querySelector('.run-decisions');decisions.querySelectorAll('p').forEach(node=>node.remove());
     for(const decision of value.run.decisions??[])decisions.append(text('p',`${decision.label}: ${decision.explanation}`));
   }
@@ -120,12 +155,12 @@ function render(value){
   if(structure!==lastStructure){
     const open=new Set([...root.querySelectorAll('details[open]')].map(node=>node.dataset.key));lastStructure=structure;
     const usable=value.skills.filter(skill=>!skill.needsExamples),legacy=value.skills.filter(skill=>skill.needsExamples);
-    el('skills-library').replaceChildren(...(usable.length?usable.map(skill=>card(skill,true)):[text('p','No skills learned yet. Complete a supported workflow once; a reusable skill will be saved here.','muted')]));
+    el('skills-library').replaceChildren(...(usable.length?usable.map(skill=>card(skill,true)):[text('p','No skills learned yet. Complete a supported workflow once; then describe its intent to save it here.','muted')]));
     el('skills-legacy').replaceChildren(...legacy.map(skill=>card(skill,true)));
     el('skills-legacy-count').textContent=`Earlier skills needing new examples (${legacy.length})`;
     el('skills-legacy-count').parentElement.hidden=!legacy.length;
     const candidates=value.candidates.filter(candidate=>!value.skills.some(skill=>skill.key===candidate.key));
-    el('skills-candidates').replaceChildren(...(candidates.length?candidates.map(skill=>card(skill,false)):[text('p','Useful workflows are saved under Your skills after their first supported attempt. Empty actions and overlapping fragments are excluded.','muted')]));
+    el('skills-candidates').replaceChildren(...(candidates.length?candidates.map(skill=>card(skill,false)):[text('p','Complete a workflow to see a suggestion and tell us its intent. Empty actions and overlapping fragments are excluded.','muted')]));
     for(const node of root.querySelectorAll('details'))if(open.has(node.dataset.key))node.open=true;
   }
   updateRunButtons();
