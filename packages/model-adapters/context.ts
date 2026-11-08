@@ -4,7 +4,7 @@ import { checkImages, SnapAnswer } from './index.js';
 import { ContextDecision, SnapSignals, VisualSummary, type BrainProviders } from '../context-brain/contracts.js';
 
 export const digest = (value:unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
-async function request(url:string, headers:Record<string,string>, body:unknown) {
+export async function request(url:string, headers:Record<string,string>, body:unknown) {
   const serialized=JSON.stringify(body);
   if (Buffer.byteLength(serialized)>13*1024*1024) throw new Error('context-request-size-limit');
   const start=performance.now();

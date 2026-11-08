@@ -4,6 +4,15 @@ Read [plan.md](plan.md) first. Phase 1 provides versioned contracts, encrypted S
 
 ## Record data and see it working
 
+For a quick local test demo, run `pnpm demo`. It opens the reporting dashboard,
+downloads real CSVs from a correct fixture and a deliberately wrong-week fixture,
+and checks their bytes against the independent oracle. The wrong-week export
+must fail verification even though the page says it succeeded. Both tabs stay
+open for inspection until you close the demo browser. No cloud credentials are
+needed. Use `pnpm verify:demo` for the headless version; evidence is saved under
+`.local/evidence/demo*`. The dashboard uses synthetic data and also works with
+the recording and skill-learning flows below.
+
 From this `cobrowser` folder:
 
 ```sh
@@ -27,23 +36,23 @@ pnpm verify:recording --raw  # same checks against the unpacked source extension
 
 The checks write synthetic evidence to `.local/evidence/recording.json`, `recording-export.json`, and `recording-monitor.png`. They use a temporary isolated browser profile and remove it afterward.
 
-## Agent playback: direct replay, then decided replay
+## Instruction-driven skills
 
-The recording monitor now has an **Agent playback** section that replays saved events in the assigned agent tab through real browser input (`chrome.debugger` CDP). Two modes share one planner (`apps/extension/playback-plan.js`, tested by `tests/playback.test.ts`):
+Open **Skills** from the extension or recording monitor. A skill opens its saved websites in tabs in the existing Chrome window; the current tab does not need to be its starting page. Newly learned workflows retain the first observed page address without query strings or fragments. Earlier skills default to their original site's root; edit the address under **Websites and workflow** when the task starts at a different path.
 
-- **Direct · literal** replays every actionable event in recorded order, including pointer moves. Scroll distance was never recorded, so direct replay scrolls a stated 200px fallback per scroll event.
-- **Filtered · decided** drops pointer/scroll/page noise and replays clicks, control keys, and submits in order.
+Give an **Instruction for this run** describing the result and where its data should come from. For example: “Use the team and weekly total on the source dashboard to preview the report for the previous calendar week.” The configured context model resolves each field from that instruction, the visible text of the listed pages, available selection options, the current date/timezone, and any clarification answers. Fields no longer all require manual entries. Optional input overrides remain available. If a required fact is missing or ambiguous, the skill pauses with a specific question and continues after an answer; unavailable providers stop the run before entering an inferred value.
 
-Neither mode invents typed values: recordings never save them, so every `change` event pauses replay with **Waiting on you**. Focus the field in the agent tab, enter the value in the monitor, and choose **Send input** (or **Skip input step**). Replay is scoped to the assigned tab: only events recorded on that tab's origin run, on any recorded site — other origins' events are skipped and counted in the warnings line. Full URLs and query strings were never recorded, so replay never auto-navigates; if the assigned tab navigates away mid-run, replay pauses until it matches again. Replayed input is tagged as agent activity and stays out of the human recording. A new recording session or **Clear saved data** cancels the active run.
+Under **Websites and workflow**, list the starting URL followed by any source pages. To perform actions on another site, append another learned skill's steps and save the combined workflow. Review and activate it after changes. A workflow supports up to eight pages and 48 steps, with each step assigned to its own website. Execution follows those reviewed steps; the instruction controls the input data rather than generating arbitrary browser actions. Redirects to unlisted origins stop the run. Sign in to required sites before running.
+
+Skill instructions and bounded visible text from the listed websites are sent to the configured model through the existing native host. Password, payment, marked-sensitive and editable field contents are excluded from source reads. Website addresses and saved instruction templates stay in the local skill library. Clarification answers are removed from session run state when the run ends. Stop prevents later steps; completed effects remain. Review pages or downloaded artifacts to confirm results.
 
 ```sh
 pnpm build:extension
-pnpm probe:popup --built        # assign the agent tab flow still works after the refactor
-pnpm verify:playback            # filtered + direct replay, input pause, suppression, detach guidance
-pnpm verify:playback --raw      # same checks against the unpacked source extension
+pnpm install:context-host --runtime-only  # update installed host; preserve credentials
+pnpm exec tsx scripts/verify-skills.ts   # isolated real-browser execution; model stub for reasoning checks
 ```
 
-Manual flow: start recording, interact with any HTTP/HTTPS page, then in the monitor's Agent playback section select the page and choose **Assign selected tab** (this attaches without reloading, so the recorded tab itself works as the target). Pick a mode and choose **Start replay**. The popup's **Create agent tab** / **Adopt active tab** flow still works as an alternative. Keep the monitor open during long runs: a suspended extension worker parks the run as interrupted, and **Resume replay** continues from the persisted step. Steps advance only after successful dispatch, so resuming after a crash may repeat the in-flight step.
+The separate Agent playback panel has been removed. Use skills for instruction-driven workflows.
 
 ## All open tabs and next-action predictions
 

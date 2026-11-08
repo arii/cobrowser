@@ -3,15 +3,12 @@ root.innerHTML = `<header><p>COBROWSER · LOCAL RECORDER</p><p><a href="skills.h
 <p>Records human interaction metadata on <strong id="record-origin">…</strong> with interaction events from the active tab and its browser window is focused.</p></header>
 <div class="controls"><button id="record-start">Start recording</button><button id="record-pause">Pause</button><button id="record-fixture">Open fixture</button><button id="record-export">Export JSON</button><button id="record-clear">Clear saved data</button></div>
 <p id="record-error" role="alert"></p><section class="stats"><div><strong id="record-count">0</strong><span>events saved locally</span></div><div><strong id="record-last">—</strong><span>last saved</span></div><div><strong>24 hours</strong><span>live window · latest 2,000 events</span></div></section>
-<p id="record-detail" role="status" aria-live="polite"></p><section id="replay-panel"><h2>Agent playback</h2><p>Replays saved events in the assigned agent tab through browser input. Select the page below and assign it first; typed values are supplied by you at each input pause.</p>
-<p id="replay-agent"></p><p id="replay-assign-row"><label>Page <select id="replay-tab"></select></label> <button id="replay-assign">Assign selected tab</button> <button id="replay-detach">Detach</button></p><div class="controls"><label>Mode <select id="replay-mode"><option value="filtered">Filtered · decided</option><option value="direct">Direct · literal</option></select></label><button id="replay-start">Start replay</button><button id="replay-pause">Pause replay</button><button id="replay-resume">Resume replay</button><button id="replay-cancel">Cancel replay</button></div>
-<p id="replay-status" role="status" aria-live="polite"></p><p id="replay-progress"></p><p id="replay-warnings"></p><div id="replay-need" hidden><p id="replay-need-text"></p><p id="replay-need-row"><input id="replay-input-text" maxlength="1000" placeholder="Value for the focused field"><button id="replay-send">Send input</button><button id="replay-skip">Skip input step</button></p></div><p id="replay-error" role="alert"></p></section><section id="brain-panel"><h2>Rolling context brain</h2><p id="brain-mode">Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.</p>
+<p id="record-detail" role="status" aria-live="polite"></p><section id="brain-panel"><h2>Rolling context brain</h2><p id="brain-mode">Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.</p>
 <h3 id="brain-intent">Waiting for evidence</h3><p id="brain-summary"></p><p id="brain-status"></p><p id="brain-phase" role="status" aria-live="polite"></p><p id="visual-status"></p><p id="brain-metrics"></p><p id="brain-error" role="alert"></p><h3>Likely next action · a guess</h3><p id="brain-next">Waiting for a prediction</p><p id="brain-next-detail"></p><details><summary>Context decisions and provider log</summary><pre id="brain-journal"></pre></details></section><section id="assumption-panel"><h2>Context assumptions over time</h2><p>About every 10 seconds while a web page is focused. These are revisable guesses based on visible evidence.</p><div id="assumption-timeline"></div></section><h2>Open tabs</h2><p id="tab-count"></p><table><thead><tr><th>Tab</th><th>Page</th><th>Origin</th><th>Read status / page content</th></tr></thead><tbody id="open-tabs"></tbody></table><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
 <table><thead><tr><th>Time</th><th>Interaction</th><th>Element</th><th>Input metadata</th><th>Origin / tab</th></tr></thead><tbody id="record-events"></tbody></table>
-<footer>Local Chrome extension storage in this browser profile. Typed values, page text and printable keys are excluded from event recording. Bounded control labels are saved to identify replay targets. Replay dispatches real browser input in the assigned tab only after you press Start replay; the agent's own replayed input is not recorded as human activity. Live brain mode sends masked active-tab screenshots to Snap and Gemini for visual summaries, and open-tab titles, headings, page excerpts, bounded before/after DOM snapshots and motion/context summaries to the context model. Raw screenshots stay in memory; derived summaries and assumptions are saved locally; the preview uses synthetic responses. Incognito and browser-internal pages are excluded, as is the agent's own debugger input. Predictions are guesses and never trigger actions. Browser restart pauses capture; the live window expires, while full local action history remains until Clear saved data. Exported files are yours to manage.</footer>`;
+<footer>Local Chrome extension storage in this browser profile. Typed values, page text and printable keys are excluded from event recording. Bounded control labels are saved to identify replay targets. Run workflows from the skills library with an instruction and the websites they need. Skill actions are excluded from human recordings. Live brain mode sends masked active-tab screenshots to Snap and Gemini for visual summaries, and open-tab titles, headings, page excerpts, bounded before/after DOM snapshots and motion/context summaries to the context model. Raw screenshots stay in memory; derived summaries and assumptions are saved locally; the preview uses synthetic responses. Incognito and browser-internal pages are excluded, as is the agent's own debugger input. Predictions are guesses and never trigger actions. Browser restart pauses capture; the live window expires, while full local action history remains until Clear saved data. Exported files are yours to manage.</footer>`;
 let state;
 let busy = false;
-let replayActionError = '';
 let renderedTabsKey='',renderedAssumptionsKey='';
 const el = id => document.getElementById(id);
 async function request(kind) {
@@ -22,7 +19,6 @@ async function request(kind) {
 function render(value) {
   state = value;
   renderBrain(value.brain);
-  renderReplay(value);
   el('recording-state').textContent = value.enabled ? 'Recording is on' : 'Recording is paused';
   el('recording-state').dataset.enabled = String(value.enabled);
   el('record-start').disabled = value.enabled || busy;
@@ -86,129 +82,6 @@ function renderBrain(brain) {
   el('brain-next-detail').textContent=next?`${next.kind} · confidence ${Math.round(next.confidence*100)}%${next.targetTabId!==null?` · target: ${target?.title||next.targetTabId}`:''} · based on ${next.evidenceIds.length} event(s)`:'No supported guess yet.';
   el('brain-journal').textContent=brain.journal.slice(-15).map(entry=>JSON.stringify(entry,null,2)).join('\n');
 }
-function replayErrorText(code) {
-  const hints = {
-    'no-assigned-tab':'No agent tab assigned. Select a page above and choose Assign selected tab.',
-    'scope-lost':'The assigned tab changed. Open the popup, choose Detach, then assign again.',
-    'empty-playback':'Nothing recorded yet. Interact with a page first, then start replay.',
-    'no-events-for-tab':'No recorded events for the assigned tab. Assign the page you recorded, or record first.',
-    'invalid-playback-event':'A saved event is malformed. Clear saved data and record again.',
-    'playback-event-limit':'Too many saved events to replay at once. Clear saved data and record a shorter session.',
-    'action-outside-viewport':'A replayed click falls outside the current viewport. Resize or scroll the agent tab into place, then Resume replay.',
-    'invalid-input-text':'Enter a value of 1 to 1000 characters.',
-    'agent-tab-origin-changed':'The agent tab moved to a different origin. Switch it back, then Send input again.',
-    'replay-already-running':'A replay is already active. Cancel or finish it first.',
-    'replay-not-running':'Replay is not running.',
-    'replay-not-paused':'Replay is not paused.',
-    'replay-not-active':'No active replay.',
-    'replay-not-waiting-for-input':'Replay is not waiting for input.',
-    'stop-existing-assignment-first':'An agent tab is already assigned. Detach first, then assign again.',
-    'unknown-tab':'That tab is gone. Pick another open page.',
-    'invalid-tab':'Pick an open page tab first.',
-    'adopt-requires-http-tab':'Assignment needs an ordinary http(s) page tab.',
-    'adopt-requires-non-incognito-tab':'Assignment is disabled for incognito tabs.',
-  };
-  return hints[code] ?? code;
-}
-function renderReplay(value) {
-  const replay = value.replay ?? { status:'idle' };
-  const agent = value.agentTab;
-  el('replay-agent').textContent = agent
-    ? `Agent tab: #${agent.tabId} · ${agent.origin ?? 'unknown origin'}${agent.title ? ` · ${agent.title}` : ''}`
-    : 'No agent tab assigned. Select the page to replay below and choose Assign selected tab.';
-  const active = ['running','paused','needs_user'].includes(replay.status);
-  const tabs = value.tabs ?? [];
-  const select = el('replay-tab');
-  const options = tabs.map(tab => ({ value: String(tab.tabId), label: `#${tab.tabId} ${tab.title || '(untitled)'} · ${tab.origin}` }));
-  const signature = JSON.stringify(options);
-  if (select.dataset.signature !== signature) {
-    select.dataset.signature = signature;
-    const previous = select.value;
-    select.replaceChildren(...options.map(option => { const node = document.createElement('option'); node.value = option.value; node.textContent = option.label; return node; }));
-    if (options.some(option => option.value === previous)) select.value = previous;
-    else {
-      const latest = value.events.at(-1);
-      select.value = (options.find(option => tabs.find(tab => String(tab.tabId) === option.value)?.origin === latest?.origin) ?? options[0])?.value ?? '';
-    }
-  }
-  el('replay-assign').disabled = busy || active || !select.value || Boolean(agent);
-  el('replay-detach').disabled = busy || active || !agent;
-  if (replay.mode) el('replay-mode').value = replay.mode;
-  el('replay-mode').disabled = active || busy;
-  el('replay-start').disabled = active || busy || value.events.length === 0;
-  el('replay-pause').disabled = replay.status !== 'running' || busy;
-  el('replay-resume').disabled = replay.status !== 'paused' || busy;
-  el('replay-cancel').disabled = !active || busy;
-  el('replay-status').textContent = {
-    idle: value.events.length ? `Ready: ${value.events.length} saved events.` : 'Nothing to replay yet.',
-    running: `Replaying (${replay.mode ?? 'filtered'})…`,
-    paused: replay.interrupted ? 'Interrupted (worker restarted). Press Resume replay.' : 'Paused.',
-    needs_user: 'Waiting on you.',
-    done: 'Replay finished.',
-    cancelled: replay.error === 'recording-session-changed' ? 'Replay cancelled: a new recording session started.'
-      : replay.error === 'recording-cleared' ? 'Replay cancelled: saved data was cleared.' : 'Replay cancelled.',
-    failed: 'Replay failed.',
-  }[replay.status] ?? replay.status;
-  el('replay-progress').textContent = replay.total
-    ? `Step ${Math.min(replay.stepIndex + 1, replay.total)} of ${replay.total} · ${replay.stats?.dispatched ?? 0} dispatched · ${replay.stats?.userInputs ?? 0} typed · ${replay.stats?.skipped ?? 0} skipped`
-    : '';
-  el('replay-warnings').textContent = (replay.warnings ?? []).join(' · ');
-  // A progressing run moots the last action error; done/failed/cancelled keep it until the next replay click.
-  if (replay.status === 'running') replayActionError = '';
-  el('replay-error').textContent = replay.status === 'failed' && replay.error ? replayErrorText(replay.error) : replayActionError;
-  const need = replay.status === 'needs_user' ? replay.need : null;
-  el('replay-need').hidden = !need;
-  if (need) {
-    el('replay-need-text').textContent = need.message;
-    const isInput = need.kind === 'input';
-    el('replay-input-text').hidden = !isInput;
-    el('replay-send').hidden = !isInput;
-    el('replay-skip').hidden = !isInput;
-  }
-}
-async function replayAction(kind, extra = {}) {
-  const result = await chrome.runtime.sendMessage({ kind, ...extra });
-  if (!result?.ok) throw new Error(replayErrorText(result?.error ?? 'Replay did not respond. Reload the extension.'));
-  return request('status');
-}
-for (const action of ['start','pause','resume','cancel']) el(`replay-${action}`).onclick = async () => {
-  busy = true;
-  replayActionError = '';
-  try { render(await replayAction(`replay:${action}`, action === 'start' ? { mode: el('replay-mode').value } : {})); }
-  catch (error) { replayActionError = error.message; if (state) renderReplay(state); }
-  finally { busy = false; if (state) renderReplay(state); }
-};
-el('replay-send').onclick = async () => {
-  busy = true;
-  replayActionError = '';
-  try {
-    const text = el('replay-input-text').value;
-    render(await replayAction('replay:input', { text }));
-    el('replay-input-text').value = '';
-  } catch (error) { replayActionError = error.message; if (state) renderReplay(state); }
-  finally { busy = false; if (state) renderReplay(state); }
-};
-el('replay-skip').onclick = async () => {
-  busy = true;
-  replayActionError = '';
-  try { render(await replayAction('replay:skip')); }
-  catch (error) { replayActionError = error.message; if (state) renderReplay(state); }
-  finally { busy = false; if (state) renderReplay(state); }
-};
-el('replay-assign').onclick = async () => {
-  busy = true;
-  replayActionError = '';
-  try { render(await replayAction('replay:assign', { tabId: Number(el('replay-tab').value) })); }
-  catch (error) { replayActionError = error.message; if (state) renderReplay(state); }
-  finally { busy = false; if (state) renderReplay(state); }
-};
-el('replay-detach').onclick = async () => {
-  busy = true;
-  replayActionError = '';
-  try { render(await replayAction('replay:detach')); }
-  catch (error) { replayActionError = error.message; if (state) renderReplay(state); }
-  finally { busy = false; if (state) renderReplay(state); }
-};
 for (const action of ['start','pause','clear']) el(`record-${action}`).onclick = async () => {
   busy = true;
   try { render(await request(action)); }

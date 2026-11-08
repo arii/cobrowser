@@ -2,7 +2,6 @@ import { retainAction, readAllActions, clearActions } from './action-history.js'
 import { validTarget } from './skill-learning.js';
 import { captureVisualContext, clearVisualEvidence } from './visual-context.js';
 import { nativeBrainLink } from './native-brain.js';
-import { cancelReplayForReset, getAgentTab, getReplaySnapshot } from './playback.js';
 const brainLink=nativeBrainLink();
 // Opt-in observation across HTTP(S) tabs, independent of execution assignment.
 // Independent of debugger/native probe execution.
@@ -25,7 +24,7 @@ async function read() {
   const saved = await chrome.storage.local.get([KEY,'contextBrain']);
   const state = saved[KEY] ?? empty();
   if(!state.historyGeneration)state.historyGeneration=crypto.randomUUID();
-  if (saved.contextBrain && Date.now()-Date.parse(saved.contextBrain.connectedAt)>TTL) await chrome.storage.local.remove('contextBrain');
+  if (saved.contextBrain && Date.now()-Date.parse(saved.contextBrain.connectedAt)>TTL) await chrome.storage.local.remove(['contextBrain','skillWebsiteStarts']);
   const cutoff = Date.now() - TTL;
   state.tabs=(state.tabs??[]).filter(tab=>Date.parse(tab.observedAt)>cutoff);
   state.events = state.events.filter(event => Date.parse(event.at) > cutoff);
@@ -72,7 +71,7 @@ async function snapshot() {
   const {contextBrain:storedBrain=null,brainConnection=null,brainActivity=null} = await chrome.storage.local.get(['contextBrain','brainConnection','brainActivity']);
   const contextBrain=storedBrain?.providers?.context?storedBrain:null;
   const brain=contextBrain && Date.now()-Date.parse(contextBrain.connectedAt)>120000?{...contextBrain,working:null,recent:[],pendingSwitches:0}:contextBrain;
-  return {...state, brain, brainConnection, brainActivity, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:'all open HTTP/HTTPS tabs', replay:await getReplaySnapshot(), agentTab:await getAgentTab()};
+  return {...state, brain, brainConnection, brainActivity, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:'all open HTTP/HTTPS tabs'};
 }
 async function archiveAction(event,generation){
   try{await retainAction(event,generation);}catch{
@@ -115,7 +114,7 @@ export function installRecorder() {
         if (!validEvent(message.event)) throw new Error('invalid-recording-event');
         if (!(await chrome.storage.session.get('recordingEnabled')).recordingEnabled) return;
         const {lastDispatch,skillRun} = await chrome.storage.session.get(['lastDispatch','skillRun']);
-        if(skillRun?.status==='running' && skillRun.tabId===sender.tab.id)return;
+        if(['running','needs_input'].includes(skillRun?.status) && skillRun.tabIds?.includes(sender.tab.id))return;
         const expected = webOrigin(sender.url);
         if (!expected) return;
         if (messageOrigin(sender.url) !== expected || messageOrigin(sender.tab?.url) !== expected) return;
@@ -128,6 +127,15 @@ export function installRecorder() {
           state.dropped+=removed.length;
         }
         const id=crypto.randomUUID();
+        if(['click','change'].includes(message.event.kind)){
+          const {skillWebsiteStarts={}}=await chrome.storage.local.get('skillWebsiteStarts');
+          const siteKey=`${state.sessionId}:${sender.tab.id}:${expected}`;
+          if(!skillWebsiteStarts[siteKey]){
+            const url=new URL(sender.url);url.search='';url.hash='';url.username='';url.password='';
+            skillWebsiteStarts[siteKey]=url.href;
+            await chrome.storage.local.set({skillWebsiteStarts:Object.fromEntries(Object.entries(skillWebsiteStarts).slice(-200))});
+          }
+        }
         state.events.push({id,sessionId:state.sessionId,at:new Date().toISOString(),
           origin:expected,tabId:sender.tab.id,provenance:'human',...message.event});
         await archiveAction(state.events.at(-1),state.historyGeneration);
@@ -144,7 +152,6 @@ export function installRecorder() {
         await refreshTabs(state,true);
         state.sessionId = crypto.randomUUID();
         state.startedAt = new Date().toISOString();
-        await cancelReplayForReset('recording-session-changed');
         await save(state);
         await chrome.storage.session.set({recordingEnabled:true,recordingError:null});
         await badge(true);
@@ -155,10 +162,9 @@ export function installRecorder() {
       } else if (message.kind === 'recording:clear') {
         clearVisualEvidence();
         await chrome.storage.session.set({recordingEnabled:false,recordingError:null});
-        await cancelReplayForReset('recording-cleared');
         await clearActions();
         await save(empty());
-        await chrome.storage.local.remove('contextBrain');
+        await chrome.storage.local.remove(['contextBrain','skillWebsiteStarts']);
         await badge(false);
       }
       return snapshot();

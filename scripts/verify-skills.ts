@@ -40,6 +40,7 @@ try{
     await source.getByRole('button',{name:'Preview report',exact:true}).click();
     await source.waitForTimeout(650);
   }
+  console.log('Observed demonstrations; checking skill activation.');
   const recording=await send('recording:status');
   assert.equal(JSON.stringify(recording.value.events).includes('Synthetic private input'),false);
   let listing=await send('skills:list');
@@ -48,7 +49,7 @@ try{
   assert.ok(candidate,JSON.stringify(listing.value.candidates));assert.equal(candidate.blockers.length,0);assert.equal(candidate.title,'Preview report');assert.equal(listing.value.skills.filter((item:any)=>!item.needsExamples).length,1);
   await popup.bringToFront();
   await popup.getByRole('button',{name:'Refresh examples'}).click();
-  await popup.locator('#skills-library details summary').click();
+  await popup.locator('#skills-library > article > details > summary').click();
   assert.equal(await popup.getByRole('button',{name:'Activate skill',exact:true}).isDisabled(),true);
   await popup.getByRole('button',{name:'Rename',exact:true}).click();
   await popup.locator('#skills-library').getByLabel('Skill name',{exact:true}).fill('Weekly report preview');
@@ -56,11 +57,13 @@ try{
   listing=await send('skills:list');assert.equal(listing.value.skills[0].title,'Weekly report preview');
   assert.equal((await send('skills:rename',{id:listing.value.skills[0].id,title:'   '})).ok,false);
   await popup.getByRole('checkbox').check();await popup.getByRole('button',{name:'Activate skill',exact:true}).click();
+  await popup.getByText('Optional input overrides',{exact:true}).click();
   await popup.getByPlaceholder('Value for this run').fill('Repeated through skill');
   listing=await send('skills:list');const skill=listing.value.skills[0];assert.equal(skill.active,true);
   await source.goto(origin);await source.bringToFront();
   // Invoke the toolbar control without making an extension test tab the active source.
   await popup.evaluate(()=>{(document.querySelector('[data-run]') as HTMLButtonElement).click();});
+  console.log('Starting first skill run.');
   let run:any;
   for(let i=0;i<100;i++){
     await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;
@@ -74,6 +77,7 @@ try{
   assert.equal(recordedAfter.some((event:any)=>event.tabId===run.tabId && ['click','change'].includes(event.kind)),false);
   await popup.bringToFront();await popup.getByRole('button',{name:'Refresh examples'}).click();
   await mkdir('.local/evidence',{recursive:true});await popup.locator('#skills').screenshot({path:'.local/evidence/skills.png'});
+  console.log('Initial skill execution passed.');
   // Missing controls stop before dispatch, without claiming success or retrying effects.
   await source.goto(origin);await source.getByRole('button',{name:'Open report',exact:true}).evaluate(node=>node.remove());await source.bringToFront();
   // A separate tab starts from the original page, so test missing target via a saved descriptor mutation in this isolated test profile.
@@ -107,11 +111,46 @@ try{
   assert.equal((await send('skills:cancel')).ok,true);
   for(let i=0;i<50;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(run?.finishedAt)break;}
   assert.equal(run.status,'cancelled');
+  console.log('Legacy execution checks passed; testing multiple websites.');
+  // Runs open configured sites even when the extension page is active. Resolve
+  // inputs from a second site, then continue another learned workflow there.
+  const sourceServer=createServer((_req,res)=>res.end(`<!doctype html><title>Source data</title><h1>Approved report data</h1><p>Team: Blue. Report title: Cross-site report.</p><label>Report title <input type="text"></label><button type="button" onclick="document.querySelector('output').textContent='Preview: '+document.querySelector('input').value">Preview report</button><output></output>`));
+  await new Promise<void>(resolve=>sourceServer.listen(0,'127.0.0.1',resolve));
+  const sourceOrigin=`http://127.0.0.1:${(sourceServer.address() as {port:number}).port}`;
+  try{
+    await popup.evaluate(async ({origin,id})=>{const chrome=(globalThis as any).chrome;const {skillLibrary}=await chrome.storage.local.get('skillLibrary');const original=skillLibrary.find((item:any)=>item.id===id);skillLibrary.push({...original,id:'source-skill',origin,sites:[{id:'main',url:origin+'/'}],steps:[{kind:'change',target:{tag:'INPUT',label:'Report title',type:'text'},parameter:'input_1'},{kind:'click',target:{tag:'BUTTON',label:'Preview report',type:'button'},parameter:null}]});await chrome.storage.local.set({skillLibrary});},{origin:sourceOrigin,id:skill.id});
+    const configured=await send('skills:configure',{id:skill.id,urls:[origin+'/'],instruction:'Use the source page to choose the team, then preview the report on both websites. Use the source report title on the second site.',appendSkillId:'source-skill'});
+    assert.equal(configured.ok,true,JSON.stringify(configured));
+    assert.equal(configured.value.skills.find((item:any)=>item.id===skill.id).active,false,'Changed workflows require review.');
+    assert.equal((await send('skills:activate',{id:skill.id,active:true,reviewed:true})).ok,true);
+    // Deterministic provider substitute: browser execution is real; no cloud calls.
+    await worker.evaluate(()=>{(globalThis as any).__skillInputs=[];(globalThis as any).chrome.runtime.sendNativeMessage=async (_host:string,message:any)=>{
+      (globalThis as any).__skillInputs.push(message);
+      if(!message.answers.length)return {v:1,kind:'skill-input-result',seq:message.seq,decision:{status:'needs_input',value:null,question:'Should the source report be used?',explanation:'Clarify source selection.',sourceSiteIds:[]}};
+      if(!message.pages.some((page:any)=>page.text.includes('Team: Blue. Report title: Cross-site report.')))throw new Error('Source page was not read.');
+      return {v:1,kind:'skill-input-result',seq:message.seq,decision:{status:'resolved',value:message.target.label==='Team'?'Blue':'Cross-site report',question:null,explanation:'Taken from the listed source report.',sourceSiteIds:message.pages.filter((page:any)=>page.text.includes('Team: Blue.')).map((page:any)=>page.siteId)}};
+    };});
+    await popup.bringToFront();assert.equal((await send('skills:run',{id:skill.id})).ok,true);
+    for(let i=0;i<100;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(run?.status==='needs_input'||run?.status==='failed')break;}
+    console.log('Multiple-site run status:',run?.status,run?.message);
+    assert.equal(run.status,'needs_input',JSON.stringify(run));assert.equal(run.completed,0,'No field is entered before clarification.');
+    assert.equal((await send('skills:answer',{runId:run.id,answer:'Yes, use the source report.'})).ok,true);
+    for(let i=0;i<150;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(!['running','needs_input'].includes(run?.status))break;}
+    assert.equal(run.status,'finished',JSON.stringify(run));assert.equal(run.completed,5);assert.equal(run.tabIds.length,2);assert.equal(run.decisions.length,2);assert.equal(run.answers,undefined);
+    const result=await worker.evaluate(`chrome.scripting.executeScript({target:{tabId:${Number(run.tabId)}},func:()=>document.querySelector('output')?.textContent})`);
+    assert.equal((result as any)[0].result,'Preview: Cross-site report');
+    const monitor=await context.newPage();await monitor.goto(`chrome-extension://${id}/recording.html`);assert.equal(await monitor.getByRole('heading',{name:'Agent playback',exact:true}).count(),0);
+    // Unavailable reasoning must fail before any input is dispatched.
+    await worker.evaluate(()=>{(globalThis as any).chrome.runtime.sendNativeMessage=async()=>{throw new Error('Provider offline');};});
+    assert.equal((await send('skills:run',{id:skill.id})).ok,true);
+    for(let i=0;i<100;i++){await popup.waitForTimeout(100);run=(await send('skills:list')).value.run;if(run?.status!=='running')break;}
+    assert.equal(run.status,'failed');assert.equal(run.completed,0);assert.match(run.message,/reasoning is unavailable/);
+  }finally{sourceServer.closeAllConnections();await new Promise<void>(resolve=>sourceServer.close(()=>resolve()));}
   // Deleting a learned skill suppresses automatic recreation from the same attempt.
   await send('skills:delete',{id:skill.id});
   listing=await send('skills:list');assert.equal(listing.value.candidates.length,0);
   assert.equal(listing.value.skills.some((item:any)=>item.id===skill.id),false);
   await mkdir('.local/evidence',{recursive:true});
-  await writeFile('.local/evidence/skills.json',JSON.stringify({mode:'synthetic isolated browser',exampleCount:candidate.exampleCount,steps:3,result:'Preview: Repeated through skill',missingTarget:'failed before dispatch',selectParameter:'Blue applied and checked',cancellation:'cancelled',renaming:'saved and blank rejected',emptySkills:'blocked',noOpResult:'failed',dismissal:'persisted',errors},null,2));
-  console.log('Skills verified: real demonstrations, privacy, toolbar save/review/activation, parameterized CDP replay, agent exclusion, missing-target failure, select parameters, cancellation, rename persistence, no-op rejection and dismissal.');
+  await writeFile('.local/evidence/skills.json',JSON.stringify({mode:'synthetic isolated browser',exampleCount:candidate.exampleCount,steps:3,result:'Preview: Repeated through skill',missingTarget:'failed before dispatch',selectParameter:'Blue applied and checked',cancellation:'cancelled',renaming:'saved and blank rejected',emptySkills:'blocked',noOpResult:'failed',dismissal:'persisted',multipleWebsites:'two configured sites opened and five steps completed',inputReasoning:'source-page values applied through real browser input; provider stub',clarification:'paused before input and continued after one answer',providerFailure:'failed before input',agentPlaybackPanel:'removed',errors},null,2));
+  console.log('Skills verified: real demonstrations, privacy, toolbar save/review/activation, parameterized CDP replay, agent exclusion, missing-target failure, select parameters, cancellation, rename persistence, no-op rejection dismissal, multiple websites, instruction-based inputs, clarification, provider failure and removed playback panel.');
 }finally{await context.close();await rm(profile,{recursive:true,force:true});await new Promise<void>(resolve=>server.close(()=>resolve()));}

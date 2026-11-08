@@ -1,5 +1,6 @@
 import { createServer } from 'node:http';
 import { pathToFileURL } from 'node:url';
+import { fixturePage } from './page.js';
 
 // Public synthetic fixture. Mutation is supervisor construction-time configuration,
 // never a page-accessible reset/admin endpoint.
@@ -31,16 +32,7 @@ export async function startFixture(wrongWeek = false, port = 0) {
     }
     if (url.pathname !== '/') { res.writeHead(404).end(); return; }
     res.writeHead(200, { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' });
-    res.end(`<!doctype html><html><head><title>Harness fixture phase0-agent-7f3a91</title>
-      <style>body{font:18px system-ui;margin:32px}input,button,select{font:inherit;margin:8px}#probe{position:absolute;left:32px;top:400px;width:300px;height:40px;box-sizing:border-box}</style></head>
-      <body><h1>Reporting fixture</h1><form action="/export">
-      <label>Team <select name="team"><option>red</option><option>blue</option></select></label><br>
-      <label>Start inclusive <input name="start" value="2026-10-26"></label><br>
-      <label>End exclusive <input name="end" value="2026-11-02"></label><br>
-      <button id="export">Export CSV</button></form><p id="status"></p>
-      <input id="probe" aria-label="CDP typing probe" placeholder="CDP typing probe">
-      <script>document.querySelector('form').addEventListener('submit',()=>document.querySelector('#status').textContent='Export successful');</script>
-      </body></html>`);
+    res.end(fixturePage);
   });
   await new Promise<void>(resolve => server.listen(port, '127.0.0.1', resolve));
   const address = server.address() as { port: number };

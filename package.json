@@ -10,6 +10,8 @@
     "typecheck": "tsc --noEmit && tsc -p apps/companion/tsconfig.renderer.json && tsc -p apps/extension/tsconfig.json",
     "test": "tsx --test tests/*.test.ts",
     "fixture": "tsx apps/fixture-site/server.ts",
+    "demo": "tsx scripts/demo.ts",
+    "verify:demo": "tsx scripts/demo.ts --headless",
     "verify:fixtures": "tsx scripts/verify-fixtures.ts",
     "probe:browser": "tsx scripts/probe-browser.ts",
     "probe:models": "tsx scripts/probe-models.ts",

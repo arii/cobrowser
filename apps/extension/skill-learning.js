@@ -1,3 +1,4 @@
+import { workflowSites } from './skill-workflow.js';
 // Conservative local discovery: complete examples with an observed visible result.
 export const QUALITY_VERSION=3;
 export const riskyAction=/\b(send|pay|purchase|buy|checkout|delete|remove|destroy|publish|transfer|unsubscribe|confirm order|sign out|log out)\b/i;
@@ -21,7 +22,8 @@ export function defaultSkillName(steps){
 }
 export function skillIssues(skill){
   const issues=[];
-  if(!Array.isArray(skill.steps) || !skill.steps.length || skill.steps.length>12)return ['This workflow has no complete, supported action sequence.'];
+  if(skill.sites){try{const sites=workflowSites(skill);if(skill.steps?.some(step=>!sites.some(site=>site.id===(step.siteId??'main'))))issues.push('A workflow step has no configured website.');}catch{issues.push('The website configuration is invalid.');}}
+  if(!Array.isArray(skill.steps) || !skill.steps.length || skill.steps.length>48)return ['This workflow has no complete, supported action sequence.'];
   for(const [index,step] of skill.steps.entries()){
     if(!validTarget(step?.target) || !['click','change'].includes(step.kind))issues.push(`Step ${index+1} has no supported, named action.`);
     if(step?.target && riskyAction.test(step.target.label))issues.push(`Step ${index+1} may have an irreversible effect.`);
