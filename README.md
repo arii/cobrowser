@@ -76,13 +76,27 @@ The monitor has a **Dataset recordings** toggle. Switch on **Use dataset recordi
 [dailySkills](dailySkills/README.md) (`cd dailySkills && pnpm install && pnpm convert psai --length 10 --merge`),
 which converts the PSAI and AgentNet computer-use datasets into this recorder's stored format. Loading validates every
 event with the recorder's own rule, pauses capture and sets the live recording aside; switching the toggle off, or
-pressing Start recording, restores it unchanged. Clear saved data discards both. Converted events carry no control
-labels yet, so they feed the monitor, the brain and the skills view but do not produce skill suggestions.
+pressing Start recording, restores it unchanged. Clear saved data discards both. Plain converted events carry no control
+labels; `pnpm convert label` adds them from the task's screen video with Meta's `muse-spark-1.3` plus SubQ Snap
+(`dailySkills/data/recordings/labeled/`). Dataset tasks are one-offs, so skill suggestions still need repeated workflows.
 
 ```sh
 pnpm build:extension
 pnpm verify:dataset        # real isolated browser: load, block live capture, reject a bad file, restore on toggle-off and Start
 pnpm verify:dataset --raw  # same checks against the source extension
+```
+
+## Mined skills and the intent agent
+
+[dailySkills/day-miner](dailySkills/README.md#day-miner-a-day-of-recording--proposed-skills-one-model-call) turns a
+day of recorder output into proposed skills with one Meta Llama / SubQ / Gemini call, grounded in recorded events.
+The skills page imports them inactive (**Import mined skills**); a mined skill declares an `outcome` block, which the
+gate accepts in place of a result-verb final click. Active skills gain **Run with intent agent**: the model picks the
+on-page control for each step's intent through the native host (`skill-step`), so renamed controls still replay.
+Reinstall the host after pulling: `pnpm install:context-host --runtime-only`.
+
+```sh
+pnpm verify:intent-agent   # isolated browser, renamed export button: literal pauses for help, intent finishes with a verified CSV
 ```
 
 ## All open tabs and next-action predictions

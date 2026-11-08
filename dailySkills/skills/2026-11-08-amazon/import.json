@@ -1,0 +1,63 @@
+[
+  {
+    "id": "c5c0c8a9-c446-4d9c-a2b9-c7fec1ee75df",
+    "title": "Open Amazon India storefront link",
+    "customTitle": true,
+    "origin": "https://www.amazon.com",
+    "sites": [
+      {
+        "id": "main",
+        "url": "https://www.amazon.com/"
+      }
+    ],
+    "steps": [
+      {
+        "kind": "click",
+        "siteId": "main",
+        "target": {
+          "tag": "A",
+          "label": "Shop online at Amazon India",
+          "type": ""
+        },
+        "parameter": null,
+        "intent": "Navigate to the Amazon India storefront."
+      }
+    ],
+    "outcome": {
+      "kind": "page-changed",
+      "description": "Page navigates to Amazon India storefront content."
+    },
+    "summary": "Follow the Shop online at Amazon India link to switch to the India storefront.",
+    "whenToUse": "Use when you need to switch from Amazon.com context to Amazon India shopping.",
+    "examples": [
+      {
+        "at": "2026-11-08T00:18:31.632Z",
+        "eventIds": [
+          "480dee4b-3004-4a36-943a-1b5b82e0f8ea"
+        ],
+        "effect": "content-changed"
+      }
+    ],
+    "evidenceIds": [
+      "480dee4b-3004-4a36-943a-1b5b82e0f8ea",
+      "35757f49-9f08-4476-97e8-bf3b6cc968ce"
+    ],
+    "exampleCount": 1,
+    "qualityVersion": 3,
+    "reusability": {
+      "reusable": true,
+      "confidence": 0.8,
+      "source": "model",
+      "reason": "Follow the Shop online at Amazon India link to switch to the India storefront."
+    },
+    "assessment": "Follow the Shop online at Amazon India link to switch to the India storefront.",
+    "generator": {
+      "provider": "llama",
+      "model": "muse-spark-1.3",
+      "promptVersion": "day-miner-v1"
+    },
+    "learnedBy": "day-miner",
+    "active": false,
+    "savedAt": "2026-11-08T00:53:24.872Z"
+  }
+]

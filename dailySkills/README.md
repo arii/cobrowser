@@ -31,7 +31,7 @@ Datasets:
 | `src/cli.ts` | `psai`, `agentnet`, `validate`, `label` commands. |
 | `src/label.ts`, `src/frames.ts`, `src/vision.ts`, `src/ocr.ts`, `src/env.ts` | Labeling pass: frame extraction with ffmpeg, Llama / SubQ Snap calls, tesseract fallback, `.env` loading. |
 | `data/recordings/` | Sample output: FoxNews, Squarespace and Amazon tasks from PSAI, five AgentNet tasks, and `*-merged.json` "day" files. |
-| `.env.example` | Keys for the labeling pass (Meta Llama API, SubQ). Copy to `.env`; `.env` is gitignored. Read by `pnpm convert label` only. |
+| `.env.example` | Keys for the labeling pass (Meta Model API from dev.meta.ai, SubQ). Copy to `.env`; `.env` is gitignored. Read by `pnpm convert label` only (then the repo root `.env` as fallback). |
 
 ## Run
 
@@ -135,9 +135,9 @@ the frame at the click's time with `ffmpeg` (event clock and video clock are ali
 
 | Provider (from `.env`) | Role | Status |
 |---|---|---|
-| `LLAMA_ENDPOINT` + `LLAMA_MODEL` + `LLAMA_API_KEY` | Vision LLM (Meta Llama 4 through any OpenAI-compatible endpoint): names the control (`tag`, `label`, `type`, confidence) from the full frame and a zoomed crop. | Request shape verified; api.llama.com answered 401 `invalid_api_key` with the key tried, so the live path is unexercised. Check the key with `curl https://api.llama.com/compat/v1/models -H "Authorization: Bearer $LLAMA_API_KEY"`, or point the endpoint at the provider that issued the key. |
+| `LLAMA_ENDPOINT` + `LLAMA_MODEL` + `LLAMA_API_KEY` | Vision LLM: Meta's Model API at `https://api.meta.ai/v1/chat/completions` with `muse-spark-1.3` (reads images, OpenAI-compatible, strict `response_format` JSON schema). Names the control (`tag`, `label`, `type`, confidence) from the full frame and a zoomed crop. Keys come from https://dev.meta.ai. | Works. On the FoxNews sample it returned "Our Locations", "Executive Leadership" and the small "View Bio" button at 92–96% confidence, about 3 s and ~2k tokens per click (300 reasoning tokens at `reasoning_effort: low`). The old `api.llama.com` host rejects these keys. |
 | `SUBQ_API_KEY` (Snap) | Classifies the control kind (button, link, text field, dropdown, text area, none) and whether the click is on something interactive. Cross-checks the LLM, or stands in for it. SubQ's chat model does not accept images. | Works. |
-| tesseract (local) | Reads the text on the click's row from a clean 2x crop when no vision LLM is available (`--provider none`). | Works, approximate: misses small buttons, and the mouse pointer sits on the clicked word. |
+| tesseract (local) | Reads the text on the click's row from a clean 2x crop when no vision LLM is available (`--provider none`), or when the LLM returns an empty label. | Works, approximate: misses small buttons, and the mouse pointer sits on the clicked word. Use Meta when you can. |
 
 SubQ Preview (chat completions) accepts only text and PDF/text files, not images, so it cannot label screenshots.
 Decision rules live in `decideTarget()` in `src/label.ts`: Snap can veto a non-control or override the LLM's tag
@@ -147,9 +147,67 @@ it when that click hit a field. Clicks that get no target stay as they were.
 
 AgentNet clicks are not labeled: its screenshots ship as 5 GB zip volumes, so there is no cheap way to fetch one frame.
 
-Labeled output still needs the same workflow repeated three times with an observed effect before `discoverSkills()`
-suggests anything; dataset tasks are mostly one-offs, so expect the labels to feed the monitor, the brain and manual
-inspection first.
+`data/recordings/labeled/` holds Meta-labeled versions of the sample "day" files; load those through the monitor's
+dataset toggle when you want targets present. Labeled output still needs the same workflow repeated three times with
+an observed effect before `discoverSkills()` suggests anything; dataset tasks are mostly one-offs, so expect the
+labels to feed the monitor, the brain and manual inspection first.
+
+## Day miner: a day of recording → proposed skills (one model call)
+
+`day-miner/` watches nothing itself. Give it a day of recorder output and it asks one model to find the tasks and
+propose skills, then materializes them into the contract in [day-miner/CONTRACT.md](day-miner/CONTRACT.md).
+
+```sh
+pnpm record-demo-day                                   # drives the fixture sites in the built extension, exports a labeled day
+pnpm mine data/recordings/demo-day.json                # -> skills/<day>/{index.json, import.json, <slug>/skill.json, <slug>/SKILL.md}
+pnpm mine data/recordings/demo-day.json --dry-run      # print the compressed day the model sees, no model call
+pnpm mine <export.json> --provider subq|gemini|llama   # default: llama if LLAMA_API_KEY is set, else subq, else gemini
+```
+
+How it works (`day-miner/`):
+
+- `compress.ts` drops pointer and scroll noise and renders one numbered line per click, change, key or submit:
+  time offset, tab, origin, tab title, control tag + label + type, effect. Typed values never existed in the
+  recording, so nothing beyond labels and titles reaches the model. A full day is tens of thousands of tokens, which
+  fits one Llama 4 or Gemini call.
+- `mine.ts` sends the whole day with a strict JSON schema: tasks (ref ranges + intent) and skills whose steps cite
+  event refs. Code, not the model, turns refs into steps, so every target comes from a recorded event. Each skill gets
+  an `outcome` block, per-step `intent`, and parameter descriptions. `skillIssues` from the extension runs on the
+  result; `import.json` holds only skills with no blockers.
+- `providers.ts` speaks the OpenAI-compatible chat API (Meta Llama API, any Llama host, SubQ Preview) and Gemini,
+  all with structured output. Keys come from `dailySkills/.env`.
+
+Unlabeled clicks (the dataset conversions) still cannot become steps; the miner reports them as blockers.
+
+## Importing and replaying mined skills
+
+The skills page now has **Import mined skills**. Pick `skills/<day>/import.json`; each skill lands inactive, passes
+the same gate as learned skills (the `outcome` block satisfies the result-action rule), and needs the review checkbox
+before activation.
+
+Every active skill has two run buttons:
+
+- **Run skill**: the existing literal replay. Each step must match its recorded control by exact tag, label and type; a missing control pauses the run for help (skill recovery).
+- **Run with intent agent**: for each step the extension reads the page's visible controls and text and asks the
+  model (via the native host, message kind `skill-step`) which control realizes the step's `intent` now, and what
+  value to enter. The model may also `skip` a step or declare the outcome `done`. Its choice must be one of the
+  controls on the page, pass the same safety rules, and go through the same `locate` + debugger dispatch. Renamed or
+  moved controls stop breaking the skill. After the last step the `outcome.check` (title/text) is verified on the
+  full page text.
+
+The host needs the new route: `pnpm install:context-host --runtime-only`. Providers: `CONTEXT_PROVIDER=gemini`
+(default), `subq`, or `llama` (`LLAMA_ENDPOINT`, `LLAMA_MODEL`, `LLAMA_API_KEY`).
+
+```sh
+pnpm build:extension
+pnpm verify:intent-agent   # real browser, export button renamed: import passes the gate, literal pauses for help at step 4, intent finishes 4/4 with a verified CSV
+```
+
+## Format harness (written, not yet run)
+
+`harness/` runs cases × skill formats × page mutations through the real playback agent and grades results with the
+CSV oracle (`pnpm harness`, from the repo root). It is scaffolding for comparing formats; the one-shot build above
+took priority and it has not been executed yet.
 
 ## Loading a recording into the extension
 

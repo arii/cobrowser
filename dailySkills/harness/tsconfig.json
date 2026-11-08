@@ -1,0 +1,4 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["./*.ts", "../../apps/fixture-site/*.ts", "../../services/verifier/oracle.ts"]
+}

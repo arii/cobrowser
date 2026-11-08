@@ -1,0 +1,97 @@
+{
+  "day": "2026-11-08",
+  "provider": "llama",
+  "model": "muse-spark-1.3",
+  "latencyMs": 50430,
+  "usage": {
+    "completion_tokens": 5925,
+    "prompt_tokens": 1857,
+    "total_tokens": 7782,
+    "completion_tokens_details": {
+      "reasoning_tokens": 5134
+    },
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "eventCount": 30,
+  "tasks": [
+    {
+      "title": "Browse hybrid noise-cancelling headphones on Amazon.com",
+      "intent": "Explore and filter headphone listings and view product details",
+      "firstRef": 1,
+      "lastRef": 9
+    },
+    {
+      "title": "Start product search from Amazon homepage",
+      "intent": "Begin searching for a product using the main search box",
+      "firstRef": 10,
+      "lastRef": 10
+    },
+    {
+      "title": "Find premium kitchen sink sorted by lowest price",
+      "intent": "Search for double-bowl kitchen sink, sort results low to high, and view product",
+      "firstRef": 11,
+      "lastRef": 21
+    },
+    {
+      "title": "Find Alienware Aurora R16 gaming desktop",
+      "intent": "Search for gaming desktop on Amazon India and view product details",
+      "firstRef": 22,
+      "lastRef": 30
+    }
+  ],
+  "skills": [
+    {
+      "id": "8912f008-5e08-46d5-a5ed-bf71857f9bcc",
+      "title": "Sort Amazon results by Price Low to High",
+      "steps": 2,
+      "sites": [
+        "https://www.amazon.com/"
+      ],
+      "outcome": "page-changed",
+      "confidence": 0.85,
+      "blockers": [
+        "Step 1 only focuses a field.",
+        "Complete one workflow with an observed result or form submission to learn this skill."
+      ]
+    },
+    {
+      "id": "c5c0c8a9-c446-4d9c-a2b9-c7fec1ee75df",
+      "title": "Open Amazon India storefront link",
+      "steps": 1,
+      "sites": [
+        "https://www.amazon.com/"
+      ],
+      "outcome": "page-changed",
+      "confidence": 0.8,
+      "blockers": []
+    },
+    {
+      "id": "a5fe088e-6192-4ccd-90de-822802be926e",
+      "title": "Filter Amazon results to 4 Stars & Up",
+      "steps": 1,
+      "sites": [
+        "https://www.amazon.com/"
+      ],
+      "outcome": "page-changed",
+      "confidence": 0.75,
+      "blockers": [
+        "Complete one workflow with an observed result or form submission to learn this skill."
+      ]
+    },
+    {
+      "id": "3d75b989-9598-4d1e-af7d-a2f762203dda",
+      "title": "Search for product on Amazon India",
+      "steps": 1,
+      "sites": [
+        "https://www.amazon.com/"
+      ],
+      "outcome": "navigation",
+      "confidence": 0.8,
+      "blockers": [
+        "Complete one workflow with an observed result or form submission to learn this skill."
+      ]
+    }
+  ]
+}

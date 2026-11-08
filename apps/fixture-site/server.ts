@@ -5,7 +5,8 @@ import { dispatchPage } from './dispatch.js';
 
 // Public synthetic fixture. Mutation is supervisor construction-time configuration,
 // never a page-accessible reset/admin endpoint.
-export async function startFixture(wrongWeek = false, port = 0) {
+/** `page` lets harnesses serve a deliberately mutated copy of the fixture (renamed controls, decoys) on the same export backend. */
+export async function startFixture(wrongWeek = false, port = 0, page: string = fixturePage) {
   const audit: { team: string; start: string; end: string }[] = [];
   const server = createServer((req, res) => {
     const url = new URL(req.url!, 'http://127.0.0.1');
@@ -37,7 +38,7 @@ export async function startFixture(wrongWeek = false, port = 0) {
     }
     if (url.pathname !== '/') { res.writeHead(404).end(); return; }
     res.writeHead(200, { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' });
-    res.end(fixturePage);
+    res.end(page);
   });
   await new Promise<void>(resolve => server.listen(port, '127.0.0.1', resolve));
   const address = server.address() as { port: number };
