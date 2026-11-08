@@ -1,14 +1,20 @@
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 import { assembleEach, assembleMerged, type StagedTask, type RecorderState } from './recorder-format.js';
 import { convertPsaiRow, fetchPsaiRows, matchesSite, PSAI_DEFAULTS } from './psai.js';
 import { AGENTNET_DEFAULTS, AGENTNET_FILES, convertAgentNetTask, isBrowserTask, loadAgentNetMeta, streamAgentNetTasks } from './agentnet.js';
 import { validateState } from './validate.js';
+import { labelState } from './label.js';
+import { loadEnv } from './env.js';
 
 const USAGE = `Usage:
   pnpm convert psai     [--offset N] [--length N] [--site amazon] [--scan-max N] [--all-categories] [common options]
   pnpm convert agentnet [--limit N] [--site amazon] [--file traj.jsonl | --remote win_mac|ubuntu] [--meta meta.jsonl] [--max-mb N] [common options]
   pnpm convert validate <file.json> [...]
+  pnpm convert label    <file.json> [...] [--provider auto|llama|none] [--no-snap] [--no-ocr] [--dry-run] [--limit-clicks N] [--out DIR] [--raw DIR]
+                        gives PSAI clicks a {tag,label,type} target from the video frame at click time (ffmpeg + vision model;
+                        Snap cross-check when SUBQ_API_KEY is set; with no vision LLM key, Snap classifies the control and
+                        tesseract OCR reads its text). Reads keys from dailySkills/.env. Output: <out>/<name>.labeled.json
 
 Common options:
   --out DIR            output directory (default data/recordings)
@@ -119,11 +125,30 @@ async function validate(files: string[]) {
   if (failed) process.exitCode = 1;
 }
 
+async function label(files: string[], flags: Record<string, string | boolean>) {
+  if (!files.length) throw new Error('label needs at least one recording file');
+  loadEnv();
+  const out = text(flags, 'out', 'data/recordings/labeled'); await mkdir(out, { recursive: true });
+  const provider = text(flags, 'provider', 'auto');
+  if (!['auto', 'llama', 'none'].includes(provider)) throw new Error('--provider must be auto, llama or none');
+  for (const file of files) {
+    const state = JSON.parse(await readFile(file, 'utf8')) as RecorderState;
+    console.log(`${file}: ${state.events.filter(event => event.kind === 'click').length} clicks`);
+    const result = await labelState(state, file, { provider: provider as 'auto' | 'llama' | 'none', snap: !flags['no-snap'], ocr: !flags['no-ocr'], dryRun: Boolean(flags['dry-run']), limitClicks: int(flags, 'limit-clicks', 1000), rawDir: text(flags, 'raw', 'data/raw'), log: line => console.log(line) });
+    const target = join(out, `${basename(file, '.json')}.labeled.json`);
+    await writeFile(target, JSON.stringify(result.state, null, 2));
+    const problems = validateState(result.state);
+    console.log(`  → ${target}: ${Object.entries(result.summary).map(([key, value]) => `${key}=${value}`).join(' ')}${problems.length ? `\n  PROBLEMS: ${problems.join('; ')}` : ''}`);
+    if (flags['dry-run']) console.log(`  frames written under ${text(flags, 'raw', 'data/raw')}/frames/${basename(file, '.json')}/`);
+  }
+}
+
 const { flags, positional } = parseArgs(process.argv.slice(2));
 const command = positional[0];
 try {
   if (command === 'psai') await psai(flags);
   else if (command === 'agentnet') await agentnet(flags);
   else if (command === 'validate') await validate(positional.slice(1));
+  else if (command === 'label') await label(positional.slice(1), flags);
   else { console.log(USAGE); process.exitCode = command ? 1 : 0; }
 } catch (error) { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; }

@@ -108,7 +108,8 @@ export function assembleEach(tasks: StagedTask[], options: AssembleOptions): Rec
     const sessionId = randomUUID();
     const base = options.rebase === 'keep' && task.originalStart ? Date.parse(task.originalStart) : now - 60_000 - task.durationMs;
     const events = place(task, sessionId, 1, base);
-    return { schemaVersion: 1, sessionId, startedAt: new Date(base).toISOString(), events, tabs: [tabFor(task, 1, true, base + task.durationMs)], tabCount: 1, dropped: 0, source: task.source };
+    return { schemaVersion: 1, sessionId, startedAt: new Date(base).toISOString(), events, tabs: [tabFor(task, 1, true, base + task.durationMs)], tabCount: 1, dropped: 0,
+      source: { ...task.source, tabId: 1, placedStartedAt: new Date(base).toISOString() } };
   });
 }
 
@@ -119,15 +120,16 @@ export function assembleMerged(tasks: StagedTask[], options: AssembleOptions): R
   const total = tasks.reduce((sum, task) => sum + task.durationMs, 0) + options.gapMs * Math.max(0, tasks.length - 1);
   let cursor = options.rebase === 'keep' && tasks[0]?.originalStart ? Date.parse(tasks[0].originalStart) : now - 60_000 - total;
   const startedAt = new Date(cursor).toISOString();
-  const events: RecorderEvent[] = []; const tabs: RecorderTab[] = [];
+  const events: RecorderEvent[] = []; const tabs: RecorderTab[] = []; const merged: Record<string, unknown>[] = [];
   tasks.forEach((task, index) => {
     const base = options.rebase === 'keep' && task.originalStart ? Date.parse(task.originalStart) : cursor;
     events.push(...place(task, sessionId, index + 1, base));
     tabs.push(tabFor(task, index + 1, index === tasks.length - 1, base + task.durationMs));
+    merged.push({ ...task.source, tabId: index + 1, placedStartedAt: new Date(base).toISOString() });
     cursor = base + task.durationMs + options.gapMs;
   });
   events.sort((a, b) => Date.parse(a.at) - Date.parse(b.at));
-  return { schemaVersion: 1, sessionId, startedAt, events, tabs, tabCount: tabs.length, dropped: 0, source: { merged: tasks.map(task => task.source) } };
+  return { schemaVersion: 1, sessionId, startedAt, events, tabs, tabCount: tabs.length, dropped: 0, source: { merged } };
 }
 
 /** Site name -> real origin, used when a task text does not spell out the URL. */

@@ -54,6 +54,21 @@ pnpm exec tsx scripts/verify-skills.ts   # isolated real-browser execution; mode
 
 The separate Agent playback panel has been removed. Use skills for instruction-driven workflows.
 
+## Test with public-dataset recordings instead of live capture
+
+The monitor has a **Dataset recordings** toggle. Switch on **Use dataset recording** and pick a JSON file produced by
+[dailySkills](dailySkills/README.md) (`cd dailySkills && pnpm install && pnpm convert psai --length 10 --merge`),
+which converts the PSAI and AgentNet computer-use datasets into this recorder's stored format. Loading validates every
+event with the recorder's own rule, pauses capture and sets the live recording aside; switching the toggle off, or
+pressing Start recording, restores it unchanged. Clear saved data discards both. Converted events carry no control
+labels yet, so they feed the monitor, the brain and the skills view but do not produce skill suggestions.
+
+```sh
+pnpm build:extension
+pnpm verify:dataset        # real isolated browser: load, block live capture, reject a bad file, restore on toggle-off and Start
+pnpm verify:dataset --raw  # same checks against the source extension
+```
+
 ## All open tabs and next-action predictions
 
 Observation now covers HTTP and HTTPS tabs in the browser where this extension is installed. The fixed localhost origin and execution-tab assignment no longer restrict passive observation. Incognito and browser-internal pages remain excluded. Rebuild/reload the extension at `chrome://extensions` and allow its HTTP/HTTPS site access when Chrome requests it. The standalone source extension and the WXT build both declare these permissions.

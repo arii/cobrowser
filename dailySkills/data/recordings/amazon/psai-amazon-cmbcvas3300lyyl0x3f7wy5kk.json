@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-  "startedAt": "2026-11-07T23:49:25.220Z",
+  "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+  "startedAt": "2026-11-08T00:21:34.572Z",
   "events": [
     {
-      "id": "a402f462-afbf-4b99-95ee-7f85480e51d9",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:49:34.068Z",
+      "id": "33642ee9-9686-4dae-b875-1fcd67179a9f",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:21:43.420Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -16,9 +16,9 @@
       "y": 0.004
     },
     {
-      "id": "00ac193e-0237-4bbc-aa33-90430c345a71",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:49:35.068Z",
+      "id": "4bba123b-a939-4660-956e-f85c673d047b",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:21:44.420Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -28,9 +28,9 @@
       "y": 0.3879
     },
     {
-      "id": "f888cad7-68ca-4ef0-8016-96c0989e9b56",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:49:35.428Z",
+      "id": "89e24466-901f-4e18-b45f-93b06a59d69b",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:21:44.780Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -41,9 +41,9 @@
       "effect": "content-changed"
     },
     {
-      "id": "eadbf1e6-c7c4-4429-924e-b78237464bbd",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:49:39.277Z",
+      "id": "33e8e258-7109-48da-834b-37d1b57fe07a",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:21:48.629Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -53,9 +53,9 @@
       "y": 0.4141
     },
     {
-      "id": "2bfabc24-05ce-4ee1-a96a-4b4b67e37e34",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:49:47.637Z",
+      "id": "64b2a94c-8d8a-4088-88e9-c3061b39c535",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:21:56.989Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -64,9 +64,9 @@
       "key": "Backspace"
     },
     {
-      "id": "e4caa95c-9c45-4d0c-b16b-9adc473f45fd",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:49:59.964Z",
+      "id": "b3af2d90-2483-4b4c-828b-c477c93cdec9",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:09.316Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -76,9 +76,9 @@
       "y": 0.0919
     },
     {
-      "id": "5bef871c-42b5-41c9-8bb5-06c44d54a95a",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:00.988Z",
+      "id": "2c912fb5-7e9d-4905-9fea-909cfe26a516",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:10.340Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -88,9 +88,9 @@
       "y": 0.5404
     },
     {
-      "id": "bf1a2191-7ae6-418e-98d4-8da4176fb736",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:01.573Z",
+      "id": "31973968-80c6-4916-a52e-cba1b402ad0f",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:10.925Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -98,9 +98,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "26687778-ec75-4c60-a1b6-400fdaec1536",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:02.932Z",
+      "id": "088272e0-edae-4bb4-baf1-cbf3792173b0",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:12.284Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -108,9 +108,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "49a55896-f764-4ddc-a744-31a093a5ff4d",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:03.793Z",
+      "id": "b1ab3c7c-86b5-42ca-989e-c83421a9f149",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:13.145Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -119,9 +119,9 @@
       "key": "ArrowDown"
     },
     {
-      "id": "32ff9213-a8b1-43ba-a518-f952104505c6",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:03.793Z",
+      "id": "baf2b319-62a9-4662-a315-aee10323b5be",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:13.145Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -130,9 +130,9 @@
       "key": "ArrowDown"
     },
     {
-      "id": "ddb6b15d-8ddd-47cf-b594-8d027b93f0ba",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:03.793Z",
+      "id": "4721a0d3-a62b-4d56-b70d-acf198ac6dcd",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:13.145Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -141,9 +141,9 @@
       "key": "ArrowDown"
     },
     {
-      "id": "03587464-229a-41d8-95aa-8f385fac7b55",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:03.793Z",
+      "id": "3e0af9b1-d888-4138-913e-75e15535d5ee",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:13.145Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -151,9 +151,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "b64f3f3d-2c4a-4be1-805f-57eafdcde8a8",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:03.793Z",
+      "id": "5fe6b5e1-548b-47d8-b0e5-2faad0cae11a",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:13.145Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -162,9 +162,9 @@
       "key": "Enter"
     },
     {
-      "id": "bf17a68d-d017-4034-b575-24252a564f9e",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:03.972Z",
+      "id": "5b34ddeb-c92d-430f-a8b8-8e05f9b2d65d",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:13.324Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -172,9 +172,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "00666a71-e01d-4bdb-acb5-67bba1d8e44a",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:05.964Z",
+      "id": "986d1607-0088-4959-99c6-552134a53290",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:15.316Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -182,9 +182,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "86b6ee5a-e58a-4abc-86ac-ade557658c5b",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:07.196Z",
+      "id": "a0cfcd54-aed4-4db4-ae4b-b0c266932608",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:16.548Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -192,9 +192,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "df950053-5a8c-4e59-9b3b-51baf939ac51",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:07.900Z",
+      "id": "eea70999-febf-4cfc-9af6-524857200f26",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:17.252Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -204,9 +204,9 @@
       "y": 0.5354
     },
     {
-      "id": "ec6a8af2-964e-45ec-a713-9a756d512d1b",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:08.901Z",
+      "id": "1dabfaf4-3f37-431b-9ea7-83b5a005e617",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:18.253Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -216,9 +216,9 @@
       "y": 0.1303
     },
     {
-      "id": "35445d37-c4e7-4e25-81e9-aa5848434e1e",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:09.908Z",
+      "id": "006c62b3-9ade-461c-81e2-dae1cb4795ac",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:19.260Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -228,9 +228,9 @@
       "y": 0.2111
     },
     {
-      "id": "a1780310-c91b-4ece-93eb-a9537b287389",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:10.116Z",
+      "id": "b89b2493-0cc3-4945-8474-970f8c16ab3f",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:19.468Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -240,9 +240,9 @@
       "y": 0.2172
     },
     {
-      "id": "20e795f8-0d83-4fb0-ae36-0eb327490451",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:11.606Z",
+      "id": "18a2a3b0-6382-45fd-80b2-58dec646d9e0",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:20.958Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -252,9 +252,9 @@
       "y": 0.2182
     },
     {
-      "id": "79d7185b-97d3-4982-a1ed-f0c84f812211",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:12.356Z",
+      "id": "994d71ac-cd0f-4e4c-baec-48d7193cee77",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:21.708Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -264,9 +264,9 @@
       "y": 0.2657
     },
     {
-      "id": "f6b779cf-dcf6-422f-91a9-68ebed47f372",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:12.756Z",
+      "id": "dc9595cd-cdc9-4f30-9983-6fb6d2a7d0d5",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:22.108Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -276,9 +276,9 @@
       "y": 0.2667
     },
     {
-      "id": "14f691d1-2d7b-4392-be14-46c01b3a721f",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:23.425Z",
+      "id": "72505406-05c0-4578-ba34-611897d5ff2c",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:32.777Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -286,9 +286,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "713bdb6d-32cf-4d49-bd47-421bc1c5445b",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:24.676Z",
+      "id": "27711c17-4bf5-472b-9caf-32c4e0e1c7e4",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:34.028Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -296,9 +296,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "bab6650b-1e2b-4eaf-9a7a-c0d3f1c9c420",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:27.392Z",
+      "id": "b5f9b5fd-b859-4036-a6c0-8263273585a2",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:36.744Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -306,9 +306,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "5d5e7c87-66cd-4245-abbf-96d6c7727103",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:28.023Z",
+      "id": "92a377b7-8679-4eff-976e-8490877a5df0",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:37.375Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -318,9 +318,9 @@
       "y": 0.5475
     },
     {
-      "id": "d367af6c-a38a-407f-b2a3-b7ade6a305e1",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:28.644Z",
+      "id": "21870ad3-3543-4371-b71f-08d5c3da0c46",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:37.996Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -328,9 +328,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "4b011021-e1df-4374-86a7-4425e1b38441",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:39.597Z",
+      "id": "05c5ffb3-f004-4ece-a115-33326c66c206",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:48.949Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -338,9 +338,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "dede3731-8608-4dc4-bb5a-2c0f6ceb45e6",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:41.348Z",
+      "id": "38cfb383-cb00-4ca8-b919-8f4051b6521a",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:50.700Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -348,9 +348,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "6d631b21-4e06-470c-b5d7-d0b6952e9e95",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:42.356Z",
+      "id": "0eeb63af-6ee8-403b-a832-03236c4c8ffd",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:51.708Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -358,9 +358,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "918473a3-c657-4fe1-a222-95f2f24e479b",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:43.373Z",
+      "id": "f61491f9-3a7b-4ad3-adfe-af3bee0db8d6",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:52.725Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -368,9 +368,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "ae683061-8be7-4c1a-9d2a-3bf8c9f408a9",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:44.924Z",
+      "id": "60ccfcc6-d6ba-4f4a-90ac-48e2b374835a",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:22:54.276Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -378,9 +378,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "c2548cec-e935-4d0f-ad55-955354a12c06",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:55.972Z",
+      "id": "d5ee539b-451d-4ed4-a4c9-7a70174f04b4",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:05.324Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -388,9 +388,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "97cc012a-f02d-496c-9236-2388a04952f1",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:50:57.156Z",
+      "id": "6f5d1c4a-437e-4a19-985d-2c846227b239",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:06.508Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -398,9 +398,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "beba9b3f-8916-418f-b78b-be16e8013305",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:51:01.695Z",
+      "id": "a68a9709-330c-4d37-ac14-de2a5baa6e6b",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:11.047Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -410,9 +410,9 @@
       "y": 0.5535
     },
     {
-      "id": "6b15402c-08e8-45d0-a21d-c40075d7c63f",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:51:02.637Z",
+      "id": "0a35a28f-ad64-4c02-bd02-44bbf0887f72",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:11.989Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -422,9 +422,9 @@
       "y": 0.6061
     },
     {
-      "id": "914ebb6b-f53e-48f1-8715-d483d7de5575",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:51:13.419Z",
+      "id": "54cc63af-4e33-4be0-aeee-493fc87d0aaa",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:22.771Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -434,9 +434,9 @@
       "y": 0.5505
     },
     {
-      "id": "da15cfbf-5c22-4332-a38c-e20bfbac7c9f",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:51:14.428Z",
+      "id": "20bc701d-ef8c-4ac5-99dc-becab698caf8",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:23.780Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -446,9 +446,9 @@
       "y": 0.8707
     },
     {
-      "id": "e0b25d3c-962d-44c8-87c3-610575b97622",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:51:15.429Z",
+      "id": "2c6564e5-7c00-4f93-a699-e29dd011528a",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:24.781Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -458,9 +458,9 @@
       "y": 0.3525
     },
     {
-      "id": "3c1e7505-2c98-46b9-ac39-4ba079c8e218",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:51:16.444Z",
+      "id": "3acc5deb-6de7-437c-9d0e-6f2e0fae5613",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:25.796Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -470,9 +470,9 @@
       "y": 0.2606
     },
     {
-      "id": "a7e440de-9c7b-4ef8-a9f4-b989904d4432",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:51:17.444Z",
+      "id": "926b8442-bf30-4a15-bd7a-f3fcb80da05f",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:26.796Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -482,9 +482,9 @@
       "y": 0.2576
     },
     {
-      "id": "6590ffef-96fe-45c4-be64-6285954c3588",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:51:18.444Z",
+      "id": "dae8b870-c005-4956-8015-37de3d42d548",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:27.796Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -494,9 +494,9 @@
       "y": 0.9566
     },
     {
-      "id": "87040166-5e17-4aa8-90a5-ab31391f45d8",
-      "sessionId": "72d1be7f-9f87-4ca9-b790-7500747f1a6f",
-      "at": "2026-11-07T23:51:19.277Z",
+      "id": "fcf93a7d-202e-4293-a8fb-353542aa782b",
+      "sessionId": "1137123f-a544-4497-9cea-906395298bcb",
+      "at": "2026-11-08T00:23:28.629Z",
       "origin": "https://www.amazon.com",
       "tabId": 1,
       "provenance": "human",
@@ -514,7 +514,7 @@
       "headings": [],
       "excerpt": "",
       "active": true,
-      "observedAt": "2026-11-07T23:51:23.308Z",
+      "observedAt": "2026-11-08T00:23:32.660Z",
       "readStatus": "unavailable"
     }
   ],
@@ -544,7 +544,13 @@
     },
     "screenshots": [],
     "reasoningSteps": [],
+    "timing": {
+      "firstEventTimestamp": 1130531.4112295,
+      "videoStartTimestamp": 1130531.4197425
+    },
     "videoFile": "videos/cmbcvas3300lyyl0x3f7wy5kk.mp4",
-    "domSnapsFile": "dom_snaps/cmbcvas3300lyyl0x3f7wy5kk.zip"
+    "domSnapsFile": "dom_snaps/cmbcvas3300lyyl0x3f7wy5kk.zip",
+    "tabId": 1,
+    "placedStartedAt": "2026-11-08T00:21:34.572Z"
   }
 }

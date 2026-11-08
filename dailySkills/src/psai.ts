@@ -52,7 +52,7 @@ const pageTitle = (title: string) => title.replace(BROWSER_TITLE_SUFFIX, '').tri
 const isAddressBarPage = (title: string) => /^(about:blank|new tab|untitled)$/i.test(pageTitle(title)) || title.trim() === '';
 
 export function convertPsaiRow(row: PsaiRow, options: PsaiConvertOptions = PSAI_DEFAULTS): StagedTask {
-  const metadata = JSON.parse(row.metadata) as { start_time?: string; screen_width?: number; screen_height?: number };
+  const metadata = JSON.parse(row.metadata) as { start_time?: string; screen_width?: number; screen_height?: number; obs_record_state_timings?: Record<string, number[]> };
   const raw = (JSON.parse(row.events) as RawEvent[]).filter(event => Number.isFinite(event.time_stamp)).sort((a, b) => a.time_stamp - b.time_stamp);
   const width = metadata.screen_width ?? 1920, height = metadata.screen_height ?? 1080, top = options.chromeTopPx;
   const t0 = raw[0]?.time_stamp ?? 0;
@@ -151,6 +151,8 @@ export function convertPsaiRow(row: PsaiRow, options: PsaiConvertOptions = PSAI_
       dataset: 'anaisleila/computer-use-data-psai', id: row.unique_data_id, taskId: row.taskId, task: row.task_name, site: row.application_website,
       category: row.category, subCategory: row.subCategory, tags: row.tags, difficulty: row.difficulty, originResolvedBy: resolvedBy,
       screen: { width, height, chromeTopPx: top }, screenshots: row.screenshots.map(shot => shot.src), reasoningSteps: row.reasoning_steps,
+      // Video starts when OBS reported output started; events use the same monotonic clock. Lets a labeler seek to a click.
+      timing: { firstEventTimestamp: t0, videoStartTimestamp: metadata.obs_record_state_timings?.OBS_WEBSOCKET_OUTPUT_STARTED?.[0] ?? t0 },
       videoFile: row.video_file, domSnapsFile: row.dom_snaps_file,
     },
   };
