@@ -319,7 +319,12 @@
       "kind": "click",
       "tag": "OTHER",
       "x": 0.5781,
-      "y": 0.1838
+      "y": 0.1838,
+      "target": {
+        "tag": "A",
+        "label": "Executive",
+        "type": ""
+      }
     },
     {
       "id": "17c21ddc-7a21-4de0-92b8-9d076bfd9105",
@@ -444,7 +449,12 @@
       "tag": "OTHER",
       "x": 0.6974,
       "y": 0.3717,
-      "effect": "content-changed"
+      "effect": "content-changed",
+      "target": {
+        "tag": "A",
+        "label": "suzanne Scott",
+        "type": ""
+      }
     },
     {
       "id": "a35a3363-8dfb-466f-a766-4f595a56ef04",
@@ -693,18 +703,19 @@
     "tabId": 1,
     "placedStartedAt": "2026-11-08T00:21:29.565Z",
     "labeling": {
-      "provider": "llama",
-      "model": "Llama-4-Maverick-17B-128E-Instruct-FP8",
+      "provider": "none",
+      "model": null,
       "snap": "subq-snap-1.1",
       "ocr": "tesseract",
-      "labeledAt": "2026-11-08T00:28:11.225Z",
+      "labeledAt": "2026-11-08T00:28:28.174Z",
       "summary": {
-        "clicks": 2,
-        "labeled": 1,
+        "clicks": 5,
+        "labeled": 3,
         "changesInherited": 0,
         "skippedTasks": 0,
         "no-ocr-text-at-click": 1,
-        "snap+ocr": 1
+        "snap+ocr": 3,
+        "snap-says-not-a-control": 1
       },
       "records": [
         {
@@ -718,14 +729,14 @@
           ],
           "decision": "no-ocr-text-at-click",
           "target": null,
-          "ocr": null,
           "snap": {
             "control": "button",
             "controlConfidence": 0.6089294910430908,
             "clickable": 0.7676069736480713,
             "model": "subq-snap-1.1",
             "latencyMs": 671
-          }
+          },
+          "ocr": null
         },
         {
           "eventId": "0532e528-6eca-4397-9f2c-65a645f6b754",
@@ -742,19 +753,108 @@
             "label": "Our",
             "type": ""
           },
-          "ocr": {
-            "label": "Our",
-            "confidence": 0.95944153,
-            "words": [
-              "Our"
-            ]
-          },
           "snap": {
             "control": "link",
             "controlConfidence": 0.8358541011810303,
             "clickable": 0.9122557044029236,
             "model": "subq-snap-1.1",
             "latencyMs": 799
+          },
+          "ocr": {
+            "label": "Our",
+            "confidence": 0.95944153,
+            "words": [
+              "Our"
+            ]
+          }
+        },
+        {
+          "eventId": "bc760908-0055-4b8e-a3ab-ebd489abfc59",
+          "tabId": 1,
+          "videoSeconds": 40.532,
+          "frames": [
+            "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-bc760908-full.jpg",
+            "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-bc760908-crop.jpg",
+            "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-bc760908-ocr.png"
+          ],
+          "decision": "snap-says-not-a-control",
+          "target": null,
+          "snap": {
+            "control": "none",
+            "controlConfidence": 0.7291423082351685,
+            "clickable": 0.09901343286037445,
+            "model": "subq-snap-1.1",
+            "latencyMs": 868
+          },
+          "ocr": {
+            "label": "New York (Headquarters)",
+            "confidence": 0.6748880063333333,
+            "words": [
+              "New",
+              "York",
+              "(Headquarters)"
+            ]
+          }
+        },
+        {
+          "eventId": "dfc3dbbd-5513-403d-aa88-0dee878151c6",
+          "tabId": 1,
+          "videoSeconds": 43.293,
+          "frames": [
+            "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-dfc3dbbd-full.jpg",
+            "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-dfc3dbbd-crop.jpg",
+            "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-dfc3dbbd-ocr.png"
+          ],
+          "decision": "snap+ocr",
+          "target": {
+            "tag": "A",
+            "label": "Executive",
+            "type": ""
+          },
+          "snap": {
+            "control": "link",
+            "controlConfidence": 0.7770550012588501,
+            "clickable": 0.8950726985931396,
+            "model": "subq-snap-1.1",
+            "latencyMs": 731
+          },
+          "ocr": {
+            "label": "Executive",
+            "confidence": 0.375238976,
+            "words": [
+              "Executive"
+            ]
+          }
+        },
+        {
+          "eventId": "638f55eb-e7c6-4009-b0ce-0e56dde4b967",
+          "tabId": 1,
+          "videoSeconds": 63.676,
+          "frames": [
+            "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-638f55eb-full.jpg",
+            "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-638f55eb-crop.jpg",
+            "data/raw/frames/psai-foxnews-cmcc8u6yc00v91p1yw2eruz95/cmcc8u6yc00v91p1yw2eruz95-638f55eb-ocr.png"
+          ],
+          "decision": "snap+ocr",
+          "target": {
+            "tag": "A",
+            "label": "suzanne Scott",
+            "type": ""
+          },
+          "snap": {
+            "control": "link",
+            "controlConfidence": 0.4039467811584473,
+            "clickable": 0.8996928334236145,
+            "model": "subq-snap-1.1",
+            "latencyMs": 475
+          },
+          "ocr": {
+            "label": "suzanne Scott",
+            "confidence": 0.8403679650000001,
+            "words": [
+              "suzanne",
+              "Scott"
+            ]
           }
         }
       ]
