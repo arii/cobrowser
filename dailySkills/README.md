@@ -152,6 +152,63 @@ dataset toggle when you want targets present. Labeled output still needs the sam
 an observed effect before `discoverSkills()` suggests anything; dataset tasks are mostly one-offs, so expect the
 labels to feed the monitor, the brain and manual inspection first.
 
+## Day miner: a day of recording → proposed skills (one model call)
+
+`day-miner/` watches nothing itself. Give it a day of recorder output and it asks one model to find the tasks and
+propose skills, then materializes them into the contract in [day-miner/CONTRACT.md](day-miner/CONTRACT.md).
+
+```sh
+pnpm record-demo-day                                   # drives the fixture sites in the built extension, exports a labeled day
+pnpm mine data/recordings/demo-day.json                # -> skills/<day>/{index.json, import.json, <slug>/skill.json, <slug>/SKILL.md}
+pnpm mine data/recordings/demo-day.json --dry-run      # print the compressed day the model sees, no model call
+pnpm mine <export.json> --provider subq|gemini|llama   # default: llama if LLAMA_API_KEY is set, else subq, else gemini
+```
+
+How it works (`day-miner/`):
+
+- `compress.ts` drops pointer and scroll noise and renders one numbered line per click, change, key or submit:
+  time offset, tab, origin, tab title, control tag + label + type, effect. Typed values never existed in the
+  recording, so nothing beyond labels and titles reaches the model. A full day is tens of thousands of tokens, which
+  fits one Llama 4 or Gemini call.
+- `mine.ts` sends the whole day with a strict JSON schema: tasks (ref ranges + intent) and skills whose steps cite
+  event refs. Code, not the model, turns refs into steps, so every target comes from a recorded event. Each skill gets
+  an `outcome` block, per-step `intent`, and parameter descriptions. `skillIssues` from the extension runs on the
+  result; `import.json` holds only skills with no blockers.
+- `providers.ts` speaks the OpenAI-compatible chat API (Meta Llama API, any Llama host, SubQ Preview) and Gemini,
+  all with structured output. Keys come from `dailySkills/.env`.
+
+Unlabeled clicks (the dataset conversions) still cannot become steps; the miner reports them as blockers.
+
+## Importing and replaying mined skills
+
+The skills page now has **Import mined skills**. Pick `skills/<day>/import.json`; each skill lands inactive, passes
+the same gate as learned skills (the `outcome` block satisfies the result-action rule), and needs the review checkbox
+before activation.
+
+Every active skill has two run buttons:
+
+- **Run skill**: the existing literal replay. Each step must match its recorded control by exact tag, label and type; a missing control pauses the run for help (skill recovery).
+- **Run with intent agent**: for each step the extension reads the page's visible controls and text and asks the
+  model (via the native host, message kind `skill-step`) which control realizes the step's `intent` now, and what
+  value to enter. The model may also `skip` a step or declare the outcome `done`. Its choice must be one of the
+  controls on the page, pass the same safety rules, and go through the same `locate` + debugger dispatch. Renamed or
+  moved controls stop breaking the skill. After the last step the `outcome.check` (title/text) is verified on the
+  full page text.
+
+The host needs the new route: `pnpm install:context-host --runtime-only`. Providers: `CONTEXT_PROVIDER=gemini`
+(default), `subq`, or `llama` (`LLAMA_ENDPOINT`, `LLAMA_MODEL`, `LLAMA_API_KEY`).
+
+```sh
+pnpm build:extension
+pnpm verify:intent-agent   # real browser, export button renamed: import passes the gate, literal pauses for help at step 4, intent finishes 4/4 with a verified CSV
+```
+
+## Format harness (written, not yet run)
+
+`harness/` runs cases × skill formats × page mutations through the real playback agent and grades results with the
+CSV oracle (`pnpm harness`, from the repo root). It is scaffolding for comparing formats; the one-shot build above
+took priority and it has not been executed yet.
+
 ## Loading a recording into the extension
 
 The recording monitor (`recording.html`) has a **Dataset recordings** panel with a toggle, **Use dataset recording**.

@@ -15,7 +15,7 @@ const quote=(value:string)=>`'${value.replaceAll("'","'\\''")}'`;
 const settings=parseEnv(await readFile(resolve('.env'),'utf8'));
 liveContextProviders({...process.env,...settings});
 const envPath=join(root,'config.env');
-const names=['HARNESS_CLOUD_ENABLED','SUBQ_API_KEY','GEMINI_API_KEY','GEMINI_MODEL','CONTEXT_PROVIDER'];
+const names=['HARNESS_CLOUD_ENABLED','SUBQ_API_KEY','GEMINI_API_KEY','GEMINI_MODEL','CONTEXT_PROVIDER','LLAMA_ENDPOINT','LLAMA_MODEL','LLAMA_API_KEY','LLAMA_SCHEMA'];
 await writeFile(envPath,names.filter(name=>settings[name]!==undefined).map(name=>`${name}=${JSON.stringify(settings[name])}`).join('\n')+'\n',{mode:0o600});await chmod(envPath,0o600);
 const launcher=join(root,'host');
 await writeFile(launcher,`#!/bin/sh\nexec ${quote(process.execPath)} --env-file=${quote(envPath)} ${quote(module)} "$@"\n`,{mode:0o700});await chmod(launcher,0o700);

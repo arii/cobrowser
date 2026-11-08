@@ -46,6 +46,8 @@
     "verify:skills": "tsx scripts/verify-skills.ts",
     "verify:skill-recovery": "tsx scripts/verify-skill-recovery.ts",
     "verify:dataset": "tsx scripts/verify-dataset.ts",
+    "harness": "tsx dailySkills/harness/run.ts",
+    "verify:intent-agent": "tsx scripts/verify-intent-agent.ts",
     "verify:report-skill": "tsx scripts/verify-report-skill.ts"
   },
   "devDependencies": {

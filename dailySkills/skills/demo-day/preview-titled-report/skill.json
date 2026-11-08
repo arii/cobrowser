@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "dayskill-1",
+  "id": "25d8c35e-dfd7-45db-9543-d9ca3f7d155c",
+  "title": "Preview titled report",
+  "summary": "Open report viewer, enter a report title, and generate a preview.",
+  "whenToUse": "Use when you need to create and preview a report with a custom title.",
+  "sites": [
+    {
+      "id": "main",
+      "url": "http://127.0.0.1:55439/"
+    }
+  ],
+  "steps": [
+    {
+      "kind": "click",
+      "siteId": "main",
+      "target": {
+        "label": "Open report",
+        "tag": "BUTTON",
+        "type": "button"
+      },
+      "intent": "Open the report viewer",
+      "evidence": [
+        "112e323b-e808-4a12-8fe1-4c17288fde64"
+      ]
+    },
+    {
+      "kind": "change",
+      "siteId": "main",
+      "target": {
+        "tag": "INPUT",
+        "label": "Report title",
+        "type": "text"
+      },
+      "intent": "Enter the title for the report",
+      "parameter": {
+        "name": "input_1",
+        "description": "Title text to display on the previewed report"
+      },
+      "evidence": [
+        "06d22dca-d154-438f-925f-3adc1800f4b6"
+      ]
+    },
+    {
+      "kind": "click",
+      "siteId": "main",
+      "target": {
+        "label": "Preview report",
+        "tag": "BUTTON",
+        "type": "button"
+      },
+      "intent": "Generate a preview of the titled report",
+      "evidence": [
+        "358e7e97-5577-44ca-83c9-9307dd825d18"
+      ]
+    }
+  ],
+  "outcome": {
+    "kind": "page-changed",
+    "description": "Report preview generated for the entered title"
+  },
+  "examples": [
+    {
+      "at": "2026-11-08T00:45:38.123Z",
+      "eventIds": [
+        "112e323b-e808-4a12-8fe1-4c17288fde64",
+        "06d22dca-d154-438f-925f-3adc1800f4b6",
+        "358e7e97-5577-44ca-83c9-9307dd825d18"
+      ],
+      "effect": "content-changed"
+    }
+  ],
+  "evidence": {
+    "sessionIds": [
+      "88c5e89a-1ca9-4f8f-ba4f-ce8b0473656f"
+    ],
+    "day": "2026-11-08",
+    "eventIds": [
+      "112e323b-e808-4a12-8fe1-4c17288fde64",
+      "06d22dca-d154-438f-925f-3adc1800f4b6",
+      "358e7e97-5577-44ca-83c9-9307dd825d18",
+      "7e257af9-b605-4aa8-b28f-cd9b77dbbae2",
+      "08f6a57b-3616-441d-84c0-7d1c71519170",
+      "8df71e71-f5af-4551-8fd3-b09030243f6c"
+    ]
+  },
+  "generator": {
+    "provider": "llama",
+    "model": "muse-spark-1.3",
+    "promptVersion": "day-miner-v1"
+  },
+  "confidence": 0.95,
+  "notes": "Performed identically twice in a row with same three controls.",
+  "blockers": []
+}

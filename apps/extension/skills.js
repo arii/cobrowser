@@ -2,7 +2,7 @@ import { skillHelpPrompt } from './skill-help.js';
 import { workflowSites, configureWorkflow } from './skill-workflow.js';
 import { readSkillPage } from './skill-page.js';
 import { readTaskActions } from './action-history.js';
-import { analyzeSkills, riskyAction, validTarget, skillIssues, defaultSkillName, skillGoalKey, outcomeAction, probeTarget, repairSkill } from './skill-learning.js';
+import { analyzeSkills, riskyAction, validTarget, skillIssues, defaultSkillName, skillGoalKey, outcomeAction, probeTarget, repairSkill, validOutcome } from './skill-learning.js';
 const KEY='skillLibrary';
 let queue=Promise.resolve();
 let executing=false;
@@ -206,6 +206,67 @@ async function resolveParameter(skill,step,index,tabs,sites,run){
   }
   throw new Error('The field remains ambiguous. Refine the instruction and source websites.');
 }
+async function awaitAnswer(run,question){
+  if(run.answers.length>=12)throw new Error('This instruction needs too many clarifications. Stop and refine the skill.');
+  run.status='needs_input';run.question=question;run.message='One detail is needed to continue.';await progress(run);
+  while(true){
+    await new Promise(resolve=>setTimeout(resolve,250));await assertRunning(run.id);
+    const {skillRun}=await chrome.storage.session.get('skillRun');
+    if(skillRun.status==='running'){run.answers=skillRun.answers;run.status='running';run.question=null;break;}
+  }
+}
+// Intent agent: the model chooses which visible control realizes the step's intent on the page as it is now.
+async function planStep(skill,step,index,tabId,site,run){
+  for(let attempt=0;attempt<4;attempt++){
+    await assertRunning(run.id);await checkSite(tabId,site);
+    const results=await chrome.scripting.executeScript({target:{tabId},func:readSkillPage});
+    const page=results[0]?.result;
+    if(!page || page.origin!==new URL(site.url).origin)throw new Error('The page could not be read for the intent agent.');
+    run.message=`Deciding how to “${step.intent||step.target?.label||'continue'}” on ${page.title||site.url}…`;await progress(run);
+    const message={v:1,kind:'skill-step',seq:index*10+attempt+1,instruction:run.instruction??'',at:new Date().toISOString(),timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
+      skill:{title:skill.title,summary:(skill.summary??skill.assessment??'').slice(0,400),outcome:validOutcome(skill.outcome)?{kind:skill.outcome.kind,description:skill.outcome.description}:null,step:index,total:skill.steps.length},
+      step:{kind:step.kind,intent:(step.intent??step.target?.label??'').slice(0,200),recordedTarget:validTarget(step.target)?step.target:null,parameterDescription:step.parameterDescription??null},
+      page:{siteId:site.id,origin:page.origin,title:page.title,text:page.text,controls:page.controls},answers:run.answers};
+    let response;
+    try{response=await chrome.runtime.sendNativeMessage('com.cobrowser.context',message);}catch(error){throw new Error(`Step reasoning is unavailable (${error?.message??chrome.runtime.lastError?.message??'no local host'}). Update the local host with pnpm install:context-host --runtime-only.`);}
+    await assertRunning(run.id);
+    if(response?.kind!=='skill-step-result' || response.seq!==message.seq)throw new Error(`Step reasoning failed: ${response?.code??'local host unavailable'}. No action dispatched.`);
+    const decision=response.decision;
+    if(!decision || !['act','skip','done','needs_input'].includes(decision.action) || typeof decision.explanation!=='string')throw new Error('Step reasoning returned an invalid decision.');
+    if(decision.action==='needs_input'){
+      if(typeof decision.question!=='string' || !decision.question.trim() || decision.question.length>500)throw new Error('Step reasoning returned an invalid question.');
+      await awaitAnswer(run,decision.question);continue;
+    }
+    if(decision.action!=='act')return decision;
+    const control=page.controls.find(item=>JSON.stringify(item.target)===JSON.stringify(decision.target));
+    if(!control || !validTarget(decision.target) || riskyAction.test(decision.target.label))throw new Error('Step reasoning chose a control that is not on the page or not allowed.');
+    const inputTag=['INPUT','SELECT','TEXTAREA'].includes(decision.target.tag);
+    if(step.kind==='click' && inputTag)throw new Error('Step reasoning chose a field for a click step.');
+    if(step.kind==='change' && (!inputTag || typeof decision.value!=='string' || decision.value.length>2000 || (decision.target.tag==='SELECT' && !control.options.includes(decision.value))))throw new Error('Step reasoning returned an unsupported value.');
+    run.decisions.push({step:index,label:decision.target.label,explanation:decision.explanation,sourceSiteIds:[site.id]});
+    return decision;
+  }
+  throw new Error('The step remains ambiguous. Refine the instruction.');
+}
+const limited=(value,max)=>typeof value==='string'?value.slice(0,max):undefined;
+// Skills proposed outside the extension (dailySkills/day-miner) arrive inactive and pass the same gate as learned ones.
+function sanitizeImport(raw){
+  if(!raw || typeof raw!=='object' || !Array.isArray(raw.steps) || !raw.steps.length || raw.steps.length>48)throw new Error('Each imported skill needs 1 to 48 steps.');
+  const steps=raw.steps.map((step,index)=>{
+    if(!step || !['click','change'].includes(step.kind))throw new Error(`Imported step ${index+1} is not a click or change.`);
+    const target=step.target && typeof step.target==='object'?{tag:step.target.tag,label:step.target.label,type:typeof step.target.type==='string'?step.target.type:''}:null;
+    const parameter=typeof step.parameter==='string' && /^input_\d+$/.test(step.parameter)?step.parameter:null;
+    return {kind:step.kind,target,parameter,siteId:limited(step.siteId,60)??'main',intent:limited(step.intent,200)??'',parameterDescription:limited(step.parameterDescription,300)??null};
+  });
+  const origin=typeof raw.origin==='string'?raw.origin:new URL(raw.sites?.[0]?.url??'https://unknown.invalid/').origin;
+  const sites=workflowSites({origin,sites:Array.isArray(raw.sites)?raw.sites:undefined});
+  const reusability=raw.reusability && typeof raw.reusability==='object'?{reusable:raw.reusability.reusable===true,confidence:Math.min(1,Math.max(0,Number(raw.reusability.confidence)||0)),source:raw.reusability.source==='model'?'model':'local',reason:limited(raw.reusability.reason,400)??''}:undefined;
+  const examples=(Array.isArray(raw.examples)?raw.examples:[]).slice(0,5).map(example=>({at:typeof example?.at==='string'?example.at:new Date().toISOString(),eventIds:(Array.isArray(example?.eventIds)?example.eventIds:[]).filter(id=>typeof id==='string').slice(0,200),effect:limited(example?.effect,40)??'unobserved'}));
+  return {id:crypto.randomUUID(),title:skillName(raw.title),customTitle:true,origin,sites,steps,outcome:validOutcome(raw.outcome)?{kind:raw.outcome.kind,description:raw.outcome.description.slice(0,300),...(raw.outcome.check && typeof raw.outcome.check==='object'?{check:{...(limited(raw.outcome.check.titleIncludes,120)?{titleIncludes:raw.outcome.check.titleIncludes.slice(0,120)}:{}),...(limited(raw.outcome.check.textIncludes,200)?{textIncludes:raw.outcome.check.textIncludes.slice(0,200)}:{})}}:{})}:undefined,
+    summary:limited(raw.summary,400)??'',whenToUse:limited(raw.whenToUse,400)??'',examples,evidenceIds:(Array.isArray(raw.evidenceIds)?raw.evidenceIds:[]).filter(id=>typeof id==='string').slice(0,500),exampleCount:examples.length,qualityVersion:3,
+    ...(reusability?{reusability}:{}),assessment:limited(raw.assessment,400)??limited(raw.summary,400)??'Imported skill.',generator:raw.generator && typeof raw.generator==='object'?{provider:limited(raw.generator.provider,80)??'',model:limited(raw.generator.model,120)??'',promptVersion:limited(raw.generator.promptVersion,80)??''}:undefined,
+    learnedBy:'day-miner',active:false,savedAt:new Date().toISOString()};
+}
 async function perform(skill,parameters,run,windowId){
   const attached=new Set(),tabs=new Map(),sites=workflowSites(skill);
   try{
@@ -222,24 +283,35 @@ async function perform(skill,parameters,run,windowId){
       const step=skill.steps[index],site=sites.find(item=>item.id===(step.siteId??'main'));
       if(!site)throw new Error('A step has no configured website.');
       const tabId=tabs.get(site.id);run.tabId=tabId;run.currentSite=site.url;await progress(run);
-      if(!validTarget(step.target) || probeTarget(step.target) || riskyAction.test(step.target.label) || !['click','change'].includes(step.kind))throw new Error('Unsupported skill step.');
+      if(!['click','change'].includes(step.kind) || (run.agent!=='intent' && (!validTarget(step.target) || probeTarget(step.target) || riskyAction.test(step.target.label))))throw new Error('Unsupported skill step.');
       const origin=new URL(site.url).origin;
-      let resolvedParameter=Object.hasOwn(parameters,step.parameter)?parameters[step.parameter]:undefined;
+      let resolvedParameter=Object.hasOwn(parameters,step.parameter??'')?parameters[step.parameter]:undefined;
+      let target=step.target,skipStep=false,stopEarly=false;
       const prepared=await withHelp(run,async()=>{
         await waitForPage(tabId,run);await checkSite(tabId,site);await chrome.tabs.update(tabId,{active:true});
         if(!attached.has(tabId)){await chrome.debugger.attach({tabId},'1.3');attached.add(tabId);}
         let parameter=null;
-        if(step.kind==='change'){
+        if(run.agent==='intent'){
+          // Intent agent: the model picks the on-page control for this step's intent; code still locates and dispatches it.
+          const decision=await planStep(skill,step,index,tabId,site,run);
+          if(decision.action==='skip'){skipStep=true;return {parameter:null,beforeResult:null,point:null,note:decision.explanation};}
+          if(decision.action==='done'){stopEarly=true;return {parameter:null,beforeResult:null,point:null,note:decision.explanation};}
+          target=decision.target;
+          if(step.kind==='change'){resolvedParameter??=decision.value;parameter=resolvedParameter;}
+        }else if(step.kind==='change'){
           resolvedParameter??=await resolveParameter(skill,step,index,tabs,sites,run);
           parameter=resolvedParameter;
-          if(typeof parameter!=='string' || parameter.length>2000)throw new Error('Invalid input value.');
         }
-        const beforeResult=outcomeAction(step)?await pageResult(tabId):null;
-        const results=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[step.target,parameter,origin]});
+        if(step.kind==='change' && (typeof parameter!=='string' || parameter.length>2000))throw new Error('Invalid input value.');
+        const isOutcomeStep=outcomeAction({...step,target}) || (validOutcome(skill.outcome) && index===skill.steps.length-1);
+        const beforeResult=isOutcomeStep?await pageResult(tabId):null;
+        const results=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[target,parameter,origin]});
         const point=results[0]?.result;
         if(!point)throw new Error(results[0]?.error?.message??'Target missing, ambiguous, covered, or unsupported. No action dispatched for this step.');
         return {parameter,beforeResult,point};
-      },`No action has been dispatched for this step. Fix the page or provide the missing detail for “${step.target.label}”, then continue.`);
+      },`No action has been dispatched for this step. Fix the page or provide the missing detail for “${step.target?.label??step.intent??'this step'}”, then continue.`);
+      if(skipStep){run.completed=index+1;run.message=`Skipped “${step.intent||step.target?.label||'step'}”: ${prepared.note}`;await progress(run);continue;}
+      if(stopEarly){run.message=`Outcome already reached: ${prepared.note}`;await progress(run);break;}
       const {parameter,beforeResult,point}=prepared;
       const command=async(method,params={})=>{await assertRunning(run.id);await checkSite(tabId,site);return chrome.debugger.sendCommand({tabId},method,params);};
       await assertRunning(run.id);await checkSite(tabId,site);
@@ -252,7 +324,7 @@ async function perform(skill,parameters,run,windowId){
       if(step.kind==='change'){
         if(point.tag==='SELECT'){
           await assertRunning(run.id);await checkSite(tabId,site);
-          const selected=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[step.target,parameter,origin,true]});
+          const selected=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[target,parameter,origin,true]});
           if(!selected[0]?.result)throw new Error('The requested option was not selected.');
         }else if(['INPUT','TEXTAREA'].includes(point.tag)){
           await command('Input.dispatchKeyEvent',{type:'keyDown',key:'a',code:'KeyA',modifiers:4,commands:['selectAll']});
@@ -260,8 +332,8 @@ async function perform(skill,parameters,run,windowId){
           if(parameter)await command('Input.insertText',{text:parameter});
           else {await command('Input.dispatchKeyEvent',{type:'keyDown',key:'Backspace'});await command('Input.dispatchKeyEvent',{type:'keyUp',key:'Backspace'});}
           await command('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab'});await command('Input.dispatchKeyEvent',{type:'keyUp',key:'Tab'});
-          const checked=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[step.target,parameter,origin,false,true]});
-          if(checked[0]?.result?.matches!==true)await withHelp(run,async()=>{const result=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[step.target,parameter,origin,false,true]});if(result[0]?.result?.matches!==true)throw new Error('The page did not retain the requested input.');},'The input was already dispatched. Correct the field on the page, then describe the fix. It will be checked without repeating the action.');
+          const checked=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[target,parameter,origin,false,true]});
+          if(checked[0]?.result?.matches!==true)await withHelp(run,async()=>{const result=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[target,parameter,origin,false,true]});if(result[0]?.result?.matches!==true)throw new Error('The page did not retain the requested input.');},'The input was already dispatched. Correct the field on the page, then describe the fix. It will be checked without repeating the action.');
         }else throw new Error('Unsupported input control.');
       }
       }catch(error){
@@ -270,12 +342,12 @@ async function perform(skill,parameters,run,windowId){
         await withHelp(run,async()=>{
           await checkSite(tabId,site);
           if(step.kind==='change'){
-            const checked=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[step.target,parameter,origin,false,true]});
+            const checked=await chrome.scripting.executeScript({target:{tabId},func:locate,args:[target,parameter,origin,false,true]});
             if(checked[0]?.result?.matches!==true)throw new Error('The field still does not match the requested input.');
           }
         },'Fix the page to match this step, then describe the change. No action will be repeated.');
       }
-      await assertRunning(run.id);run.completed=index+1;run.message=`Completed “${step.target.label}”.`;await progress(run);
+      await assertRunning(run.id);run.completed=index+1;run.message=`Completed “${target.label}”.`;await progress(run);
       await new Promise(resolve=>setTimeout(resolve,300));
       if(beforeResult!==null){
         await withHelp(run,async()=>{
@@ -288,7 +360,18 @@ async function perform(skill,parameters,run,windowId){
         },'The action was already dispatched and will not be repeated. Fix or finish the result on the page, then describe what changed.');
       }
     }
-    await assertRunning(run.id);run.status='finished';run.message='Workflow finished. Check the pages or downloaded artifacts to confirm the result.';
+    if(validOutcome(skill.outcome) && skill.outcome.check && run.tabId){
+      // Full visible text (not the 1,200-character monitor excerpt), re-read for up to 3 seconds while the page settles.
+      let met=false;
+      for(let attempt=0;attempt<12 && !met;attempt++){
+        const results=await chrome.scripting.executeScript({target:{tabId:run.tabId},func:readSkillPage}).catch(()=>null);
+        const page=results?.[0]?.result;
+        met=!!page && (!skill.outcome.check.titleIncludes || (page.title??'').includes(skill.outcome.check.titleIncludes)) && (!skill.outcome.check.textIncludes || (page.text??'').includes(skill.outcome.check.textIncludes));
+        if(!met)await new Promise(resolve=>setTimeout(resolve,250));
+      }
+      if(!met)throw new Error(`The outcome check was not met: expected ${JSON.stringify(skill.outcome.check)}.`);
+    }
+    await assertRunning(run.id);run.status='finished';run.message=`Workflow finished${skill.outcome?.description?` · ${skill.outcome.description}`:''}. Check the pages or downloaded artifacts to confirm the result.`;
   }catch(error){
     const {skillRun}=await chrome.storage.session.get('skillRun');
     run.status=skillRun?.status==='cancelled'?'cancelled':'failed';run.message=error.message;
@@ -348,6 +431,18 @@ export function installSkills(){
         if(['running','needs_input'].includes(skillRun?.status) && skillRun.skillId===skill.id)throw new Error('Stop this run before repairing its saved steps.');
         skills[skills.indexOf(skill)]=repairSkill(skill,message.removeSteps);
         await chrome.storage.local.set({[KEY]:skills});
+      }else if(message.kind==='skills:import'){
+        if(!Array.isArray(message.skills) || !message.skills.length || message.skills.length>30)throw new Error('Provide 1 to 30 skills to import.');
+        let added=0,skipped=0;
+        for(const raw of message.skills){
+          const skill=sanitizeImport(raw);
+          const goalKey=validTarget(skill.steps.at(-1)?.target)?skillGoalKey(skill.origin,skill.steps.at(-1).target):null;
+          if(goalKey && skills.some(item=>item.goalKey===goalKey)){skipped++;continue;}
+          if(skills.filter(item=>!item.needsExamples).length>=30)throw new Error('The local library is full. Delete a skill first.');
+          skills.push(skill);added++;
+        }
+        await chrome.storage.local.set({[KEY]:skills});
+        if(!added && skipped)throw new Error(`All ${skipped} skills were already in the library.`);
       }else if(message.kind==='skills:rename'){
         const skill=skills.find(item=>item.id===message.id);if(!skill)throw new Error('Skill not found.');
         skill.title=skillName(message.title);skill.customTitle=true;await chrome.storage.local.set({[KEY]:skills});
@@ -376,10 +471,11 @@ export function installSkills(){
         if(typeof parameters!=='object' || Array.isArray(parameters) || Object.values(parameters).some(value=>typeof value!=='string' || value.length>2000))throw new Error('Invalid input overrides.');
         const instruction=message.instruction??skill.instruction??'';
         if(typeof instruction!=='string' || instruction.length>4000)throw new Error('Keep the instruction under 4,000 characters.');
-        if(skill.steps.some(step=>step.parameter && !Object.hasOwn(parameters,step.parameter)) && !instruction.trim())throw new Error('Add an instruction describing what to do and where to get the input data.');
+        const agent=message.agent==='intent'?'intent':'literal';
+        if(agent==='literal' && skill.steps.some(step=>step.parameter && !Object.hasOwn(parameters,step.parameter)) && !instruction.trim())throw new Error('Add an instruction describing what to do and where to get the input data.');
         const window=await chrome.windows.getCurrent();
         if(window.incognito)throw new Error('Skills cannot run in an incognito window.');
-        const run={id:crypto.randomUUID(),skillId:skill.id,title:skill.title,status:'running',completed:0,total:skill.steps.length,startedAt:new Date().toISOString(),tabId:null,tabIds:[],instruction,answers:[],decisions:[]};
+        const run={id:crypto.randomUUID(),skillId:skill.id,title:skill.title,agent,status:'running',completed:0,total:skill.steps.length,startedAt:new Date().toISOString(),tabId:null,tabIds:[],instruction,answers:[],decisions:[]};
         await update(run);executing=true;void perform(skill,parameters,run,window.id);
       }else if(message.kind==='skills:answer'){
         const {skillRun}=await chrome.storage.session.get('skillRun');

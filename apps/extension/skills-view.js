@@ -3,7 +3,7 @@ import { workflowSites } from './skill-workflow.js';
 const root=document.getElementById('skills');
 root.innerHTML=`<style>
 #skills{font:14px system-ui;color:#172033;margin:0 0 18px}#skills h1{font-size:24px;margin:10px 0}#skills h2{font-size:17px;margin:18px 0 8px}#skills p{line-height:1.5}#skills .muted{color:#596579;font-size:12px}#skills article{border:1px solid #dce2ea;border-radius:10px;padding:12px;margin:10px 0;background:#fff}#skills summary{cursor:pointer;font-weight:600}#skills button{padding:7px 10px;margin:6px 6px 0 0;border:1px solid #cbd5e1;border-radius:6px;background:#f4f7fb;cursor:pointer}#skills button.primary{background:#244ce0;color:white;border-color:#244ce0}#skills button:disabled{opacity:.5;cursor:default}#skills label{display:block;margin:10px 0}#skills textarea,#skills select,#skills input[type=text]{display:block;box-sizing:border-box;width:100%;padding:8px;margin-top:4px;border:1px solid #cbd5e1;border-radius:5px}#skills .blocker,#skills-error{color:#a32a20}#skills ol{padding-left:22px}#skills li{padding:4px 0}#skills-run{background:#edf2ff;padding:10px;border-radius:8px}#skills-refresh{float:right}
-</style><button id="skills-refresh">Refresh examples</button><p class="muted">COBROWSER · SKILLS</p><h1>Repeat what works</h1><p>A useful completed attempt can become a skill immediately. Review it, activate it, then repeat it.</p><p id="skills-error" role="alert"></p><section><p id="learning-status" role="status"></p><button id="learning-toggle">Start learning</button></section><h2>Learning progress</h2><div id="learning-progress"></div><p id="task-history-info" class="muted"></p><div id="skills-run" role="status" aria-live="polite" hidden></div><h2>Your skills</h2><div id="skills-library"></div><h2>Suggested from your activity</h2><p class="muted">One completed attempt is enough when its actions and result support reuse. New skills are saved automatically and stay inactive until reviewed.</p><div id="skills-candidates"></div><details data-key="legacy-library"><summary id="skills-legacy-count">Earlier skills needing new examples</summary><div id="skills-legacy"></div></details><p class="muted">Give a run instruction and list the websites it needs. Skills open those pages and use the instruction and visible source data to choose inputs. A question appears only when a required detail is unclear. Listed page text and the instruction are sent to your configured model; recorded field values are never saved. Stop prevents further steps; completed effects remain. Saved skills remain until you delete them.</p>`;
+</style><button id="skills-refresh">Refresh examples</button><p class="muted">COBROWSER · SKILLS</p><label class="muted" style="float:right;clear:right;margin-top:6px">Import mined skills <input type="file" id="skills-import" accept="application/json,.json"></label><h1>Repeat what works</h1><p>A useful completed attempt can become a skill immediately. Review it, activate it, then repeat it.</p><p id="skills-error" role="alert"></p><section><p id="learning-status" role="status"></p><button id="learning-toggle">Start learning</button></section><h2>Learning progress</h2><div id="learning-progress"></div><p id="task-history-info" class="muted"></p><div id="skills-run" role="status" aria-live="polite" hidden></div><h2>Your skills</h2><div id="skills-library"></div><h2>Suggested from your activity</h2><p class="muted">One completed attempt is enough when its actions and result support reuse. New skills are saved automatically and stay inactive until reviewed.</p><div id="skills-candidates"></div><details data-key="legacy-library"><summary id="skills-legacy-count">Earlier skills needing new examples</summary><div id="skills-legacy"></div></details><p class="muted">Give a run instruction and list the websites it needs. Skills open those pages and use the instruction and visible source data to choose inputs. A question appears only when a required detail is unclear. Listed page text and the instruction are sent to your configured model; recorded field values are never saved. Stop prevents further steps; completed effects remain. Saved skills remain until you delete them.</p>`;
 const el=id=>document.getElementById(id);
 let busy=false,lastStructure='',latest;
 const nameDrafts=new Map(),workflowDrafts=new Map();
@@ -35,7 +35,9 @@ function card(skill,saved){
   if(skill.reusability)details.append(text('p',`${skill.reusability.source==='model'?'Model':'Local'} assessment · ${Math.round(skill.reusability.confidence*100)}% confidence · ${skill.reusability.reason}`,'muted'));
   if(skill.context)details.append(text('p',`Related task assumption: ${skill.context.intent} · ${Math.round(skill.context.confidence*100)}% confidence. ${skill.context.explanation} Task outcome is unverified.`,'muted'));
   const list=document.createElement('ol');
-  for(const step of (skill.steps??[]).filter(step=>step?.target?.label?.trim() && ['click','change'].includes(step.kind))){list.append(text('li',`${step.kind==='change'?'Enter input for':'Click'} “${step.target?.label??'unknown target'}”${step.parameter?' · chosen from your instruction and source pages':''}${step.siteId?' · '+(displaySites(skill).find(site=>site.id===step.siteId)?.url??'website missing'):''}`));}
+  for(const step of (skill.steps??[]).filter(step=>(step?.target?.label?.trim() || step?.intent) && ['click','change'].includes(step.kind))){list.append(text('li',`${step.kind==='change'?'Enter input for':'Click'} “${step.target?.label??'unlabeled control'}”${step.intent?` — ${step.intent}`:''}${step.parameter?' · chosen from your instruction and source pages':''}${step.siteId?' · '+(displaySites(skill).find(site=>site.id===step.siteId)?.url??'website missing'):''}`));}
+  if(skill.outcome)details.append(text('p',`Outcome: ${skill.outcome.kind} · ${skill.outcome.description}`,'muted'));
+  if(skill.learnedBy==='day-miner')details.append(text('p',`Proposed by the day miner${skill.generator?.model?` (${skill.generator.model})`:''} from a day of activity. ${skill.summary??''}`,'muted'));
   if(list.children.length)details.append(list);
   if(saved){
     if(skill.steps.some(step=>probeTarget(step.target)))details.append(button('Remove probe steps and review',()=>request('repair',{id:skill.id})));
@@ -79,6 +81,8 @@ function card(skill,saved){
       details.append(text('p','Run opens the listed websites in this browser window. Use your instruction to specify what to do and which source data to use.','muted'));
       const runButton=button('Run skill',()=>request('run',{id:skill.id,instruction:instruction.value,parameters:Object.fromEntries(Object.entries(inputs).filter(([_name,input])=>input.value.trim()).map(([name,input])=>[name,input.value]))}),true);
       runButton.dataset.run='true';runButton.dataset.requiresInput=String(Object.keys(inputs).length>0);runButton.disabled=latest?.run?.status==='running';details.append(runButton);
+      const intentButton=button('Run with intent agent',()=>request('run',{id:skill.id,instruction:instruction.value,agent:'intent',parameters:Object.fromEntries(Object.entries(inputs).filter(([_name,input])=>input.value.trim()).map(([name,input])=>[name,input.value]))}));
+      intentButton.dataset.run='true';intentButton.dataset.requiresInput='false';intentButton.title='The model picks the control that matches each step\'s intent on the current page, so renamed or moved controls still work.';details.append(intentButton);
       details.append(button('Deactivate',()=>request('activate',{id:skill.id,active:false})));
     }
     details.append(button('Delete skill',()=>request('delete',{id:skill.id})));
@@ -97,7 +101,7 @@ function render(value){
   if(newRunKey!==runViewKey){
     runViewKey=newRunKey;run.replaceChildren();
     if(value.run){
-      run.append(text('strong',`${value.run.title} · ${value.run.status}`),text('p','','run-progress'));
+      run.append(text('strong',`${value.run.title} · ${value.run.status}${value.run.agent==='intent'?' · intent agent':''}`),text('p','','run-progress'));
       if(value.run.tabId)run.append(button('View run tab',async()=>{await chrome.tabs.update(value.run.tabId,{active:true});return latest;}));
       if(value.run.status==='needs_input'){
         const label=text('label',value.run.question),answer=document.createElement('textarea');answer.rows=3;answer.maxLength=2000;label.append(answer);run.append(label);
@@ -139,6 +143,14 @@ el('learning-toggle').onclick=()=>void act(async()=>{
   return request('list');
 });
 el('skills-refresh').onclick=()=>void act(()=>request('list'));
+el('skills-import').onchange=()=>void act(async()=>{
+  const file=el('skills-import').files?.[0];el('skills-import').value='';
+  if(!file)return latest;
+  let parsed;try{parsed=JSON.parse(await file.text());}catch{throw new Error('That file is not valid JSON.');}
+  const skills=Array.isArray(parsed)?parsed:Array.isArray(parsed?.skills)?parsed.skills:null;
+  if(!skills)throw new Error('Expected an array of skills (import.json from the day miner).');
+  return request('import',{skills});
+});
 if(location.protocol==='chrome-extension:' && globalThis.chrome?.runtime?.id){
   void act(()=>request('list'));
   setInterval(()=>{if(!busy)void request('list').then(render).catch(error=>{el('skills-error').textContent=error.message;});},2000);

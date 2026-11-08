@@ -16,6 +16,10 @@ export const outcomeAction=step=>step?.kind==='click' && validTarget(step.target
   && ['BUTTON','A'].includes(step.target.tag)
   && /^(export|download|preview|search|filter|apply filters?|show results?|generate|calculate|run report)\b/i.test(step.target.label.trim())
   && !riskyAction.test(step.target.label);
+export const OUTCOME_KINDS=['page-changed','navigation','form-submitted','download'];
+// A mined skill may declare its observable end state instead of ending on a result-verb click.
+export const validOutcome=outcome=>!!outcome && typeof outcome==='object' && OUTCOME_KINDS.includes(outcome.kind)
+  && typeof outcome.description==='string' && outcome.description.trim().length>0 && outcome.description.length<=300;
 export function defaultSkillName(steps){
   const label=steps?.at(-1)?.target?.label?.replace(/\s+/g,' ').trim();
   if(!label)return 'Workflow needs new examples';
@@ -34,7 +38,7 @@ export function skillIssues(skill){
     if(step?.kind==='click' && !['BUTTON','A'].includes(step.target?.tag))issues.push(`Step ${index+1} only focuses a field.`);
     if(step?.target?.type==='submit' && !/\b(export|download|search|filter)\b/i.test(step.target.label))issues.push(`Step ${index+1} has an unsupported form submission.`);
   }
-  if(!outcomeAction(skill.steps.at(-1)))issues.push('This workflow does not end with a supported result action.');
+  if(!outcomeAction(skill.steps.at(-1)) && !validOutcome(skill.outcome))issues.push('This workflow does not end with a supported result action.');
   if(![2,QUALITY_VERSION].includes(skill.qualityVersion) || !Array.isArray(skill.examples) || !skill.examples.some(example=>['content-changed','form-submitted'].includes(example.effect)))issues.push('Complete one workflow with an observed result or form submission to learn this skill.');
   return [...new Set(issues)];
 }

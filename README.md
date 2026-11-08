@@ -70,6 +70,19 @@ pnpm verify:dataset        # real isolated browser: load, block live capture, re
 pnpm verify:dataset --raw  # same checks against the source extension
 ```
 
+## Mined skills and the intent agent
+
+[dailySkills/day-miner](dailySkills/README.md#day-miner-a-day-of-recording--proposed-skills-one-model-call) turns a
+day of recorder output into proposed skills with one Meta Llama / SubQ / Gemini call, grounded in recorded events.
+The skills page imports them inactive (**Import mined skills**); a mined skill declares an `outcome` block, which the
+gate accepts in place of a result-verb final click. Active skills gain **Run with intent agent**: the model picks the
+on-page control for each step's intent through the native host (`skill-step`), so renamed controls still replay.
+Reinstall the host after pulling: `pnpm install:context-host --runtime-only`.
+
+```sh
+pnpm verify:intent-agent   # isolated browser, renamed export button: literal pauses for help, intent finishes with a verified CSV
+```
+
 ## All open tabs and next-action predictions
 
 Observation now covers HTTP and HTTPS tabs in the browser where this extension is installed. The fixed localhost origin and execution-tab assignment no longer restrict passive observation. Incognito and browser-internal pages remain excluded. Rebuild/reload the extension at `chrome://extensions` and allow its HTTP/HTTPS site access when Chrome requests it. The standalone source extension and the WXT build both declare these permissions.
