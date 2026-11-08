@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "dayskill-1",
+  "id": "8912f008-5e08-46d5-a5ed-bf71857f9bcc",
+  "title": "Sort Amazon results by Price Low to High",
+  "summary": "Change result ordering from Featured to Price Low to High to compare cheapest options first.",
+  "whenToUse": "Use when browsing Amazon search results and you want cheapest items first.",
+  "sites": [
+    {
+      "id": "main",
+      "url": "https://www.amazon.com/"
+    }
+  ],
+  "steps": [
+    {
+      "kind": "click",
+      "siteId": "main",
+      "target": {
+        "tag": "SELECT",
+        "label": "Sort by: Featured",
+        "type": ""
+      },
+      "intent": "Open the sort order menu to choose how results are ordered.",
+      "evidence": [
+        "1af4ebc3-08bb-406d-8bf4-d51b0d03bf6a"
+      ]
+    },
+    {
+      "kind": "click",
+      "siteId": "main",
+      "target": {
+        "tag": "BUTTON",
+        "label": "Price: Low to High",
+        "type": ""
+      },
+      "intent": "Select Price Low to High ordering for results.",
+      "evidence": [
+        "842173ee-4840-49ba-9680-a258cb1cca00"
+      ]
+    }
+  ],
+  "outcome": {
+    "kind": "page-changed",
+    "description": "Search results reorder to show lowest-priced items first."
+  },
+  "examples": [
+    {
+      "at": "2026-11-08T00:19:06.320Z",
+      "eventIds": [
+        "1af4ebc3-08bb-406d-8bf4-d51b0d03bf6a",
+        "842173ee-4840-49ba-9680-a258cb1cca00"
+      ],
+      "effect": "unobserved"
+    }
+  ],
+  "evidence": {
+    "sessionIds": [
+      "434f6570-abca-4b76-9f3a-21e35027d6fd"
+    ],
+    "day": "2026-11-08",
+    "eventIds": [
+      "1af4ebc3-08bb-406d-8bf4-d51b0d03bf6a",
+      "842173ee-4840-49ba-9680-a258cb1cca00"
+    ]
+  },
+  "generator": {
+    "provider": "llama",
+    "model": "muse-spark-1.3",
+    "promptVersion": "day-miner-v1"
+  },
+  "confidence": 0.85,
+  "notes": "Two-click sort workflow; stable across Amazon search pages.",
+  "blockers": [
+    "Step 1 only focuses a field.",
+    "Complete one workflow with an observed result or form submission to learn this skill."
+  ]
+}

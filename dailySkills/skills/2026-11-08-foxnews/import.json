@@ -1,0 +1,135 @@
+[
+  {
+    "id": "2b6c595e-f42c-451e-8800-af97ee27e034",
+    "title": "View executive leadership bio",
+    "customTitle": true,
+    "origin": "https://www.foxnews.com",
+    "sites": [
+      {
+        "id": "main",
+        "url": "https://www.foxnews.com/"
+      }
+    ],
+    "steps": [
+      {
+        "kind": "click",
+        "siteId": "main",
+        "target": {
+          "tag": "A",
+          "label": "Executive Leadership",
+          "type": ""
+        },
+        "parameter": null,
+        "intent": "Open the Executive Leadership section to list leaders"
+      },
+      {
+        "kind": "click",
+        "siteId": "main",
+        "target": {
+          "tag": "BUTTON",
+          "label": "View Bio",
+          "type": ""
+        },
+        "parameter": null,
+        "intent": "Open a leader's detailed biography"
+      }
+    ],
+    "outcome": {
+      "kind": "page-changed",
+      "description": "Executive biography details displayed in place"
+    },
+    "summary": "Open Executive Leadership list then open a View Bio to show details.",
+    "whenToUse": "Use when asked to find Fox News corporate leaders and read an executive biography.",
+    "examples": [
+      {
+        "at": "2026-11-08T00:06:57.884Z",
+        "eventIds": [
+          "4c84e7f8-8710-4b3c-81ff-8e02387d27ac",
+          "098b9bcb-f547-4d65-bc67-f44591ca68bf"
+        ],
+        "effect": "content-changed"
+      }
+    ],
+    "evidenceIds": [
+      "4c84e7f8-8710-4b3c-81ff-8e02387d27ac",
+      "098b9bcb-f547-4d65-bc67-f44591ca68bf"
+    ],
+    "exampleCount": 1,
+    "qualityVersion": 3,
+    "reusability": {
+      "reusable": true,
+      "confidence": 0.72,
+      "source": "model",
+      "reason": "Open Executive Leadership list then open a View Bio to show details."
+    },
+    "assessment": "Open Executive Leadership list then open a View Bio to show details.",
+    "generator": {
+      "provider": "llama",
+      "model": "muse-spark-1.3",
+      "promptVersion": "day-miner-v1"
+    },
+    "learnedBy": "day-miner",
+    "active": false,
+    "savedAt": "2026-11-08T00:57:00.142Z"
+  },
+  {
+    "id": "b19f6832-9dd1-465b-a51f-d6462ecaac40",
+    "title": "Open Squarespace template gallery",
+    "customTitle": true,
+    "origin": "https://www.squarespace.com",
+    "sites": [
+      {
+        "id": "main",
+        "url": "https://www.squarespace.com/"
+      }
+    ],
+    "steps": [
+      {
+        "kind": "click",
+        "siteId": "main",
+        "target": {
+          "tag": "A",
+          "label": "Choose a template",
+          "type": ""
+        },
+        "parameter": null,
+        "intent": "Start browsing by opening the template chooser"
+      }
+    ],
+    "outcome": {
+      "kind": "page-changed",
+      "description": "Template gallery content displayed"
+    },
+    "summary": "Click Choose a template to open the template browsing gallery.",
+    "whenToUse": "Use when asked to browse or choose a Squarespace website template.",
+    "examples": [
+      {
+        "at": "2026-11-08T00:21:41.284Z",
+        "eventIds": [
+          "23c56638-089d-41a2-abfd-78900497a4be"
+        ],
+        "effect": "content-changed"
+      }
+    ],
+    "evidenceIds": [
+      "23c56638-089d-41a2-abfd-78900497a4be"
+    ],
+    "exampleCount": 1,
+    "qualityVersion": 3,
+    "reusability": {
+      "reusable": true,
+      "confidence": 0.78,
+      "source": "model",
+      "reason": "Click Choose a template to open the template browsing gallery."
+    },
+    "assessment": "Click Choose a template to open the template browsing gallery.",
+    "generator": {
+      "provider": "llama",
+      "model": "muse-spark-1.3",
+      "promptVersion": "day-miner-v1"
+    },
+    "learnedBy": "day-miner",
+    "active": false,
+    "savedAt": "2026-11-08T00:57:00.142Z"
+  }
+]
