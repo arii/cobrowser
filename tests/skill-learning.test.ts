@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 // @ts-expect-error Legacy extension JavaScript has no declaration file.
-import { repairSkill, analyzeSkills, discoverSkills, skillIssues, defaultSkillName } from '../apps/extension/skill-learning.js';
+import { repairSkill, analyzeSkills, discoverSkills, skillIssues, defaultSkillName, skillGoalKey, demoSkill, QUALITY_VERSION } from '../apps/extension/skill-learning.js';
 const target=(label:string)=>({tag:'BUTTON',label,type:'button'});
 function examples(labels=['Open report','Preview report']){
   return Array.from({length:3},(_,session)=>labels.map((label,index)=>({id:`${session}-${index}`,sessionId:`session-${session}`,tabId:1,origin:'https://example.test',at:new Date(Date.UTC(2026,10,7,0,session,index)).toISOString(),provenance:'human',kind:'click',tag:'BUTTON',target:target(label),...(index===labels.length-1?{effect:'content-changed'}:{})}))).flat();
@@ -101,4 +101,17 @@ test('saved probe skills are quarantined and repair removes selected steps with 
   assert.equal(bad.steps.length,good.steps.length+1);
   assert.throws(()=>repairSkill(good,[1]),/supported result action/);
   assert.throws(()=>repairSkill(bad,[-1]),/valid steps/);
+});
+test('built-in skill installs without a demonstration and stays inactive pending review',()=>{
+  const skill=demoSkill();
+  assert.equal(skill.origin,'http://127.0.0.1:3210');
+  assert.equal(skill.active,false);
+  assert.deepEqual(skill.steps.map((step:any)=>[step.kind,step.target.tag,step.target.label]),[['change','SELECT','Team'],['click','BUTTON','Export CSV']]);
+  assert.equal(skill.steps[0].parameter,'input_1');
+  assert.equal(skill.goalKey,skillGoalKey(skill.origin,skill.steps[1].target));
+  assert.equal(skill.qualityVersion,QUALITY_VERSION);
+  assert.equal(skill.reusability.source,'local');
+  assert.ok(skill.examples.some((example:any)=>example.effect==='form-submitted'));
+  assert.equal(skillIssues(skill).length,0);
+  assert.match(skill.title,/built-in/);
 });

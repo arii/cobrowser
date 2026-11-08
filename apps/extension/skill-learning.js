@@ -137,6 +137,57 @@ export function analyzeSkills(events,brain=null){
 }
 export const discoverSkills=(events,brain=null)=>analyzeSkills(events,brain).candidates;
 
+// Built-in demo fixture: installable without an observed demonstration. It is
+// stored inactive, still requires review plus activation, and never claims a
+// blind check or model approval (local assessment only).
+export function demoSkill(){
+  const origin='http://127.0.0.1:3210';
+  const steps=[
+    {kind:'change',target:{tag:'SELECT',label:'Team',type:''},parameter:'input_1'},
+    {kind:'click',target:{tag:'BUTTON',label:'Export CSV',type:'submit'},parameter:null}
+  ];
+  return {origin,steps,
+    goalKey:skillGoalKey(origin,steps.at(-1).target),
+    title:'Export CSV (built-in)',customTitle:true,outcome:'Export CSV',
+    examples:[{at:new Date().toISOString(),eventIds:['built-in-demo'],effect:'form-submitted'}],
+    evidenceIds:['built-in-demo'],exampleCount:1,qualityVersion:QUALITY_VERSION,
+    reusability:{reusable:true,confidence:.88,source:'local',reason:'Built-in fixture skill with named replay actions and a declared form-submission result. Review the steps before activation.'},
+    assessment:'Built-in skill for the local fixture site. No demonstration was observed and no model approved it. Review the steps before activation.',
+    demoFixture:true,active:false};
+}
+
+// Built-in web skills: hardcoded from live control descriptors observed in
+// November 2026 (aria-label, associated labels, placeholders, button text).
+// Stored inactive like the fixture skill; review plus activation still apply.
+// Search inputs below carry placeholder-only labels, which recording, replay
+// matching and page reads all accept as a fallback.
+export function demoSkills(){
+  const at=new Date().toISOString();
+  const build=(origin,sites,steps,title,label)=>{
+    const outcome=steps.at(-1).target.label;
+    return {origin,sites,steps,goalKey:skillGoalKey(origin,steps.at(-1).target),
+      title,customTitle:true,outcome,
+      examples:[{at,eventIds:[`built-in-${label}`],effect:'content-changed'}],
+      evidenceIds:[`built-in-${label}`],exampleCount:1,qualityVersion:QUALITY_VERSION,
+      reusability:{reusable:true,confidence:.82,source:'local',reason:'Built-in skill with named replay actions and a declared page-change result. Review the steps before activation.'},
+      assessment:'Built-in skill for a live website. No demonstration was observed and no model approved it. Review the steps before activation.',
+      demoWeb:true,active:false};
+  };
+  return [
+    build('https://www.zappos.com',[{id:'main',url:'https://www.zappos.com/'}],[
+      {kind:'change',target:{tag:'INPUT',label:'Search for shoes, clothes, etc.',type:''},parameter:'input_1'},
+      {kind:'click',target:{tag:'BUTTON',label:'Search',type:'submit'},parameter:null}
+    ],'ASICS shoes search (Zappos)','shoes'),
+    build('https://weather.com',[{id:'main',url:'https://weather.com/'}],[
+      {kind:'click',target:{tag:'BUTTON',label:'Search for a location',type:'button'},parameter:null}
+    ],'SF weather search','weather'),
+    build('https://devpost.com',[{id:'main',url:'https://devpost.com/hackathons'}],[
+      {kind:'change',target:{tag:'INPUT',label:'Search by hackathon title or keyword',type:'text'},parameter:'input_1'},
+      {kind:'click',target:{tag:'BUTTON',label:'Search',type:''},parameter:null}
+    ],'SF hackathons search (Devpost)','hackathons')
+  ];
+}
+
 export function repairSkill(skill,removeSteps){
   const indexes=removeSteps??skill.steps.map((step,index)=>probeTarget(step.target)?index:-1).filter(index=>index>=0);
   if(!Array.isArray(indexes) || !indexes.length || indexes.some(index=>!Number.isInteger(index) || index<0 || index>=skill.steps.length))throw new Error('Choose valid steps to remove.');

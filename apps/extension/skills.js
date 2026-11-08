@@ -7,7 +7,7 @@ import { skillHelpPrompt } from './skill-help.js';
 import { workflowSites, configureWorkflow } from './skill-workflow.js';
 import { readSkillPage } from './skill-page.js';
 import { readTaskActions } from './action-history.js';
-import { analyzeSkills, riskyAction, validTarget, skillIssues, defaultSkillName, skillGoalKey, outcomeAction, probeTarget, repairSkill } from './skill-learning.js';
+import { analyzeSkills, riskyAction, validTarget, skillIssues, defaultSkillName, skillGoalKey, outcomeAction, probeTarget, repairSkill, demoSkill, demoSkills } from './skill-learning.js';
 const KEY='skillLibrary';
 let queue=Promise.resolve();
 let executing=false;
@@ -47,7 +47,7 @@ function locate(target, parameter, origin, applySelection=false, verifyInput=fal
   if(location.origin!==origin)throw new Error('The page left the skill origin.');
   const label=control=>{
     const copy=control.cloneNode(true);copy.querySelectorAll('input,select,textarea,[data-sensitive],[contenteditable],script,style').forEach(node=>node.remove());
-    return (control.getAttribute('aria-label') || (control.labels?[...control.labels].map(item=>{const node=item.cloneNode(true);node.querySelectorAll('input,select,textarea,[data-sensitive]').forEach(child=>child.remove());return node.textContent;}).join(' '):'') || (['BUTTON','A'].includes(control.tagName)?copy.textContent:'')).replace(/\s+/g,' ').trim().slice(0,100);
+    return (control.getAttribute('aria-label') || (control.labels?[...control.labels].map(item=>{const node=item.cloneNode(true);node.querySelectorAll('input,select,textarea,[data-sensitive]').forEach(child=>child.remove());return node.textContent;}).join(' '):'') || control.getAttribute('placeholder') || (['BUTTON','A'].includes(control.tagName)?copy.textContent:'')).replace(/\s+/g,' ').trim().slice(0,100);
   };
   const matches=[...document.querySelectorAll('button,a,input,select,textarea')].filter(control=>control.tagName===target.tag && label(control)===target.label && (control.getAttribute('type') || (control.tagName==='BUTTON' && control.form?'submit':'')).toLowerCase()===target.type && control.getClientRects().length && getComputedStyle(control).visibility!=='hidden');
   if(matches.length!==1)throw new Error('Target missing or ambiguous. Open the same starting page and review the skill.');
@@ -377,6 +377,16 @@ export function installSkills(){
           skills.push({...confirmSkillIntent(candidate,message.intent),title:skillName(message.title??candidate.title),customTitle:message.title!==undefined,id:crypto.randomUUID(),active:false,savedAt:new Date().toISOString()});
           await chrome.storage.local.set({[KEY]:skills});
         }
+      }else if(message.kind==='skills:seed-demo'){
+        const seeds=[demoSkill(),...demoSkills()];
+        if(seeds.some(seed=>skillIssues(seed).length))throw new Error('A built-in skill is invalid.');
+        let added=false;
+        for(const seed of seeds){
+          if(skills.some(item=>item.goalKey===seed.goalKey))continue;
+          if(skills.filter(item=>!item.needsExamples).length>=30)throw new Error('The local library is full. Delete a skill first.');
+          skills.push({...seed,id:crypto.randomUUID(),savedAt:new Date().toISOString()});added=true;
+        }
+        if(added)await chrome.storage.local.set({[KEY]:skills});
       }else if(message.kind==='skills:configure'){
         const skill=skills.find(item=>item.id===message.id);if(!skill)throw new Error('Skill not found.');
         if(skill.family===NETWORKING)throw new Error('Networking recipes keep their learned guest-list address. Demonstrate another guest list to learn a new recipe.');
