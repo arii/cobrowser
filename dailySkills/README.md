@@ -28,13 +28,14 @@ Datasets:
 | `src/psai.ts` | Fetch PSAI rows; convert one row's raw event stream to staged recorder events. |
 | `src/agentnet.ts` | Load AgentNet metadata, stream trajectories, convert PyAutoGUI steps to staged events. |
 | `src/validate.ts` | Mirrors `validEvent()` in `apps/extension/recorder.js` plus the fields the recorder adds on store. Fails on anything the extension would reject. |
-| `src/cli.ts` | `psai`, `agentnet`, `validate` commands. |
+| `src/cli.ts` | `psai`, `agentnet`, `validate`, `label` commands. |
+| `src/label.ts`, `src/frames.ts`, `src/vision.ts`, `src/ocr.ts`, `src/env.ts` | Labeling pass: frame extraction with ffmpeg, Llama / SubQ Snap calls, tesseract fallback, `.env` loading. |
 | `data/recordings/` | Sample output: FoxNews, Squarespace and Amazon tasks from PSAI, five AgentNet tasks, and `*-merged.json` "day" files. |
-| `.env.example` | Keys for the planned labeling pass (Meta Llama API, SubQ). Copy to `.env`; `.env` is gitignored. Nothing reads it yet. |
+| `.env.example` | Keys for the labeling pass (Meta Llama API, SubQ). Copy to `.env`; `.env` is gitignored. Read by `pnpm convert label` only. |
 
 ## Run
 
-Requires Node 22+ and pnpm. From this folder:
+Requires Node 22+ and pnpm; the labeling pass also needs `ffmpeg` and optionally `tesseract` (`brew install ffmpeg tesseract`). From this folder:
 
 ```sh
 pnpm install
@@ -112,20 +113,43 @@ text, then a `https://www.<site>.com` guess; `source.originResolvedBy` says whic
 
 ## Known gaps
 
-- **No `target` labels yet.** The recorder saves `{tag, label, type}` for clicked controls; the datasets only
-  give coordinates (PSAI accessibility trees are unpublished local paths). `discoverSkills()` in
-  `apps/extension/skill-learning.js` requires targets, so converted recordings feed the monitor and the context
-  brain but will not produce skill suggestions until a labeling pass adds them.
+- **Targets come from the labeling pass, not the conversion.** The datasets only give coordinates (PSAI
+  accessibility trees are unpublished local paths), so `pnpm convert psai` output has no `target` fields;
+  run `pnpm convert label` to add them. `discoverSkills()` in `apps/extension/skill-learning.js` requires targets.
 - `effect` is approximated (title change for PSAI, next-step for AgentNet) rather than an observed DOM change.
 - Browser UI height is a guess; Chrome with a bookmarks bar is closer to 120 px at 1080p (`--chrome-top 120`).
 
-## Planned next step: labeling pass
+## Labeling pass: giving clicks a target
 
-Give each click a `target` by looking at the frame at click time (PSAI: `ffmpeg` frame from `videos/<id>.mp4`
-at the event offset, aligned to `obs_record_state_timings.OBS_WEBSOCKET_OUTPUT_STARTED`; AgentNet: the step's
-screenshot), marking the click point, and asking a vision model (Meta Llama via the OpenAI-compatible endpoint,
-or SubQ Snap for the tag choice) for `{tag, label, type}`. A `change` event inherits the target of the preceding
-click when that click hit an input-like control. This is what `.env.example` is for.
+```sh
+pnpm convert label data/recordings/psai-merged.json                 # auto-picks the provider from .env
+pnpm convert label data/recordings/psai-*.json --provider none      # SubQ Snap + local OCR only
+pnpm convert label data/recordings/psai-merged.json --dry-run       # cut frames only, no model calls
+```
+
+For every PSAI click the labeler downloads the task's screen video once (`data/raw/psai/videos/`, gitignored), cuts
+the frame at the click's time with `ffmpeg` (event clock and video clock are aligned through
+`source.timing`), draws a red box at the click, and asks for the control under it. Output goes to
+`data/recordings/labeled/<name>.labeled.json`; the per-click evidence (frames, answers, decision) is kept in
+`source.labeling.records`, and model answers are cached in `data/raw/labels/` so re-runs are free.
+
+| Provider (from `.env`) | Role | Status |
+|---|---|---|
+| `LLAMA_ENDPOINT` + `LLAMA_MODEL` + `LLAMA_API_KEY` | Vision LLM (Meta Llama 4 through any OpenAI-compatible endpoint): names the control (`tag`, `label`, `type`, confidence) from the full frame and a zoomed crop. | Request shape verified; api.llama.com answered 401 `invalid_api_key` with the key tried, so the live path is unexercised. Check the key with `curl https://api.llama.com/compat/v1/models -H "Authorization: Bearer $LLAMA_API_KEY"`, or point the endpoint at the provider that issued the key. |
+| `SUBQ_API_KEY` (Snap) | Classifies the control kind (button, link, text field, dropdown, text area, none) and whether the click is on something interactive. Cross-checks the LLM, or stands in for it. SubQ's chat model does not accept images. | Works. |
+| tesseract (local) | Reads the text on the click's row from a clean 2x crop when no vision LLM is available (`--provider none`). | Works, approximate: misses small buttons, and the mouse pointer sits on the clicked word. |
+
+SubQ Preview (chat completions) accepts only text and PDF/text files, not images, so it cannot label screenshots.
+Decision rules live in `decideTarget()` in `src/label.ts`: Snap can veto a non-control or override the LLM's tag
+when it is confident; the result must pass `validTarget()` exactly as `apps/extension/skill-learning.js` defines it
+(no generic labels, no password/checkbox/radio types). A `change` event inherits the target of the click just before
+it when that click hit a field. Clicks that get no target stay as they were.
+
+AgentNet clicks are not labeled: its screenshots ship as 5 GB zip volumes, so there is no cheap way to fetch one frame.
+
+Labeled output still needs the same workflow repeated three times with an observed effect before `discoverSkills()`
+suggests anything; dataset tasks are mostly one-offs, so expect the labels to feed the monitor, the brain and manual
+inspection first.
 
 ## Loading a recording into the extension
 

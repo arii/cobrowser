@@ -4,6 +4,16 @@ import { RECORDER_KEYS, RECORDER_KINDS, RECORDER_TAGS, type RecorderState } from
 const TOP_LEVEL = ['schemaVersion', 'sessionId', 'startedAt', 'events', 'tabs', 'tabCount', 'dropped', 'source'];
 const EVENT_FIELDS = ['id', 'sessionId', 'at', 'origin', 'tabId', 'provenance', 'kind', 'tag', 'x', 'y', 'key', 'target', 'effect'];
 const CONTENT_FIELDS = ['kind', 'tag', 'x', 'y', 'key', 'target'];
+/** Same rule as validTarget() in apps/extension/skill-learning.js. */
+export const validTarget = (target: unknown): boolean => {
+  const value = target as Record<string, unknown> | null;
+  return !!value && typeof value === 'object' && Object.keys(value).every(key => ['tag', 'label', 'type'].includes(key))
+    && ['BUTTON', 'A', 'INPUT', 'SELECT', 'TEXTAREA'].includes(value.tag as string)
+    && typeof value.label === 'string' && value.label.trim().length > 0 && value.label.length <= 100
+    && !/^(unknown|untitled|other|button|click|action|\.{3})$/i.test(value.label.trim())
+    && typeof value.type === 'string' && /^[a-z-]{0,30}$/.test(value.type)
+    && !['password', 'hidden', 'file', 'checkbox', 'radio'].includes(value.type);
+};
 const webOrigin = (value: string) => { try { const url = new URL(value); return ['http:', 'https:'].includes(url.protocol) && url.origin === value; } catch { return false; } };
 
 export function validateState(state: RecorderState): string[] {
@@ -28,7 +38,7 @@ export function validateState(state: RecorderState): string[] {
     if (content.target !== undefined) {
       const target = event.target!;
       if (!['click', 'change'].includes(event.kind)) issue(`${where}: target only on click/change`);
-      if (!['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'A'].includes(target.tag) || typeof target.label !== 'string' || !target.label.trim() || target.label.length > 100 || typeof target.type !== 'string') issue(`${where}: invalid target`);
+      if (!validTarget(target)) issue(`${where}: invalid target ${JSON.stringify(target)}`);
     }
     if (event.effect !== undefined && (event.effect !== 'content-changed' || event.kind !== 'click')) issue(`${where}: effect only 'content-changed' on click`);
     if (event.provenance !== 'human') issue(`${where}: provenance must be human`);

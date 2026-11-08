@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-  "startedAt": "2026-11-07T23:28:32.272Z",
+  "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+  "startedAt": "2026-11-08T00:03:14.851Z",
   "events": [
     {
-      "id": "f90cc607-6953-441d-8e24-4db3a740ef97",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:41.586Z",
+      "id": "a3e52557-ef73-491d-ae44-084a218b5e5e",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:24.165Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -16,9 +16,9 @@
       "y": 0.3838
     },
     {
-      "id": "f09dd5f5-20c8-479b-9079-81d5ecd2b54a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:42.593Z",
+      "id": "f520a41f-0aea-4c50-a3d9-7f958d2df2a1",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:25.172Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -28,9 +28,9 @@
       "y": 0.5091
     },
     {
-      "id": "16aebbec-d218-4da9-af36-d7aa3784f7d8",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:43.600Z",
+      "id": "304fd743-4774-4020-9ecd-00c8356702eb",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:26.179Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -40,9 +40,9 @@
       "y": 0.1646
     },
     {
-      "id": "63f8998c-b04c-4346-a263-adf8d21c8b1f",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:45.296Z",
+      "id": "0f68fbde-364c-4251-9364-8aea9f918092",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:27.875Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -52,9 +52,9 @@
       "y": 0.1879
     },
     {
-      "id": "db806f13-6102-4e1d-a631-0a1747f110f0",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:46.976Z",
+      "id": "949eb90d-dddf-4ae9-ad47-ae7d40321d1a",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:29.555Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -64,9 +64,9 @@
       "y": 0.1939
     },
     {
-      "id": "38b0e9af-ade9-4f77-9bc0-7e2f9ccba18f",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:48.152Z",
+      "id": "6763451b-f1c8-4573-8e43-403212995a2b",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:30.731Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -76,9 +76,9 @@
       "y": 0.3939
     },
     {
-      "id": "d51f35e4-3113-4f52-a594-abb547c9fb66",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:49.200Z",
+      "id": "f78e1f3d-a2ab-44cf-84c2-cd0ca2e6a17b",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:31.779Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -88,9 +88,9 @@
       "y": 0.4
     },
     {
-      "id": "9cf6b2ba-9ba8-4fbd-981d-c21906fedfbb",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:50.200Z",
+      "id": "24f1cac3-bdb1-4a7a-8777-5cd7169d4edc",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:32.779Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -100,9 +100,9 @@
       "y": 0.3374
     },
     {
-      "id": "519229a4-121e-4297-ba04-01298636e39c",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:51.225Z",
+      "id": "4e6987a1-f088-48ae-a3c5-e9cc69a4fada",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:33.804Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -112,9 +112,9 @@
       "y": 0.2303
     },
     {
-      "id": "8634124b-52ef-4cb0-9a4b-2c4ef01ec9a0",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:51.244Z",
+      "id": "82e5df15-9921-4589-8e89-239527b6f625",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:33.823Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -122,9 +122,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "16cf63b7-63cc-4240-816e-faf4bdaf4866",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:53.032Z",
+      "id": "d28fb700-8745-4c2a-b555-8edfdf87012c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:35.611Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -134,9 +134,9 @@
       "y": 0.1323
     },
     {
-      "id": "ac3a46a0-f534-4d31-9900-aa3626a18e16",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:54.040Z",
+      "id": "99442ea6-8192-4cfb-ac99-39bc1f2eda81",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:36.619Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -146,9 +146,9 @@
       "y": 0.1444
     },
     {
-      "id": "cd8f9e99-59fb-43b4-9492-6f4538a5c5b5",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:55.608Z",
+      "id": "dcd0eabb-8a9f-4675-a33a-da41a7fd9cbb",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:38.187Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -158,9 +158,9 @@
       "y": 0.1283
     },
     {
-      "id": "1e108dda-2f4a-41a3-a3fa-c579e37b2ceb",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:28:55.681Z",
+      "id": "245d031a-283d-48d9-b9a5-712dc21e3810",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:38.260Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -170,9 +170,9 @@
       "y": 0.1273
     },
     {
-      "id": "f2800720-05d4-4734-b8de-cd5cee6d8ec2",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:11.891Z",
+      "id": "6f5ab4b3-be7f-4363-8eff-8cd80550cd29",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:54.470Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -182,9 +182,9 @@
       "y": 0.4131
     },
     {
-      "id": "90ee6881-395b-465d-b352-afcbab645e0a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:12.541Z",
+      "id": "30270015-f257-402f-83ad-e0ce9c798062",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:55.120Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -192,9 +192,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "a7f29cab-a26f-4c14-9802-5bf4869975df",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:14.345Z",
+      "id": "722830d0-0feb-45e2-854a-ab126c93bff1",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:03:56.924Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -204,9 +204,9 @@
       "y": 0.402
     },
     {
-      "id": "eaec05f8-b21e-445a-85b7-022b0f7f0d9a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:17.848Z",
+      "id": "aab1cc3f-a768-48fd-96a4-74f5a2f26b39",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:00.427Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -216,9 +216,9 @@
       "y": 0.4879
     },
     {
-      "id": "32739ae4-84cb-4ab0-a499-f539f553aede",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:18.628Z",
+      "id": "5444b93f-fedc-418e-b331-2a8afa0db4c4",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:01.207Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -226,9 +226,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "cacb733f-6ac8-4227-9387-66589bb0a17c",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:19.249Z",
+      "id": "b4aaaef6-90a1-4ce4-88b3-a137f7621d3a",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:01.828Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -238,9 +238,9 @@
       "y": 0.5616
     },
     {
-      "id": "887fbc64-07aa-42f0-b504-135a5187ead3",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:20.265Z",
+      "id": "90a6d23f-d3d2-449b-b9e1-2957227529ba",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:02.844Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -250,9 +250,9 @@
       "y": 0.5636
     },
     {
-      "id": "6095380f-9aff-4855-9075-f10cf6062f4a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:24.856Z",
+      "id": "25541c1c-8d2f-41b3-87cd-d3ee04460ba3",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:07.435Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -262,9 +262,9 @@
       "y": 0.4495
     },
     {
-      "id": "f1dd840e-861b-40ab-adde-05e6816a3ade",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:25.169Z",
+      "id": "24660715-b6e7-4a78-9350-78907ca0e042",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:07.748Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -272,9 +272,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "0faba20e-ce29-4e58-a20a-ff9ddfcf944f",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:25.169Z",
+      "id": "1c2e2477-5003-4311-87e2-64d3c2ccf0c6",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:07.748Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -283,9 +283,9 @@
       "key": "Enter"
     },
     {
-      "id": "c69f85c2-376c-4fb9-ad01-e9dda30ad423",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:25.176Z",
+      "id": "fc063026-8c73-4a6d-985b-f0a3cd088ec8",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:07.755Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -293,9 +293,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "e81027ee-81c2-4128-bf56-0e61d06a6105",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:26.793Z",
+      "id": "61e0f480-fc20-41a9-9881-7b1104fae44b",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:09.372Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -303,9 +303,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "2d03b121-896c-4641-83e2-fa7cf8a081c6",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:28.400Z",
+      "id": "67e1b291-6bed-4ff2-8f4d-5961714aa960",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:10.979Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -313,9 +313,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "fcb34ef5-bc0f-4de9-96ef-278185631ba2",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:29.448Z",
+      "id": "a3fb186f-bdc1-4a29-b6eb-42dc54e48ee0",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:12.027Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -323,9 +323,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "64d9dfa1-5d5c-4f83-94b3-07ba419b59b8",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:30.056Z",
+      "id": "83d8bcd2-3689-4466-a333-193ce8baa1ff",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:12.635Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -335,9 +335,9 @@
       "y": 0.4505
     },
     {
-      "id": "3baea121-6ef0-45dd-b7cf-59de96b36e98",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:30.696Z",
+      "id": "5191c7f0-341a-43ca-9e09-9ed56dd7c1ec",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:13.275Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -345,9 +345,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "80b60aef-d78a-4f6c-b482-802b25763922",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:31.776Z",
+      "id": "457f20a6-2bee-4549-8c05-f3276864b0b8",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:14.355Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -355,9 +355,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "ed4bb772-7245-47c3-b84d-3d52dbb41c4e",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:32.816Z",
+      "id": "6abca3a6-04f4-450a-9839-8a1cdbb76e24",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:15.395Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -365,9 +365,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "5809faa1-3c92-4051-95c8-2e7b1fbc38e9",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:33.096Z",
+      "id": "ed030363-93be-49d6-b7fa-02735391d169",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:15.675Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -377,9 +377,9 @@
       "y": 0.4545
     },
     {
-      "id": "0728122a-544c-4a80-a2bb-cd0d715f1103",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:34.128Z",
+      "id": "280fc8bf-ef20-47a7-b728-1d3b54df5d10",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:16.707Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -389,9 +389,9 @@
       "y": 0.4222
     },
     {
-      "id": "140d3646-dd1f-4d88-ba1d-e3a55c0d6595",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:34.792Z",
+      "id": "634d3b65-66ef-4abf-bb42-3beb154fc376",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:17.371Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -401,9 +401,9 @@
       "y": 0.4455
     },
     {
-      "id": "46093a1b-5bb0-4dc8-a717-46abaf719d2c",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:35.128Z",
+      "id": "c8e055a7-9022-44e9-864c-63e1149c56fd",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:17.707Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -413,9 +413,9 @@
       "y": 0.4263
     },
     {
-      "id": "f0f78d42-ba87-4fce-a88c-4b48d10cd801",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:36.664Z",
+      "id": "e08a8dba-8ee6-4460-9288-5329d2dd459a",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:19.243Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -425,9 +425,9 @@
       "y": 0.4263
     },
     {
-      "id": "8fc1b3db-3e2e-40c0-a840-1a3d6c0fff24",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:37.845Z",
+      "id": "2163113c-a908-4e2f-a81b-4939ee6f142d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:20.424Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -437,9 +437,9 @@
       "y": 0.9586
     },
     {
-      "id": "608bb321-3325-4fc8-b96d-e03de6520b39",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:38.928Z",
+      "id": "8035600a-0b30-4851-bf8f-fbb5a3be2fbf",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:21.507Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -449,9 +449,9 @@
       "y": 0.999
     },
     {
-      "id": "3d95413e-6e64-49cb-8634-5e264f347b34",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:29:39.169Z",
+      "id": "a567e674-b008-4f7b-8c58-70135b1f95d4",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:21.748Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -461,9 +461,9 @@
       "y": 0.999
     },
     {
-      "id": "722e0055-c9a6-4ad7-8c77-7c6d1857e7dd",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:30:04.992Z",
+      "id": "474314a8-1e5c-48ba-a189-0f2b869ab9da",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:47.571Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -473,9 +473,9 @@
       "y": 0.3131
     },
     {
-      "id": "94566b03-da16-4777-9f59-eb2aeb7ea620",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:30:07.248Z",
+      "id": "8c4a2bb8-5b4d-46fe-88fe-7ce8ef512779",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:49.827Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -485,9 +485,9 @@
       "y": 0.3121
     },
     {
-      "id": "01c9591c-5e8a-4551-8448-831e5137ffda",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:30:08.248Z",
+      "id": "c6f01aac-c212-4ff2-8db6-435412334a15",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:50.827Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -497,9 +497,9 @@
       "y": 0.4687
     },
     {
-      "id": "765f8636-f496-4270-8335-6b0920d70dc6",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:30:16.407Z",
+      "id": "f88a3ac9-3d90-4cdb-83cd-ad8bb6aea363",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:58.986Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -509,9 +509,9 @@
       "y": 0.5717
     },
     {
-      "id": "a7872110-70fd-4120-a1f0-1c1fe13b6c20",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:30:17.408Z",
+      "id": "7df5f8f9-2bcc-4fbe-a391-b508aa068601",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:04:59.987Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -521,9 +521,9 @@
       "y": 0.6071
     },
     {
-      "id": "7da3343b-9680-49bb-a890-4e9aba7a6803",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:30:26.216Z",
+      "id": "4f053d8c-e8cd-4b35-ba97-0b31925f8d48",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:05:08.795Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -533,9 +533,9 @@
       "y": 0.7182
     },
     {
-      "id": "f5a7c34e-e529-4d0e-a813-f7972a6bab26",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:30:27.216Z",
+      "id": "4a7a1ff1-01d2-490e-8fd7-28bc8d87bd61",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:05:09.795Z",
       "origin": "https://www.foxnews.com",
       "tabId": 1,
       "provenance": "human",
@@ -545,9 +545,9 @@
       "y": 0.7192
     },
     {
-      "id": "5777e699-05ce-4e0b-b1ff-b25a22659a76",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:31:41.568Z",
+      "id": "d591522c-9957-47c2-8eda-f6158db53d5d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:24.147Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -557,9 +557,9 @@
       "y": 0.4232
     },
     {
-      "id": "b02077ee-2ca4-49eb-a17c-25c1336f0a23",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:31:42.590Z",
+      "id": "6b4d938d-c822-49d2-9467-daaeec4f3898",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:25.169Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -567,9 +567,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "bf8e6a6b-5c03-4b22-a5a4-d9ff79b390ea",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:31:42.609Z",
+      "id": "b20c9ce6-d4e6-419d-9b0a-8d51ab1d3c87",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:25.188Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -579,9 +579,9 @@
       "y": 0.0778
     },
     {
-      "id": "b6d4a5af-0486-46b7-ad9b-4dffcf830741",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:31:43.681Z",
+      "id": "0a6c3917-5304-4a21-b2df-6ce9017e9ad5",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:26.260Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -591,9 +591,9 @@
       "y": 0.0808
     },
     {
-      "id": "1397626b-992c-4412-a9c9-96bc7d0fe673",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:31:43.749Z",
+      "id": "e52a5e07-f627-4129-9abb-23a21e0d9484",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:26.328Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -603,9 +603,9 @@
       "y": 0.0818
     },
     {
-      "id": "d7f58bdb-ea07-44a8-bf8a-a4bc707ddd57",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:31:44.819Z",
+      "id": "0ef9a537-a7b7-4e78-8c21-4cb79f80d443",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:27.398Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -615,9 +615,9 @@
       "y": 0.8333
     },
     {
-      "id": "a3f1f2e0-694b-4a20-a850-dbc8a85f1f8b",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:31:45.824Z",
+      "id": "9cd26547-202f-43c4-814f-348a0f1ce9a4",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:28.403Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -627,9 +627,9 @@
       "y": 0.3687
     },
     {
-      "id": "3d18bd11-70ee-4112-aa59-d4a0c4aeac11",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:31:45.963Z",
+      "id": "e8ad8029-70b8-4de2-9a96-76cf58e4edf5",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:28.542Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -637,9 +637,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "fa33b637-7549-40fa-8f8f-0178b0182284",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:31:47.369Z",
+      "id": "0e23d1f9-1830-4bfa-862a-8fa3920c5dcb",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:29.948Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -647,9 +647,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "95943fb1-aaf6-4c4b-a862-9ff5d78445a2",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:31:59.256Z",
+      "id": "67878fe5-bd46-4126-9e35-80b94de49713",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:41.835Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -659,9 +659,9 @@
       "y": 0.4808
     },
     {
-      "id": "014d7558-9e25-47bb-a8a2-0c5897d0792b",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:00.859Z",
+      "id": "f2c6fc5c-6309-491d-bc02-acf3c4181d51",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:43.438Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -671,9 +671,9 @@
       "y": 0.4434
     },
     {
-      "id": "9817964b-392c-4542-9f97-4d6cb458264f",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:01.889Z",
+      "id": "1a2346fb-306e-4c27-b04e-67c4c37b9ab0",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:44.468Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -683,9 +683,9 @@
       "y": 0.4202
     },
     {
-      "id": "b67d3727-3140-442c-8852-c377849cc408",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:02.896Z",
+      "id": "2097f543-cd48-4e07-b9ed-a968d36747a2",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:45.475Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -695,9 +695,9 @@
       "y": 0.3778
     },
     {
-      "id": "fb5e6ef5-450a-4a95-a1d9-514123a70f6d",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:03.897Z",
+      "id": "760a75b2-3aca-4555-9088-710ce60a4803",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:46.476Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -707,9 +707,9 @@
       "y": 0.5404
     },
     {
-      "id": "5900f775-74ab-4a4c-bcd9-bace2ee28f3b",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:04.904Z",
+      "id": "6e73f1d6-133b-4923-903e-589df3f3872a",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:47.483Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -719,9 +719,9 @@
       "y": 0.4283
     },
     {
-      "id": "f700d412-ce98-4604-9ff0-ef9a20462718",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:05.472Z",
+      "id": "8947025d-f3a7-4b48-93fd-c2e03d23417d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:48.051Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -729,9 +729,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "ddd8f36f-d0b5-4ce7-8356-3e38decaffa8",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:05.740Z",
+      "id": "de2f47a6-06fb-4b06-9aa0-2caadab45d6d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:48.319Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -739,9 +739,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "7f1b651e-e7a6-4d7d-b07d-867a2f2cc4f2",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:05.740Z",
+      "id": "6a361fcb-2c91-419a-a392-804a0ee26539",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:48.319Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -750,9 +750,9 @@
       "key": "Enter"
     },
     {
-      "id": "a2fbcdf6-86d1-4978-bdd9-94dfca347926",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:07.056Z",
+      "id": "36bee1eb-4358-4d1d-8b0b-828b0e8aa0eb",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:49.635Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -762,9 +762,9 @@
       "y": 0.5364
     },
     {
-      "id": "154c83bd-bade-42a9-abf4-c95bc1060144",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:07.832Z",
+      "id": "f8b440f3-cde0-4fc2-b9dd-63827bcdbe4a",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:50.411Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -774,9 +774,9 @@
       "y": 0.1768
     },
     {
-      "id": "513441bd-f527-4fec-979b-151d7d432561",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:10.209Z",
+      "id": "f425aab6-3661-4b1c-aa8f-fa19d81f7983",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:52.788Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -786,9 +786,9 @@
       "y": 0.1768
     },
     {
-      "id": "ef1eb228-3f17-4fd8-9e18-1a33f1196632",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:11.216Z",
+      "id": "a3436464-7878-4b9b-be8a-1aee12370d15",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:53.795Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -798,9 +798,9 @@
       "y": 0.3808
     },
     {
-      "id": "6e0132c4-553a-48da-b24f-a6f41cc12039",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:12.544Z",
+      "id": "f28ef2da-8617-4f80-acc3-9f1191782554",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:55.123Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -810,9 +810,9 @@
       "y": 0.3566
     },
     {
-      "id": "846b7415-3e41-42fe-ae8e-c9c0d7b1e2be",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:12.737Z",
+      "id": "bed08166-423c-42b4-875b-ce7143244d97",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:55.316Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -822,9 +822,9 @@
       "y": 0.3566
     },
     {
-      "id": "a5be90fa-0758-4ca7-912e-28b1cbd956bb",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:14.152Z",
+      "id": "8685b3ab-ed45-40c6-a175-c6a52f82b2da",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:56.731Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -834,9 +834,9 @@
       "y": 0.3505
     },
     {
-      "id": "2527cacf-83d0-45fb-92b5-05bea483861a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:15.160Z",
+      "id": "2104ba4e-53c5-4953-84ea-6a1694e11aa8",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:57.739Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -846,9 +846,9 @@
       "y": 0.198
     },
     {
-      "id": "fc3216e7-30e4-464a-a6b9-367e93bd0f50",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:15.305Z",
+      "id": "4c84e7f8-8710-4b3c-81ff-8e02387d27ac",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:57.884Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -858,9 +858,9 @@
       "y": 0.1838
     },
     {
-      "id": "86edbda9-aefc-409c-a5e7-4699038a8649",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:16.760Z",
+      "id": "6e1678b2-8ba3-40dd-a866-045787165fa5",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:06:59.339Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -870,9 +870,9 @@
       "y": 0.1838
     },
     {
-      "id": "6112f43f-d3fb-47ca-80a1-56bc90114277",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:17.760Z",
+      "id": "5d72f19c-079e-4695-ac30-64ab843619ff",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:00.339Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -882,9 +882,9 @@
       "y": 0.3929
     },
     {
-      "id": "57384b9b-3268-41a2-ba9a-532966ab2bb5",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:19.497Z",
+      "id": "3f0ef3c2-2b95-41b4-a474-674cbff86d35",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:02.076Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -894,9 +894,9 @@
       "y": 0.4162
     },
     {
-      "id": "1dbf4f1d-b3db-4037-84de-bcb1a5e0c7a4",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:23.217Z",
+      "id": "bfe6b1cb-47dc-4774-88fa-29f01515a130",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:05.796Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -906,9 +906,9 @@
       "y": 0.4131
     },
     {
-      "id": "27a80627-4f6e-4684-8265-999843696bcb",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:26.792Z",
+      "id": "a35cc5bc-a50a-48a9-8b3a-6e836f62da6b",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:09.371Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -916,9 +916,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "92b8429e-cb87-42df-900b-c056322b72f9",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:28.056Z",
+      "id": "6e9118f6-5a69-4850-924d-7b2df6d2d0b5",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:10.635Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -928,9 +928,9 @@
       "y": 0.4101
     },
     {
-      "id": "b427f4af-dc95-4d09-82b0-b4a145a8ea75",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:29.728Z",
+      "id": "942e6c39-2082-4b49-ad89-eeae0d63e1b6",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:12.307Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -938,9 +938,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "84b84489-96b7-40c7-853b-9ba6b0853969",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:32.304Z",
+      "id": "45b2a33a-4572-4d53-9aca-3aa014463f1c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:14.883Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -948,9 +948,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "d8a89f9e-dbec-4320-bfe5-cc3eb7dcf93c",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:33.584Z",
+      "id": "ccce0733-a922-48bd-b37e-02c81fcf8791",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:16.163Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -958,9 +958,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "8f1c873f-ee88-4e9b-bff0-47b3ab3caa75",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:35.096Z",
+      "id": "f95ee57d-aba7-4e04-9914-302b8b84ced4",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:17.675Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -970,9 +970,9 @@
       "y": 0.4091
     },
     {
-      "id": "f85b3188-f401-44b8-b9e3-b5130d91bf06",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:35.688Z",
+      "id": "098b9bcb-f547-4d65-bc67-f44591ca68bf",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:18.267Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -983,9 +983,9 @@
       "effect": "content-changed"
     },
     {
-      "id": "bca4abe2-0e92-490f-96c4-279612bf71b7",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:36.098Z",
+      "id": "0cbc502e-5fce-4b8e-a491-fb3eb6c9e9b6",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:18.677Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -995,9 +995,9 @@
       "y": 0.3889
     },
     {
-      "id": "42308db7-b21b-4082-8ee8-f32720df3e1d",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:37.098Z",
+      "id": "408be6e4-d12a-412b-81ed-4b32cc42f706",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:19.677Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1007,9 +1007,9 @@
       "y": 0.3889
     },
     {
-      "id": "03582156-314b-46f2-9ac0-faa9e86d6554",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:38.136Z",
+      "id": "5844902a-ffea-4581-ad15-791e3c8f78d4",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:20.715Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1017,9 +1017,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "95efcc61-374f-43f9-aaaf-3485b79fc479",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:38.736Z",
+      "id": "4af4331d-40c9-46dc-aa53-7604badfffd9",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:21.315Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1029,9 +1029,9 @@
       "y": 0.4444
     },
     {
-      "id": "5591d74c-b121-4132-95df-d01e9b74e164",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:39.736Z",
+      "id": "703f6301-5796-48d7-ab44-a42f2f7ca261",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:22.315Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1041,9 +1041,9 @@
       "y": 0.2525
     },
     {
-      "id": "6005da86-7fc7-448f-8a21-095349144a62",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:39.836Z",
+      "id": "12a835a8-051b-48fb-989d-4c72949ddfe3",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:22.415Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1051,9 +1051,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "61f2f641-9bd2-4a76-be35-ce653cb2fac3",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:40.881Z",
+      "id": "06474da0-c5a3-4126-b083-814ed3267b86",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:23.460Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1063,9 +1063,9 @@
       "y": 0.2566
     },
     {
-      "id": "fe7708f1-ac90-467e-a58f-080beca1cdf9",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:41.849Z",
+      "id": "4b542286-4ede-4942-9a2b-b4f4fa2d8d38",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:24.428Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1073,9 +1073,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "57dd3dd9-4410-4aad-833c-26ae5e108af3",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:43.440Z",
+      "id": "95bc4f90-f6ff-4e9c-9976-3a52ecd38b2c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:26.019Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1083,9 +1083,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "2b9cd78b-21a2-475c-9dab-e83e3790dcf8",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:44.465Z",
+      "id": "babe3ad6-53ad-47a1-bc97-7b0fb0533b8d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:27.044Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1093,9 +1093,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "d0a29a10-8223-474c-8ed8-a8c01462c532",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:45.889Z",
+      "id": "cd1e7eef-554a-4fee-a11b-f9a7a1738adb",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:28.468Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1103,9 +1103,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "59594b85-8576-4112-8326-63957b4c3aa1",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:47.089Z",
+      "id": "3bb4cd52-93f3-4875-a218-c44dde315786",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:29.668Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1115,9 +1115,9 @@
       "y": 0.5717
     },
     {
-      "id": "41636a0c-73c7-435c-b6b3-6fa978b2aa28",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:49.881Z",
+      "id": "ea373985-8348-489a-b82b-bfc2f28355ef",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:32.460Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1127,9 +1127,9 @@
       "y": 0.5808
     },
     {
-      "id": "d9e607ea-ad37-4ff9-9630-fea648961837",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:50.888Z",
+      "id": "bb4d8b52-180b-43a4-b1e0-96ec5718bb25",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:33.467Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1139,9 +1139,9 @@
       "y": 0.5788
     },
     {
-      "id": "da8802b5-033b-4089-99bc-369c3a794d43",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:52.040Z",
+      "id": "956f3a9d-c4eb-435a-ac2c-f9d4575f39c2",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:34.619Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1151,9 +1151,9 @@
       "y": 0.5768
     },
     {
-      "id": "2e6c3568-e402-411f-9e8f-2caf7b9a5784",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:53.040Z",
+      "id": "c9f77ea4-abf3-46e4-abf0-5f569326b1f3",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:35.619Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1163,9 +1163,9 @@
       "y": 0.9636
     },
     {
-      "id": "7b784dbb-c7a0-4b84-8fe8-b5a5bed1d8b9",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:32:54.233Z",
+      "id": "88ba2c53-f6c0-4e51-8d00-6b5466e3bd4c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:07:36.812Z",
       "origin": "https://www.foxnews.com",
       "tabId": 2,
       "provenance": "human",
@@ -1175,9 +1175,9 @@
       "y": 0.9444
     },
     {
-      "id": "90249c11-aec8-4969-b9bf-ef927216e6c4",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:09.062Z",
+      "id": "2d4e2750-e9c0-48ba-99b4-3d11ff8ea87c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:08:51.641Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1187,9 +1187,9 @@
       "y": 0.2364
     },
     {
-      "id": "15ae576e-5c74-464b-86db-3aa00e8f7db2",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:10.110Z",
+      "id": "75e5c380-97f1-44ad-96bd-a222409e27d1",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:08:52.689Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1199,9 +1199,9 @@
       "y": 0.1465
     },
     {
-      "id": "7ffd36f2-905d-4e11-81cd-676dfcdf981e",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:11.134Z",
+      "id": "9c8b5d70-4160-46e5-9526-61f522c93887",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:08:53.713Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1211,9 +1211,9 @@
       "y": 0.0778
     },
     {
-      "id": "7d171fef-f86d-45ad-8a2d-6a7db5324edc",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:12.137Z",
+      "id": "79bd8c91-85c6-44d0-8a2d-83bd73a7c762",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:08:54.716Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1223,9 +1223,9 @@
       "y": 0.8576
     },
     {
-      "id": "d9c344d3-97f0-4ed9-8205-b38f27cdfaed",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:13.142Z",
+      "id": "6c34420e-0670-470b-b1a9-bd9d7b280de2",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:08:55.721Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1235,9 +1235,9 @@
       "y": 0.2616
     },
     {
-      "id": "3c107245-ab92-4b57-8648-97dbb4738d71",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:14.142Z",
+      "id": "042b4b33-3136-4513-816f-8feececb83c3",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:08:56.721Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1247,9 +1247,9 @@
       "y": 0.404
     },
     {
-      "id": "99be4d87-9a6c-432d-8339-d7ff534cb22a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:14.892Z",
+      "id": "331df0a9-e904-45e6-9ac6-cfab31569b43",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:08:57.471Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1259,9 +1259,9 @@
       "y": 0.3646
     },
     {
-      "id": "f6048aa7-c89e-4eb2-9620-fb80243d6f69",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:15.197Z",
+      "id": "68da5878-8764-432c-9ae7-5bce7e923039",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:08:57.776Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1271,9 +1271,9 @@
       "y": 0.3636
     },
     {
-      "id": "e6afcbef-90d2-4d41-aac6-ab3185366562",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:27.306Z",
+      "id": "5a93407c-79f1-4390-8a53-cb1fc349e214",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:09:09.885Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1283,9 +1283,9 @@
       "y": 0.4596
     },
     {
-      "id": "20ac0da4-ffbd-4ee2-9ac1-4cbd0dccbe3c",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:27.942Z",
+      "id": "5c7c667b-506f-4449-8d32-f4d317b80d3f",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:09:10.521Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1295,9 +1295,9 @@
       "y": 0.5141
     },
     {
-      "id": "6622a3e9-ef9a-41ee-a3d7-b15ad4311139",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:28.310Z",
+      "id": "a1c88e49-292b-4d75-81f4-d0a7e1267903",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:09:10.889Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1307,9 +1307,9 @@
       "y": 0.4899
     },
     {
-      "id": "4143915a-d252-47f2-8f71-512adbc3973a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:38.998Z",
+      "id": "22414d5d-37b8-498a-a0e3-73148c97bb91",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:09:21.577Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1317,9 +1317,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "1e68b66d-fda6-4ef8-9545-290c06ce0d1c",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:39.222Z",
+      "id": "c8ce8721-2a89-4c26-82da-247bfe7601a3",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:09:21.801Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1329,9 +1329,9 @@
       "y": 0.6778
     },
     {
-      "id": "3fab601f-9973-47ee-993f-2b3edd6ee560",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:40.558Z",
+      "id": "52a97fa1-afbf-4cc7-9153-7edf1e8ff98c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:09:23.137Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1341,9 +1341,9 @@
       "y": 0.5364
     },
     {
-      "id": "77e59f6d-fa85-491c-87c1-7cf32b4b8a15",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:51.318Z",
+      "id": "0d7637bb-5b60-45c6-9836-5be9b5d36c7d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:09:33.897Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1351,9 +1351,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "94dbd28e-38f7-405b-9a99-a980fa1b0bbd",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:34:54.007Z",
+      "id": "06815e8b-d806-4060-9e16-d86cd6dfaa43",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:09:36.586Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1361,9 +1361,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "03c71662-3c31-4745-8498-e315ac452b1c",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:35:13.686Z",
+      "id": "0f1498cb-02ed-4150-8d42-d1d0421c93fc",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:09:56.265Z",
       "origin": "https://www.foxnews.com",
       "tabId": 3,
       "provenance": "human",
@@ -1373,9 +1373,9 @@
       "y": 0.1
     },
     {
-      "id": "bbdbc9dc-14c7-48d1-959e-606513783ebd",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:30.050Z",
+      "id": "cdac5340-4b01-47c3-b7bd-bb9dcb2a2a52",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:12.629Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1385,9 +1385,9 @@
       "y": 0.5485
     },
     {
-      "id": "b3f31ad6-6b14-4f37-867b-8541e65be4c5",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:31.186Z",
+      "id": "00eb4cf5-88bf-4bf2-a733-47d83c0e133d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:13.765Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1397,9 +1397,9 @@
       "y": 0.2394
     },
     {
-      "id": "2dbf8025-327c-4fc0-869e-20ab5fb9bb91",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:32.378Z",
+      "id": "e5d1c4c4-f717-4995-9f51-53288c90f3a4",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:14.957Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1409,9 +1409,9 @@
       "y": 0.2374
     },
     {
-      "id": "2ce0003c-1338-4dbd-8f4e-adc8a74f7168",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:33.260Z",
+      "id": "057d42cd-943d-494f-80ec-6aa488966137",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:15.839Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1419,9 +1419,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "c0b1ec70-68cf-4f0a-ba7a-1df8a1020afa",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:34.882Z",
+      "id": "880a1e93-fd0a-4a9a-9bec-1cd399b7032c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:17.461Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1431,9 +1431,9 @@
       "y": 0.001
     },
     {
-      "id": "c401ef9f-0ea7-4607-992e-239e7c742e82",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:36.275Z",
+      "id": "e578db5b-3692-4753-b5a4-0ee18c20de8f",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:18.854Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1443,9 +1443,9 @@
       "y": 0.2465
     },
     {
-      "id": "9fad71af-4179-4d4b-b2f4-ca6d91734ac0",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:37.195Z",
+      "id": "12df1c56-6344-422f-a96e-42482dc71e80",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:19.774Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1456,9 +1456,9 @@
       "effect": "content-changed"
     },
     {
-      "id": "b2f17665-03a7-43fa-bda9-c39af53fedf6",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:37.686Z",
+      "id": "d65018b1-61d8-48f8-8181-8ab5d9874bb9",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:20.265Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1468,9 +1468,9 @@
       "y": 0.1293
     },
     {
-      "id": "8245597e-d92e-4e88-ae88-4b3f645c1b19",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:38.784Z",
+      "id": "9702f480-aecb-4049-9a8f-71cd9766a1d5",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:21.363Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1480,9 +1480,9 @@
       "y": 0.6727
     },
     {
-      "id": "ae8969d8-a2c4-46b7-ac71-30b9c614b6ba",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:39.794Z",
+      "id": "f4f81f5d-a074-4dea-b508-24873cca136e",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:22.373Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1492,9 +1492,9 @@
       "y": 0.5879
     },
     {
-      "id": "caf65a2f-aed4-42ca-99c0-22e3ac49e988",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:40.797Z",
+      "id": "2d3e8860-5055-4024-88c9-607767fb88d5",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:23.376Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1504,9 +1504,9 @@
       "y": 0.5778
     },
     {
-      "id": "2e70be2e-802e-4617-ad69-9a843e27678b",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:41.995Z",
+      "id": "90141f61-f242-43a5-ba72-7a199d24b203",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:24.574Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1514,9 +1514,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "89991d36-8d5c-40db-b6c0-a2a9f7afdaf8",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:42.659Z",
+      "id": "774c1993-9f52-4d21-ac7d-1fa569468bd1",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:25.238Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1526,9 +1526,9 @@
       "y": 0.5323
     },
     {
-      "id": "8fe7e908-7fc1-41eb-b6ae-2ed0dc45068c",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:43.011Z",
+      "id": "ad278a67-6e97-458c-897a-626d912536ed",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:25.590Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1536,9 +1536,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "6b3cf168-86b2-4619-8b1f-95c77f167eea",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:48.819Z",
+      "id": "bcfba550-083a-4fba-8c23-99c4458da79a",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:31.398Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1546,9 +1546,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "fb18d4cd-a6f3-4574-9ab6-6b8862d8d16e",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:50.002Z",
+      "id": "43a66e58-9bdc-451a-9d38-e1a3aecf5869",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:32.581Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1556,9 +1556,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "1be58d59-fb8e-4fbc-999b-8b203744c981",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:51.043Z",
+      "id": "5f7d7ed3-03f4-4753-96cc-1959e4fcdd31",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:33.622Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1566,9 +1566,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "f7c27ab8-a8cc-4086-9573-f584f7351f6f",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:51.866Z",
+      "id": "b93be97c-606f-47f5-b5aa-a141cab0d758",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:34.445Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1578,9 +1578,9 @@
       "y": 0.5273
     },
     {
-      "id": "31814094-55ef-4819-9a2a-0b8187056261",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:52.866Z",
+      "id": "5fa20bd6-0a4c-404c-8a4e-c2d1acf939b9",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:35.445Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1590,9 +1590,9 @@
       "y": 0.4434
     },
     {
-      "id": "d3c7875b-f7ee-49ba-ad13-aa6a78f4c3fe",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:53.514Z",
+      "id": "5aed1664-81aa-4e30-ac4e-f06a6c3d1ce8",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:36.093Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1603,9 +1603,9 @@
       "effect": "content-changed"
     },
     {
-      "id": "14c909b0-28e5-4657-afb8-9aa78c2452be",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:54.387Z",
+      "id": "8fd87595-e0ff-4904-b4a2-e5281f4f0f7b",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:36.966Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1615,9 +1615,9 @@
       "y": 0.4475
     },
     {
-      "id": "480f4dd3-49fc-4acc-a47d-a259c6f57edc",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:56.734Z",
+      "id": "184e90ce-4b53-4681-ba9c-24a083338f1d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:39.313Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1625,9 +1625,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "b666274a-636d-4d0a-a0c0-05edbaef8426",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:36:56.811Z",
+      "id": "26439132-f3d5-44d3-b7d7-12b1ad56e45e",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:39.390Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1637,9 +1637,9 @@
       "y": 0.4717
     },
     {
-      "id": "cd82edea-b9ee-4cf7-a8ff-dfb871f7299b",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:01.720Z",
+      "id": "b7b5e456-2d4c-486c-a2fa-2ba069a2329d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:44.299Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1649,9 +1649,9 @@
       "y": 0.5475
     },
     {
-      "id": "7e46483b-e94b-46f1-b29e-c33ed18b36ec",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:02.212Z",
+      "id": "7a76a312-c523-48fd-b511-bb49927ea964",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:44.791Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1659,9 +1659,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "98d813d9-81f3-467d-98ed-622f2eab75a7",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:02.931Z",
+      "id": "cc4a1fb6-5ab6-4480-b370-b3ee54b7343f",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:45.510Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1671,9 +1671,9 @@
       "y": 0.5889
     },
     {
-      "id": "3a0d449f-0dca-4735-b00e-54bbbbcfb606",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:03.986Z",
+      "id": "defbf4cf-9c8f-4364-9449-2278039b8578",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:46.565Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1681,9 +1681,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "708915b5-5fc1-44a0-afd0-b37ec3300cb8",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:04.684Z",
+      "id": "ac248629-67ca-4f48-9f78-7f7f8dede78a",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:47.263Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1693,9 +1693,9 @@
       "y": 0.697
     },
     {
-      "id": "ee4c656a-2dc9-427c-9a7a-bbf3fedd006d",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:05.738Z",
+      "id": "3ade8bd0-3156-4b15-a2b7-acf40d50eb15",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:48.317Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1705,9 +1705,9 @@
       "y": 0.803
     },
     {
-      "id": "0d1635db-bb14-468b-9839-3a6580728123",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:06.858Z",
+      "id": "84db0fb5-48fc-46e2-be38-5a59eb11b5ab",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:49.437Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1717,9 +1717,9 @@
       "y": 0.8253
     },
     {
-      "id": "e8f2e782-e839-4155-9f77-bd34a398e0f7",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:13.467Z",
+      "id": "b6b58312-22a4-4e97-80c8-e0c630b2bcae",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:56.046Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1729,9 +1729,9 @@
       "y": 0.7101
     },
     {
-      "id": "45e51b66-ff3c-470f-981f-c611730af844",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:13.899Z",
+      "id": "768ce4e0-fb27-477e-bd8e-a04883d63520",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:56.478Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1741,9 +1741,9 @@
       "y": 0.7111
     },
     {
-      "id": "7f12dcc1-461e-47ec-8316-dc75a8b45897",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:14.874Z",
+      "id": "f783999b-423e-4200-b93f-f91f8d9cd656",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:57.453Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1753,9 +1753,9 @@
       "y": 0.7111
     },
     {
-      "id": "15259d07-de8d-4a8d-9cb5-22ad450e3c63",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:15.315Z",
+      "id": "5d14bcef-9020-4c95-8d02-8209f0c5be51",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:57.894Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1763,9 +1763,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "200ff4e4-2b17-4a41-922e-0d63fe60c7ef",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:16.530Z",
+      "id": "23f5127c-1935-4af8-9053-3a964bb30332",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:11:59.109Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1773,9 +1773,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "b3e41028-454b-4d4b-9c64-7973830b42c7",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:27.907Z",
+      "id": "09bc6b32-c53e-4ee6-9051-a1e184b579a3",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:10.486Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1785,9 +1785,9 @@
       "y": 0.7657
     },
     {
-      "id": "200fe380-bf06-431f-9982-8d838eb184e4",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:28.867Z",
+      "id": "16921540-9156-450d-a1a4-49d7e967ff53",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:11.446Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1797,9 +1797,9 @@
       "y": 0.4354
     },
     {
-      "id": "9554d290-230b-4801-8199-026c5d9b0726",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:29.146Z",
+      "id": "b443caaa-6bab-4601-b3c2-f162bce3f05c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:11.725Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1809,9 +1809,9 @@
       "y": 0.4364
     },
     {
-      "id": "28534259-aef2-4eac-942a-1b4e42f1e915",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:30.298Z",
+      "id": "52f50dee-6d42-45c4-8947-fd6f85370ce3",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:12.877Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1819,9 +1819,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "02497cb9-acbd-488a-a0ef-d40f572274d4",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:43.419Z",
+      "id": "3fdc4dc8-4bf8-443e-a2f3-b59c26b4421b",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:25.998Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1829,9 +1829,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "d1a0b161-21cb-4323-974d-c0ae7cef67db",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:43.594Z",
+      "id": "b0b2965a-9c04-49bb-9f4a-ab89d4f45fec",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:26.173Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1841,9 +1841,9 @@
       "y": 0.5939
     },
     {
-      "id": "ac04d0d9-8700-467a-a1bd-01327c180b48",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:44.554Z",
+      "id": "5d656efa-c415-4198-b61d-a6981c793608",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:27.133Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1851,9 +1851,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "01c90e67-a9f1-4a66-8e75-693659b90873",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:45.658Z",
+      "id": "fcd59f4c-ce36-4861-ac41-bcb0cb3dac59",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:28.237Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1861,9 +1861,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "e53616ae-fdee-45f4-83d5-0cb1d6fc5a5b",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:47.154Z",
+      "id": "ae678bd8-8d41-4477-853d-1246ba6c5203",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:29.733Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1871,9 +1871,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "21db1a78-246e-4ba1-8ddb-04b66c4efe35",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:47.698Z",
+      "id": "51671abe-1381-44cf-b134-4bc6a928a8c4",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:30.277Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1883,9 +1883,9 @@
       "y": 0.5929
     },
     {
-      "id": "a4cf6b31-c327-4275-8c6f-8518d9c0ea1b",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:48.475Z",
+      "id": "8d80f0ac-56ff-4645-b58a-9f21fcaff776",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:31.054Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1893,9 +1893,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "6e83ccf1-43b0-4f23-ba93-aeb3213f4dce",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:48.706Z",
+      "id": "05b2c82a-3f1e-4853-81c0-41b4fe24bdab",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:31.285Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1905,9 +1905,9 @@
       "y": 0.5929
     },
     {
-      "id": "7c96de91-609d-4131-98fc-7e4b6bce3be3",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:49.322Z",
+      "id": "16063033-ffb6-4344-85d0-e27c0d8dfcdd",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:31.901Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1917,9 +1917,9 @@
       "y": 0.9798
     },
     {
-      "id": "5dd7d359-e555-453f-805d-f14948fc5cb0",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:37:50.226Z",
+      "id": "6247b1e2-38e0-458a-80c5-123f0ca10c15",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:12:32.805Z",
       "origin": "https://www.foxnews.com",
       "tabId": 4,
       "provenance": "human",
@@ -1927,9 +1927,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "d0388f40-d8f4-44a0-a78b-5bc31b859cbc",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:33.602Z",
+      "id": "1d1807d2-4852-469d-b067-b161037e2637",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:16.181Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -1939,9 +1939,9 @@
       "y": 0.397
     },
     {
-      "id": "71c4ab91-eb75-4011-ae34-a63528c57ca5",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:34.914Z",
+      "id": "d21203e5-90e1-4540-8733-3551327f8795",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:17.493Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -1951,9 +1951,9 @@
       "y": 0.401
     },
     {
-      "id": "7375926c-8ae1-4579-83ad-9babe357e200",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:35.914Z",
+      "id": "354eb703-e8d0-4d08-8804-03d4fe92e07b",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:18.493Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -1963,9 +1963,9 @@
       "y": 0.2404
     },
     {
-      "id": "033282e6-8d22-4983-92ae-598998e09d51",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:36.914Z",
+      "id": "95cb84b6-04aa-44e6-8418-f666d62c3fbb",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:19.493Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -1975,9 +1975,9 @@
       "y": 0.302
     },
     {
-      "id": "d9c8e071-7d64-44d7-bfcd-30e79414b3b7",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:37.915Z",
+      "id": "18a84b1f-ba93-42aa-806b-92ec1253f981",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:20.494Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -1987,9 +1987,9 @@
       "y": 0.1828
     },
     {
-      "id": "5bc6cf6e-9672-4890-8fcd-4db9eb08a467",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:38.938Z",
+      "id": "70acca2b-7e94-49c1-a69d-db988e047234",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:21.517Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -1999,9 +1999,9 @@
       "y": 0.3707
     },
     {
-      "id": "3a6bc219-3607-4a92-865c-cb14b2e27653",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:39.938Z",
+      "id": "4c5f4997-345e-49ec-bcd1-21e4db517b63",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:22.517Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2011,9 +2011,9 @@
       "y": 0.1586
     },
     {
-      "id": "7583651e-b5c2-4c44-bec7-432f186875a7",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:40.579Z",
+      "id": "d1e8c578-718a-4bcc-b7e1-f737b7375c96",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:23.158Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2021,9 +2021,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "c3df0547-f1f3-44b5-8c65-7c23f41540c1",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:40.589Z",
+      "id": "3914eca8-47c8-41fb-adf1-75629b1d144f",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:23.168Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2031,9 +2031,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "627d8afc-481d-44af-88ed-7759021bbfd7",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:40.938Z",
+      "id": "484d9e6f-777a-427f-9bc0-f87e8f7cacff",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:23.517Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2043,9 +2043,9 @@
       "y": 0.5131
     },
     {
-      "id": "c10e2acc-66c7-429e-9019-13e55ef72395",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:41.952Z",
+      "id": "2f79b349-79db-4609-8853-82670a77b536",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:24.531Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2055,9 +2055,9 @@
       "y": 0.1646
     },
     {
-      "id": "a1a39442-d248-4c36-bdba-68c24cd97620",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:42.547Z",
+      "id": "cb7c5086-d6b9-4ca2-a952-b3576256b77d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:25.126Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2067,9 +2067,9 @@
       "y": 0.1697
     },
     {
-      "id": "561e2112-09b5-430d-97ce-ba37d7c0fd1f",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:42.993Z",
+      "id": "5044d6c4-d7f3-48dc-baa5-45c6cf7047b7",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:25.572Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2079,9 +2079,9 @@
       "y": 0.3455
     },
     {
-      "id": "fcbdfcc3-60be-473f-af24-a927092be33d",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:44.027Z",
+      "id": "5b0fb4cc-7e85-4f96-b792-bdf9c80683de",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:26.606Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2091,9 +2091,9 @@
       "y": 0.9081
     },
     {
-      "id": "b8f2dde7-5083-4d83-a59e-3f1eb3a1ed79",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:44.691Z",
+      "id": "b7dea490-3b9c-426d-9268-369c7d63da49",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:27.270Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2101,9 +2101,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "7074c430-50f6-414e-8aaf-52a526f91150",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:45.363Z",
+      "id": "4aa17074-feab-48c7-a617-d6b0c7763688",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:27.942Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2113,9 +2113,9 @@
       "y": 0.3232
     },
     {
-      "id": "d812acba-e462-4aab-925a-f8ee50ee331a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:46.051Z",
+      "id": "403f02ac-53a2-4fff-9d3f-f7aabea3ec7c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:28.630Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2123,9 +2123,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "2acaf77f-02bc-4956-b8f7-cbc1eda0efd9",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:46.394Z",
+      "id": "a2790a52-e688-413b-847d-4105cb8a5bea",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:28.973Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2135,9 +2135,9 @@
       "y": 0.6384
     },
     {
-      "id": "5bb3c955-392f-4939-93af-e2628aa4c687",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:56.890Z",
+      "id": "1909cab4-e41c-4a51-8419-4835c2de102f",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:39.469Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2145,9 +2145,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "ecebdd6a-a778-4e45-acdd-8e724886d6e4",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:58.435Z",
+      "id": "12f0da5a-7f96-4685-b159-522d10220c6f",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:41.014Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2155,9 +2155,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "efbb0bfe-a7fd-4e8b-bd21-b9c9cca887c6",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:59.527Z",
+      "id": "3e8fa12e-6042-4bd7-85d8-040a85dc34e2",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:42.106Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2165,9 +2165,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "ef41fdf8-6a62-471d-a561-c8194a6d48d6",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:40:59.644Z",
+      "id": "87993438-7b4e-48b1-8fc8-f6c99e393d1f",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:42.223Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2175,9 +2175,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "f4dcc45f-63d3-4501-b73b-5a327212522e",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:00.551Z",
+      "id": "7f09f625-e7f9-4ca7-ab6d-32af84d6daf8",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:43.130Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2185,9 +2185,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "e188ce98-65f3-4d7a-b682-c06162aa6aa4",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:01.650Z",
+      "id": "83ddfbc8-e602-4f79-8978-015e2e1a1ed0",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:44.229Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2197,9 +2197,9 @@
       "y": 0.5626
     },
     {
-      "id": "8264d43b-4043-4988-bdff-4d36ec219122",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:02.735Z",
+      "id": "a03359da-b2f6-497d-9a53-223a45baa30d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:45.314Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2209,9 +2209,9 @@
       "y": 1
     },
     {
-      "id": "a2596406-7e95-45a3-ba21-ce5737315e78",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:03.755Z",
+      "id": "2fabd213-5092-4b48-8515-93c3374a364c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:46.334Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2221,9 +2221,9 @@
       "y": 0.9758
     },
     {
-      "id": "6b2506de-1f17-41ac-ae6e-ddfed2bd00f7",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:04.598Z",
+      "id": "df939a00-0e3f-430f-9bf9-cde8a64d08e7",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:47.177Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2233,9 +2233,9 @@
       "y": 0.9848
     },
     {
-      "id": "1df9b10f-9f7a-4a81-9c84-fe4a7fba8bad",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:05.002Z",
+      "id": "9c072957-7597-4f74-9ed0-625c62715756",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:47.581Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2245,9 +2245,9 @@
       "y": 0.9848
     },
     {
-      "id": "7ff5f39f-f6b3-46c2-8b33-d63f70b90caf",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:06.013Z",
+      "id": "867305e8-36e2-4a15-a622-a7f229abe35c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:48.592Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2257,9 +2257,9 @@
       "y": 0.6818
     },
     {
-      "id": "3add0a69-d7d7-4a2e-96aa-6a23633f64ff",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:06.730Z",
+      "id": "d9e94902-0971-4b05-b5cf-5991b918b7a9",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:49.309Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2269,9 +2269,9 @@
       "y": 0.7101
     },
     {
-      "id": "b959b748-81bd-496d-8b38-51dba5240db7",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:07.675Z",
+      "id": "941b98ea-8fe4-4364-a900-d148c4c70f0b",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:50.254Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2281,9 +2281,9 @@
       "y": 0.7101
     },
     {
-      "id": "5cc968b6-4b20-4fd9-9931-65fa39898e0d",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:08.185Z",
+      "id": "c8f8e169-8b96-45e1-9ee9-573bc6e6127a",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:15:50.764Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2293,9 +2293,9 @@
       "y": 0.7101
     },
     {
-      "id": "8faff44c-21d7-40d4-a607-707215633373",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:30.767Z",
+      "id": "2154ce27-740d-4451-a0f8-ccbb68bb5da6",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:16:13.346Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2305,9 +2305,9 @@
       "y": 0.7293
     },
     {
-      "id": "d2a72da7-3e5e-471f-9828-c00f9b567ec4",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:41:32.107Z",
+      "id": "45cd79c0-b3f9-47d6-b0c8-c5335c11f8d5",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:16:14.686Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2317,9 +2317,9 @@
       "y": 0.7293
     },
     {
-      "id": "ed63fb5c-cdc3-41c0-9482-040f0aba0e58",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:44:27.540Z",
+      "id": "771c7fbc-a292-4a42-9736-5c0807d5df23",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:19:10.119Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2328,9 +2328,9 @@
       "key": "Tab"
     },
     {
-      "id": "e3dd72b6-0568-410b-8019-994a1cec3fa5",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:44:27.930Z",
+      "id": "d8a940f2-53ad-4a23-8bde-1f3f0f33c529",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:19:10.509Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2340,9 +2340,9 @@
       "y": 0.3455
     },
     {
-      "id": "d7bdeb38-b9cd-4d92-8e17-d571ea336127",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:45:10.653Z",
+      "id": "c96c1195-48b9-41eb-bcf6-31ba1d1ed0d2",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:19:53.232Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2351,9 +2351,9 @@
       "key": "Tab"
     },
     {
-      "id": "b1ccbbd9-9c42-4f05-b3a7-6dc153844f21",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:45:10.978Z",
+      "id": "a0b2f685-37d5-4f1f-a428-36479167addd",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:19:53.557Z",
       "origin": "https://www.foxnews.com",
       "tabId": 5,
       "provenance": "human",
@@ -2363,9 +2363,9 @@
       "y": 0.6
     },
     {
-      "id": "e85285e0-6cf6-4468-914b-618424b08441",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:26.881Z",
+      "id": "d0e40342-aef3-4f1a-9f3b-2d84dd60bc09",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:09.460Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2375,9 +2375,9 @@
       "y": 0.3111
     },
     {
-      "id": "99852db3-608f-456e-91ca-c497b0706406",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:27.071Z",
+      "id": "8913d102-1f45-4424-9bff-3a2ba66d3089",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:09.650Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2385,9 +2385,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "fca1624e-71de-4f32-be35-211dba1d9d96",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:27.071Z",
+      "id": "96fb0e86-213c-4498-9196-8913f226b6dd",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:09.650Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2396,9 +2396,9 @@
       "key": "Enter"
     },
     {
-      "id": "2a2c24c7-dcfc-4b05-bdfe-4f31df985dfd",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:28.545Z",
+      "id": "4d3919de-00c3-48d6-8b4c-87cf8d900b91",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:11.124Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2408,9 +2408,9 @@
       "y": 0.3081
     },
     {
-      "id": "ffef3b98-8994-498a-9473-2d6218c2c485",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:29.898Z",
+      "id": "56d66d78-48cb-4c92-8fa2-3e336f42f9de",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:12.477Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2420,9 +2420,9 @@
       "y": 0.3101
     },
     {
-      "id": "8b519ee9-e899-41da-ab21-e6c193a5ede1",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:30.378Z",
+      "id": "5b48d005-9846-49e6-abe4-3ef522054449",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:12.957Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2430,9 +2430,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "485d5c4a-9a7a-4879-a57a-084461cdaa50",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:31.425Z",
+      "id": "2b108bd8-a080-4a19-bbc2-0a9049929308",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:14.004Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2442,9 +2442,9 @@
       "y": 0.301
     },
     {
-      "id": "2d63b5a2-79b3-4050-90a7-450afa5d79b0",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:31.635Z",
+      "id": "4ef48e54-c98a-4c28-9010-d1cfb1f416e7",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:14.214Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2452,9 +2452,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "4baeb3cb-25dc-43fd-a008-051e925ca26c",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:32.778Z",
+      "id": "7434edfb-f73f-45e8-bf0a-9a87f5012fd6",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:15.357Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2464,9 +2464,9 @@
       "y": 0.3616
     },
     {
-      "id": "ce0ab5b0-d0e7-4f5e-80e7-0548b6381c18",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:33.778Z",
+      "id": "b9db6fa4-1b9c-4732-8f99-a23a781b6331",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:16.357Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2476,9 +2476,9 @@
       "y": 0.5747
     },
     {
-      "id": "f9dcda47-34b5-4d43-87d0-c78ae0b37345",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:34.258Z",
+      "id": "136b9f68-cb7a-4469-8976-faf178d49421",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:16.837Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2486,9 +2486,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "71e6741c-5105-4349-9cfc-1346eea1d838",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:35.129Z",
+      "id": "fa4737c1-40d7-4845-9a1e-c9827a8ee04b",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:17.708Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2498,9 +2498,9 @@
       "y": 0.6202
     },
     {
-      "id": "9d8d3735-6a25-44bb-9c0f-0f84415cea65",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:35.938Z",
+      "id": "5e6c8271-3ca3-4b4f-b9a7-4b7ceecd7c45",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:18.517Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2508,9 +2508,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "4c55a964-68cb-4e08-9ddf-af693713c5fe",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:36.985Z",
+      "id": "76d38ab6-db57-447a-aa84-7242d5f8f058",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:19.564Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2518,9 +2518,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "ec1d0037-cb59-465a-b456-edbdf7e0100e",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:38.898Z",
+      "id": "e9905f2c-ff77-4535-82a3-060374b2f763",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:21.477Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2530,9 +2530,9 @@
       "y": 0.6162
     },
     {
-      "id": "bf128890-9a59-4648-a390-cb81c8896d15",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:39.673Z",
+      "id": "6123c076-f1ea-4dc8-b888-bd35c1ba681b",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:22.252Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2540,9 +2540,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "59a9424c-617a-4931-bf06-89bf2b47a6a6",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:40.801Z",
+      "id": "b511ce42-9800-4a81-90e0-6efdc420dafd",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:23.380Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2552,9 +2552,9 @@
       "y": 0.5253
     },
     {
-      "id": "da192396-3885-4249-8560-7ea69e87a13a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:41.266Z",
+      "id": "4ea0ec23-5e91-4f4e-92a0-dcb7ad1e364f",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:23.845Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2562,9 +2562,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "58b7b609-73de-43d0-8afe-a0eec6f7d27e",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:42.282Z",
+      "id": "ba8f48e3-d385-4752-8817-ef0b465f8c65",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:24.861Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2572,9 +2572,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "8c40fcb2-b241-460c-bbda-55c73287cf0d",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:43.970Z",
+      "id": "4f845b3a-a888-4ce5-b3e8-2cb23d29e723",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:26.549Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2582,9 +2582,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "a47f5f26-0279-444d-b205-8e7b373b4459",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:45.242Z",
+      "id": "ca5c3f94-bf61-46ba-a304-fa87f9bf58bb",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:27.821Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2594,9 +2594,9 @@
       "y": 0.5848
     },
     {
-      "id": "d4c97950-3614-4eda-af43-5971c831c1e9",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:49.865Z",
+      "id": "da8cc888-4ac5-489e-9ce5-9dda841ec9a9",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:32.444Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2606,9 +2606,9 @@
       "y": 0.5747
     },
     {
-      "id": "0a49021d-cc7c-4c4d-8c36-323e15904eee",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:51.993Z",
+      "id": "e356c6cf-36a6-45c9-b725-433d4f867d00",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:34.572Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2616,9 +2616,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "f5a75d34-ff4b-41e7-9481-2ed71c2f8dc2",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:53.297Z",
+      "id": "9ac1e703-cc37-4e47-9076-a4a79d510857",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:35.876Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2627,9 +2627,9 @@
       "key": "Enter"
     },
     {
-      "id": "33fb040f-2278-4b59-b554-da7e06ff3997",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:55.969Z",
+      "id": "0b64e725-89ed-420a-854c-0d0a4763ed71",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:38.548Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2638,9 +2638,9 @@
       "key": "Enter"
     },
     {
-      "id": "52e4e85c-3e57-4fe8-9c78-35d36f5ed21e",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:55.969Z",
+      "id": "bfdb0c69-663d-4f6b-95e1-c01da8f3bf60",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:38.548Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2649,9 +2649,9 @@
       "key": "Enter"
     },
     {
-      "id": "b6b750b9-b3fb-4385-a375-66cb841e5b10",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:56.337Z",
+      "id": "72c89eee-6033-4886-bb9e-8d396678d335",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:38.916Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2660,9 +2660,9 @@
       "key": "Enter"
     },
     {
-      "id": "5d0a69ea-65e7-4aeb-9db2-03b3933fec4d",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:57.481Z",
+      "id": "75263642-5762-4902-9a9e-c37db499f3bf",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:40.060Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2672,9 +2672,9 @@
       "y": 0.5778
     },
     {
-      "id": "82b94eac-2b66-4244-aace-c91e39bd94f5",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:46:58.705Z",
+      "id": "23c56638-089d-41a2-abfd-78900497a4be",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:41.284Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2685,9 +2685,9 @@
       "effect": "content-changed"
     },
     {
-      "id": "cfe0f969-eccd-4980-8394-4d810320e6e6",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:00.770Z",
+      "id": "8a7ef4eb-82a1-4f94-98a7-d782f4d31c5d",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:43.349Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2697,9 +2697,9 @@
       "y": 0.4364
     },
     {
-      "id": "c2ebcd76-59fa-4afa-bf09-a75942b2c677",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:01.778Z",
+      "id": "4527229f-692a-48c2-910d-627d9c9be52a",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:44.357Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2709,9 +2709,9 @@
       "y": 0.4576
     },
     {
-      "id": "b0068de6-739b-4b1c-9b37-91feb534d517",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:04.066Z",
+      "id": "dd638637-bbe1-4fd8-863b-29423c4e99ae",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:46.645Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2721,9 +2721,9 @@
       "y": 0.5091
     },
     {
-      "id": "63cbcb18-cb20-4432-9a22-5c78adcddc4a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:05.116Z",
+      "id": "e30caff4-6544-4cb1-bd3d-30380ec63409",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:47.695Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2733,9 +2733,9 @@
       "y": 0.8778
     },
     {
-      "id": "6f22d07d-bdb9-489d-88b0-c40f9f6331a0",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:06.129Z",
+      "id": "4109bb6a-07bb-4c03-bdb1-a02c2e16e33c",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:48.708Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2745,9 +2745,9 @@
       "y": 0.5505
     },
     {
-      "id": "bf29de5b-b847-44cc-97c1-33a93291f473",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:07.129Z",
+      "id": "2b44da81-5f07-4be1-b8ff-4b63d1a4b7de",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:49.708Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2757,9 +2757,9 @@
       "y": 0.3899
     },
     {
-      "id": "81edd857-7f30-4598-b930-725b8978b0db",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:08.247Z",
+      "id": "4775e84d-6966-4015-8237-3d86323ef3b7",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:50.826Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2769,9 +2769,9 @@
       "y": 0.3949
     },
     {
-      "id": "c4557017-ee59-4d83-ad06-a3f4394fb202",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:09.250Z",
+      "id": "a7e013f6-a77c-480f-b8dd-eaf82246b170",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:51.829Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2781,9 +2781,9 @@
       "y": 0.701
     },
     {
-      "id": "08fc7dfb-0193-4db2-b7b9-0b4db260c37c",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:10.257Z",
+      "id": "36454d8d-a9bd-41d8-afa6-34c40a411369",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:52.836Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2793,9 +2793,9 @@
       "y": 0.7657
     },
     {
-      "id": "c67520dd-a604-42d0-8bd9-19270c862c8f",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:11.465Z",
+      "id": "c8417b1e-78ac-47bc-8f00-6ba1f1351100",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:54.044Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2805,9 +2805,9 @@
       "y": 0.8788
     },
     {
-      "id": "4396f171-9fdd-4a86-94b6-ef464731e5c1",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:12.497Z",
+      "id": "f40fab17-054a-400b-aa35-2984d0f0c173",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:21:55.076Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2817,9 +2817,9 @@
       "y": 0.4212
     },
     {
-      "id": "96a95081-037e-48a6-8db7-b0e8a1abd96a",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:36.993Z",
+      "id": "261a91e3-cba8-49c4-9d9f-14035a26ddc1",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:19.572Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2827,9 +2827,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "c5c55116-7c9b-4c36-884a-1de19a9e33fe",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:38.105Z",
+      "id": "8ea836b0-cb50-457f-bd53-d3fb4e382c8f",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:20.684Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2837,9 +2837,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "6c31bd99-4eb2-4e70-9922-2bff541b0796",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:38.361Z",
+      "id": "95b44406-7c49-4c01-81ca-742994ff4cf8",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:20.940Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2849,9 +2849,9 @@
       "y": 0.4899
     },
     {
-      "id": "326662e6-77c8-40ff-af70-7a0b9ae5779b",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:44.722Z",
+      "id": "f95c6dd5-9dc8-437f-835d-6e217009ff72",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:27.301Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2861,9 +2861,9 @@
       "y": 0.9758
     },
     {
-      "id": "c411666b-3cc1-40d4-8476-479e5489da77",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:45.802Z",
+      "id": "e37680e5-48a7-4fac-90c1-1d792608ffde",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:28.381Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2873,9 +2873,9 @@
       "y": 0.9737
     },
     {
-      "id": "2eb183fe-e0dc-4889-aae3-c5da25e70516",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:47.995Z",
+      "id": "2f97c67d-1ac8-4fd7-974a-d94f35bececb",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:30.574Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2883,9 +2883,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "52b78b33-43f1-4a43-b58b-204ab7931af1",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:49.050Z",
+      "id": "e9d8436b-e6e4-4825-952b-b2039dbc9bd6",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:31.629Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2894,9 +2894,9 @@
       "key": "Enter"
     },
     {
-      "id": "d3c33e18-f5ba-43cd-bc5d-aeb2f7adb4e0",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:52.635Z",
+      "id": "8d99312d-ee17-4acf-9aa3-265f54979cad",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:35.214Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2904,9 +2904,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "2217e323-8d29-42af-a82d-940520f2bec8",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:53.402Z",
+      "id": "cabe7dfe-1731-4d83-801a-07d129d8df2a",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:35.981Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2915,9 +2915,9 @@
       "key": "Enter"
     },
     {
-      "id": "efbec85f-7219-4fb6-99da-ade3518a0125",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:58.666Z",
+      "id": "3c2186b4-c628-4932-9d2f-36e5e43940db",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:41.245Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2925,9 +2925,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "d5863424-e11b-405e-86c9-57118125dd55",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:47:59.722Z",
+      "id": "f9ebf8be-a75e-4021-bb7d-160ee91df794",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:42.301Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2936,9 +2936,9 @@
       "key": "Enter"
     },
     {
-      "id": "a41c87b0-ea50-4cec-9302-945039b798d9",
-      "sessionId": "6399afee-29b3-41a9-b17f-e20625ace2a7",
-      "at": "2026-11-07T23:48:02.721Z",
+      "id": "eab9f049-bede-4dd8-a8fc-af59cdf2c1d5",
+      "sessionId": "f407b73e-f796-4da2-b362-1214b69fce12",
+      "at": "2026-11-08T00:22:45.300Z",
       "origin": "https://www.squarespace.com",
       "tabId": 6,
       "provenance": "human",
@@ -2954,7 +2954,7 @@
       "headings": [],
       "excerpt": "",
       "active": false,
-      "observedAt": "2026-11-07T23:30:31.960Z",
+      "observedAt": "2026-11-08T00:05:14.539Z",
       "readStatus": "unavailable"
     },
     {
@@ -2964,7 +2964,7 @@
       "headings": [],
       "excerpt": "",
       "active": false,
-      "observedAt": "2026-11-07T23:32:56.606Z",
+      "observedAt": "2026-11-08T00:07:39.185Z",
       "readStatus": "unavailable"
     },
     {
@@ -2974,7 +2974,7 @@
       "headings": [],
       "excerpt": "",
       "active": false,
-      "observedAt": "2026-11-07T23:35:15.094Z",
+      "observedAt": "2026-11-08T00:09:57.673Z",
       "readStatus": "unavailable"
     },
     {
@@ -2984,7 +2984,7 @@
       "headings": [],
       "excerpt": "",
       "active": false,
-      "observedAt": "2026-11-07T23:39:18.252Z",
+      "observedAt": "2026-11-08T00:14:00.831Z",
       "readStatus": "unavailable"
     },
     {
@@ -2994,7 +2994,7 @@
       "headings": [],
       "excerpt": "",
       "active": false,
-      "observedAt": "2026-11-07T23:45:16.227Z",
+      "observedAt": "2026-11-08T00:19:58.806Z",
       "readStatus": "unavailable"
     },
     {
@@ -3004,7 +3004,7 @@
       "headings": [],
       "excerpt": "",
       "active": true,
-      "observedAt": "2026-11-07T23:48:11.640Z",
+      "observedAt": "2026-11-08T00:22:54.219Z",
       "readStatus": "unavailable"
     }
   ],
@@ -3035,24 +3035,30 @@
           "chromeTopPx": 90
         },
         "screenshots": [
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1d100e9.jpg?Expires=1794098950&Signature=rroKU5BJdbtUek7t0mbcQC2l~omaqEvxEqo6-QV4xJ8uZQPUXgp~bfBaY~TekxMKhBmLm6jxV9fTZaOzBsKWDWrt47btGdB04sN3lld2mN66Y0wqkMGCUqLbzF9dKr4NTMCJSaHgKU78hed9jiGF5-b8uS~0v8PIugJqJuWKnZ52I0O2gFKCGfht6hdh15pWIeJhi2U9liQmytNK5gVxUIxgbfnrKC3FRJ9ylodk96tAUUSEhttcOo4KGrCEMXVvScitOYAZp0PzPpua4xfU8L6y2FW~R1U05YNhioMdnADN4JSAXlNHiw-PZx0rxh3vjeQrzuEralc6NiZGqG~DgA__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1d300ea.jpg?Expires=1794098950&Signature=w7NvAf-9QObcsgGhEAIhLPGFq7QnExyiQWGFFELdxJIZgbg1ZdJIW5JzupXFtQmDtNdVP-yRrnh7zx9b42eL6boI-h8H~-qHkyFXmzxKK7BMIKsCSlfQopUYocONrhfOEihTisZoHfGTB-ozfVPrrnqEmLQbvGvpmRgRrIGGN3QaAsvHGGD05rDIMTz0g34ONTaV5mgrC76490R595ZSHtZH~RRz-UM-06ZyD2C2ltDsI100~aZJI0-qbWrOCEVqVP3SXqFOZgoclv4YrqHPOvM1KaCsnZaXgHh-PNrvQ2cWbSH33GOipudmjDQgCDKCQxxc7OnjdM4yoSgcfc6Y1g__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1d500eb.jpg?Expires=1794098950&Signature=HCthTPrO3Fc~JHQyQYzMmlO4~4llRP38t8HG903zgcthVYyqRy4Ip2nkIQhKnact2HqiuCqEwX73YD8q78TI5DqYIcOVmYD2HE5yH0s-OcnhxPjXZ0lRhgy7yQqqjHKHEB5spIESmaJtsKSPVX38wZxNdhiYDVcPQLN-2-kLTY5AMNnRDrTQo6kHAAs69pGjvy7a7r6C7eMEzRx4CNmyEw1r-H1kS-3bNfJDuYKR3E6JGZkOyUL~-1jAPT0UcR0ncVxXXPdPusxb7dw5X2kx8aMIngiijiJxeCzZIO~J55DbRWNbc5WgGTro3LiXKN6zCB1DP-J~xI5s3QB7MsLRUg__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1d700ec.jpg?Expires=1794098950&Signature=NNlo8yDZsfmRmuKnw~8wCPz9TPef~QZfvJEEW8mdDcMqXiSPIHxF2KLWkjGNtJF17XsbJKG3uYo56dz0cgDHMkO1e1iZ-vrKA9V7alAPWxdg8jcTqNYQpphxyeGxFqraTBfz-izdI-AuRpAOp4daXZxj7WVSbExdP-hPaW8KGhYlCwr7IIylfc7Nmtzko3jOErE7XkT3-Gt7yBcfMidNVn3JQmlYVTXWNjTC7KAokn5cFKNTdHZqXWeNMLIp1W966hAJFaO8ET4Bzvbz0C7P8hxT5mdQt0GhG9mvpuU3M7zfBvDRoeZ2bq-6Hb30BmLfaoEGR6iIm7D4t2jFe45-ZA__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1d900ed.jpg?Expires=1794098950&Signature=j~swCWhPWpC3dbLLxR2C75pIg5US2o63I1NhjjVh1uPa4Y-uztcnCz5dhNtvtBfUkRGY~SEppqmUlZar88g0qqOBkScpV-xwuxGDfEFYXybt~XIDhO-m3qWv03yNN3nFDJb0q3OyOTF9-9FmWLNC2dac2Ez-FuRC7uUTuF8Hwn-lUOJkn1jXriZ313aHq73PW~gMWH4RVur58JGrMTR9yvyprt2koZUa7iMwkAAXvkBQeQ2VdX0HPgspuj7PpkQSTrhnD-Ipl0EeVtTjRK2LIANSogR8Kp5oTGHH5wgwFOXjrYnXf0C5BtV28a79hsbjJI6mkjQnXvAKP9Wxl33T7Q__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1db00ee.jpg?Expires=1794098950&Signature=VEQwgblbuG1~qMCfJiqHVDRtoPOREciV2SD1CsSU7kBm4UdsgbH1BzkH1PLDtXSGqGtLsV7G4GYWxht2U39uiiGATOtx8Ww8X5WjQUWItI6MfqFojIfUJLxr0uphBU8KH5l6PpD1JtxJFpu0CrVgDL1SWUs6lY3~ye7A~2duDL0A3okbpcOJsi4kjLB4Luigfu8nfjLlhQHbuToWI3HhLLxdxx3IXVntuORSc9cdpP1Jb3itYngpLfM2E7eHBeZoTzePRzYBdHhQEsC7peYUwXw-E1IqqK5jTbsw-DmWYq6J1hH84yygRtS9UqSmjGMqaDcyJsa1i1Kmn6~ofI3bIw__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1dd00ef.jpg?Expires=1794098950&Signature=ReIE1pS-2HAQrEMYQBNhbWeMklOqpgq-3-URUjB~PWRL2yqOcZxBN-hPlkebi5grXQOxNzbMoQG6JotlYoqydRDi0QEP0-eZT5SNirMSUhzBKqZXz26gjASrCHMckZF43VhTPYUFf7BbnVzHFO27M~mcf4mzyl-TAIaLxo5P6xQR0E3I1Kl1r2BUmS2MPyQHa70X~Ip3U-NmpmkmjUEPxgJMfjU~rcMpgmRfDfcvs~1N8MuFfsZp~X1N4AXta0tu90FZR2ylKrvqA8RDKHGP5-dVzo1PF~B2lOVJXh9Zj6idZ1VaUgb1U8vtsHjlgJrI-VO8VWYbx4zPLQcz1l5WYw__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1df00f0.jpg?Expires=1794098950&Signature=Pe19C3GiwaS2oHzBvoX4b15huwGYAOHXi6vE95clIqD8AFkHI2WeJi0twtyZpdBYz4FazpQGRbpB~sRt7T0mQaVoRF~SSFvloRnmPoH7meN6Dq4GwhIdweYk85gWZ4EqWjoOOaUQzQFiylS09BeS1uobB6F61NflrlsrWew2p6Si2XyUxMDMnc2Lr1~bD0iyLZGUGPND9o35-~HKSw9~nAibfyh5r~x3nHxMb7AhssfeZJBV8xVb7~vYaJG8kcmHTV5ccXtZY7UpCnOa621MfuQVtxhOh-u8CfCfB~bdtvsZEFJXLXSoMzAmA5ebLDYDpQ9VKw7sCE5VNf1ln3b0TQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1e100f1.jpg?Expires=1794098950&Signature=vmvo5SN0eBu5WOPq6nvL7BcuSbKSLguff0XW-QGkHRKrVMDFx7T8sxPQy-xOR1LhLT4O75CKKn4diTsntdhUTLVAf7nzNu3WYId1NC9p6yyLXGJpdlwA7iSQOBm~-qyOhW-SGga9dKNzkcq~DbpMoSRctg0fvPpe5HRtKDDk7lo0T3m-J28FJrYNGr3dzLJGCy~RvvMO36eR3oIJ7pwn~fDXz8TpuB33RrQspIhtp8PQ~9bPzvNo4wGEUAOl3J-uwkPE-Z0pLBJD8oVIE81DW4ijWUtBqo84Vj5tP6Ms1DeollFajbTiqdhfpjzbS6giCGu3igNZ68AyQcDn-k7OVQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1e300f2.jpg?Expires=1794098950&Signature=UQSA~FTMbUS0RQvFWKLaHNoUmVO98QUqtEx0DLUglCaR3DCroSUEqTewTPKiyFRXAO~nI92AxwnMVNjgjQtViZiSuBsiTLbxxmdjW4jceEbflMkciyu4QUyaAZaanhjCUsr87pMUpJYrR~u2pwoPOcDZx5c4IA7iKaRq5J3~AluN6GfohU19ghJSSnK2eQ8mRTkNs8ufQ9PzTVXEErvT9F8uJGBHQ1bRxoMnn5Fw2LHfWU-rvB4fH9KruOqcJBmGZGFu0dbwzmdzcCl86q3mjyja4y88UVwDNVYzKJOuKXP~yDOm-2wftZt6iCYe6CyRBu7dfkd9Wv611spY0Kj78w__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-2c0011a.jpg?Expires=1794098950&Signature=naSqTacLmRhXy-8nTIOAKu3WUKR9bjzUfVj7L7Jm1ZJI0V-0-KwYcFvwDlnkZQ6a~HUctnLxN6RTTsfAF5i63gD3RYAEgnR7UxDIcu1j35G2jbPhAg~DMtLGP2079Eo6zo~ZbFmTQSmRGDI9BRtfWpsLLe9QU7gCbznkGBYirR7Z73vDCan2FmqHE4UdOfSeblU4iTxvCnLbSoCMkrAFRdAiLYWobwB-IZxT5sY370JRbYC9jK-zZwsGquYJ9zyzWPk4Z6xT9uNLMpTkas39IE08dMNfsuUc8SVGOPVthTWocdUCTUCkWGwqbliBxUQdFm-TWrzX83WNa700jBwkAg__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-2c2011b.jpg?Expires=1794098950&Signature=a783ecQv0GloTTQYIuVYcKR~wf1KvfHjxreOzGwhvb8Bxqhbli~tdT8TxZll332Tx0PnzAhti7iJ-iKdzJdTW2Otw6M8lRGAjF5AcVcY5bH~oZPVVCFnbrNOYqd-Hv-bVdj5FrA8ASSx-v1sYtLTQGoppTMPIaAbBX~Qu-InmrwC0he95Ib31-JyEZKgXV2ZWkmEi6YxWJCD7jExcU3Jd~xRq9-9E-XsUvXtSJnQ5eTv2UqSuThLEFPPk59xrPNSGc8DIeC35-6Qzq3cviDiutF8vpmsdk2wwd-Waqslir3JO-JMNCvQy27sqgq7A5gAXuMDNemgJVaTi79kwpJhlQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-2c4011c.jpg?Expires=1794098950&Signature=KvusF~9h-Cd1bLemfTBOHCoFEBn6RMPjasnyTPgQH-ngUaDX~51AkCmDgiTmto-14YmUBJHIG0TLn-04kwsV4tpy5q6WWWLVqQ-dVOKSeEZUkwpiXWx~8UqWaZmdGmTzxJAiytOcrtnkwnhosnIK63iLIBCVrk6VdgkHb5HqzFaYZwI6k4dQ9gORVnCDeWuiUYi7PS4niczv9DSSRuRTsl81txNViqx3nY~JeKglvcXxdeIvzEIdghRdRfcoMggDBtv25gH7sfsRUa7lBIJMSAWwwoTel2JrLfWALVWivtOEiNFbGOp4DUomUvgFhm1WEDkwUqKT6XHDIfWAfWkBkA__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-2c6011d.jpg?Expires=1794098950&Signature=Fk6jtNif~9x~j-iUKF4HEq8suJIk4Bi3YR-dFyBcRmZoG4V3hVQIvwBt1tBPK0BqDGbJCBWPGk579170LW9HZ2wJVBj~SoQ0YJg1UtfTAFlmQLRy40GTB7owW1TVCzobC9XiAohxZOoZSnO0XLC15AKodqI9CcjIU~YGZBP5snusA5Y9gs1pLunUuBoK9Qv1zdgdkxsjqRV2RUSkyC1DheQUeZ4HBnMZP0k2lS2wd3VhCK6HdtwcFijxKpl6J-zWDn-9394hhZXl3NThUc3wqlKbFQTleMGM~drailhZA3oY82BYLKv7arN8jqOyedR-SkaCXgAsTPe7ZfNxdHn0pQ__&Key-Pair-Id=K3C0L9WB6U5DUC"
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1d100e9.jpg?Expires=1794101032&Signature=K581FMGe9oJB~xLAHBmPi1U4hYqLE~iMP7fL4qUhTs8JncdarcsgRobaLueEKSwhio~gK9q6ZTi6VFoCkYASwC-oBPfDt5rS8MX6f88FTT7G7HYu421jaSdkB9DMYjbaJlgpo4sD6HdrJXimZkb5BPPYiXeLZpwYMivu7G-~7kZmhqrbgqWTbNl--pdfOvVUSs~Bcs1OqLlkJBQTarHdkq59JLnGTrX~zG8uJt2htB66ObakA86qYK47oVH-4l6uzt0bYM9NZDdW-uyZVvvAKpNy2e~1-uRLiV~vbfDM7PK3NE~yYHblwAYltP38lHKs9q3LsjSNxzZJ8GL6rqLPxQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1d300ea.jpg?Expires=1794101032&Signature=Vcxp12DU-dbzogaDuXblVWvmyme-TUJY0BWvRGtfpC506Mk12nfx1uiLyLzqRONu62cGQL2oXYq8sAMq3vr9Zjo1Mayh17yldHu2E0W43EmNzALBy7Vyfkhnn8aGrfY6dJx0t72qlk10i4rNRv8Ljys5-ZKI4joxdug1fx-Hok3QMGXWc2jOljdWCuXgL730u9wHm01J2idabEIxtKrEi-7biL~sSjGNTJllq72fJaZv7QuCyfLXi4sAAYP-oyvHh3DaUKrSlsgu9nfh53p7HvWw~07r~8MxW1NJ4eZsUoXw5JHz16sse3mkleJO~RwxHAcOHvVHWY5A3RAe7R6KOg__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1d500eb.jpg?Expires=1794101032&Signature=MNLoFkjQHQx8kyMe63~MnL2sK3JA7FFdAIwfcg3CTfayc78~2eZq4MYO4GTrH2s4UA9feB3mG2Wls5hmrv4ImRsA-6MCGw7Qa5iEOwm5T0I~v74LPUPrPam~CgDHbfuzyOhSkycObUFhbkztwbTYrQ25oVH98zo36ePg21tn7VxhhEmCRi8HKRmC5F7EB6w5j2B5RUVKoo1wIe0H0LN~8uIP2fPzCyRH~7CO6ft~tsyiQS1x8jl3IkXjyCU53s7UrOknz0vDBtmu3GTxohNA7WhY8~DrOHgUQPqGs3W~01tPthApz-jhyO3Bv8DKpAoi9OEvfb~d6xqB4rXy~IKCaw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1d700ec.jpg?Expires=1794101032&Signature=XwPUuROTGlLIpfzUrr3dyfF-GcwZqSgjgddEfNdTf2Cvvn5Gbi2e7BjT0nE8SNi5PMu2B5sVS9VteuFaS3IvXva2IuuenNEahofU2oE584yQZqVGcZZdFPMFXeUVRPHgTb8Jb3FMVwHP6NIo6jKLhZ3sDw1LfrjSB3I8C4AyMLwgjMKLZ9lcBBPmxgl8krViSTIOvFsHznjmT-gKWOsTiJDFVHJIUpQRft0z2DsFReJotGA4VGy31bjqtWyBxoBf0hz4Lb7sOLwGMscvNXBV28XB0IROF~rCE8gjBkMSeq4SVaRAVH9zOwgwvPa5xcRkxZFjPlVgF~sRfQCylpbigQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1d900ed.jpg?Expires=1794101032&Signature=Bho-pODgiz3RsejQuYGzLA2KW0h4s3gTRs2P-IouliihMj80tf9-9UUCG6GAijff73NLt6gbh89WeQWstoUhE~2PzBskTu36MigLtGgJxRt3qWeAa40WZE3LlrSNOWrh7kxx4HCHwKzpZFJ-ntVw9dyyUBb5N7dgacasGhvv3mVNt7AdN568SF~VRwXudavUCmR~wSyHUM-M8zqBeJEVLXIgILuTmHEmQGS3HgyYl2JOUFwZUxjM28p4QfntPX3NGrrYKzhRhBaGfX4YXSyd04HrS8-3G2plWxXAVaw6CWVvcjXSB5demyAtvPjG80Qr0qglRYms8niuA-Kw2Gyp9Q__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1db00ee.jpg?Expires=1794101032&Signature=fF8UVB~K5rSu7p6h8uQVB7yUIR0CAT5mY5c1yWj32s~HsafebuG2y79wcf6~jUPtOBbnP7YYPxT36Dqt-fqfnktqiuRk4vSH1XbyTN3dwkTO3OWmw7YyevjPUsZTww2EU8C03kL~8qTET-s2i3r5bh41hlzue1wBO~XSQ1j3Re6JEVxB~Z1-KrVQ9Kmg6eN-YP8ivRwst2VtQsVUgsyfyBTYOxw0Ia8FYJzYaGyoiYhCMg01eoBvgZIhbqVx-oU1YJEB--Ne01zZylk0yk22B-Q3gI2M0dfkyK5BUZW1yYOOk3LuJNOCJCxw6ytHiSSwQxAUh0L~QhdrqtPy96~YKw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1dd00ef.jpg?Expires=1794101032&Signature=BDeLa7FfSPn88U7dPxGwqKfq9fawgwhsB~23vJzPGr~Z3NDBzmgjHemXF-xdGZYtSxpMEelumiG5lAAWL5KzrKax8iJc0CPWtrNx8Qo2VOWS4NbPO-anxUuzRIvBJ6P~9AHbGND4Svw3kcpGRrz~EtPFcj9doTojeiFC2ilhwblY8sDJFamw4UbitXT2xYjNCIkYglNiMG2-VX4~uNEfgu2VqE2cFakk1PYwuOmxGk9uHcroVbi~awMSzvqf-xqgMVFLGHs49ieIdkcn17c573vtnoJGyX3PlQusB-Q1wl4WKdDLwpNf2Iyms01gEngmUINpnxEQGgUsoFvlteVaQg__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1df00f0.jpg?Expires=1794101032&Signature=kWfhX99RK6oHGSPid3wALmjM8cZyPTMbPgwMzn0SdqykxCakJ1M-g3gh8c~BXNTt2CAMkHkokNogQhTM1To~0xSFxTG1F1WHIGs6ckHfKbMzv0v2GTAi3Dd67lFZM-R7oAxxCxsREol9e3I2cwRj-4BsFn~6O2miCTjzteuXB29Iobduhx-qSpUHjubldiDAZmuX6fP1hY6rFoiM3~KjsSUtYqD~xUd9lyxc8uvbkDD9ikmPgZcDhk3f~q7T0H3VMpFvIl18stXdvFaP8~SmQyxHc~iRaex1xQ2IMoAzN49KF53PidhpS0WtTRxRWUH44dtbOXSONprV~HkDrCSk-w__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1e100f1.jpg?Expires=1794101032&Signature=a3PjTPyUEut6yPruTnq5s7oyDDfV9~sl7Wqn2Zr8i4lM99wpvTnxMPe3B5tVmK2k7QUuIPTgS5Ozw8cwTh8NI5GpfvcgCF8H5B-Lp~XM1RO0evcm5VCbgE-TCf4jTk5C~Mx9CCzzLgBoKZRrOij3DXYIXFcvjWmCDdBL0icvvqC56~RJpUD6VKIvQpDa3yxN4dF5AAB9ebzR0NHtmMg6wAhOI7~srt7nn0rIMCIgoavyLLH-lNUj4hmXR~23wmCLruxr9yXVq0A~7eSFtInX-2iLYYmcaWIoy8GLxYCZKSDMEc66kZAuCrO0pG2MaSS1tCAbNl51Cx0vGUjN5sVR7A__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-1e300f2.jpg?Expires=1794101032&Signature=gOa4vnxpLqGYzWS4MhlZjsKGUlJImezj8F5DkWBRRPbZVozA--va3XLMn4~JF~mnKDICdJAuSDoNkoyckiMn1trXJaxr196--Rlxm1HY32bWqyOpof4oXG~z91e~UMQzG729GhlbUXW6zagoDbidRYKgGwg~hbzXhVt19S5~wAKLoK7VTmT22tUh2KzepTI4SX-n5p4k--lCRVoIC5oB10uOEKT~t0-hzofNVzcWvzceYoSTdCZiOcoVcpmEz42TqBBimREUE1T9K~pMvcv7HcMTZWvlvFbfhYtl0bsPIi~eLveBVPk0NY1Lu1Lc36SY8JJb-dia08eDMKvE-bxd1Q__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-2c0011a.jpg?Expires=1794101032&Signature=emHcvtNOvxjk4jIzy0QF-f2UdaIJ-2RJcMrTjh3SAkmIVjrH9suOf00riJioW7oM94MKuwAtiXXHZJAJe~GUUy3FEFh5KBcEUL-IzMHCSutu9o64NJdSfzL8aTay0oXRpM-d6-MI~eEXnUH6mO~OFprrImDeIK8KR15TTJwxwYrTNPee0fDtPyV2EWjHly7xurpfKR14hDfapHia6XdltsWXQAyL0FqHb1wCVGNMK~IyatGsRopkjvwxqg54235ni78CYaQ~fJqRbb1qc~r-pnb-haw7gDGUHdMPLkbkkAOiIgNk-4p7b0wH5WDlojo8unaOr2twGO7a9dHcS8Opew__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-2c2011b.jpg?Expires=1794101032&Signature=SZ7xy1Zqf62XsXupDdO~7U~thd0opnoH82OV5B5btvZMuDRr9HLMQOzbPGPB7kNQq02ydG07Dsi5w-Z0Tz9fsA9a0dsTJIv4v4RQJNZTn-g4YKx5SnRS~u3HEYU1XY5uyNIqEtoLWyaf9r55fWNUkSxASlLi1Ch4F47OK4DSTpG4xZLJV62MlABFJbxbBh~2jZyTt0HIU84YUOVgIGixFUeAeMAVuZAUHPdAEQiS1hasuRRwNmU6YI1CM~udp3WlqpjT6PEVUglrspvtRQ-D0GzQW57BkXR~8s3G7TNfkpuS2vZY08LvJhMUuZ50ALlpx57ozb8WH5UY7omuYr4zBQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-2c4011c.jpg?Expires=1794101032&Signature=NYBucUYW0tm2qOB8Xazh0v9mjc7GuCVzbd-Djcm0UbwpRng1AuMvn2Xk0jtNFLc-sEDRhWHP4bjr7L~x4FXzE-g2Ejmjc~K0uFrKeKLgiXsjxomnWLcJ72Apj8RLb9Pw-hQdXhu03ZJWOsh2~mJNqy7V7SraWOQCD8gX1OYAA4C0JYLKDL~L3k~pNio7tUVdI8l58xIYuR9OGP0aR07IPJwpgI0qfTvXp8jo7lGuOe7Ro371wm3W63y6wMf0dMRkL9PSrKb-lTLlY-bZoyiQVDRVTtDa21NWNF~lvkHwWIpFxYm-jM42lq2ZlaXXWL4WIFjTXhCkK72CPcu7NFJCog__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/0/screenshots/image-2c6011d.jpg?Expires=1794101032&Signature=YKqn0Bx5TX9UP4SN6fM0-RsOQArRitrmM9eMErdejUdia5wnl40rjBub5kwyHKR3f~Ug7teUvxruXonfYQRVPrL0Gm5I9bB2JpDger9fL-r6-ThhsspIeXp2r6bxwiKOffUFp5Q9uoNXBqGWpYu8ziU68PJLYZMyULhMa4uP8jhM0JkGHYYXlHrbIumCAq35s2Tlpu7byyw7CSsO3m0Y~w0VurZo-i5FPpNKYEQ0YKWh1voar2HGSuRT2mDgk4bT7m1d2WmUwgj~L4NOtQy8qRfqtufsEO3EIVfgW6duEpaU8C9ChpZOGnkcZ8O~t4co8ZaBrooGdGrLw-QWw4iJTA__&Key-Pair-Id=K3C0L9WB6U5DUC"
         ],
         "reasoningSteps": [],
+        "timing": {
+          "firstEventTimestamp": 1245483.3936478,
+          "videoStartTimestamp": 1245483.3797005
+        },
         "videoFile": "videos/cmcc8u6yc00va1p1ydsdu52zy.mp4",
-        "domSnapsFile": "dom_snaps/cmcc8u6yc00va1p1ydsdu52zy.zip"
+        "domSnapsFile": "dom_snaps/cmcc8u6yc00va1p1ydsdu52zy.zip",
+        "tabId": 1,
+        "placedStartedAt": "2026-11-08T00:03:14.851Z"
       },
       {
         "dataset": "anaisleila/computer-use-data-psai",
@@ -3076,17 +3082,23 @@
           "chromeTopPx": 90
         },
         "screenshots": [
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1d100e9.jpg?Expires=1794098950&Signature=fFfuGaec~CGDZFKnEvicZn99TX9PhoAdPeYv6B6SAB~vbwRD3IhT3bSFQDhalo2xVb0N7VKfYT~rpwDKjU6474Y~Mx-5HIL6VB7KKPyl3WyiAmgdXyyaFbPLRMWeAISXr78DxnDPm7zq0Sw1ctM6ZV2l~kSpHEfukjA~L99eQDqCPfa8V~LIf2ZBrB4sPS3DkDAYTE8N1f2Tq1q87lxlnufBQK-2GjX1sjdt9D7l-hNxoS20JvWiG0Caaq5xhHU8vW0cN~69AWOffkQwW-klNcfDFuj23BFjr4~OENp1DACaOnqsoZ9JEU1WNDUsm1tnqi5Wzisvygz3-lyRzAgr9Q__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1d300ea.jpg?Expires=1794098950&Signature=tA9qsRPMpLdCV6wVdyLyyTRkuXThK8E5In7bd24YlEcP~z3c2uGc37ZgXl35dlt00kt8ptel6LdAgaUuHYdfWNbbEdlAFvS5wFJev7gMGpzbx3A2FibrNCE3K5W2~y-o5qKoi~oR4kXEIov-kD6LwwF7eW7fjuqtmhSFEVA-yLBITauQP-iop~Y5YRRV81ADKas5omeZKQztz1WJ4d8tDW1tDe7R-GEO~MWEsvavQWI6Gq-FrvnsBp7mMB7d-VxShvFqYMwCFW6ev~3HkTluW~IsZa0HNeMMHYyA4EeveJDMYNTjKwM~VGx~AUT0YFWYZiE074d8I99U4wHU6b9COQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1d500eb.jpg?Expires=1794098950&Signature=b3uAdjspwyiYg4UdxUVqMsiOtF0FoQm48MyaCRt9huoDCd~zPwkxpYKM0ZBfGUq2vOd6STGfpL89B9Ab8TM7nmHOwjDWOJhwP75Dq~0Q0mxqnMDqYQwfev~fxB2oUWYInOKn4iY3DlPGZJQrFt9hemL4o~-ybI1P~QauBLkbrBTL5QFD5cBImswmjU0IWetoBxocM1kjFh-JMc-Mi83FcBE75D4YJto3ROAtBdvhOdHacD5gIxUm75fL4zBaXoJE2tC1PT7ttIS9M~yqbXR6uypIUmaI1qdh-nPl78i7CkFhuMSgr~oE4znnsw1pAnUlFKs-6Yqyhj2NILFXRnfYTw__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1d700ec.jpg?Expires=1794098950&Signature=sFqUk9YokQSBzuyGuycSBXx2~vG6T0N7rUVIuIds2UcGLaDgI0I4Tc5HDalJztEertcBAsAzTYmdi0Q0SuPdKE5lHOEZ-D5n3Kstg93-foyM8bkP29HC4Pympu2iAFUNJspLF~n5y1yFM4PpkL1qp4KwWojaz7YwbNdllNFRcFZYfkcwmqe~VfGg1PluoTFxs6QsltdeWcSzdpIwm84WUCPn8f4hhOFeawcmZh8Jf3ukmHYPoEmXibLrBh6L~tIIwjpueX4jDoTKco2tCN6dLZc3S-YAnvI97Rm9ic9rq~7e9MKGFdY1fZs9-dG1vlbmf-VbaJo5O5Kwr8j2pLs-RQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1d900ed.jpg?Expires=1794098950&Signature=Dzs0awxp6lTv7edND8bL5fisS44eB60cVq3QyGVQejS~uPeNeKVoSRjv8COiqwpGs66XAbR4ghFyOjejS-MI6Tsvv6xQ~giLt2BL37igAf7n4zuuhWqBfRmHQxsdntip8306NrFUWVdNT5LOuquOB44CuJ5B8Ih3dUe3Nw-utQmQR6i8ThqxL~S9Yptx600PpuZICB2AlhJvqrHQ8IdTLHZyWkEEvAB~sQZ1-EvJufeRVkETKN73uMtRwFxUXmZBvqWqPBIh7MdtCiYXRc3S7Qh1nVKqOhxvrpAZv8juFDCFpCkiNGBMecPjWopzWYlK63AVB7coAHm~YH15coGNhQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1db00ee.jpg?Expires=1794098950&Signature=esuYRCABvyeALVORiXyrpTg3bgHJ5ot8zgt6zdIXdF9uDqA9mPpqWCJvijfokn97zy0PCYKc2MFSByenlsgwgTbb9OUyauNW~B0qpsjHFaBp2vJF-cwG~aIv3TkSBX82gdd4sp7Xiw8hpHjzCE~TDPLyl-PE0BouTIl8LzevvffPvKSpMS4LzNyMYqFakqMFp3qCWkqTMpFaeMAX1nzYUS75vHgWJT0Y888OQ1ZjOzci92Ecra0lzIaEuvq-kNQZM4cytuIZviAjKfvsgJyxM8n6FNZzhTbx7u~IYu7HQLfOdSLfim4dp4hnzZKMv9lp4s2staR324JHqw9LK~Ao2A__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1dd00ef.jpg?Expires=1794098950&Signature=vq~0Ac6hikM7mkxBrDpnimgeL8euA4uEDm12~zuIdntZcawCAM7koDHPCrQyJSJzmYx05~LXVLGRLbyUPkyvkBYr12XtYW1AiVRCMbvL8VkFfW28w39p6WxKcBdGU3QdgoZPDwTmzR1nxr9WK2A~af27uo749XeVZozuLzchu1dfu9ggzK2Y8y~U4wkKgbIWRF3gr3b8oGwQX35YCmWn10fuvsBqli4pl3YgCeoB3fCsnLoYgBYm8~PL2eQZdhUHsqKcwAGTvhJ4sqbDEyI7EFpW53M~iXWgzfaJRHr9KPKVg8ySIRqbXguNhcNyLBYvS7PLftl~lsi5hXZKmzcUTg__&Key-Pair-Id=K3C0L9WB6U5DUC"
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1d100e9.jpg?Expires=1794101032&Signature=tj699SHML2J6Vh-xCnZqTKwRvwrP1JVIMiQtAx6Tgy5y6EBluLgetz9jsFQexqYxOENFiJTIOdhER2j31leOhPyhrkiiCRdCT-vm~PebzgLwmBpuklSDootEJy7a4-ddKhwgLb7rbHWweO7oJjbL2DImghgq6v49tBo4l8Ge803dgAlF1HaaiA0u-anflaAaMJfyHO49OpEPHv3yplkAPSK7IB6XeNF--6PutrUauqKLbALwlIo3dcq529b9KsyDGHhhJA8Ox8WrZcALgCSMlA5OdvJBe0Z~UTsoFivNi~H7~ieAqtCgr~gIb96ixb0la8EFhl-ItOgdL~5cZHQ2EQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1d300ea.jpg?Expires=1794101032&Signature=VlU6GhjYLQVIJzXFOVQWt5fTBsZotI8GZpd2JzxvGTnimB7w1Im31gatVUOQYjwsVgik5k1DLZkDbaStUEAFfvie8nVya~ccPbUBjUUYSV7wTYsr7Y5dqJk-sRe-FL474J5Nt5SvHBxkWy8ZFnygfJP2HFC7Pcp~Et3Bxjp0ZaQYyRk5SfbYbY4ghIgWFEveOIlFBL7YlQrMJh5RneYtIqpjxhoPzXA~e9uS8MwAKM9~wcqi~qjQFJyoruecksv8kfG6-CGe0M6DEeJcWZ6OPH-LJx04~2j7--qazbj5HofYRt7~x5mcBy20onuy70rlbPxaQgqZh36pfGWWEbFBjA__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1d500eb.jpg?Expires=1794101032&Signature=aqtjT0M~8rQP9cVSMna6QRasblOEv0oAh5phWOKGL8HLPNVnTAMuEqCrkg8BUC~cqhnuXpEi3fSl52tS4e5sgBwVXsXsYvSOJeyreq0nrAlL4w5rxhzbZ4FIwFqBE5qtsrowRFtkmi0Pci5Jr2vXcbzvfzDOZFKpvi7EV4yGPQmqfi2cWW6pEOszOlpszKfOLhxqHupx4g~DEy-HRC6rv3NBOX3jFVRQtkjDAmOHqovdZhHuPEYKzpThbWS0WS0jV3feWr2IDrB~qj2tfATxgasYKcIfXQLJ1Z~OxEk91P2VYnna9IZnkhVPWYDjfuT0pj1IilVHxVjJ3JgcPnLh-A__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1d700ec.jpg?Expires=1794101032&Signature=VRpejgIJsUTyS19pFsFHJwMN6SCW3Z61eCjIQHOCDWOvd15DRELwC8Tc1zq-B314HDyuJcPGoY6ses95UlCLxwNtyiXADGUdbUv~v~aU38mSrpAVhp2wG7KrsxrkGlM2~hdvA-cAbrGRS6xEfrtBOciRZ7Kzk~rKkQk24ehiLbHUKA7ptBxcdwbiZMNAlFUJEFCorp6KqJBkhijIqftx3ZNXCbWrNCFjECrusALd1ruPA3AhqhZzKTE1BdzidFpcffzaj2bH0rZE9q6goMkriisaQJ7aAG1d0tDQA3dJ~-R6SGHuBpfXt35JCWwjeOYpjzWxg4mczE4U8Mu1QfaYNQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1d900ed.jpg?Expires=1794101032&Signature=PJ3ZCw-2OmQRKwG-NGnRe7ViUhPKD3~XUK9O7x4S7p9AP5nO1TRl9kdxEI2F3LNV27QuPuTPaEVY0aqAIWb3MKKffytvdn9uVhH6Mr0mXlYSjwNMUOW2vA9MWGH4xLF6b80jc1VuuoXUKHXFNJr4qLauNdWSYS5AIpBJ~vLwBZWv8V-4tk9tf23VHm3wOQOS7VQRVCrGOKYA3IF5Gt4DFoI5ylrHvABr4jBRcukkEKqjFRl5NrQN84haf6bWSaIwdkOGTfLANHs~yV1Y4eg878ofP2eVfzwFFovtU~~-I~M0wtt9y0Fh99--2N~aMTBp92dxfBLpWw9k9fYFH3NLQA__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1db00ee.jpg?Expires=1794101032&Signature=ZegWl-Q6EFb1HrvYctCtd8ZszsXyOUm-NlybrZNA-r01EOevG22Vq-i3EPAS2D3xMjbf0RK7oiqXI6JjBGjaLpLAfwIzoevuBS85My3-1ujYfX6RMSTTWZCM2wUnsAZWhml77SeLlnEh4KyWZUN0uCqVKvQskw96uv8UtQPPoDHJHQIK3XQKn3DOSg6DEkN11EQCfPJYp4r2qX2WgRKNl-Mz4JlUfS~f7SwP3pMkPa~Iv~BIrRfySZDgXfaf54Ohl5obioJvJCyeX2erMwhHQk~MkYJinykSYe-rTL5n1VE1i8gNa60gS9o9zHXwo1J48-hWOWtDFIZlrQ-G1P9l5w__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/1/screenshots/image-1dd00ef.jpg?Expires=1794101032&Signature=LVUze1MYA3BzokTwayXUwCrDOUtSwi4NqVgQR8wuNBTvRlOrhBxI64OiZGE05MO95YQQhT~S1l6G4~TAjKnG2LR6qhRVdJIerH2KMaIsXFrxT8dcLbw5sP68ynE8FUyaYb58sZoeuwiS3hNh-~Rks1gUdMRjrRjxEaUZXa3ghF1YoWjLlmevry8OYZpUB1NspRpramgNTB1Suw3-dutvsa0C69QEX4gjGLOHxyX5OEsn912GKBSL-G2zIV4kSUWb1TYOIWfsz~WpARxSF-Yk2hUPtxk2ukGOIomh8xvOIKsh4Q3VZmQBt7o0uY3XMYRDBv5Y7qAGc7tkUhi6rO32ag__&Key-Pair-Id=K3C0L9WB6U5DUC"
         ],
         "reasoningSteps": [],
+        "timing": {
+          "firstEventTimestamp": 1245169.1857704,
+          "videoStartTimestamp": 1245169.2379967
+        },
         "videoFile": "videos/cmcc8u6yc00v91p1yw2eruz95.mp4",
-        "domSnapsFile": "dom_snaps/cmcc8u6yc00v91p1yw2eruz95.zip"
+        "domSnapsFile": "dom_snaps/cmcc8u6yc00v91p1yw2eruz95.zip",
+        "tabId": 2,
+        "placedStartedAt": "2026-11-08T00:06:14.539Z"
       },
       {
         "dataset": "anaisleila/computer-use-data-psai",
@@ -3110,14 +3122,20 @@
           "chromeTopPx": 90
         },
         "screenshots": [
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/2/screenshots/image-1d100e9.jpg?Expires=1794098950&Signature=eP08XC7VGMQ55ABAIUYW5Ytm6t8X9USaSGSFETJc4rpmPoS7VxxPrhZ9Hx5AguXVm93E6aB8swtOma~ZSpz6D0jJ1WFoYWqJWjeMJypDx4~J8eWeQRYmaMS6A7CjCdR0kCZKxzgIJo3MQ-wk3Q4ogXFwIS6dTc0HcXe2Bl-XdHmemCVyIz8yZ3IzmQx1Bmm7skjgoYy34rzlhVjYZG7V4DvRQ8JQQDGT0MvGDx4aF6-5XrpFhLGKDPKpIdofLC23RGjH5ET898GlUbHaZWkZedIag6ecUbCx~m~OFk-peyDjoPpUQcPmMLkYoz3H4WIQz5KLXPeV4PNCKCQXlYz46g__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/2/screenshots/image-1d300ea.jpg?Expires=1794098950&Signature=XFtjhbaxD~hqL60L5JewK7q0Wv2ivyFu3HNg188jnX1~MRl8GhDLEYrc7U~9XRrKBmZWRudqf0qKRJ760wmKDE31eQf58uEaN-oaRDxI5gXclqEHrcT1T3-OkA9RsYuA1Ixj~f07qJx6RX6hmKgYiRw-l9l~UmrtIYGWsgGlOfcs~mDkGDxX-ELMmk4T4tUlZIspm1K8w0~wgAP~wrdYMNnJaCbhfkjTcKcHTll~r82-ePKSa1uFjD7V6zq7lGDj5q1e054fQJRWTrc7xRq8yT7g2KR-cx07DOU3PoOWvslsmgZlEiq0~S0H3ZEePRNM5XKq7HupOukmenOnzXxY~w__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/2/screenshots/image-1d500eb.jpg?Expires=1794098950&Signature=qlvFLvVNIyPLqMTryrnNpA9dfNd2NIl5rN23rcFUKP7pq70GpKSEL3Nf1Mpvt~rmvfnZZi95EyLCG~5Z3Rc8LbFiY4KlNK8lewzzX9mBNTGrP7dDJe8mEQ7iwL~S3cJpOnxVChlSfpYC7dq-e-0K46KQ0yluuOAmQh9WXs9M2jrrVtGEczTNFJ~OtQjyj51IZ0XFV6nBM6ABBribXVQEaktqdokuzYcC~Bgz73VIodHPUK16B7ezAwzrCBTGVW6tDQHMmcX2h8YvrmuqdczxQs3bUEm89jr9fvCnYjJ3gd2syX0Zs2Dyl~k1aRWT0Y2f4ofTWg717UiLxL73G9erHA__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/2/screenshots/image-1d700ec.jpg?Expires=1794098950&Signature=SPxAoRExcaNgHZGZ26n2jWbW7e70v1PpIDS5AeF3i9HLXw1JJ5BmeBr5Kax2En0ptEnCtf4xOPuA82FPKrAKVPp~qy6xvL3OkGsMSXNHzdYY2~tvGdh8-c4YgjVj3N3KMnhy1m12vjYcRVKyrxS8OHuAKS3wFawA9TSCZMguZBj51SWSOsz3EQNAsy5HtTtjAfR1e9TZdTMS9oyxGm~g7dnQvRd8cTARTjFvrUXmkb2XAhw1bO9bePw~XKomMKWAb7u7iExw85fLzZm4PPI~iKcAA0dsxRLl-m93vovFYrY~XgpmfHr2EOMrvlOXQxb2gpADS8QtxeoRnlaz4qwyMA__&Key-Pair-Id=K3C0L9WB6U5DUC"
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/2/screenshots/image-1d100e9.jpg?Expires=1794101032&Signature=EvU8FuqSioft0CnaUrAbapGa~NWWVqFa~NJTka7zi~94TmHNpBhr3lxo-7SB4S7QtMCHYAudrGk5J~Vsds9gopnYUhwI8lOe4JlZrdvlRAC~2G-o2IBGSS1eRT6uVHQp5Bb9qzy06T6vylU4GOU98jgpWKhW6alSpnNBzM~bM7-L3~-vzriA33DXPV1J9~-ua29wdVIUKY3-tk71jrFnzHn0oq8B~lVGTkWK1C3WdSemVadGiUOHv4xBvPPcuvhOrX5zmfba7WUATAmyUCAkX3dZJmesuby8b2m2NF673VHdgQaog-bCHsH~xFkW3BtoEDcsZn0zWhB6yOeZhdBn6Q__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/2/screenshots/image-1d300ea.jpg?Expires=1794101032&Signature=BTG8SOS3F5T6qNlsaVR36v~rirDjWyRLWj5tLOhAu4r0g2ehsZbnm30pe7HEbaA6rAIp4BDBuZzcEdmGclL5LMGmCvU3k4VaHbmASPFLfUFJNCpqMAGCAFlDvFzPwe8sGqlvIQu67x2bdD0zmBnJo2UtCp5s6zUJxvsoORcwZdS4z1ieqMoDjKKubbMoDimskFamGrkc8CwKM1ulKYZjXlZJDspdxdN4FPB5yQfu1r9CnCJpJfPOP~kcmm3qT2GYaHyaA289KkMYKGnXPqUE1NYY-bwyLg8LzvyZ06Ga1IvUKgWVvy2QXgIH2fARBGzZ3v3egajmzRF0S1xgijYYHw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/2/screenshots/image-1d500eb.jpg?Expires=1794101032&Signature=cD4SR49fZsPaOysJ2d-rCV7eKKjH7LQ~bkanOB8a95p-G5X2PW4cAke5NsH8tNgT9GFQwfkHY-IMaGskl7apHy--ZMiNKFZZUdWXd4NZXEYVwhyZagOkRPiyyP1vMQaesI~vViW~l0Z2mQiSUtIbJC~LIKpYsKjkoSnbUn1E4pmrPY7lWkZ8LOWa9-cCKPVtcQcRTx6jL43H6muf5dHe-d5j0uOu~Z~n-lkCD53lrgRPwcKHRgFnDxLH7IPPrOPYaHCUUAcG9SwsjziWTWmWeHIDbpf~tP0xIwyldg1jgAIe9lMu7e3FsWdmnHYnvzmlwd5aQQJxvv07GzYshKkAzg__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/2/screenshots/image-1d700ec.jpg?Expires=1794101032&Signature=VmLpHclOe7i5GFr-xiWilIx8oQ4L9UPrY~MG8~s1cwzZWR5bsVe58RAjTgaQRu296wVTPyD7N5dmrRIqi26eXUPeAmUB4h3~h03osQ4CBMZvNs8dqR4FQ--V39ikzpY0sLrbG728J0v8dRrmD-HgVqK4CI6Z59TytH16ltqFAINDhc6N9iYwwwqlFcL-ex-f87IokVJB1vpCbg3AbVF6uCXAsCPrysjJMXmKoe65pL5H2h3nsdzBItO4LAMY0iVsu2J1f55zLisdrpu2224rlP~8W2XwmJxn~T7ieL9b3larH8mWp3s8Mwf2JN0h~4SFP~imON390BKcIHEJRcpCzg__&Key-Pair-Id=K3C0L9WB6U5DUC"
         ],
         "reasoningSteps": [],
+        "timing": {
+          "firstEventTimestamp": 1244566.5383122,
+          "videoStartTimestamp": 1244566.4936671
+        },
         "videoFile": "videos/cmcc8u6yc00vm1p1yhjl1u0bf.mp4",
-        "domSnapsFile": "dom_snaps/cmcc8u6yc00vm1p1yhjl1u0bf.zip"
+        "domSnapsFile": "dom_snaps/cmcc8u6yc00vm1p1yhjl1u0bf.zip",
+        "tabId": 3,
+        "placedStartedAt": "2026-11-08T00:08:39.185Z"
       },
       {
         "dataset": "anaisleila/computer-use-data-psai",
@@ -3141,21 +3159,27 @@
           "chromeTopPx": 90
         },
         "screenshots": [
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1d100e9.jpg?Expires=1794098950&Signature=BZdw0tAJiR7Hop2mxWpQiKacLcPLBJo6vtIUYTLk8odyihkgwro95UHhOQpguEPhlVHNnI-29cr~lrGW0IQs2mbimZiGjehzxtjJ2hjrXfMQPdm5P-dPo5L3XQoQAKVwjxZwf1kFcQs1PBE5YxxWjStcLJ5vNOPB6OXtwPiNfnNHNavpnYd7F5OrpOHZ0uTH00oKetCIF4tbDKcUfeFrUxnSWLG4u7rRmDEXDZqvtL9xjMDQ86Wl2gkLSimoJATd4OmwvOxf6wHU6zn-Wq~E85AyYDf0kFebbX3BrgSGd8GNa4hQ5C1MQ2sROU1tqeDAULDAK9ofBb5Ew2~qy96KEw__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1d300ea.jpg?Expires=1794098950&Signature=D-7mGpS1FBx0-rL44O6QTkcTKLvHHsCgH-tDb7vUKMuNdcQM1v7FbsWxWTy6~ksxc7cpQVauW6gybrxpP-sfw9QOcn~oYWc5GfMsC5-GJh9J1dGvUtCw3w-IfDgQfaprUIlGxlEkHf8EdtD1puuP5Gc6IbqE11QZlz73UA5TKJbLgcqmGSutkYlBk-~tUi9gIeKaSJsKj~VIy3kQuIFM8HaYTGOk1b6ZC1h6dt6AzL9C~p4WJU8AaV2iznh8iE7DTYiOIvIC50riZYc-iUpZXQGuOgFBvSxK40zloyTPGdV26rEUJxqYfGxBGImEeINzzCQKoH5jG5V6GH4SjfG90w__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1d500eb.jpg?Expires=1794098950&Signature=mcMV2a41jEoxjkbOFbp8ew9iCfpAu5F6wjkE2uyNWFOQtb63jyhLUSbCxoq1uIdk2kqtC1Icp2~5aYJPqLsp-EQS2LGRUpL4d2yWeW8~xRCQ5K3CGUreSIZ8NkumMRtezMzMNGHvMpy80X~Yee9Lo1Adib29SPxXlxcRDwccsZg4ZkruDTe84lA385VBFLhnBcYFeGrfNaC1m6U3oVyf67bpfFT5MYEl7eIJ-Tcx0l8CgalmFCvDbYceEe52Czfn0A~M4kowSXAOa0CgN~4YB3ZDtaKEAkNRNsKqGtlx5JOlLxoq6A9jsfOKE-kFzgWNXeSNEbmHbM7H7BxnzgKR4w__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1d700ec.jpg?Expires=1794098950&Signature=JA8CwHk5A0XKk3AObGu8-vglF33n3UmzGU3k7YmN7mhsNzfa1085vAlC732FU49M9mVcPLIpMYsNDlX4cmKQkQgdqqDi1IiQo74R-I4l01IvkMY5wiqcUaFG4~k4e0mJbBAVnI8rLuSLVHzDyv5KicYo2RmnRgA9UpcxKP~LZw7cgwMSt9oH2O-JUfDT1GibgAuW4kGuA0LB8XMJF4ZMNNoMB7w1C4TPXxvxz~qn65AHiIF5i~po4Iu2hvbXZfom8qRU8UgGXcBsDNiFzDvxQWIeVsCQXUPJ5~YHRJDMGuECDvTJ1JSnKvcC68IJkHxPWTzPWnLz67eFfrd4k2FBUg__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1d900ed.jpg?Expires=1794098950&Signature=qDiAyun2tMwG7ZR3E1dSJuEaC3Iq2KxEuBIEr~s7cPAb646k5zEnYfxdfFw~W~q9eUnHhg6Ogq-is6fclIerkHD0RtchexcuvCwTWmkNEuQmf65RDv~0kKtol2m4xhp3uKa-o37Mjht4zTBeLJzabJhs4jlsZ6XnAtsV5FJjbjCFFs26fh~VJOAcXiU91qi1yTCRBr1S3C6A6tKu8BR~PqCgo20Dn9rmI4mQ8-yCiG-nWn9~~rTkc1LFhDygzr6rSLuA9ZnpK5GyH0OLT9II74iEdFTuFfFHPeKgPq5FM9wQ6ND9vAIlZhMyPq2MI9U5R2tfW9k-aGViNJedxOuYAQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1db00ee.jpg?Expires=1794098950&Signature=QHWNRRXta6L~QUFlWbTLeKS8upUtUgE4EvoHeZq1X2YAwmIc9Sfu5sH1iN-0WYS3GtvHCxVBq96IwH~eI9mvY5AoXqxIBBF4U5dPj-jyXSVAiS89q83uhYD2GeIVHwlFQVFn-UCgkUOp5yj4Y1fHTCpIMkz1skE2EWq2KabqeN2nFRgy8lNyEG~iC5ULcqmRSu6pYqQSv8oe~s3o0CN8grNEsQT1emDBt3QWhmctMkONgXyNboB4zsi0q~UIzjuMi~nFyjjbcm8vzoofByQ5PfBNAnSXs16veWxePEEa1VyiHmNe1AmI6itz9qxfHJO3GBQJb-EttgTmUdHx7c3DCA__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1dd00ef.jpg?Expires=1794098950&Signature=Zf7qonF1yEXfWTF-Se0bllt36jK47x55HuH5B7eU4E3DNwa28It9uaCM7P9dI2f1gORWmNCXEf4GhNOH5rI4IpO49OLd3YgFpTv65ibuBp-I2jKZnR9sDTeq4Z5cVHO7XKjC9n6BWODWKP5ljcaW95ctwgZx047weyZik99jHIvDey-miAtecaXT-43wqij-iLt-y2Yu0lnxdBTChvz5zqiJyiY2SrgbTBcjYNZ~5kHxCQdyOIu9GmJcj0iACK2fzwQ5C0MiEPg1xlh8iF6KCphyUVhWT-dA8BlyK~JKZsRIayx-Bo15Nf-zW6msWJSBl4PFtOFVHH~dTvhTSgjd4A__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1df00f0.jpg?Expires=1794098950&Signature=t5lfGrtlb~bwMn96aA7VsA5n6r9vnhd58bPhOGJPkHu-lyIB0kBe7zoZ-3nkth~uJWxA3KZiVycTHCzRGFG3uFcDoBlXBRRJeX5G6hSSvsycm7~lTRMUwQuN4SN-eSuMaNuIAQSyFITRDATTT-WHmpMc9yTp1P4ixHCPpixurl0S1diG7HGw4sn5SUzSs1rOBxS1IFN4E5hr5mOzSha-E0NzkG7i~8BTQB~itswD04ozwcvnQdInQqwFHeaPWMTfAR6U1cn2SjOuyQzUxVqHjzuOVg7cshjaKDXiIpqKLO62Q-0LRY7Ga1p8G31OzmN0Xf0jz3lBvIrtRbZBsO3ouw__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1e100f1.jpg?Expires=1794098950&Signature=qJoWIidgrhCB9orgCuhNv-5WBin8ym9bQw-lCJGxiNYEdWoCHbVm4CjnCDcPpGr05Gc2RO8Hwisq-9~KPS-5yR3TE7nuBwh7QKxZfE6qLHvovuBpyEu9uOiIxBvja4qxIH7DExVLTjZ5T4~OKPoqvu1FkGS6mi9LaeEsn9A6KsiOA7PJRKE39zi5oUlr~dcU7Nn0zFjvcFbag-~PsB-Nh3KiKAC7yuDlZligZ9HBa20iaPURXo7LRAv9wD~JZQxzIV4tKgolyzSffMS6MA8794DqIi~HQmp3kgd5cT9p2d5Dhz165-q9oHjiOE5ewQYfL8K4v2QMmL1AHyJ~2cF-Pg__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1e300f2.jpg?Expires=1794098950&Signature=Vkvos1LxfY7b6dE2FqtDxByrSKk06lUlYC14G-V9cPH7DbPT21BxImw8QgReXJnrW81zq8fqRPaZt7z225kp6pIHweWmUUrMZTb2ZK5LMTp4B8oliwP8VuGOapYzfebTd-QbgJ7-zTjABNz9f9V4zFwEejJ69rPgOdO0zd7NqyKJWjuiQEOmAXdvAd35MnYjLuiqF7U-FnEIFTDzXoa4tOFo80aLR15MUQBP3TGY7WUgCkCBiwn7YKXK0819n7REcwa90~FfBzmrHBcl3z2hiPoLiwTGzVdvBfqilt2z7X2hWFWWatqAy81flLYhre6HBJLdSocdt6gZ~dq63EUa6w__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-2c0011a.jpg?Expires=1794098950&Signature=B28qzBxzwRIhj9YdE3UkRU9KSYEJNg3ftDdWPDzAW4nZwties0sPtGQ7l-HfYu2FkAmCBrG~eG9vbFzV5p35NfEzg8bEt-amnYMxbnjJOju2xk-1MNcCwoZ~Ylgc8UlaA2aUxEz-fl6LHlWl76hWQnu3BcuCOwu~uDFI7GWF7TMuLZKoJEmP9iOop69TlQdFOlYVnAWwg6CQa0hczpRNji-UMDPt~ut6tamF1MujVrko~Mgznqd~G82eKfLGwUwr9GmHGj7aEJEtOM3-16Z8Y3NzUjo2eqwCiLCeKZR2vLyEIBm8iJdmgJXUKFPYd2D8An5UiuuGZsYJHgQzKqY5VA__&Key-Pair-Id=K3C0L9WB6U5DUC"
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1d100e9.jpg?Expires=1794101032&Signature=TyUCAjjYTnr5RneX-IViAf-HQX3m50nWlG5Yu94Xd1JWT-1ipnc46Xc8uw54nrE39dFdfF6Uw86rGPJgi89sebaUNTapZjYOFE4srGJ7nd0XWomBE5T3sJRPX60GO1aXAXGlbtWhYo6lBC6NnU2zJGFBtCeS67Yh0hkeYGMJohIHgugtG0k~370v3VY2LafXxPubQlNdXT5ovSdLs6KGDNom1ejVmfKOoEC6F1YIaLOczidpKA-WIgmATEo6wNMwbY55jLpZkygZgV-W6u~KFfDO0eveEL8nFW7FWkejOgYhzJ~5yBjPrqS7zNWLwc3KccDaK7K70r7YQu7NPtjd~g__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1d300ea.jpg?Expires=1794101032&Signature=aX4Eg4XRDe7KbWnAoMmPko7mr4yKplblutHvOr64b~K-AP5laynCtwiq6U2dO2NOGEZD-QpMubsydTLWWWFh74W88N3XSU7-740alIRmgp8cEMyz2L8DrmyRDcaZV57IzrabVEaSrPwRcqlmWvHwEXb7YgVZ8qLUTPEIG6H7Ky~NPVGOMqSq132cxr1b80PWOP~q-6c08oPKr760lZR5AzVQE8-mCJQyywRxnyJK5p4q4YR7YNViKwJqCyf2LNeH3azg43z2F3G6hLrzX~WXAkZ36i3ADVFqCgKEhWuHgtZyYlM36dU4qMBi36V~6krgPHp3dwb1iwBHxXKFHlK99w__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1d500eb.jpg?Expires=1794101032&Signature=kUhqVPeIRHb~Vwd4h-zmDvfLAvyDlT4VBqKTx~r9kpmZs8NEUqO~s4B0A3HHmFtcgig2~w~5MsPaWZjBso94AgelcBGj2TmaNaAqHmi2iMCE8Gaus1a5qJWuBi9BGb92jazWh4l92mGGLOKspgjoaT1uEelNRI7yNP3JMDbrPg2C-u-jjI9iLBlxBiIoHyD5sQnbUwozh4uYL3CvCgwvnwK9fSzPXR2NOrY5hDIo~PmlOuebPswHF4tAFgRohCXqn3I5AxlEjuN4Q2VmMOtSarngzJ3x~X3O1ptpgDumxuMahgH7~GIQ9bgJ8QG6ftEume06bpBzfOoZZ5nY3leNIg__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1d700ec.jpg?Expires=1794101032&Signature=LuP5XHqCzQU~4kGJf-wVAYFM~~pgY0ki6wOU-f7b3tzlgdadQZlohAUyHILt2qM-eKHrm9QGXhDg7JmAtIOpbdFjXyrb96foeJNk2pXOrs4QWuwfRX9bRtvUaLU46Tv1NldoxQoCpzYgTPsX~Isdp2QoyE~fFPqgCCBpnKTQ6cNpJhZw~AOVJ57ZES-4OsB4py6vP7L~WnT6zS4GWVGd8m1-ryaKDaubU9a9lCtgpBi7tOuf74-K82m6UhKrkpRoPDGxy1BH26haPjBhb4Pvia-gW62vJvizrdpUTIsCfYZkO6YHn-DIexKRchO-Qlv4WYE0FfEKhAGsMCLt7gmvXw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1d900ed.jpg?Expires=1794101032&Signature=eqeXI719dDz-NZfIl5Lj4usKhZUmC9L1Pqyx3SKVWJ1XiqCFdo8pXNvwtazTW0CMcoonq2Trx83-nmisD4VmTcdjnvBi9Qbw2EUE6ckY-EEZvaMnG6rJTzGWeKSFjal5pMmPBXEB7OQyg1bnTKoBzBBo0I7GnYPcVRE~XrqYPi40GtmcxXRRDJFhzj4BX1reibnSN6wEYBd0FO-BYVsUTeyP2~w8ZZrjy-Gwrau8NjxqMv5Dst1hufsckj-N5hPjgkbffexKBf6ffp920zsnditj5I4S0J~ZUcnk6jtjeOxyyuPnitECPsAssVs~AoNT4RVc1XMQyKRjKipHndy2Tg__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1db00ee.jpg?Expires=1794101032&Signature=ryqN~o~TeeUzIgPeVtblcV6yCQxXNZhu2e-sI5jHOWiPTEzdW5nTwl6d4C6GYrL0yyNA43MomukmNqR-bhdcyb5Rm920ESlU32LlPF4xYb4ekZ0oVBsgsN8X34CXs9VMKVoEyxt9HnTqKfRGl6y1eVGhVqY9Tgvjk8pTScgbZTuEauHeS0u6WjGrH-0YtB5dcvqAIUQJOHNV4NCyTC8~M7EhZ0xstmHu1MF11BqPPhJerxmNxAxBonUEDhCnzinIpSbHrdzcaQ72P00sChFsXYv5SzFQJ7PGD9Z0PrMZa264~6InvcLDVzWpxSKM4KjeZ-Ad-cHTt-MQP10Ol9OYvw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1dd00ef.jpg?Expires=1794101032&Signature=h2uiMXYIEse6wr74cULrPBJmk6qTQ9nOo~KsGdnj0o7KIBH0IP937uTs5obuwELOkvzjOOeMSInOIMFvfi~m9s2egQozIalbh6Hp2dXRXDfR-lAL6U4~nhbuoB6bkqB3DS91LADkGSB0OpKJMJKQ2Av5G4R-2S-ERhiJm7PFMMI~cg~SiuGnESqbrKY4G92xHGErqbMNqYbMrHFW9u-RIbHz~8uB3qbzQ69rbJI3g5yAqc9Pp1O2aEObcN0Kh8fEL4uZrwIBFL4oP7RT~X-sZxtwxhYAhkWbBYOpykZ~pPtAm2nlGtggwNTq2XN0RuIHRjGKnx91D1U5AvDD3zRo5Q__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1df00f0.jpg?Expires=1794101032&Signature=YXoUpxDKBKsdAFurDzFhrbjrBww0Qn9JnIw2s1HBebGBQAa78fE1KCNdjHQPqyYhtWY-ZJAgz-5we7NDf-T2mEUIWOo-cJ-eYGbb70a4qZsJZ1PZiJAr~X-SrrnCCt9aAc3QqtWzl0FJzteN6VmBycZTCQqFELrCyxanaGlf5eYQQHocJ1MxQLz~GSwNE8wO4VQUgmurfvY7qShGX3b1~4qUAN0L529GVhO-9Xb1Sfc9KEJJL6YvHdrUHELQj2qgEAa14RpfszrKec~5Q~-sEFLucX993oa2YRzUatxCa7fsxREuTNq9P1BWFrbSM9XuNt9N91F5gfysG6CxrMdLIA__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1e100f1.jpg?Expires=1794101032&Signature=CvwDdrRf3owmb~e76kCdXcgc-5kCKBKeSD8CC7COpjLbTdfdM52iP7ROLclb6H5X7tnZKpGigZC5afFy6mTkxUOUZaiC3MzKWQe09167ZwGr4mWgjw01p7tRN~pEPXvM6Uzzk9omnOE4YKdLnhL3AY~-uWCXT25hXOtwaT01s5TnUSo9DjRSVZ1tprmRDShsSzJvLBrYtG0xHsIaJzvauWs0fneFP~D6mg8wQX3uqIx2hZR-fCZjMyOGPPvvPtJGHE1dAgDSsZOodRChDoepnux98dEQZSrFAMlc4OiERbRzppVz8-2XcJ4IXft8xqafNAoo3z8NCHL0DJRYJbMZZQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-1e300f2.jpg?Expires=1794101032&Signature=TLI53E8l3VwCd2kJqSjPca5qy65ekCQxf9zl1IttfxLz0jMk-SXab7YyRFZv0iqHAQA7WC4R8RvsznEEDHOxgl-JgQOH2tfVArid955hctCDxlCu~9xaSadDqj0twA7mVhobty9OncOyPo927KYkqCc7vgzFKInxQS1isoDCYzix391iUgIL2FQk~QaomHilYVoaGNImSqdjZcIVwOILXCl8K7J5o8IZsUUagvMcFirrS5gmm9tAYc41rnWqVXYMuBDaBB875-fCZWE9WS~JkjxKvI0t674xQSXkDTgcmiwDV1Vj2AdUnxQkSxRbGv0mGCdw5dPuXD8cq3gNCbsBIg__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/3/screenshots/image-2c0011a.jpg?Expires=1794101032&Signature=ajtV51sSv2uZ8Dkcf3fH9cZQqoyc-TquWP~8AhvfY0w7Qv-Qt1LYAsho-lGZUzLtNQ~RRNZ16i~FVaI6zbYqslLjKmhj~3ZbKKumjApdpvsgAcI3W65wmHkMnQ9oApWLDEj9pcAngqiGp-YSRFkEy2EkXJAQZLb8u5vk808VDJwWipapIEtxn9pMT-WkY6xKQGYU61lv2Xb4ZMZXNWXoyB5dujXMqwNONM525f1VlBhEA5nFbiscPG8opzaLZkkbBy1ORnlDMBS50kYt15e1pyNS3gDRkG2BHZgLMVNc617RC2mCGji9~J2XRrcmldqA1KbjTLu69U1bSQOqsaQMFg__&Key-Pair-Id=K3C0L9WB6U5DUC"
         ],
         "reasoningSteps": [],
+        "timing": {
+          "firstEventTimestamp": 1243026.75937,
+          "videoStartTimestamp": 1243024.27956
+        },
         "videoFile": "videos/cmcc8u6yc00vi1p1y10rtsjn1.mp4",
-        "domSnapsFile": "dom_snaps/cmcc8u6yc00vi1p1y10rtsjn1.zip"
+        "domSnapsFile": "dom_snaps/cmcc8u6yc00vi1p1y10rtsjn1.zip",
+        "tabId": 4,
+        "placedStartedAt": "2026-11-08T00:10:57.673Z"
       },
       {
         "dataset": "anaisleila/computer-use-data-psai",
@@ -3179,22 +3203,28 @@
           "chromeTopPx": 90
         },
         "screenshots": [
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1d100e9.jpg?Expires=1794098950&Signature=Zd1kXXKplmkWrsE~~oeS8vNQnKFweRiVVfddKVlcM2PnxL6~nVQDaftNZi4sM7pNHJX1VriUF3dM2FdSNC0-k9obkFifE--iIJA3YruPgfKQfEXVh8~H0jUu19OOhP2Fk1-9SrjULptxU1-6rER854zUBKOo5SQe8AStt8SyVI2kWec5esdRMg70q~on6S7wdAqGkdb3vVmg6pjs-eIhFyFBVbPnfOGiWhnJn2Y1lPYzl-tXAuBKHUq0w2J6-Yq~g8ZTh9Ku4fPhudqFt3c~y2PpYHGq-VeOLw4MuTR7TiDusneTxoYd4G3eNwM-SOAHd4KF2s4PfzsPfGkSnCx7YQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1d300ea.jpg?Expires=1794098950&Signature=ndbKj2xuCPtWT75fXkfJWhohHdH0lqT-OCJJ9yLOVSyaC7UJxA6tqZmVUDe9ib1kXKpQtM7WDPPUTq7IMkvd~uy8FebrliU0j~zKiRHd3SUMe7fNdwgS7zX7ZzofF9AYQq8JV-w0wtY7840pmTNA5BMml0ZVVzE5x0Jq4AKn8lTrm7AF1DemjFk51-3Uj6BTwfQnEVZhGElfuMVUeEOurkVhO~L38hkQDQSW4qWgquIXjXDwVbcdzeoAQ7ZN~yEUBzyKCAzMbxEgTANnPRqzKQXVfwXZfojBTIGyOcXIYNM45a8o~zpJtyYX~z1tWF8HrgdV9XGMGZIGK5F5w4kMhw__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1d500eb.jpg?Expires=1794098950&Signature=vxnLHKMheoyzcfR9qaOPXdwPJOH2xZF3xc7UhRQWUSoqvs2q1c3C8dyINx8tlaBDM7gO2G-eVjAWBhuI9NGxJ~OAKvjndFgusZ~o~Z1OtI-O~kXs6yA3RjZyD5as8ELJCUmuG6uR5kpTvgnesKfItr3ZpNquy8BdHVkTLac1E7Cz-oSij8nRdKtUa82AxVqRy2eOHuAspSLG-tQewwK4uaJKVMyrxArHoS4EY0T7tsV5xW07TypjKLb9Ipfy31-MTyFplBdOydopvlvZFnEeGiwhmAZpTTVGdOGb4jAM~DgJUhnbF2Aw-NmGLdpMI8ExDvstMetYPN0S93V29Hoy4w__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1d700ec.jpg?Expires=1794098950&Signature=PeowbEnQY~LRvhOtGM8hdwbGQ~moOBlap6z086qOcQIk01Ra6W8GLu0WBE34vNqNeffoyGqjsSWBWixPcxrfyvNS~FW~ceOWRC4HOHSL-~seGg2Q8jxlPXQlWwx~IO1spM8FAx9tUjKmJ-j85WmzJQZJ5b0S-~fHcuDR8y2HObiLoZcAWKH7-okKQEIIxkWnzm1AlP6islT7vjmFqryPQ-E6YcTIbn9S9TCUVRAbUULd2uPiA6gsWHCRuZZttK50shPxkyOl0oiQ8fVtZ9yx8AGgCtZHngGBGcauit2f49BXOxrkByL8M2l-jhpAY0RdZmNDCtoZwADPjD7pKRuXjg__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1d900ed.jpg?Expires=1794098950&Signature=brP2RICQ4A9W4nnVsSr3HlxLRi-NLTaMTlDNMPdSlOcbES9ZLZf8W7c77vg~qTxiKeWmDH-KWs0uyNfZq-xxSzgUk3gCFlgD1WU7Qp10WyQsvQww3jw8WsqpHXyNZW31EO3b~ZKpiunUJ3GEQCeL~KivF0Apn8ZQMVkFDjWbIHWavtjbDZTUJO5kcT2X~JOaemTftNSeGUamYd8E4xcN8KM8hSVlyoD6W3yn6KtedXl0AaId4HxuGYHRpODY1SHd~r9MEysWjZuCqwohQ4j0vp4X-mZWAvUKEBsQShgsc2rul3JNdx5sG9JWjiykMrnOsFBstqNJYFMGhkPqFpcrFg__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1db00ee.jpg?Expires=1794098950&Signature=MgrDKHe4SDOmEud73rsd64OAKs8souInheGMykDkKSwcQlZCjrtyfguquqROQgpWGfGKMoPQOuvsEf4gfKiBUMTFQPygujSRkKpILKC~kgw167T-sm4b1bHd1iszpT-VCERh-CNIrv2UvFrfMFAWbHwKo1tvAUuCNQHMGK7jNDxdbgdOUJGUfqL9dotgIwJLGFDK44Igqv2b9OjM7-yUENTDO-lv8d~dz1zev4oikfodJyex8zrOhw4QFoScx1fy5y1BNI5JQSHb2cowsac4AqOYAXRJWAFMEd2930U9rtQly7ZAurHXGigzs0VnMlFJ3GaEtvM5ZoWh1AUQO1iUew__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1dd00ef.jpg?Expires=1794098950&Signature=wk1xCV10ngJs1QSvhzmzsTxi2HJwYxgaqAFXxXhv48Qn2V5YQBbRuPGf4EZl9nBDYMKbEkY73np8MSwGALaPAYcbsWxNY04uhkq3-2VVv7Vu06ag8hU--03qAZ-XR5p6hM4Lil~DcKIGtwMauxnRrw~Xe1lHOWS8BbgY9RStBJdlOppNof99SQVjPoQ3d0kjIKA4HRQjiEcIRGjtwl2Zzb2tmxuoukfOxtAgyJdkM5qz4R~3vRvK~wlZjdP2xzi~SpLkBhUy5Wlx4s5Q1Gc3i6p6OLkIEcjyiGFZx4Y0TOROrzN6oK53OUgsWI1LaqRV9BsfXSQdLfOfjHcHENCq1Q__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1df00f0.jpg?Expires=1794098950&Signature=QCs-MAENz03~ViN6NXDDRd2SG2abq~1spTw6vFLAmo69afPSbm4KrfuzgAiAlWB9rONe-AYxMiYvODzcEiU1hrXpjtdacePNf53dZrkEqryd~6gjBmkB6VsG~dIpQGGcymZfcoqvbsKan2khmUgcwPSvtddQp91hU3nDON6s0y6oCFfA~vS5sIPRRMCTpACoFMY4VLH34AlcgNHKrq9RM3the4BP660KM6j6J-TLNPJJ0B2o3A2SjsKMjc349W~AcbZVTC5h~ZMVRafFi9WfPF~hw3j6pJ2Pdq7FsoiUNPbG3U~Gyv71I2QeeEZNEJ-H1n~Vf-s0JBJhxv8zjKYqzQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1e100f1.jpg?Expires=1794098950&Signature=PN92FAokIvH4B6uWvNr6nX0HG1uRtdALWnwcsVJLn6285FmKC12K1DI~iFmdvK8T9LGkN9nvcUIqkMbrHju7AoMYAle2fEkqW9lF5aYWV6vBEGjBW54bSOAVHwJ7u30lgzPn2o3kZleVzxjCw377tM1eAdxv95KT0Oy7kdwza4sWBUSCMM1f829xo44-L3Iq~LpezJj3oGe6BH23mVOXYjXwwxrgAeNOtORhIqU5SDbYCGINLilsn1njYxAqsFqylhdJGz87yR3kMv7LMxv3pn1C9-0tGXKY5sfVF3Op6bLXD04S3uNez8~-kYPIJWor~FT8JyfOYyIt07rD9VSbtg__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1e300f2.jpg?Expires=1794098950&Signature=h05Wh3kyjVTBInZeYOBUnsTa9hihEJ1lM0xB3AMvZpsDz0CsPlHoyK7gRSUPGXEUn8YRq0TPaS-GGvVfsCkMMteQboIYxzU6Fcytk1LKWSnQzL~uEEGrK8UWPzELfBpmq5fI4KGswYK1-dqicQdX8fO1M2tB0MJ~OiyFN-7VD~vFh7TNCnYD-e5UVy5HqTFJjNtVWhGYrS74gMuvo1Nf25GNisn5BXM3AJVNhAGXEUs3KCi-pYhDmpGOhy2qS3WetHcuPrL91nFwjLdLJZkQO9OyHYGs5J9TYuEgzQFiFLfZVj5WIwb-mZrj846yt-lSmJTG5zqm~CxUd8fNpERDvA__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-2c0011a.jpg?Expires=1794098950&Signature=DL0qBn7KHzHzPn1e5Ou2zb~3Ku2qwvg-8OuMhJ6qQX7bLI8l0HUu7rHTACUmGfJ~UQnB1b9rKJTE-nEXPLEYIZrGSsXJhnp5LiFrsLNEXUsJA5KdI2KKkL3kTIVQ361yIYXKhvdPdiS6gxP64cQujC2y3xsN3iasFrIWl9FonXigsBSod9Ydno7ZAtjvQcKwdtBS08lpfUgTamKKKzmh4NU46JClQ0xN6pst6vDj1P0Da6djog4F7fKmzoG5qc7zzIsvCI9AQYn~gl6cQX3T55Hpi6FLEMTFaOypFM-tCbNNrahn3vVE4UKsc0PXIw-vbofJ3U09NXgMmOiE2TuLmg__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-2c2011b.jpg?Expires=1794098950&Signature=l1goE69XdRj-~BEsRnSu6L0sgsPkBFeqokv7iIpFCtzlMw~Co8PJln0ZwtbgxXZmN~IoASk-AylGC06r8mSpLAKpvGydFgNOfUdgdmZr~vGajaFtuNNIrBL2fqSgaReraJBi4329Rw5~dIHHP8zq8MzWjwotbqRxo9ueUe6ZBgRMZJ4UTanDS9CK3GevI10Ru9HZu3~rDWVP4qVF5-OxbU2BzBZh1my-yODAUx9khalHRR4QCFT2PyWXndwqjr7SYO0m1K~0xbuGA0jcfW6mW1v9x5CWCVXBi59tAvuNQikQGEQctDPxMh9nErXg8bRpddtjdOH~zp8Dq5tYd04ZZg__&Key-Pair-Id=K3C0L9WB6U5DUC"
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1d100e9.jpg?Expires=1794101032&Signature=dJPse-AwQtew6pjvcIbkAMChR9mAVCR9UeWgdYkT0-bogzgk2ZlNCXa~JfD6ZXVKgbXkyMAEtYrrYyNgCMS96CNkn9r14tJE2FEUVGT5VONTXbSsUONFZPMXFEyQpD~1-9PaQD2GEueiZIVEn5DIu2Kc7Wl8dW3-c49wWKzzvrz9YJ9gf~0Dn2nPWTDac8VGPudV4ybr2cJ7ZwIPKFxs4~hfj4ZSb~V4mHNHCfCeeP-NOi-k6bgXBmq~uQp0iDALQXg62q1qCdDEmO0VCoQrD10RqgpKbg9WA2IBq9aNo4t8GuGMRe~4K-ffBUOlNW5Zk9iHIT7V~hN-LGJtSytZoQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1d300ea.jpg?Expires=1794101032&Signature=t9jcTrmLBBchOfgUDJGh~5I-Z55NYQpUA9~i~YJn2z3KO18IGJWAQeMSlotUCt0VqmmD0cKqKKiUd7YB0m5e8vxrfE3etegFoUb5iktjEQiFVL6rUcmnPKjY~ALdocAPGCoOvyCGackrueoxViJSN~9d5s~WsdeflyWyKNR5lp5IIa2e3-3AZY9vI7qAAByh3JreFr9ensdzR22eufOfGPzy-HRtFA8jy6wfqXbEws~QkhBUA3hn3CgQ5mE8fM5PZZe9ph9qDX62K8scrWM~D~81pP9jXAohBRJW55IeicsXZUTbZW-rhRe0d~nFTltBVtfemA0T60AGKI6jECZumw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1d500eb.jpg?Expires=1794101032&Signature=IEfzBSkHzk4lKBpeBluIQj4v8enKRjIAPmfkcekM6N~oSsX1pWzF6LqhejgNIw6rf~U0Dqjm8nYnUV9sColGr-kPzWRntt0g4OLG8ZRDtINX3fofqJan9jy1gJjGoe6l81IoP8Yzxb2wxFPELTwaYogzShjYH0EzZh~oBLfXOoDUJvcwBZ8JgG0nw4eMuQBwjH-q6RNvgem3Al25vbVoTbB7OQuuHEtiq3IhAtwCV3x3W3NhERK29tdj1n1FqxYGRbuDeHb7fJgFydwEJ3Un7jEBvUON192M2e~J8jzQhzKsdMg4uEi6eRR-ctH-Cvq0iUIlwLFFfmC2oNFsdV-aKg__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1d700ec.jpg?Expires=1794101032&Signature=MXc8tmD1PufZEtUl6d-KppPUOrJ2JR7womM9wQg9O41ePL7EGjFgPcbJcJ9bJHEKCIKta0qdbOBtodeJ32G0lzVy6KZutUQRRT7TbnZZc2Whg-BR4tKHc8225~j5hX3tHCXhXQyy6Xy1uH4Fh9iHnKbSZIyn31qxM58juq1z8g~U78gkTKNWYwEGrYWZ9fN38XvcpaeW0TfzWJWkGJhyK2fGKMbn0XGCaoeMKBaqZKeIcUiIKZyL08HcI~QPXInp0UJvRvPnpSEsUqA31p7P7wPJhVgtYJ9GvLrO5HCxlp075F-YJ-fSY3AwOIb3dHJUf4vouiOPaiJiBKyl6rIclQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1d900ed.jpg?Expires=1794101032&Signature=kItS97zWkem7OAr8g1SncvbjTHUPNoSR4hUzwyIS~E5NtsEY5IztMkyO-OjTEQB61pplcht-nEcVK~KAy9n0rDG~9B7bDe4aCcTYUsgGOT0TibNPh9991sne09k6yclLHlQIyCr09fngj6mkx0keFR3jQ7f1znQo~Vc2k0kiRBVGGD6ueWfbzscJOjYBdkgy5iMBm1XRYSYwMobm0dYN34D9hjMo-aA9c5Ka~b43KBdJ14OEFoEZntUcD16APOpR8CKzEFxBslb~5GBoJxOE5Cif4OeVZwVvNUnOx9TbO4MW5OaW1~IojDT4pjqSStOw1XYorWy~4jZBrSM8QfpO~Q__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1db00ee.jpg?Expires=1794101032&Signature=k~czx4X7v9FdAczJTMjRjbohE7wKCKDcxmAbbgbAka3s4lFp5wo94JWKeSEUxGyx77ML7Vc9SkOTroWqN2QJwH0ZkdB8h2xzLV22ttY7a4Dxrpuu0Luz3NXEXeRd5LSiW~k8guxbuxc-SVqZrQKCZRy2sov0bx12lkghWRYnKtgSqZTzYfU7FmOrlyK9i6F5kUzO1ISpNR~jtcmAWwu8WQ7n1klQhtrN0h4roqO1x1bur-~joN4fb93B37VpMp-V7uU2~E5I~Toc0---Gc53VNrk5hUZzrn1ikPojXi8yhI3558eQzjbbNnrD-OUM3egS6wOau5YKhcSVGGpmDBMvQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1dd00ef.jpg?Expires=1794101032&Signature=p1gyaqrCaxOpsWZCDKKi015A0RynytM~13arNo53Jb-ShIlTiz-jbf7CFAycuEQCE4ZTS1AEHBAfC4lwrwnTwUqJdHdhp9OZ32~araxwvq~S3-lqXzqZtihwnAXqdJV6V27il-n5T~wJLRMZfbvKoSPOygSwxijMvLjig~xFAUuhrouTtMmkFypgkDdi79jKJPy8207weAJ0YIPBFMAbIw7VSdAfQrmlHUf-umUB2Pdjv9FF12IUxuC7ftZXnKLp-RDogcwMF2hTf~6KQRIoyqP526XsKvv~pcQELaVd3tA-QbknPpWiRHJJ~Zu3Mbe7eEY8utldVWChxRCrEOJhaQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1df00f0.jpg?Expires=1794101032&Signature=qTU8pcGcG6yRK5KW2u0s3huESvjYH4uRhGYBYYx0oCJMP0biAjZg-YN-Unkp33DzR8R-MHsQ-btC4fbs6mESnf6yYeiRT83Gdy3GYrTQwdF2P~MoCDgMBSxOQ3Km6BX9BSLxG73r6C6HCWygiv1B-fvl5otEwW~fBYyS6QguMmVPMFiTorFlZxXHz9exC2JBivFDOaRjmHi75B~5iSFwlnbJSBpryyYrXQcaROiod6Ssf8vQ-YAhcA8S7-naGikWXoT75gaYGgHzuhDtntTXfFvGuGdhQiRDV-JGsoSyzEAhc27legb3oc6XG0GoqiXUUge4cGIQgKkBpGqYzV8g-g__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1e100f1.jpg?Expires=1794101032&Signature=W6tTSd8MBK86xM~mKiQfRsLO5wmFIgdBvQcgJaJFey2vJ4gvFoPGPCmr7qpgWzTL1GbHi~vNqPzWw5dVTf16AOAF9paPjc5DFeMUZTYVEPNJSO6KbCicQr2pivCiKDV3i9S1nfEskxMkaZbWqXubpbphW8uBywMR9QFURwafrkKfMhypf84i66HuNZoIPoNCfF1bMWPWGod5lOvXoCiofVm8jIoEspMEJEX3N8wNfeJcDWB4xmDcs3YiUeb0sakhCBBqmvPigXpRvz2vEzHAODV~iJo8kf4e7~wqciVvlYwiOoZfW0P-B~XpHkCedSV44vvHy2TZchmohs0qQgVIKw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-1e300f2.jpg?Expires=1794101032&Signature=kjtCFaLY4sqEuE8fGHpuVRz2fUkA-OFrzrgf0YFAMof4pwQNO-tonnF1J8CZMeG6MSDKT4RzOC58KXbrdM-VcOBquD7CzMdzUd71Y9MKXVK43gaguoIoXM2wuo6Q3r7cAsgoZrGyOCKwg2fDLUWmq2nNL9zx2w28PUzINKsPwdixDGnqlLcOXnslsUgLd9bUW34VehKmc-dBi5jL-EKly9RQqZDblE2Grq~r8AWSZ3JTHz2qEFmNpf8qCfrfMzo0MLpmvY-rmCjxSFfHna0Y2GC22uc1XRNwbYOONwSXzuxCLEm-9q~st5kG6YFXa4cCfiNqXFbUzpEYTcHKHW28~g__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-2c0011a.jpg?Expires=1794101032&Signature=R4Ds-fOfBhRGgMirTimRhutGmvjzXpKP5mVnhHCW4JQKrYiDUxmTH5viRXZMWzcMSLm9hG4lewhswzTeMFn2TQGmXjgKH9zViBiICXrH19B6ttRKOd36XIGoLzc9iF5a-Al7IS1C4DFwlNBmFwZMplUAq9FIkLW3eYyPo--qMhnarvrUOqJj4FnByb8BzVpBDuSfaA6kQR8qeh0tWZdTg-lT0Et08vwBpUqEnhfkTL7kDlS6taK08c-9n~08FVPec0~KjwYO0v0bwir09~TCfGbdI4j78TqpIJIO2Vc0v96PivxC5J9NJafGyESSik78gIs3N-GdVETHdUeZUjfp4w__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/4/screenshots/image-2c2011b.jpg?Expires=1794101032&Signature=h2VpIMwnOd6JpkuunMMnzlaLx5gx8NaQr0x6MXDxgf6HbOywA1STV8xTmH5ZF3AKDxIhN0ipRmukYKw9NMt3~LDwSdWwGT2rNogatBy6kKLRzEZGB4YPVT99sKeJWq-RRTHZH9qnsBOdylWlfcAyFqIT8Xks2teXEj0C24OjH-Xew7k928M-JLI1PtwMHKxXJHRE1j5dcmNNCkkJNhIk8WB6lzuO2Zu5K7pGVU~DrqTh52rKthUPYhdPzLF1A-0YrnWC9RhmQ0KqC7UP2IbBlU5i5-0OlL5DmqCH~xhNB79T5RudSJ4V81K5AzMs4U3-FucoXBn8W1pXa~qfe0AzQQ__&Key-Pair-Id=K3C0L9WB6U5DUC"
         ],
         "reasoningSteps": [],
+        "timing": {
+          "firstEventTimestamp": 1241459.2144113,
+          "videoStartTimestamp": 1241459.3284148
+        },
         "videoFile": "videos/cmcc8u6yc00vf1p1yvn1ufxj2.mp4",
-        "domSnapsFile": "dom_snaps/cmcc8u6yc00vf1p1yvn1ufxj2.zip"
+        "domSnapsFile": "dom_snaps/cmcc8u6yc00vf1p1yvn1ufxj2.zip",
+        "tabId": 5,
+        "placedStartedAt": "2026-11-08T00:15:00.831Z"
       },
       {
         "dataset": "anaisleila/computer-use-data-psai",
@@ -3212,18 +3242,18 @@
           "Information Retrieval & Analysis:Extraction"
         ],
         "difficulty": "EASY",
-        "originResolvedBy": "task-text",
+        "originResolvedBy": "site-map",
         "screen": {
           "width": 1920,
           "height": 1080,
           "chromeTopPx": 90
         },
         "screenshots": [
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d100e9.jpg?Expires=1794098950&Signature=bQnqVM00hM3MxiVm7MfATngfcTPUCVaI9xZ4Q4AHD0S4Q9PbHybQthWvTROElygIgqSj0fRdHet3CGn-vsNMo2og4uG6H6w7y3OW7dOiLJQvSS5Y5GtfAowUBCkJPNk2NDRXH8oyJEBZoYvZ8NaLbfDdoiSZEFbnEoKZc~Ps28p4aN9sEQutedrapfp7~ob4e18bodnxf197DhMkBWi-pXpG-sTN916EhRh1C3KxnEsYahdNVexEu~m4CMzE~wmHsxexMOztLblEUTpOugz30h0FzQoPK~btizoRK9-AOfGb48mBK8G0yWMDxRHA52RHug~ajVryzmLwZJX8PtyysA__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d300ea.jpg?Expires=1794098950&Signature=JZRxIrI3FV1OG0h~mzU2ioiOElq4AT10vpqtHNOfqtPnG8H15c414AWB~jOkjxyVhhdGc6~uNbtPA2zSR1LtqGnbjetx8aPMbirkf3D5YpdfOnuB4MWnW2K2UeaM-jI7r7lxjVZYnbyVlV9SCvHPNNnFn6f99WdtQ5nZAbkqz2lmxYSVhNJAAnbvJCCVTOuJbgCQPfEd6BvnHy0nN9bEX9uRy1fSh-ZTPes54n684-PwSoqddXhRH5l162kTbK16rcnLel8UXxmzqlv1J0juGKbRdqtZoMXsfeSsxgWfiyOCBGgwpjwKQp1m414t41FV4J1wiI-RhXI~qOKfPtrqgQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d500eb.jpg?Expires=1794098950&Signature=FoZVBHR1UWrf8S9kgKIxKEC-AGhf8fq-Xt9pfPfnrWWEnjf28BENwukO1-xnL0qH-aQ~EkOhdX-~giJGyUzzvyZVcAceHh8~BGlUMnU7a7xVMSKuISxLS1QDWESMAUXd3~GHVRUFazck6f1VhysAyEtrDUoQQqBDGqpyD7kE1tnG3yhSKUSBVBYi4te9tBxXb1wOOh0RsBxmnA9Tl0whHN-IWSNkcuiP4LqSaJBWhN7PANaN~YPB8e47W5q52xmhvsxk~5n4GU53QIkjy92AYGi2mvvtyHmW~FosO~6Z45kweadwo-4VH90cYYRxZhlcK4yPwKUVYEaMmhKkPC6Ezg__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d700ec.jpg?Expires=1794098950&Signature=ds3rw3ZbJigPdHW2g6tUvfmQgn0t3jNysbbCspvqz4ERpaixJK70c2oKUkDBg7URM~DIk0fvknsX-yIRLtwjo0q6WavfnMG1CKZT6gGanvIeMADg73boPVaF56V4Rrrl6FLkJDuSGVNOrltoqnla0MldmXHvTEDuxMR5Vc38VSy5EbXPRsDaJ8C9czpdLD-56rNPARBa173cBbW4sp9s0f35Q9quT8eDMlxOfnw6PmdLjbhag5IIAPxV-ZTdA-QIBI3kMytFqeB0AN36Xi3mkcFhZMckRYGTcKfQZh2ejMP7gf9~nQ2oEhf-xAjtAZotexsUQgpjlSApl55z6n8QkQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d900ed.jpg?Expires=1794098950&Signature=gF6T3DwO2wBvVFM1-z~Vu4xMbTnhO4avGRn-DX9aBQwaPj49ccfO3vRTn2BqMGz8Z81aYsRFNxI4mbGXqCxbCEmAN-pkhItAqishcSLbTUmYLKWrZRNJnIppWQMtOstXRjej1rHX70eTAAZoHBrvg0BXahkUay2Onf4dCukjP~jjdyKJqv67imFtwI~n0z63hSvRqUkaEIrLUl0orKe6bu0dLHQPoF~N41a26R~RN98OWA3YrZzZ5hEbBB4ChzRaAiQrkpC8QX4~NXrpcQZE4be4zRPVIZQcdXOEXL8F1V-lGHmWE9UJjgzpd4S2RpeuMFwAkc1r-t4nF5DBOaK1-w__&Key-Pair-Id=K3C0L9WB6U5DUC"
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d100e9.jpg?Expires=1794101032&Signature=ifUX9jo90K0YnKe7PtMOVzxSuN1mH9Klv1isc8UYsfcO49Iuy7y2yleIsvvz32jaAlHaKK2qbTKEn~7zTMMgn3aOrlQJyZHESY1F-CBpNWatvMNXeBJBwPbbq62B5FJ-QpgxCnJhSDLmAUeR1H5UdcmnevGw0VlbmCsGnQAwzR-J6cgm9X0EV-9JXE8fSIFgKOdu5szeYPEcPOa6Ysn3MbLjYpplx~v4ijuZvPq~bNcRvILnT6EeV-CTyfQAS-Hqmc0d4kvHpGX363Dp4C9jcsbKz8W0hawCXVYlY5h7LV0j0NS1v1y2y~6mAtgyx4z5vGHaGoZQ9drbsggkYJ33Mw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d300ea.jpg?Expires=1794101032&Signature=jmMDDVFI56Qmq5HNFJtj4hg5cnFPm823b-n05Sk7RcKOeXoNDlrPlRVVmFUi7CYZB6OEOug1zp0ZQPWamZZWVcnAUB3h~iEqwwxBbL7TcpyJUdhm8~FApfpzV9tNl5WNRszQF6gFzbvdMNbJ6yRV3qVCSxOOCqww4gNtfdWcxD9lToaMIJ2aqHgKXw1EWZjdfpnVF3DnXFd0q5PciLJcPXLHQpeiQRw1X3WX-2ux-RinfGPnPSJ~TTxAB0SzhokMn~TKTtKlHRLKB5osgHdbz8l-D3T0-QhSWFVwZxAPYBSeHG5s0-4t8xjMncPihyBewEF2w9lf4Pn-HQdX-aIErw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d500eb.jpg?Expires=1794101032&Signature=rDda9EJgrn67Pd8hNh5~AHhfPReGsC~mzjr~Yu2hlNCXn2bYLVu-z57ptJQCI-wgwKYcaMXuIhS~lNfFOddCBEoNkUgObPyvsY4aYQkFzAwP6PDEFanf-Q6Vrj1PP845SMPkdpAfmUruJFzjDvAOLb2iojlxPBsIdcgWEm7Zn2Enzp-ZN4CkchXkdIaNM9uLkYGhf3~~AD3tsEMX4xkLX0vnKXnQal7ltkK2Qqs62zCUMS2RZGQyfuZ9mwoNm7wN79pmpIEQy~cJivJx12n5ziHHxynRIWm9Awa82eCfWbXMigc9VzlIr089Xby8~SUssckEYE6V-SSzovOiwOBXPQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d700ec.jpg?Expires=1794101032&Signature=vQLPbACwxdGDCg3s4qY9NREMw-htinXKLf3jB-1bFr0KeYSbNXW9RMY0~iHltdaB2Svx645vV0C167NGh0d0~BMOKEYi34c8L0U7ekB3DY31FFZtLVldLFfSV9k2fxtMfP2r0nxZvjxV3gTZ9nWGgNUbBYcpCWpXTUMLgasKH9id2ZVIjPdPXpBhmkzi7YmZjae9d1w~qHupntWycNCuerDEsdZGZ4qThz0U5f0DJpolotffJFkDhBgw3JyM7bKTDHQEOcSKNgzbKXjeJ1byVZce~QzX3e0PVlBjGPS0HiUEhxMh70vmrDl5UZRH3IQAWR5bvVASYvjJsu63BN9ksQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+          "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d900ed.jpg?Expires=1794101032&Signature=tR3peXNx7nm~vDfCxaf7Mz2h9AQxI~4R3TctE9BHHKJfaKfGwMtPvmYryVQjNzpE9IpOtcg3Tu879io9HzTteXNE4qJBNIaPDl~S02GBkB9pBy9sv3HmsuLN1x9NAgrFTTS~VrsU7ghrYJBU5BR5rm7h6gVKyfi0msBxsZ5IlUaReL1sS14WEanAvNGXHTfZWDoW-bUIDADjTodOneFRyu7php4fmLHpY3DDfO8UuWLv5YspaK3SfRGKsnP6GH5eeaMmghEZvE5K9bV4Nl3aoDCsOmVMFxZlwrEE~-3GaswE--Ab72~I5XD5B3erEjnXVap~mhlplvwrOtu5XjeM-A__&Key-Pair-Id=K3C0L9WB6U5DUC"
         ],
         "reasoningSteps": [
           "Open the pre designed template and list every pre-designed page (here Shop,Services,Gallery,Contact)",
@@ -3232,8 +3262,14 @@
           "Once the hyperlink is clicked for choosing the template wait for the results",
           "Launch the browser ( e.g. Chrome)"
         ],
+        "timing": {
+          "firstEventTimestamp": 1209196.8302786,
+          "videoStartTimestamp": 1209196.9189451
+        },
         "videoFile": "videos/cmcc8u6ym018l1p1yxhf18gc2.mp4",
-        "domSnapsFile": "dom_snaps/cmcc8u6ym018l1p1yxhf18gc2.zip"
+        "domSnapsFile": "dom_snaps/cmcc8u6ym018l1p1yxhf18gc2.zip",
+        "tabId": 6,
+        "placedStartedAt": "2026-11-08T00:20:58.806Z"
       }
     ]
   }

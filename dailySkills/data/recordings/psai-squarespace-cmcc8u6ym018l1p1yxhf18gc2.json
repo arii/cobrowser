@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-  "startedAt": "2026-11-07T23:46:16.223Z",
+  "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+  "startedAt": "2026-11-08T00:20:58.798Z",
   "events": [
     {
-      "id": "6cb5872e-818b-4f0d-bcb5-5b929920c810",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:26.877Z",
+      "id": "30f93695-a552-4da0-bf11-c26227863e6d",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:09.452Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -16,9 +16,9 @@
       "y": 0.3111
     },
     {
-      "id": "d0a70c44-0a0a-426d-b1de-342bdbaafa4f",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:27.067Z",
+      "id": "b832338c-e2cb-458e-b0ca-37baee65d58e",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:09.642Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -26,9 +26,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "46338c09-d36e-4809-85e9-39a3e810d2a3",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:27.067Z",
+      "id": "3194cf7b-8bf0-488b-8ce3-b0ef7c0da990",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:09.642Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -37,9 +37,9 @@
       "key": "Enter"
     },
     {
-      "id": "2d93d64b-b05a-4d82-a677-5ef277342cf6",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:28.541Z",
+      "id": "8e833c59-6486-4ea6-befa-8407b0f3e8e6",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:11.116Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -49,9 +49,9 @@
       "y": 0.3081
     },
     {
-      "id": "73d3f64a-44ca-46ed-8e5b-683361003add",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:29.894Z",
+      "id": "8849d942-bf99-479d-a19f-c3e2bb8fdfe3",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:12.469Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -61,9 +61,9 @@
       "y": 0.3101
     },
     {
-      "id": "07ed4fb5-d21a-4726-a419-1dd9bf7c30c0",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:30.374Z",
+      "id": "e97b00e2-41e0-4af5-9c80-b4cfad0793fa",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:12.949Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -71,9 +71,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "68023a0f-61ab-46db-904c-76f4b48585c0",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:31.421Z",
+      "id": "a429326b-8752-46f4-9de9-50a01b6927c0",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:13.996Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -83,9 +83,9 @@
       "y": 0.301
     },
     {
-      "id": "ba6b290b-8656-4ea4-aa8b-17a6da05e055",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:31.631Z",
+      "id": "9ca8caba-765a-4119-818f-4ef45eac0c67",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:14.206Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -93,9 +93,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "287dd2ff-b663-4dfc-8535-e2ba73be2ab6",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:32.774Z",
+      "id": "907c856a-bdf2-4270-a4d4-a0b76801f8b6",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:15.349Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -105,9 +105,9 @@
       "y": 0.3616
     },
     {
-      "id": "acbedb82-1c79-4dee-bbb9-61c2d75c7312",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:33.774Z",
+      "id": "55eab313-ba7a-4ece-b56a-594a3ea0157e",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:16.349Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -117,9 +117,9 @@
       "y": 0.5747
     },
     {
-      "id": "20ed73be-1dfe-41f9-aa87-534b5f105156",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:34.254Z",
+      "id": "91a82c36-c569-4bbd-a474-8044f15d9865",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:16.829Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -127,9 +127,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "fb77f431-3d54-4869-9066-21ce1795a254",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:35.125Z",
+      "id": "c2358497-a26e-493b-8241-4fa7a77501f7",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:17.700Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -139,9 +139,9 @@
       "y": 0.6202
     },
     {
-      "id": "4cdac25b-3428-407c-b0db-4acb28d1901a",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:35.934Z",
+      "id": "74f8f36a-41cb-4c25-9f0e-02ddd1d42349",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:18.509Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -149,9 +149,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "13cfdb18-1bb2-4387-a6b5-068428ed565e",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:36.981Z",
+      "id": "dd95a8a7-e161-408b-b4e6-98869adc1708",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:19.556Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -159,9 +159,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "40dee918-0c3f-442b-a9d3-584b952995d7",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:38.894Z",
+      "id": "ba49409b-69cb-466e-b130-574af8b0779a",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:21.469Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -171,9 +171,9 @@
       "y": 0.6162
     },
     {
-      "id": "8704ac71-7f57-4c1c-954d-7d50e72c95c1",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:39.669Z",
+      "id": "e18d1701-9f78-4ebd-ad88-df6cab8e27f5",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:22.244Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -181,9 +181,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "d8eb700c-8115-4d78-9297-55ff933ff43a",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:40.797Z",
+      "id": "9ffc20fa-3e2b-4a68-a7f2-279286b2f9c6",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:23.372Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -193,9 +193,9 @@
       "y": 0.5253
     },
     {
-      "id": "75794977-6319-466d-a973-2d198ee867e0",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:41.262Z",
+      "id": "53cd7a0b-f8ef-4171-9000-bdf881106562",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:23.837Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -203,9 +203,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "2656a71a-1735-41fe-96b7-433d5b2bd1ac",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:42.278Z",
+      "id": "b3c58ac5-6af5-4d08-b95c-b7648e94db25",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:24.853Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -213,9 +213,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "c1b8a72a-2bcc-43b0-a2a7-53cdf1505387",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:43.966Z",
+      "id": "6cf98a19-3fa6-4eb2-bb97-f350b03ff731",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:26.541Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -223,9 +223,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "beb86f69-eb21-4203-9079-60d8bc02bd39",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:45.238Z",
+      "id": "452133d9-2ecf-4f04-bb7c-e3481ac7147d",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:27.813Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -235,9 +235,9 @@
       "y": 0.5848
     },
     {
-      "id": "7951baa8-ab9d-467e-b352-04c7ff165326",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:49.861Z",
+      "id": "1c3b2562-28ca-4342-819d-47d0a4d0b1ca",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:32.436Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -247,9 +247,9 @@
       "y": 0.5747
     },
     {
-      "id": "074c973f-3446-4d68-ac3e-ee9551a46028",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:51.989Z",
+      "id": "fdfc6acf-18ed-4d13-9e86-46c2d82b1a2d",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:34.564Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -257,9 +257,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "3ea52896-5da3-40b5-a4d4-f9fd774096a7",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:53.293Z",
+      "id": "275097aa-6773-4ceb-88e2-1262acc8f034",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:35.868Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -268,9 +268,9 @@
       "key": "Enter"
     },
     {
-      "id": "1a5c3d2f-4cfc-48cf-9a05-661d3ddeb58c",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:55.965Z",
+      "id": "11feb593-1d5d-433a-8345-f0f653bc4db6",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:38.540Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -279,9 +279,9 @@
       "key": "Enter"
     },
     {
-      "id": "c1c3c898-4867-4cd5-bf0a-1ab5e0050863",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:55.965Z",
+      "id": "31727553-a954-4760-9a92-52aea91490dc",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:38.540Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -290,9 +290,9 @@
       "key": "Enter"
     },
     {
-      "id": "5de105c4-96c7-471e-9c3d-8a623f908d58",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:56.333Z",
+      "id": "49c74d0d-858c-4ad3-a6d1-7c8eb467e68e",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:38.908Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -301,9 +301,9 @@
       "key": "Enter"
     },
     {
-      "id": "2c2d5ea6-8e00-47e2-936e-95875c839b24",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:57.477Z",
+      "id": "6def0938-7535-452b-bd6b-f79ecda16f37",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:40.052Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -313,9 +313,9 @@
       "y": 0.5778
     },
     {
-      "id": "dfc6818f-524b-47e2-aaa2-4acbd2002420",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:46:58.701Z",
+      "id": "a8a1d716-cd37-4e98-b699-c57bd28c66bc",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:41.276Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -326,9 +326,9 @@
       "effect": "content-changed"
     },
     {
-      "id": "fff9adbf-d9cb-42bf-a1fb-1c70b778158e",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:00.766Z",
+      "id": "0b8430a3-8b46-4ee9-b788-2adacadc9394",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:43.341Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -338,9 +338,9 @@
       "y": 0.4364
     },
     {
-      "id": "7a7ad2b8-260c-484d-bd41-774310028872",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:01.774Z",
+      "id": "df87396c-ef76-43bf-9274-7761dd98aedb",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:44.349Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -350,9 +350,9 @@
       "y": 0.4576
     },
     {
-      "id": "3083b53f-684f-467f-80b0-f98605b6a580",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:04.062Z",
+      "id": "6c05ee38-b9f1-4cff-a775-32339ec51763",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:46.637Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -362,9 +362,9 @@
       "y": 0.5091
     },
     {
-      "id": "48fc6279-5fa7-4b37-ab55-48b5076e03cc",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:05.112Z",
+      "id": "d922c428-9a89-4598-a393-3bec0058f6db",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:47.687Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -374,9 +374,9 @@
       "y": 0.8778
     },
     {
-      "id": "0f19ce97-6d5b-43d1-858d-8db16315a8cf",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:06.125Z",
+      "id": "ea33a844-5d4e-4fd2-83d4-50b484712e58",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:48.700Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -386,9 +386,9 @@
       "y": 0.5505
     },
     {
-      "id": "2bef3af0-978c-41f9-9f5d-5ce449a8c966",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:07.125Z",
+      "id": "a4e70c27-5262-4964-9b16-ade675405bad",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:49.700Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -398,9 +398,9 @@
       "y": 0.3899
     },
     {
-      "id": "81691bb4-edfd-44a3-8b17-0a7e5a35fd28",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:08.243Z",
+      "id": "3f9716d2-3169-43ba-b0b7-e5a1bb95f4f2",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:50.818Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -410,9 +410,9 @@
       "y": 0.3949
     },
     {
-      "id": "f1aad0fb-8e18-4a53-94f9-1199676160b5",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:09.246Z",
+      "id": "c197d803-bacc-4f01-b795-74da416b9c20",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:51.821Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -422,9 +422,9 @@
       "y": 0.701
     },
     {
-      "id": "c6c9faa2-e2be-418e-859a-07fe0194218d",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:10.253Z",
+      "id": "cd49f755-5b65-4dfa-8666-b4cc8cb149e1",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:52.828Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -434,9 +434,9 @@
       "y": 0.7657
     },
     {
-      "id": "aa37e9bb-70cb-46c2-9b83-6a6522a7bdd0",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:11.461Z",
+      "id": "a00db931-8cbc-4256-8167-3972f1802f2b",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:54.036Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -446,9 +446,9 @@
       "y": 0.8788
     },
     {
-      "id": "17b8444a-aa1c-4ffc-9908-042b7c212589",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:12.493Z",
+      "id": "41781d89-4254-43d6-9f65-0232fe070b28",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:21:55.068Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -458,9 +458,9 @@
       "y": 0.4212
     },
     {
-      "id": "5bace89f-e8b2-4523-b0ec-7ec86371c7a6",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:36.989Z",
+      "id": "261708b3-ad1d-48e8-8bb8-a9dc818adb35",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:19.564Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -468,9 +468,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "2ed84686-c31f-4321-bdc3-731952b4a559",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:38.101Z",
+      "id": "3035929f-42c1-407a-af94-359fc1d39673",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:20.676Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -478,9 +478,9 @@
       "tag": "PAGE"
     },
     {
-      "id": "a9062fd8-55e4-42e8-8727-950613734437",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:38.357Z",
+      "id": "3224c158-6e79-4ba9-8c7a-a82d5694390c",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:20.932Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -490,9 +490,9 @@
       "y": 0.4899
     },
     {
-      "id": "65908d9e-9ba3-4374-81b8-6275822ff0b0",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:44.718Z",
+      "id": "774cf848-d6f5-4f05-a050-2062fd0eb87c",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:27.293Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -502,9 +502,9 @@
       "y": 0.9758
     },
     {
-      "id": "740b90bb-ed7a-43c7-bd49-f0f7de675a9a",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:45.798Z",
+      "id": "5a50b110-cb90-47ab-9bff-030948a2e01c",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:28.373Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -514,9 +514,9 @@
       "y": 0.9737
     },
     {
-      "id": "812750c3-7c31-4b82-8ae9-4e815e703c1d",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:47.991Z",
+      "id": "a5ec8fba-367f-4eb0-9783-7c1a2d66a332",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:30.566Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -524,9 +524,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "fb069ffb-af40-43b9-82c6-99b770a9cb26",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:49.046Z",
+      "id": "9cf4563c-6e55-435f-b01b-9d1deb9443be",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:31.621Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -535,9 +535,9 @@
       "key": "Enter"
     },
     {
-      "id": "d43586fb-66f9-4768-9f07-1e1287d8adf6",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:52.631Z",
+      "id": "fc157808-40a7-4b78-b45c-e8ae2dff7ecd",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:35.206Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -545,9 +545,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "abe04b52-2f03-4ac3-a17c-c19b24bbe656",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:53.398Z",
+      "id": "76d3db71-c6e0-4dcf-9dd1-6ca32943ed7a",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:35.973Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -556,9 +556,9 @@
       "key": "Enter"
     },
     {
-      "id": "e942ecd4-a793-491e-8b42-8f31624bee43",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:58.662Z",
+      "id": "b48ef7dd-53ab-46d4-af57-bd3b258407b7",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:41.237Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -566,9 +566,9 @@
       "tag": "INPUT"
     },
     {
-      "id": "913c100a-ddd1-4390-9b30-52fa764c7f34",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:47:59.718Z",
+      "id": "eedb6116-6b22-4cfa-a0df-92f2e3211c40",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:42.293Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -577,9 +577,9 @@
       "key": "Enter"
     },
     {
-      "id": "102e62ae-afa2-40ab-921b-4e05ca6d570a",
-      "sessionId": "99504953-2327-4153-b4ab-b52d97aacc89",
-      "at": "2026-11-07T23:48:02.717Z",
+      "id": "0b2d93a1-b1d0-4893-a73e-ee0b870b1af2",
+      "sessionId": "5372f2b8-07f6-4ba0-a2d2-e19d016fb2de",
+      "at": "2026-11-08T00:22:45.292Z",
       "origin": "https://www.squarespace.com",
       "tabId": 1,
       "provenance": "human",
@@ -595,7 +595,7 @@
       "headings": [],
       "excerpt": "",
       "active": true,
-      "observedAt": "2026-11-07T23:48:11.636Z",
+      "observedAt": "2026-11-08T00:22:54.211Z",
       "readStatus": "unavailable"
     }
   ],
@@ -617,18 +617,18 @@
       "Information Retrieval & Analysis:Extraction"
     ],
     "difficulty": "EASY",
-    "originResolvedBy": "task-text",
+    "originResolvedBy": "site-map",
     "screen": {
       "width": 1920,
       "height": 1080,
       "chromeTopPx": 90
     },
     "screenshots": [
-      "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d100e9.jpg?Expires=1794098950&Signature=bQnqVM00hM3MxiVm7MfATngfcTPUCVaI9xZ4Q4AHD0S4Q9PbHybQthWvTROElygIgqSj0fRdHet3CGn-vsNMo2og4uG6H6w7y3OW7dOiLJQvSS5Y5GtfAowUBCkJPNk2NDRXH8oyJEBZoYvZ8NaLbfDdoiSZEFbnEoKZc~Ps28p4aN9sEQutedrapfp7~ob4e18bodnxf197DhMkBWi-pXpG-sTN916EhRh1C3KxnEsYahdNVexEu~m4CMzE~wmHsxexMOztLblEUTpOugz30h0FzQoPK~btizoRK9-AOfGb48mBK8G0yWMDxRHA52RHug~ajVryzmLwZJX8PtyysA__&Key-Pair-Id=K3C0L9WB6U5DUC",
-      "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d300ea.jpg?Expires=1794098950&Signature=JZRxIrI3FV1OG0h~mzU2ioiOElq4AT10vpqtHNOfqtPnG8H15c414AWB~jOkjxyVhhdGc6~uNbtPA2zSR1LtqGnbjetx8aPMbirkf3D5YpdfOnuB4MWnW2K2UeaM-jI7r7lxjVZYnbyVlV9SCvHPNNnFn6f99WdtQ5nZAbkqz2lmxYSVhNJAAnbvJCCVTOuJbgCQPfEd6BvnHy0nN9bEX9uRy1fSh-ZTPes54n684-PwSoqddXhRH5l162kTbK16rcnLel8UXxmzqlv1J0juGKbRdqtZoMXsfeSsxgWfiyOCBGgwpjwKQp1m414t41FV4J1wiI-RhXI~qOKfPtrqgQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-      "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d500eb.jpg?Expires=1794098950&Signature=FoZVBHR1UWrf8S9kgKIxKEC-AGhf8fq-Xt9pfPfnrWWEnjf28BENwukO1-xnL0qH-aQ~EkOhdX-~giJGyUzzvyZVcAceHh8~BGlUMnU7a7xVMSKuISxLS1QDWESMAUXd3~GHVRUFazck6f1VhysAyEtrDUoQQqBDGqpyD7kE1tnG3yhSKUSBVBYi4te9tBxXb1wOOh0RsBxmnA9Tl0whHN-IWSNkcuiP4LqSaJBWhN7PANaN~YPB8e47W5q52xmhvsxk~5n4GU53QIkjy92AYGi2mvvtyHmW~FosO~6Z45kweadwo-4VH90cYYRxZhlcK4yPwKUVYEaMmhKkPC6Ezg__&Key-Pair-Id=K3C0L9WB6U5DUC",
-      "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d700ec.jpg?Expires=1794098950&Signature=ds3rw3ZbJigPdHW2g6tUvfmQgn0t3jNysbbCspvqz4ERpaixJK70c2oKUkDBg7URM~DIk0fvknsX-yIRLtwjo0q6WavfnMG1CKZT6gGanvIeMADg73boPVaF56V4Rrrl6FLkJDuSGVNOrltoqnla0MldmXHvTEDuxMR5Vc38VSy5EbXPRsDaJ8C9czpdLD-56rNPARBa173cBbW4sp9s0f35Q9quT8eDMlxOfnw6PmdLjbhag5IIAPxV-ZTdA-QIBI3kMytFqeB0AN36Xi3mkcFhZMckRYGTcKfQZh2ejMP7gf9~nQ2oEhf-xAjtAZotexsUQgpjlSApl55z6n8QkQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
-      "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d900ed.jpg?Expires=1794098950&Signature=gF6T3DwO2wBvVFM1-z~Vu4xMbTnhO4avGRn-DX9aBQwaPj49ccfO3vRTn2BqMGz8Z81aYsRFNxI4mbGXqCxbCEmAN-pkhItAqishcSLbTUmYLKWrZRNJnIppWQMtOstXRjej1rHX70eTAAZoHBrvg0BXahkUay2Onf4dCukjP~jjdyKJqv67imFtwI~n0z63hSvRqUkaEIrLUl0orKe6bu0dLHQPoF~N41a26R~RN98OWA3YrZzZ5hEbBB4ChzRaAiQrkpC8QX4~NXrpcQZE4be4zRPVIZQcdXOEXL8F1V-lGHmWE9UJjgzpd4S2RpeuMFwAkc1r-t4nF5DBOaK1-w__&Key-Pair-Id=K3C0L9WB6U5DUC"
+      "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d100e9.jpg?Expires=1794101032&Signature=ifUX9jo90K0YnKe7PtMOVzxSuN1mH9Klv1isc8UYsfcO49Iuy7y2yleIsvvz32jaAlHaKK2qbTKEn~7zTMMgn3aOrlQJyZHESY1F-CBpNWatvMNXeBJBwPbbq62B5FJ-QpgxCnJhSDLmAUeR1H5UdcmnevGw0VlbmCsGnQAwzR-J6cgm9X0EV-9JXE8fSIFgKOdu5szeYPEcPOa6Ysn3MbLjYpplx~v4ijuZvPq~bNcRvILnT6EeV-CTyfQAS-Hqmc0d4kvHpGX363Dp4C9jcsbKz8W0hawCXVYlY5h7LV0j0NS1v1y2y~6mAtgyx4z5vGHaGoZQ9drbsggkYJ33Mw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+      "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d300ea.jpg?Expires=1794101032&Signature=jmMDDVFI56Qmq5HNFJtj4hg5cnFPm823b-n05Sk7RcKOeXoNDlrPlRVVmFUi7CYZB6OEOug1zp0ZQPWamZZWVcnAUB3h~iEqwwxBbL7TcpyJUdhm8~FApfpzV9tNl5WNRszQF6gFzbvdMNbJ6yRV3qVCSxOOCqww4gNtfdWcxD9lToaMIJ2aqHgKXw1EWZjdfpnVF3DnXFd0q5PciLJcPXLHQpeiQRw1X3WX-2ux-RinfGPnPSJ~TTxAB0SzhokMn~TKTtKlHRLKB5osgHdbz8l-D3T0-QhSWFVwZxAPYBSeHG5s0-4t8xjMncPihyBewEF2w9lf4Pn-HQdX-aIErw__&Key-Pair-Id=K3C0L9WB6U5DUC",
+      "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d500eb.jpg?Expires=1794101032&Signature=rDda9EJgrn67Pd8hNh5~AHhfPReGsC~mzjr~Yu2hlNCXn2bYLVu-z57ptJQCI-wgwKYcaMXuIhS~lNfFOddCBEoNkUgObPyvsY4aYQkFzAwP6PDEFanf-Q6Vrj1PP845SMPkdpAfmUruJFzjDvAOLb2iojlxPBsIdcgWEm7Zn2Enzp-ZN4CkchXkdIaNM9uLkYGhf3~~AD3tsEMX4xkLX0vnKXnQal7ltkK2Qqs62zCUMS2RZGQyfuZ9mwoNm7wN79pmpIEQy~cJivJx12n5ziHHxynRIWm9Awa82eCfWbXMigc9VzlIr089Xby8~SUssckEYE6V-SSzovOiwOBXPQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+      "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d700ec.jpg?Expires=1794101032&Signature=vQLPbACwxdGDCg3s4qY9NREMw-htinXKLf3jB-1bFr0KeYSbNXW9RMY0~iHltdaB2Svx645vV0C167NGh0d0~BMOKEYi34c8L0U7ekB3DY31FFZtLVldLFfSV9k2fxtMfP2r0nxZvjxV3gTZ9nWGgNUbBYcpCWpXTUMLgasKH9id2ZVIjPdPXpBhmkzi7YmZjae9d1w~qHupntWycNCuerDEsdZGZ4qThz0U5f0DJpolotffJFkDhBgw3JyM7bKTDHQEOcSKNgzbKXjeJ1byVZce~QzX3e0PVlBjGPS0HiUEhxMh70vmrDl5UZRH3IQAWR5bvVASYvjJsu63BN9ksQ__&Key-Pair-Id=K3C0L9WB6U5DUC",
+      "https://datasets-server.huggingface.co/cached-assets/anaisleila/computer-use-data-psai/--/0e1b7c63072833ba58b89dcfcc0cbac45107b0f4/--/default/train/5/screenshots/image-1d900ed.jpg?Expires=1794101032&Signature=tR3peXNx7nm~vDfCxaf7Mz2h9AQxI~4R3TctE9BHHKJfaKfGwMtPvmYryVQjNzpE9IpOtcg3Tu879io9HzTteXNE4qJBNIaPDl~S02GBkB9pBy9sv3HmsuLN1x9NAgrFTTS~VrsU7ghrYJBU5BR5rm7h6gVKyfi0msBxsZ5IlUaReL1sS14WEanAvNGXHTfZWDoW-bUIDADjTodOneFRyu7php4fmLHpY3DDfO8UuWLv5YspaK3SfRGKsnP6GH5eeaMmghEZvE5K9bV4Nl3aoDCsOmVMFxZlwrEE~-3GaswE--Ab72~I5XD5B3erEjnXVap~mhlplvwrOtu5XjeM-A__&Key-Pair-Id=K3C0L9WB6U5DUC"
     ],
     "reasoningSteps": [
       "Open the pre designed template and list every pre-designed page (here Shop,Services,Gallery,Contact)",
@@ -637,7 +637,13 @@
       "Once the hyperlink is clicked for choosing the template wait for the results",
       "Launch the browser ( e.g. Chrome)"
     ],
+    "timing": {
+      "firstEventTimestamp": 1209196.8302786,
+      "videoStartTimestamp": 1209196.9189451
+    },
     "videoFile": "videos/cmcc8u6ym018l1p1yxhf18gc2.mp4",
-    "domSnapsFile": "dom_snaps/cmcc8u6ym018l1p1yxhf18gc2.zip"
+    "domSnapsFile": "dom_snaps/cmcc8u6ym018l1p1yxhf18gc2.zip",
+    "tabId": 1,
+    "placedStartedAt": "2026-11-08T00:20:58.798Z"
   }
 }
