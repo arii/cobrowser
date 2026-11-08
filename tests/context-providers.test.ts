@@ -68,6 +68,10 @@ test('Meta Llama is the default context provider with separate credentials and s
     assert.equal(sent.url,llamaEnv.LLAMA_ENDPOINT);
     assert.equal(sent.headers.Authorization,'Bearer synthetic-meta-key');
     assert.equal(sent.body.response_format.json_schema.strict,true);
+    const schema=sent.body.response_format.json_schema.schema;
+    assert.deepEqual([...schema.required].sort(),Object.keys(schema.properties).sort());
+    const muse=liveContextProviders({...llamaEnv,LLAMA_MODEL:'muse-spark-1.3'});
+    assert.equal(muse.contextModel,'muse-spark-1.3');
     assert(!JSON.stringify(result).includes('synthetic-meta-key'));
     for(const name of ['LLAMA_ENDPOINT','LLAMA_MODEL','LLAMA_API_KEY','LLAMA_SCHEMA'])assert.throws(()=>liveContextProviders({...llamaEnv,[name]:''}),new RegExp(`missing-${name}`));
     assert.throws(()=>liveContextProviders({...llamaEnv,LLAMA_MODEL:'other-model'}),/not-declared-llama/);

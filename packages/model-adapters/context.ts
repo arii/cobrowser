@@ -32,15 +32,18 @@ export function llamaConfiguration(env:NodeJS.ProcessEnv) {
     if(!env[name])throw new Error(`missing-${name}`);
   }
   if(env.LLAMA_SCHEMA!=='openai-chat')throw new Error('unsupported-LLAMA_SCHEMA');
-  if(!/llama/i.test(env.LLAMA_MODEL!))throw new Error('configured-model-is-not-declared-llama');
+  if(!/llama/i.test(env.LLAMA_MODEL!) && env.LLAMA_MODEL!=='muse-spark-1.3')throw new Error('configured-model-is-not-declared-llama');
   let url:URL;
   try{url=new URL(env.LLAMA_ENDPOINT!);}catch{throw new Error('unsafe-LLAMA_ENDPOINT');}
   if(url.protocol!=='https:'||url.username||url.password||url.hash)throw new Error('unsafe-LLAMA_ENDPOINT');
   return {endpoint:url.href,model:env.LLAMA_MODEL!,key:env.LLAMA_API_KEY!};
 }
 export async function llamaStructured<T>(config:ReturnType<typeof llamaConfiguration>,system:string,content:unknown,schema:z.ZodType<T>,name:string) {
+  const outputSchema=z.toJSONSchema(schema);
+  // Strict providers require every property, including nullable optional fields.
+  if(outputSchema.properties)outputSchema.required=Object.keys(outputSchema.properties);
   const body={model:config.model,messages:[{role:'system',content:system},{role:'user',content}],stream:false,max_tokens:4096,
-    response_format:{type:'json_schema',json_schema:{name,strict:true,schema:z.toJSONSchema(schema)}}};
+    response_format:{type:'json_schema',json_schema:{name,strict:true,schema:outputSchema}}};
   const result=await request(config.endpoint,{Authorization:`Bearer ${config.key}`},body);
   const envelope=z.object({model:z.literal(config.model),choices:z.array(z.object({finish_reason:z.literal('stop'),message:z.object({content:z.string().min(1),refusal:z.null().optional()})})).length(1),usage:tokenUsage.optional()}).safeParse(result.raw);
   if(!envelope.success)throw new Error('context-llama-invalid-envelope');
