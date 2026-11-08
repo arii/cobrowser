@@ -3,7 +3,9 @@ root.innerHTML = `<header><p>COBROWSER · LOCAL RECORDER</p><p><a href="skills.h
 <p>Records human interaction metadata on <strong id="record-origin">…</strong> with interaction events from the active tab and its browser window is focused.</p></header>
 <div class="controls"><button id="record-start">Start recording</button><button id="record-pause">Pause</button><button id="record-fixture">Open fixture</button><button id="record-export">Export JSON</button><button id="record-clear">Clear saved data</button></div>
 <p id="record-error" role="alert"></p><section class="stats"><div><strong id="record-count">0</strong><span>events saved locally</span></div><div><strong id="record-last">—</strong><span>last saved</span></div><div><strong>24 hours</strong><span>live window · latest 2,000 events</span></div></section>
-<p id="record-detail" role="status" aria-live="polite"></p><section id="brain-panel"><h2>Rolling context brain</h2><p id="brain-mode">Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.</p>
+<p id="record-detail" role="status" aria-live="polite"></p><section id="dataset-panel"><h2>Dataset recordings</h2><p>Test with a recording converted from a public dataset (<code>dailySkills/</code> in the repo, <code>pnpm convert …</code>) instead of live capture. Loading one pauses recording and sets the live data aside; switching off, or pressing Start recording, restores it. Clear saved data discards both.</p>
+<div class="controls"><label class="toggle"><input type="checkbox" id="dataset-toggle"> Use dataset recording</label><button id="dataset-choose">Choose JSON…</button><input type="file" id="dataset-file" accept="application/json,.json" hidden></div>
+<p id="dataset-status" role="status" aria-live="polite"></p><p id="dataset-error" role="alert"></p><details id="dataset-tasks-details" hidden><summary>Tasks in this recording</summary><table><thead><tr><th>Tab</th><th>Site</th><th>Task</th></tr></thead><tbody id="dataset-tasks"></tbody></table></details></section><section id="brain-panel"><h2>Rolling context brain</h2><p id="brain-mode">Not connected. Run pnpm brain:record for live providers or pnpm brain:preview for a synthetic preview.</p>
 <h3 id="brain-intent">Waiting for evidence</h3><p id="brain-summary"></p><p id="brain-status"></p><p id="brain-phase" role="status" aria-live="polite"></p><p id="visual-status"></p><p id="brain-metrics"></p><p id="brain-error" role="alert"></p><h3>Likely next action · a guess</h3><p id="brain-next">Waiting for a prediction</p><p id="brain-next-detail"></p><details><summary>Context decisions and provider log</summary><pre id="brain-journal"></pre></details></section><section id="assumption-panel"><h2>Context assumptions over time</h2><p>About every 10 seconds while a web page is focused. These are revisable guesses based on visible evidence.</p><div id="assumption-timeline"></div></section><h2>Open tabs</h2><p id="tab-count"></p><table><thead><tr><th>Tab</th><th>Page</th><th>Origin</th><th>Read status / page content</th></tr></thead><tbody id="open-tabs"></tbody></table><h2>Recent activity</h2><p id="record-empty">Open the fixture and click a control or change a field, then return here. Events appear after Chrome confirms the save.</p>
 <table><thead><tr><th>Time</th><th>Interaction</th><th>Element</th><th>Input metadata</th><th>Origin / tab</th></tr></thead><tbody id="record-events"></tbody></table>
 <footer>Local Chrome extension storage in this browser profile. Typed values, page text and printable keys are excluded from event recording. Bounded control labels are saved to identify replay targets. Run workflows from the skills library with an instruction and the websites they need. Skill actions are excluded from human recordings. Live brain mode sends masked active-tab screenshots to Snap and Gemini for visual summaries, and open-tab titles, headings, page excerpts, bounded before/after DOM snapshots and motion/context summaries to the context model. Raw screenshots stay in memory; derived summaries and assumptions are saved locally; the preview uses synthetic responses. Incognito and browser-internal pages are excluded, as is the agent's own debugger input. Predictions are guesses and never trigger actions. Browser restart pauses capture; the live window expires, while full local action history remains until Clear saved data. Exported files are yours to manage.</footer>`;
@@ -19,6 +21,7 @@ async function request(kind) {
 function render(value) {
   state = value;
   renderBrain(value.brain);
+  renderDataset(value);
   el('recording-state').textContent = value.enabled ? 'Recording is on' : 'Recording is paused';
   el('recording-state').dataset.enabled = String(value.enabled);
   el('record-start').disabled = value.enabled || busy;
@@ -55,6 +58,39 @@ function render(value) {
   }));
   }
 }
+function datasetErrorText(code) {
+  if (typeof code !== 'string') return 'Dataset load did not respond. Reload the extension.';
+  const event = /^dataset-event-(\d+)-(.+)$/.exec(code);
+  if (event) {
+    const reasons = {'rejected-by-recorder':'has content the recorder would never store (check kind, tag, x/y, key, target).','session-mismatch':'does not belong to the file\'s sessionId.','bad-origin':'needs a bare http(s) origin.','out-of-order':'is earlier than the event before it.','bad-time':'has an unreadable timestamp.','not-human':'must have provenance "human".'};
+    return `Event ${event[1]} ${reasons[event[2]] ?? `failed: ${event[2]}.`}`;
+  }
+  return {
+    'dataset-not-an-object':'Expected a recorder state object (the Export JSON shape).',
+    'dataset-unsupported-schema':'Only schemaVersion 1 recordings are supported.',
+    'dataset-missing-session':'The recording has no sessionId.',
+    'dataset-no-events':'The recording has no events.',
+    'dataset-too-many-events':'The recording is too large; convert fewer tasks.',
+    'dataset-duplicate-event-ids':'Event ids repeat; regenerate the file.',
+    'dataset-all-events-expired':'Every event is older than 24 hours. Re-run the converter (default --rebase now).',
+  }[code] ?? code;
+}
+function renderDataset(value) {
+  const dataset = value.dataset ?? null;
+  el('dataset-toggle').checked = Boolean(dataset);
+  el('dataset-toggle').disabled = busy;
+  el('dataset-choose').disabled = busy;
+  el('dataset-status').textContent = dataset
+    ? `${dataset.name}: ${dataset.eventCount} events across ${dataset.tabCount} tab(s), loaded ${new Date(dataset.loadedAt).toLocaleTimeString()}.${dataset.expired ? ` ${dataset.expired} events older than 24 hours were left out.` : ''}${dataset.dropped ? ` ${dataset.dropped} oldest events were rotated out at the ${value.limit ?? 2000}-event cap.` : ''} Live recording is set aside until this is switched off.`
+    : 'Off. Live recording behaves as usual.';
+  const rows = (dataset?.tasks ?? []).map(task => {
+    const row = document.createElement('tr');
+    for (const text of [String(task.tabId), task.site || task.dataset || '—', task.task || '—']) { const cell = document.createElement('td'); cell.textContent = text; row.append(cell); }
+    return row;
+  });
+  el('dataset-tasks').replaceChildren(...rows);
+  el('dataset-tasks-details').hidden = rows.length === 0;
+}
 function renderBrain(brain) {
   const activity=state?.brainActivity;
   el('brain-phase').textContent=!state?.enabled?'Observation paused':activity?.sessionId===state?.sessionId?`Activity: ${activity.phase}`:'Waiting for the next observation';
@@ -89,6 +125,37 @@ for (const action of ['start','pause','clear']) el(`record-${action}`).onclick =
   finally { busy = false; if (state) {el('record-start').disabled = state.enabled;el('record-pause').disabled = !state.enabled;} }
 };
 el('record-fixture').onclick = () => chrome.tabs.create({url:'http://127.0.0.1:3210/'});
+async function datasetRequest(kind, extra = {}) {
+  const result = await chrome.runtime.sendMessage({ kind: `recording:${kind}`, ...extra });
+  if (!result?.ok) throw new Error(datasetErrorText(result?.error));
+  return result.value;
+}
+el('dataset-choose').onclick = () => el('dataset-file').click();
+el('dataset-file').onchange = async () => {
+  const file = el('dataset-file').files?.[0];
+  el('dataset-file').value = '';
+  if (!file) { if (state) renderDataset(state); return; }
+  busy = true;
+  el('dataset-error').textContent = '';
+  try {
+    let parsed;
+    try { parsed = JSON.parse(await file.text()); } catch { throw new Error('That file is not valid JSON.'); }
+    render(await datasetRequest('dataset-load', { name: file.name, state: parsed }));
+  } catch (error) { el('dataset-error').textContent = error.message; if (state) renderDataset(state); }
+  finally { busy = false; if (state) renderDataset(state); }
+};
+el('dataset-toggle').onchange = async () => {
+  if (el('dataset-toggle').checked) {
+    // Switching on without a loaded file asks for one; render() sets the box once the load succeeds.
+    if (!state?.dataset) { el('dataset-toggle').checked = false; el('dataset-file').click(); }
+    return;
+  }
+  busy = true;
+  el('dataset-error').textContent = '';
+  try { render(await datasetRequest('dataset-unload')); }
+  catch (error) { el('dataset-error').textContent = error.message; if (state) renderDataset(state); }
+  finally { busy = false; if (state) renderDataset(state); }
+};
 el('record-export').onclick = async () => {
   try {
     const saved = await request('export');

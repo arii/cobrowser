@@ -129,12 +129,12 @@ click when that click hit an input-like control. This is what `.env.example` is 
 
 ## Loading a recording into the extension
 
-There is no import button. Open the unpacked extension's service worker console at `chrome://extensions`, paste a
-file's contents as `state`, then:
+The recording monitor (`recording.html`) has a **Dataset recordings** panel with a toggle, **Use dataset recording**.
+Switch it on (or press **Choose JSON…**) and pick any file from `data/recordings/`. The extension validates every
+event with the same rule the recorder applies to live events, pauses capture, sets the live recording aside, and
+loads the dataset events into the monitor, the action history and the skills view. Switching the toggle off, or
+pressing **Start recording**, restores the live recording exactly as it was. **Clear saved data** discards both.
+Use the default `--rebase now` output; events older than 24 hours are left out on load.
 
-```js
-await chrome.storage.local.set({ fixtureRecording: state });
-```
-
-Open the recording monitor; it reads `fixtureRecording` on each refresh and filters out events older than 24 h,
-so use the default `--rebase now` output.
+The toggle lives in `apps/extension/recorder.js` (`recording:dataset-load` / `recording:dataset-unload`) and
+`apps/extension/dataset-recording.js` (validation, covered by `tests/dataset-recording.test.ts`).

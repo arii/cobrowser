@@ -45,6 +45,14 @@ export async function readTaskActions(openedAt){
     request.onsuccess=()=>resolve(request.result.map(item=>item.event));request.onerror=()=>reject(new Error('Local task actions could not be read.'));
   });
 }
+/** Drops one generation's actions, e.g. an unloaded dataset recording, leaving live history intact. */
+export async function removeActions(generation){
+  const db=await open();return new Promise((resolve,reject)=>{
+    const tx=db.transaction('events','readwrite'),store=tx.objectStore('events'),request=store.openCursor();
+    request.onsuccess=()=>{const cursor=request.result;if(!cursor)return;if(cursor.value.generation===generation)cursor.delete();cursor.continue();};
+    tx.oncomplete=()=>resolve();tx.onabort=()=>reject(new Error('Local action history could not be updated.'));
+  });
+}
 export async function clearActions(){
   const db=await open();return new Promise((resolve,reject)=>{const tx=db.transaction(['events','meta'],'readwrite');tx.objectStore('events').clear();tx.objectStore('meta').clear();tx.oncomplete=()=>resolve();tx.onabort=()=>reject(new Error('Local action history could not be cleared.'));});
 }

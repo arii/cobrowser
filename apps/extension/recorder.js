@@ -1,5 +1,6 @@
-import { retainAction, readAllActions, clearActions } from './action-history.js';
-import { validTarget } from './skill-learning.js';
+import { retainAction, readAllActions, clearActions, removeActions } from './action-history.js';
+import { validEvent } from './recording-events.js';
+import { normalizeDatasetRecording } from './dataset-recording.js';
 import { captureVisualContext, clearVisualEvidence } from './visual-context.js';
 import { nativeBrainLink } from './native-brain.js';
 const brainLink=nativeBrainLink();
@@ -11,6 +12,10 @@ function messageOrigin(value) {
   try { return new URL(value ?? '').origin; } catch { return ''; }
 }
 const KEY = 'fixtureRecording';
+// Dataset mode (monitor toggle): a converted public-dataset recording replaces the live state for testing; the live
+// state is stashed and restored when the toggle is switched off or recording starts again.
+const DATASET_KEY = 'datasetRecording';
+const LIVE_STASH_KEY = 'fixtureRecordingLiveStash';
 const TTL = 24 * 60 * 60 * 1000;
 const LIMIT = 2000;
 const empty = () => ({schemaVersion:1, historyGeneration:crypto.randomUUID(),sessionId:null, startedAt:null, events:[], tabs:[], tabCount:0, dropped:0});
@@ -68,10 +73,10 @@ async function snapshot() {
   const state = await read();
   const {recordingEnabled = false, recordingError = null} = await chrome.storage.session.get(['recordingEnabled','recordingError']);
   if (recordingEnabled) {await refreshTabs(state);await captureVisualContext(state);await save(state);}
-  const {contextBrain:storedBrain=null,brainConnection=null,brainActivity=null} = await chrome.storage.local.get(['contextBrain','brainConnection','brainActivity']);
+  const {contextBrain:storedBrain=null,brainConnection=null,brainActivity=null,[DATASET_KEY]:dataset=null} = await chrome.storage.local.get(['contextBrain','brainConnection','brainActivity',DATASET_KEY]);
   const contextBrain=storedBrain?.providers?.context?storedBrain:null;
   const brain=contextBrain && Date.now()-Date.parse(contextBrain.connectedAt)>120000?{...contextBrain,working:null,recent:[],pendingSwitches:0}:contextBrain;
-  return {...state, brain, brainConnection, brainActivity, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:'all open HTTP/HTTPS tabs'};
+  return {...state, brain, brainConnection, brainActivity, enabled:recordingEnabled, error:recordingError, limit:LIMIT, retentionHours:24, origin:'all open HTTP/HTTPS tabs', dataset};
 }
 async function archiveAction(event,generation){
   try{await retainAction(event,generation);}catch{
@@ -87,14 +92,27 @@ async function save(state) {
     throw new Error('recording-storage-failed');
   }
 }
-function validEvent(value) {
-  if (!value || typeof value !== 'object' || Object.keys(value).some(key => !['kind','tag','x','y','key','target','formTargets'].includes(key))) return false;
-  return (value.formTargets===undefined || (value.kind==='click' && Array.isArray(value.formTargets) && value.formTargets.length<=12 && value.formTargets.every(target=>validTarget(target) && ['INPUT','SELECT','TEXTAREA'].includes(target.tag))))
-    && (value.target===undefined || (['click','change'].includes(value.kind) && validTarget(value.target)))
-    && ['click','change','submit','scroll','page-visible','pointer','key'].includes(value.kind)
-    && ['INPUT','SELECT','TEXTAREA','BUTTON','A','FORM','PAGE','OTHER'].includes(value.tag)
-    && ((value.x === undefined && value.y === undefined) || (['pointer','click'].includes(value.kind) && Number.isFinite(value.x) && Number.isFinite(value.y) && value.x>=0 && value.x<=1 && value.y>=0 && value.y<=1))
-    && (value.key === undefined || (value.kind === 'key' && ['Tab','Enter','Escape','Backspace','Delete','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(value.key)));
+async function loadDataset(name,input){
+  const {state:next,tasks,expired,dropped}=normalizeDatasetRecording(input,{limit:LIMIT,generation:crypto.randomUUID()});
+  clearVisualEvidence();
+  await chrome.storage.session.set({recordingEnabled:false,recordingError:null});
+  await badge(false);
+  const {[DATASET_KEY]:previous=null}=await chrome.storage.local.get(DATASET_KEY);
+  if(previous)await removeActions(previous.generation); // replacing one dataset with another keeps the original live stash
+  else await chrome.storage.local.set({[LIVE_STASH_KEY]:await read()});
+  for(const event of next.events)await archiveAction(event,next.historyGeneration);
+  await save(next);
+  await chrome.storage.local.set({[DATASET_KEY]:{name:String(name??'dataset').slice(0,120),loadedAt:new Date().toISOString(),generation:next.historyGeneration,eventCount:next.events.length,tabCount:next.tabs.length,expired,dropped,tasks}});
+}
+async function unloadDataset(){
+  const {[DATASET_KEY]:dataset=null,[LIVE_STASH_KEY]:live=null}=await chrome.storage.local.get([DATASET_KEY,LIVE_STASH_KEY]);
+  if(!dataset)return;
+  clearVisualEvidence();
+  await chrome.storage.session.set({recordingEnabled:false});
+  await badge(false);
+  await removeActions(dataset.generation);
+  await save(live??empty());
+  await chrome.storage.local.remove([DATASET_KEY,LIVE_STASH_KEY]);
 }
 export function installRecorder() {
   chrome.runtime.onMessage.addListener((message, sender, respond) => {
@@ -144,10 +162,13 @@ export function installRecorder() {
       }).then(value => respond({ok:true,value}), error => respond({ok:false,error:error.message}));
       return true;
     }
-    if (!isView || !['recording:status','recording:start','recording:pause','recording:clear','recording:export'].includes(message?.kind)) return;
+    if (!isView || !['recording:status','recording:start','recording:pause','recording:clear','recording:export','recording:dataset-load','recording:dataset-unload'].includes(message?.kind)) return;
     serial(async () => {
       if(message.kind==='recording:export')return {...await snapshot(),events:await readAllActions(),historyScope:'Full locally retained action history; no 24-hour truncation.'};
-      if (message.kind === 'recording:start') {
+      if (message.kind === 'recording:dataset-load') await loadDataset(message.name,message.state);
+      else if (message.kind === 'recording:dataset-unload') await unloadDataset();
+      else if (message.kind === 'recording:start') {
+        await unloadDataset(); // live capture never writes into a dataset recording
         const state = await read();
         await refreshTabs(state,true);
         state.sessionId = crypto.randomUUID();
@@ -164,7 +185,7 @@ export function installRecorder() {
         await chrome.storage.session.set({recordingEnabled:false,recordingError:null});
         await clearActions();
         await save(empty());
-        await chrome.storage.local.remove(['contextBrain','skillWebsiteStarts']);
+        await chrome.storage.local.remove(['contextBrain','skillWebsiteStarts',DATASET_KEY,LIVE_STASH_KEY]);
         await badge(false);
       }
       return snapshot();
