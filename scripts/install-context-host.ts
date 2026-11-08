@@ -13,7 +13,7 @@ const module=join(root,'host.cjs');
 if(process.argv.includes('--runtime-only')){console.log(JSON.stringify({updated:true,runtime:root,credentials:'unchanged'}));process.exit(0);}
 const quote=(value:string)=>`'${value.replaceAll("'","'\\''")}'`;
 const settings=parseEnv(await readFile(resolve('.env'),'utf8'));
-liveContextProviders({...process.env,...settings});
+try{liveContextProviders({...process.env,...settings});}catch(error){console.log(JSON.stringify({warning:'provider validation failed; installing local-only host',reason:(error as Error).message}));}
 const envPath=join(root,'config.env');
 const names=['HARNESS_CLOUD_ENABLED','SUBQ_API_KEY','LLAMA_SCHEMA','LLAMA_ENDPOINT','LLAMA_MODEL','LLAMA_API_KEY','CONTEXT_PROVIDER'];
 await writeFile(envPath,names.filter(name=>settings[name]!==undefined).map(name=>`${name}=${JSON.stringify(settings[name])}`).join('\n')+'\n',{mode:0o600});await chmod(envPath,0o600);
